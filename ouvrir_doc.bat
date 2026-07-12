@@ -3,7 +3,7 @@ chcp 65001 >nul
 setlocal
 
 set "SCRIPT_DIR=%~dp0"
-set "OUT_DIR=%SCRIPT_DIR%doc"
+set "OUT_DIR=%SCRIPT_DIR%docs"
 set "PORT=8743"
 
 if not exist "%OUT_DIR%\index-en.html" (

@@ -4,7 +4,7 @@ setlocal
 
 set "SCRIPT_DIR=%~dp0"
 set "ONT_FILE=%SCRIPT_DIR%lotusim naval maritime ontology v1.1-draft"
-set "OUT_DIR=%SCRIPT_DIR%doc"
+set "OUT_DIR=%SCRIPT_DIR%docs"
 set "JAVA_EXE=C:\Program Files\Eclipse Adoptium\jdk-21.0.11.10-hotspot\bin\java.exe"
 set "WIDOCO_JAR=C:\Users\chauv\tools\widoco\widoco-1.4.25.jar"
 set "PORT=8743"
