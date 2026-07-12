@@ -1,0 +1,2034 @@
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix nmo: <https://ontology.lotusim.org/naval-maritime#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix sosa: <http://www.w3.org/ns/sosa/> .
+@prefix ssn: <http://www.w3.org/ns/ssn/> .
+@prefix wgs84: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+
+<https://ontology.lotusim.org/naval-maritime> a owl:Ontology ;
+    rdfs:label "LOTUSim Naval Maritime Ontology"@en,
+        "Ontologie navale maritime LOTUSim"@fr ;
+    dct:description "Physical-world ontology for LOTUSim covering systems, platforms, equipment, physical objects, infrastructure, maritime environment, states, configurations, properties and physical capabilities."@en ;
+    dct:title "LOTUSim Naval Maritime Ontology"@en ;
+    dct:creator "Estelle Chauveau (Naval Group, PO LOTUSim)" ;
+    dct:publisher "Naval Group" ;
+    dct:modified "2026-07-12"^^xsd:date ;
+    # dct:license : à renseigner après validation juridique (Nathalie, NGSA) — EPL-2.0 comme le repo, ou licence dédiée type CC-BY-4.0
+    rdfs:comment "Ontologie de référence décrivant le monde naval physique simulable à un instant donné. Elle exclut les missions, objectifs, tâches, rôles opérationnels, observations, événements, doctrine et planification."@fr,
+        "Vocabulaire normatif de LOTUSim : les types du profil HDDL, le vocabulaire du schéma de scénario (agents, zones) et les familles des manifestes de capacités (nmo:manifestKey) en dérivent. Chaque classe porte une annotation de diffusabilité (nmo:hasUsageDomain : civil / dual-use / militaire) conditionnant sa présence dans les exports publics."@fr ;
+    owl:versionInfo "1.1.0-draft" .
+
+nmo:AIAccelerator a owl:Class ;
+    rdfs:label "AI accelerator"@en,
+        "Accélérateur IA"@fr ;
+    rdfs:comment "Accélérateur dédié à l'inférence IA embarquée."@fr ;
+    rdfs:subClassOf nmo:ComputingDevice ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:AISTransceiver a owl:Class ;
+    rdfs:label "AIS transceiver"@en,
+        "Émetteur-récepteur AIS"@fr ;
+    rdfs:comment "Émetteur-récepteur AIS : diffusion coopérative d'identité et de cinématique. À la fois équipement de communication et senseur de la situation de surface."@fr ;
+    rdfs:subClassOf nmo:CommunicationDevice,
+        nmo:Sensor ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:AcousticCommunication a owl:Class ;
+    rdfs:label "Acoustic communication"@en,
+        "Communication acoustique"@fr ;
+    rdfs:comment "Communication acoustique sous-marine : faible débit, latence élevée — la contrainte structurante des opérations multi-engins immergés."@fr ;
+    rdfs:subClassOf nmo:CommunicationCapability ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:AcousticModem a owl:Class ;
+    rdfs:label "Acoustic modem"@en,
+        "Modem acoustique"@fr ;
+    rdfs:comment "Modem acoustique : seul lien sans fil praticable sous l'eau. Débit faible, latence élevée, portée limitée — la contrainte qui structure les opérations sous-marines multi-engins."@fr ;
+    rdfs:subClassOf nmo:CommunicationDevice ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:AcousticPerception a owl:Class ;
+    rdfs:label "Acoustic perception"@en,
+        "Perception acoustique"@fr ;
+    rdfs:comment "Perception par voie acoustique — le canal dominant sous l'eau."@fr ;
+    rdfs:subClassOf nmo:PerceptionCapability ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:ActiveSonar a owl:Class ;
+    rdfs:label "Active sonar"@en,
+        "Sonar actif"@fr ;
+    rdfs:comment "Sonar actif : émet et écoute l'écho. Portée et zones d'ombre gouvernées par le profil de célérité ; trahit sa présence en émettant."@fr ;
+    rdfs:subClassOf nmo:AcousticSensor ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:AirMobility a owl:Class ;
+    rdfs:label "Air mobility"@en,
+        "Mobilité aérienne"@fr ;
+    rdfs:comment "Mobilité dans l'atmosphère."@fr ;
+    rdfs:subClassOf nmo:MobilityCapability ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:Aircraft a owl:Class ;
+    rdfs:label "Aircraft"@en,
+        "Aéronef"@fr ;
+    rdfs:comment "Aéronef habité opérant en environnement maritime."@fr ;
+    rdfs:subClassOf nmo:AirPlatform ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:AircraftWreck a owl:Class ;
+    rdfs:label "Aircraft wreck"@en,
+        "Épave d'aéronef"@fr ;
+    rdfs:comment "Épave d'aéronef immergée."@fr ;
+    rdfs:subClassOf nmo:Wreck ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:Airspace a owl:Class ;
+    rdfs:label "Airspace"@en,
+        "Espace aérien"@fr ;
+    rdfs:comment "Volume d'espace aérien délimité."@fr ;
+    rdfs:subClassOf nmo:SpatialRegion ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:Altimeter a owl:Class ;
+    rdfs:label "Altimeter"@en,
+        "Altimètre"@fr ;
+    rdfs:comment "Altimètre : hauteur au-dessus du fond (acoustique) ou de la surface."@fr ;
+    rdfs:subClassOf nmo:NavigationSensor ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:Anchor a owl:Class ;
+    rdfs:label "Anchor"@en,
+        "Ancre"@fr ;
+    rdfs:comment "Ancre : objet de mouillage, posé ou croché au fond."@fr ;
+    rdfs:subClassOf nmo:ArtificialObject ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:AquacultureFacility a owl:Class ;
+    rdfs:label "Aquaculture facility"@en,
+        "Installation aquacole"@fr ;
+    rdfs:comment "Installation aquacole (cages, filières). Obstacle de subsurface mal cartographié."@fr ;
+    rdfs:subClassOf nmo:OffshoreInfrastructure ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:Atmosphere a owl:Class ;
+    rdfs:label "Atmosphere"@en,
+        "Atmosphère"@fr ;
+    rdfs:comment "Milieu gazeux au-dessus de la surface. Siège des phénomènes météorologiques et milieu de propagation des ondes radio et optiques."@fr ;
+    rdfs:subClassOf nmo:PhysicalMedium ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:AutonomousUnderwaterVehicle a owl:Class ;
+    rdfs:label "Autonomous underwater vehicle"@en,
+        "AUV"@fr ;
+    rdfs:comment "AUV : opère sans contrôle temps réel d'un opérateur. Optimisé pour la collecte de données sur zone étendue."@fr ;
+    rdfs:subClassOf nmo:UncrewedUnderwaterVehicle ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:BallastSystem a owl:Class ;
+    rdfs:label "Ballast system"@en,
+        "Système de ballast"@fr ;
+    rdfs:comment "Système de ballast : modifie la flottabilité (immersion des sous-marins, propulsion des planeurs)."@fr ;
+    rdfs:subClassOf nmo:Actuator ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:Balloon a owl:Class ;
+    rdfs:label "Balloon"@en,
+        "Ballon"@fr ;
+    rdfs:comment "Ballon ou aérostat : plateforme aérienne à sustentation statique, longue endurance, faible manœuvrabilité."@fr ;
+    rdfs:subClassOf nmo:AirPlatform ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:Battery a owl:Class ;
+    rdfs:label "Battery"@en,
+        "Batterie"@fr ;
+    rdfs:comment "Batterie : stockage électrochimique. Son niveau borne l'endurance — première ressource abstraite en prédicat (« autonomie suffisante »)."@fr ;
+    rdfs:subClassOf nmo:EnergyDevice ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:Beacon a owl:Class ;
+    rdfs:label "Beacon"@en,
+        "Balise"@fr ;
+    rdfs:comment "Balise fixe d'aide à la navigation."@fr ;
+    rdfs:subClassOf nmo:NavigationInfrastructure ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:Boat a owl:Class ;
+    rdfs:label "Boat"@en,
+        "Bateau"@fr ;
+    rdfs:comment "Embarcation de surface de taille modeste (pêche, plaisance, servitude)."@fr ;
+    rdfs:subClassOf nmo:SurfacePlatform ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:Bomb a owl:Class ;
+    rdfs:label "Bomb"@en,
+        "Bombe"@fr ;
+    rdfs:comment "Bombe non explosée immergée (héritage historique typique)."@fr ;
+    rdfs:subClassOf nmo:UnexplodedOrdnance ;
+    nmo:hasUsageDomain nmo:MilitaryUse .
+
+nmo:BottomMine a owl:Class ;
+    rdfs:label "Bottom mine"@en,
+        "Mine de fond"@fr ;
+    rdfs:comment "Mine posée sur le fond. Détection par sonar imageur, signature dépendante de la nature du sédiment et de l'ensouillement."@fr ;
+    rdfs:subClassOf nmo:NavalMine ;
+    nmo:hasUsageDomain nmo:MilitaryUse .
+
+nmo:Breakwater a owl:Class ;
+    rdfs:label "Breakwater"@en,
+        "Brise-lames"@fr ;
+    rdfs:comment "Brise-lames : ouvrage de protection contre la houle."@fr ;
+    rdfs:subClassOf nmo:CoastalInfrastructure ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:Buoy a owl:Class ;
+    rdfs:label "Buoy"@en,
+        "Bouée"@fr ;
+    rdfs:comment "Bouée d'aide à la navigation (flottante, mouillée)."@fr ;
+    rdfs:subClassOf nmo:NavigationInfrastructure ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:CTDProbe a owl:Class ;
+    rdfs:label "CTD probe"@en,
+        "Sonde CTD"@fr ;
+    rdfs:comment "Sonde CTD (conductivité, température, profondeur) : mesure les gradients dont dérive le profil de célérité du son."@fr ;
+    rdfs:subClassOf nmo:EnvironmentalSensor ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:CableSegment a owl:Class ;
+    rdfs:label "Cable segment"@en,
+        "Segment de câble"@fr ;
+    rdfs:comment "Segment de câble posé ou ensouillé (télécom, énergie). Cible typique d'inspection par ROV/AUV."@fr ;
+    rdfs:subClassOf nmo:ArtificialObject ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:Camera a owl:Class ;
+    rdfs:label "Camera"@en,
+        "Caméra"@fr ;
+    rdfs:comment "Caméra visible : identification à courte portée, inspection."@fr ;
+    rdfs:subClassOf nmo:OpticalSensor ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:Chain a owl:Class ;
+    rdfs:label "Chain"@en,
+        "Chaîne"@fr ;
+    rdfs:comment "Chaîne : élément de liaison ou de mouillage, souvent partiellement ensouillé."@fr ;
+    rdfs:subClassOf nmo:ArtificialObject ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:Channel a owl:Class ;
+    rdfs:label "Channel"@en,
+        "Chenal"@fr ;
+    rdfs:comment "Chenal : passage navigable délimité, naturel ou dragué."@fr ;
+    rdfs:subClassOf nmo:SpatialRegion ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:ChannelMarker a owl:Class ;
+    rdfs:label "Channel marker"@en,
+        "Marque de chenal"@fr ;
+    rdfs:comment "Marque de chenal : matérialise les limites navigables."@fr ;
+    rdfs:subClassOf nmo:NavigationInfrastructure ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:ChemicalHazardObject a owl:Class ;
+    rdfs:label "Chemical hazard object"@en,
+        "Objet à risque chimique"@fr ;
+    rdfs:comment "Objet à risque chimique (fût, cargaison dangereuse immergée)."@fr ;
+    rdfs:subClassOf nmo:HazardousObject ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:CivilUse a nmo:UsageDomain ;
+    rdfs:label "Civil use"@en,
+        "Usage civil"@fr .
+
+nmo:ClassificationCapability a owl:Class ;
+    rdfs:label "Classification capability"@en,
+        "Capacité de classification"@fr ;
+    rdfs:comment "Capacité à attribuer un type physique d'après des caractéristiques mesurées (dimensions, signature). Exclut l'identification d'allégeance — interprétation opérationnelle hors périmètre de l'ontologie."@fr ;
+    rdfs:subClassOf nmo:PerceptionCapability ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:CoastalArea a owl:Class ;
+    rdfs:label "Coastal area"@en,
+        "Zone côtière"@fr ;
+    rdfs:comment "Zone côtière : interface terre-mer, faibles profondeurs."@fr ;
+    rdfs:subClassOf nmo:SpatialRegion ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:CoastalStation a owl:Class ;
+    rdfs:label "Coastal station"@en,
+        "Station côtière"@fr ;
+    rdfs:comment "Station côtière : plateforme fixe à terre (surveillance, communication)."@fr ;
+    rdfs:subClassOf nmo:FixedPlatform ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:Compass a owl:Class ;
+    rdfs:label "Compass"@en,
+        "Compas"@fr ;
+    rdfs:comment "Compas : cap magnétique ou gyroscopique."@fr ;
+    rdfs:subClassOf nmo:NavigationSensor ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:Container a owl:Class ;
+    rdfs:label "Container"@en,
+        "Conteneur"@fr ;
+    rdfs:comment "Conteneur, éventuellement perdu à la mer : obstacle flottant ou posé, écho sonar caractéristique."@fr ;
+    rdfs:subClassOf nmo:ArtificialObject ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:ControlSurface a owl:Class ;
+    rdfs:label "Control surface"@en,
+        "Gouverne"@fr ;
+    rdfs:comment "Gouverne : surface de contrôle d'attitude et de cap (safran, barres de plongée, ailerons)."@fr ;
+    rdfs:subClassOf nmo:Actuator ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:Current a owl:Class ;
+    rdfs:label "Current"@en,
+        "Courant"@fr ;
+    rdfs:comment "Courant marin : déplace et fait dériver les plateformes, en particulier les plus lentes (AUV, glider, ROV) ; contraint la navigation et la tenue de trajectoire."@fr ;
+    rdfs:subClassOf nmo:EnvironmentalPhenomenon ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:DataProcessingCapability a owl:Class ;
+    rdfs:label "Data processing capability"@en,
+        "Capacité de traitement de données"@fr ;
+    rdfs:comment "Capacité de traitement de données à bord."@fr ;
+    rdfs:subClassOf nmo:SupportCapability ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:DataStorage a owl:Class ;
+    rdfs:label "Data storage"@en,
+        "Stockage de données"@fr ;
+    rdfs:comment "Support de stockage de données (enregistrement des mesures en mission)."@fr ;
+    rdfs:subClassOf nmo:StorageDevice ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:DataStorageCapability a owl:Class ;
+    rdfs:label "Data storage capability"@en,
+        "Capacité de stockage de données"@fr ;
+    rdfs:comment "Capacité de stockage de données à bord."@fr ;
+    rdfs:subClassOf nmo:SupportCapability ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:DemolitionCharge a owl:Class ;
+    rdfs:label "Demolition charge"@en,
+        "Charge de démolition"@fr ;
+    rdfs:comment "Charge de démolition : explosif mis en œuvre pour neutraliser un engin ou détruire une structure."@fr ;
+    rdfs:subClassOf nmo:ExplosiveObject ;
+    nmo:hasUsageDomain nmo:MilitaryUse .
+
+nmo:DeploymentCapability a owl:Class ;
+    rdfs:label "Deployment capability"@en,
+        "Capacité de mise en œuvre"@fr ;
+    rdfs:comment "Capacité à mettre à l'eau un engin ou un équipement."@fr ;
+    rdfs:subClassOf nmo:InteractionCapability ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:DeploymentSystem a owl:Class ;
+    rdfs:label "Deployment system"@en,
+        "Système de mise en œuvre"@fr ;
+    rdfs:comment "Système de mise à l'eau (LARS, portique, rampe) : déploie un engin ou un équipement depuis la plateforme porteuse."@fr ;
+    rdfs:subClassOf nmo:Actuator ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:DepthSensor a owl:Class ;
+    rdfs:label "Depth sensor"@en,
+        "Capteur de profondeur"@fr ;
+    rdfs:comment "Capteur de profondeur (pression)."@fr ;
+    rdfs:subClassOf nmo:NavigationSensor ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:DetectionCapability a owl:Class ;
+    rdfs:label "Detection capability"@en,
+        "Capacité de détection"@fr ;
+    rdfs:comment "Capacité à constater la présence d'un objet ou d'un signal au-dessus d'un seuil (vue physique : un écho, un contact, une signature)."@fr ;
+    rdfs:subClassOf nmo:PerceptionCapability ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:DivingCapability a owl:Class ;
+    rdfs:label "Diving capability"@en,
+        "Capacité de plongée"@fr ;
+    rdfs:comment "Capacité à descendre en immersion (changer d'immersion vers le bas)."@fr ;
+    rdfs:subClassOf nmo:MobilityCapability ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:Dock a owl:Class ;
+    rdfs:label "Dock"@en,
+        "Dock"@fr ;
+    rdfs:comment "Dock : bassin ou ouvrage d'accueil des navires."@fr ;
+    rdfs:subClassOf nmo:CoastalInfrastructure ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:DockingCapability a owl:Class ;
+    rdfs:label "Docking capability"@en,
+        "Capacité d'accostage"@fr ;
+    rdfs:comment "Capacité d'accostage ou d'amarrage à une structure (station de recharge, plateforme porteuse)."@fr ;
+    rdfs:subClassOf nmo:MobilityCapability ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:DopplerVelocityLog a owl:Class ;
+    rdfs:label "Doppler velocity log"@en,
+        "DVL"@fr ;
+    rdfs:comment "Loch Doppler (DVL) : vitesse par rapport au fond par effet Doppler acoustique. Recale la dérive de la centrale inertielle."@fr ;
+    rdfs:subClassOf nmo:NavigationSensor ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:DriftingMine a owl:Class ;
+    rdfs:label "Drifting mine"@en,
+        "Mine dérivante"@fr ;
+    rdfs:comment "Mine dérivante, non fixée, portée par les courants."@fr ;
+    rdfs:subClassOf nmo:NavalMine ;
+    nmo:hasUsageDomain nmo:MilitaryUse .
+
+nmo:DualUse a nmo:UsageDomain ;
+    rdfs:label "Dual use"@en,
+        "Usage dual"@fr .
+
+nmo:EchoSounder a owl:Class ;
+    rdfs:label "Echo sounder"@en,
+        "Sondeur"@fr ;
+    rdfs:comment "Sondeur : mesure la profondeur sous la quille."@fr ;
+    rdfs:subClassOf nmo:AcousticSensor ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:EmbeddedComputer a owl:Class ;
+    rdfs:label "Embedded computer"@en,
+        "Ordinateur embarqué"@fr ;
+    rdfs:comment "Ordinateur embarqué : calculateur généraliste de la plateforme."@fr ;
+    rdfs:subClassOf nmo:ComputingDevice ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:EnergySupplyCapability a owl:Class ;
+    rdfs:label "Energy supply capability"@en,
+        "Capacité d'alimentation énergétique"@fr ;
+    rdfs:comment "Capacité d'alimentation énergétique des équipements portés."@fr ;
+    rdfs:subClassOf nmo:SupportCapability ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:EngagementCapability a owl:Class ;
+    rdfs:label "Engagement capability"@en,
+        "Capacité d'engagement"@fr ;
+    rdfs:comment "Capacité à engager une cible désignée. Distincte de la capacité de neutralisation (NeutralizationCapability), qui vise la neutralisation d'objets (p. ex. guerre des mines). L'ontologie décrit la capacité physique, pas son backend d'exécution : en première version LSGA, le résultat d'un engagement est adjugé par la cellule blanche."@fr ;
+    rdfs:subClassOf nmo:InteractionCapability ;
+    nmo:manifestKey "engage.attack_target" ;
+    nmo:hasUsageDomain nmo:MilitaryUse .
+
+nmo:EnvironmentalPerception a owl:Class ;
+    rdfs:label "Environmental perception"@en,
+        "Perception environnementale"@fr ;
+    rdfs:comment "Capacité à mesurer les propriétés du milieu (colonne d'eau, météo-océano)."@fr ;
+    rdfs:subClassOf nmo:PerceptionCapability ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:EquipmentWreck a owl:Class ;
+    rdfs:label "Equipment wreck"@en,
+        "Épave d'équipement"@fr ;
+    rdfs:comment "Épave d'équipement (engin, instrument coulé)."@fr ;
+    rdfs:subClassOf nmo:Wreck ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:FPGA a owl:Class ;
+    rdfs:label "FPGA"@en,
+        "FPGA"@fr ;
+    rdfs:comment "Circuit logique programmable : traitement temps réel au plus près du senseur."@fr ;
+    rdfs:subClassOf nmo:ComputingDevice ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:FieldPerception a owl:Class ;
+    rdfs:label "Field perception"@en,
+        "Perception de champ"@fr ;
+    rdfs:comment "Perception des champs (magnétique, électrique) : détection d'anomalies causées par les masses métalliques."@fr ;
+    rdfs:subClassOf nmo:PerceptionCapability ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:FloatingMine a owl:Class ;
+    rdfs:label "Floating mine"@en,
+        "Mine flottante"@fr ;
+    rdfs:comment "Mine flottant en surface ou en subsurface immédiate."@fr ;
+    rdfs:subClassOf nmo:NavalMine ;
+    nmo:hasUsageDomain nmo:MilitaryUse .
+
+nmo:FuelCell a owl:Class ;
+    rdfs:label "Fuel cell"@en,
+        "Pile à combustible"@fr ;
+    rdfs:comment "Pile à combustible : source électrique de longue endurance, notamment pour la propulsion anaérobie."@fr ;
+    rdfs:subClassOf nmo:EnergyDevice ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:FuelTank a owl:Class ;
+    rdfs:label "Fuel tank"@en,
+        "Réservoir de carburant"@fr ;
+    rdfs:comment "Réservoir de carburant."@fr ;
+    rdfs:subClassOf nmo:EnergyDevice ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:GNSSReceiver a owl:Class ;
+    rdfs:label "GNSS receiver"@en,
+        "Récepteur GNSS"@fr ;
+    rdfs:comment "Récepteur GNSS : positionnement par constellation satellitaire. Indisponible en immersion — le sous-marin remonte ou dérive à l'estime."@fr ;
+    rdfs:subClassOf nmo:NavigationSensor ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:GPU a owl:Class ;
+    rdfs:label "GPU"@en,
+        "Processeur graphique"@fr ;
+    rdfs:comment "Processeur graphique : calcul parallèle embarqué (traitement d'image, IA)."@fr ;
+    rdfs:subClassOf nmo:ComputingDevice ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:Generator a owl:Class ;
+    rdfs:label "Generator"@en,
+        "Générateur"@fr ;
+    rdfs:comment "Générateur : production électrique à bord."@fr ;
+    rdfs:subClassOf nmo:EnergyDevice ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:GroundMobility a owl:Class ;
+    rdfs:label "Ground mobility"@en,
+        "Mobilité terrestre"@fr ;
+    rdfs:comment "Mobilité à terre."@fr ;
+    rdfs:subClassOf nmo:MobilityCapability ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:GroundPlatform a owl:Class ;
+    rdfs:label "Ground platform"@en,
+        "Plateforme terrestre"@fr ;
+    rdfs:comment "Plateforme évoluant à terre."@fr ;
+    rdfs:subClassOf nmo:Platform ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:Halocline a owl:Class ;
+    rdfs:label "Halocline"@en,
+        "Halocline"@fr ;
+    rdfs:comment "Couche de fort gradient de salinité. Peut générer des gradients de célérité sévères, notamment près de la surface."@fr ;
+    rdfs:subClassOf nmo:EnvironmentalFeature ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:HarbourArea a owl:Class ;
+    rdfs:label "Harbour area"@en,
+        "Zone portuaire"@fr ;
+    rdfs:comment "Zone portuaire : eaux abritées et aménagées."@fr ;
+    rdfs:subClassOf nmo:SpatialRegion ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:HealthMonitoringCapability a owl:Class ;
+    rdfs:label "Health monitoring capability"@en,
+        "Capacité de surveillance de santé"@fr ;
+    rdfs:comment "Capacité de surveillance de l'état de santé des systèmes embarqués."@fr ;
+    rdfs:subClassOf nmo:SupportCapability ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:Helicopter a owl:Class ;
+    rdfs:label "Helicopter"@en,
+        "Hélicoptère"@fr ;
+    rdfs:comment "Hélicoptère : aéronef à voilure tournante, capacité de vol stationnaire, opérable depuis une plateforme navale."@fr ;
+    rdfs:subClassOf nmo:AirPlatform ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:HoveringCapability a owl:Class ;
+    rdfs:label "Hovering capability"@en,
+        "Capacité de vol stationnaire"@fr ;
+    rdfs:comment "Capacité de vol ou de tenue stationnaire dans le milieu."@fr ;
+    rdfs:subClassOf nmo:MobilityCapability ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:IceFeature a owl:Class ;
+    rdfs:label "Ice feature"@en,
+        "Formation de glace"@fr ;
+    rdfs:comment "Formation de glace structurante du milieu (banquise, glace de mer). Contraint la navigation de surface et l'accès à la surface pour les engins sous-marins."@fr ;
+    rdfs:subClassOf nmo:EnvironmentalFeature ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:IceObject a owl:Class ;
+    rdfs:label "Ice object"@en,
+        "Objet de glace"@fr ;
+    rdfs:comment "Objet de glace flottant ou dérivant (growler, floe). Danger de collision peu détectable au radar."@fr ;
+    rdfs:subClassOf nmo:NaturalObject ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:ImagingRadar a owl:Class ;
+    rdfs:label "Imaging radar"@en,
+        "Radar imageur"@fr ;
+    rdfs:comment "Radar imageur ou à onde de surface haute fréquence (détection au-delà de l'horizon)."@fr ;
+    rdfs:subClassOf nmo:RadioFrequencySensor ;
+    nmo:hasUsageDomain nmo:MilitaryUse .
+
+nmo:ImagingSonar a owl:Class ;
+    rdfs:label "Imaging sonar"@en,
+        "Sonar imageur"@fr ;
+    rdfs:comment "Sonar imageur (latéral, frontal) : produit une image acoustique du fond ou de la scène. Instrument central de la détection d'objets posés."@fr ;
+    rdfs:subClassOf nmo:AcousticSensor ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:IndustrialDebris a owl:Class ;
+    rdfs:label "Industrial debris"@en,
+        "Débris industriel"@fr ;
+    rdfs:comment "Débris d'origine industrielle (structures, équipements abandonnés)."@fr ;
+    rdfs:subClassOf nmo:Debris ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:InertialNavigationSystem a owl:Class ;
+    rdfs:label "Inertial navigation system"@en,
+        "Centrale inertielle"@fr ;
+    rdfs:comment "Centrale inertielle (INS/IMU) : mesure attitude, cap et déplacement par inertie. Seul positionnement continu en immersion ; dérive avec le temps."@fr ;
+    rdfs:subClassOf nmo:NavigationSensor ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:InfraredCamera a owl:Class ;
+    rdfs:label "Infrared camera"@en,
+        "Caméra infrarouge"@fr ;
+    rdfs:comment "Caméra infrarouge : détection par contraste thermique, utilisable de nuit ; inopérante sous l'eau."@fr ;
+    rdfs:subClassOf nmo:OpticalSensor ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:InstrumentedBuoy a owl:Class ;
+    rdfs:label "Instrumented buoy"@en,
+        "Bouée instrumentée"@fr ;
+    rdfs:comment "Bouée ou mouillage instrumenté : plateforme fixe de mesure."@fr ;
+    rdfs:subClassOf nmo:FixedPlatform ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:Lidar a owl:Class ;
+    rdfs:label "Lidar"@en,
+        "Lidar"@fr ;
+    rdfs:comment "Lidar : télémétrie laser. En version bathymétrique, pénètre les eaux claires peu profondes ; portée dégradée par la turbidité."@fr ;
+    rdfs:subClassOf nmo:OpticalSensor ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:Lighthouse a owl:Class ;
+    rdfs:label "Lighthouse"@en,
+        "Phare"@fr ;
+    rdfs:comment "Phare : amer lumineux majeur."@fr ;
+    rdfs:subClassOf nmo:NavigationInfrastructure ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:LocalizationCapability a owl:Class ;
+    rdfs:label "Localization capability"@en,
+        "Capacité de localisation"@fr ;
+    rdfs:comment "Capacité à estimer la position d'un objet ou la sienne propre."@fr ;
+    rdfs:subClassOf nmo:NavigationCapability ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:LostEquipment a owl:Class ;
+    rdfs:label "Lost equipment"@en,
+        "Équipement perdu"@fr ;
+    rdfs:comment "Équipement perdu à la mer (engin de pêche, instrument, charge)."@fr ;
+    rdfs:subClassOf nmo:ArtificialObject ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:Magnetometer a owl:Class ;
+    rdfs:label "Magnetometer"@en,
+        "Magnétomètre"@fr ;
+    rdfs:comment "Magnétomètre : détecte les anomalies magnétiques (masses ferreuses immergées, UXO, épaves)."@fr ;
+    rdfs:subClassOf nmo:FieldSensor ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:ManipulationCapability a owl:Class ;
+    rdfs:label "Manipulation capability"@en,
+        "Capacité de manipulation"@fr ;
+    rdfs:comment "Capacité à saisir, déplacer ou prélever un objet (repose sur les effecteurs de manipulation)."@fr ;
+    rdfs:subClassOf nmo:InteractionCapability ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:Manipulator a owl:Class ;
+    rdfs:label "Manipulator"@en,
+        "Manipulateur"@fr ;
+    rdfs:comment "Bras manipulateur / pince : saisir, déplacer, prélever un objet."@fr ;
+    rdfs:subClassOf nmo:Actuator ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:MannedSubmersible a owl:Class ;
+    rdfs:label "Manned submersible"@en,
+        "Submersible habité"@fr ;
+    rdfs:comment "Submersible habité civil (recherche, intervention, tourisme)."@fr ;
+    rdfs:subClassOf nmo:UnderwaterPlatform ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:MarineOrganism a owl:Class ;
+    rdfs:label "Marine organism"@en,
+        "Organisme marin"@fr ;
+    rdfs:comment "Organisme marin (faune, banc de poissons). Source de bruit et d'échos biologiques (fausses alarmes acoustiques)."@fr ;
+    rdfs:subClassOf nmo:NaturalObject ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:MaritimeArea a owl:Class ;
+    rdfs:label "Maritime area"@en,
+        "Zone maritime"@fr ;
+    rdfs:comment "Zone maritime générique délimitée en surface."@fr ;
+    rdfs:subClassOf nmo:SpatialRegion ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:MarkingCapability a owl:Class ;
+    rdfs:label "Marking capability"@en,
+        "Capacité de balisage"@fr ;
+    rdfs:comment "Capacité à déposer une marque sur ou près d'un objet localisé."@fr ;
+    rdfs:subClassOf nmo:InteractionCapability ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:MarkingSystem a owl:Class ;
+    rdfs:label "Marking system"@en,
+        "Système de balisage"@fr ;
+    rdfs:comment "Système de balisage d'objets : dépose une marque sur ou près d'un objet localisé (contexte typique : marquage d'engins avant neutralisation)."@fr ;
+    rdfs:subClassOf nmo:Actuator ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:MeteorologicalSensor a owl:Class ;
+    rdfs:label "Meteorological sensor"@en,
+        "Capteur météorologique"@fr ;
+    rdfs:comment "Capteur météorologique (vent, pression, température de l'air)."@fr ;
+    rdfs:subClassOf nmo:EnvironmentalSensor ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:MilitaryUse a nmo:UsageDomain ;
+    rdfs:label "Military use"@en,
+        "Usage militaire"@fr .
+
+nmo:MooredMine a owl:Class ;
+    rdfs:label "Moored mine"@en,
+        "Mine à orin"@fr ;
+    rdfs:comment "Mine à orin : flottante entre deux eaux, reliée au fond par un câble. Détectable dans la colonne d'eau."@fr ;
+    rdfs:subClassOf nmo:NavalMine ;
+    nmo:hasUsageDomain nmo:MilitaryUse .
+
+nmo:MooringElement a owl:Class ;
+    rdfs:label "Mooring element"@en,
+        "Élément de mouillage"@fr ;
+    rdfs:comment "Élément de ligne de mouillage (corps-mort, flotteur intermédiaire, ligne)."@fr ;
+    rdfs:subClassOf nmo:ArtificialObject ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:MooringSystem a owl:Class ;
+    rdfs:label "Mooring system"@en,
+        "Système de mouillage"@fr ;
+    rdfs:comment "Système de mouillage de navigation (coffre, ligne de mouillage). Distinct du mouillage de mines, sans équivalent dans cette version."@fr ;
+    rdfs:subClassOf nmo:NavigationInfrastructure ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:MultibeamSonar a owl:Class ;
+    rdfs:label "Multibeam sonar"@en,
+        "Sonar multifaisceaux"@fr ;
+    rdfs:comment "Sonar multifaisceaux : bathymétrie et imagerie de la colonne d'eau par balayage. Outil hydrographique standard."@fr ;
+    rdfs:subClassOf nmo:AcousticSensor ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:NavigationRadar a owl:Class ;
+    rdfs:label "Navigation radar"@en,
+        "Radar de navigation"@fr ;
+    rdfs:comment "Radar de navigation : anticollision et situation de surface. Détection des petits objets dégradée par l'état de mer."@fr ;
+    rdfs:subClassOf nmo:RadioFrequencySensor ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:NeutralizationCapability a owl:Class ;
+    rdfs:label "Neutralization capability"@en,
+        "Capacité de neutralisation"@fr ;
+    rdfs:comment "Capacité à rendre un engin inopérant par effet physique (charge de neutralisation, émetteur d'influence). Distincte de l'engagement d'une cible (EngagementCapability)."@fr ;
+    rdfs:subClassOf nmo:InteractionCapability ;
+    nmo:hasUsageDomain nmo:MilitaryUse .
+
+nmo:NeutralizationSystem a owl:Class ;
+    rdfs:label "Neutralization system"@en,
+        "Système de neutralisation"@fr ;
+    rdfs:comment "Système de neutralisation : met en œuvre l'effet rendant un engin inopérant (charge, émetteur d'influence)."@fr ;
+    rdfs:subClassOf nmo:Actuator ;
+    nmo:hasUsageDomain nmo:MilitaryUse .
+
+nmo:ObstacleAvoidanceCapability a owl:Class ;
+    rdfs:label "Obstacle avoidance capability"@en,
+        "Capacité d'évitement d'obstacles"@fr ;
+    rdfs:comment "Capacité d'évitement d'obstacles en cours de route."@fr ;
+    rdfs:subClassOf nmo:NavigationCapability ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:OceanographicSensor a owl:Class ;
+    rdfs:label "Oceanographic sensor"@en,
+        "Capteur océanographique"@fr ;
+    rdfs:comment "Capteur océanographique (propriétés de la colonne d'eau)."@fr ;
+    rdfs:subClassOf nmo:EnvironmentalSensor ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:OffshoreMonitoringStation a owl:Class ;
+    rdfs:label "Offshore monitoring station"@en,
+        "Station de surveillance offshore"@fr ;
+    rdfs:comment "Station de surveillance offshore fixe."@fr ;
+    rdfs:subClassOf nmo:FixedPlatform ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:OffshorePlatform a owl:Class ;
+    rdfs:label "Offshore platform"@en,
+        "Plateforme offshore"@fr ;
+    rdfs:comment "Plateforme offshore fixe ou flottante (énergie, industrie)."@fr ;
+    rdfs:subClassOf nmo:OffshoreInfrastructure ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:OpticalCommunication a owl:Class ;
+    rdfs:label "Optical communication"@en,
+        "Communication optique"@fr ;
+    rdfs:comment "Communication optique sous-marine : très haut débit, très courte portée, eaux claires."@fr ;
+    rdfs:subClassOf nmo:CommunicationCapability ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:OpticalCommunicationDevice a owl:Class ;
+    rdfs:label "Optical communication device"@en,
+        "Équipement de communication optique"@fr ;
+    rdfs:comment "Équipement de communication optique : très haut débit sous-marin à très courte portée, en eaux claires."@fr ;
+    rdfs:subClassOf nmo:CommunicationDevice ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:OpticalPerception a owl:Class ;
+    rdfs:label "Optical perception"@en,
+        "Perception optique"@fr ;
+    rdfs:comment "Perception par voie optique, à courte portée sous l'eau (turbidité)."@fr ;
+    rdfs:subClassOf nmo:PerceptionCapability ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:PassiveSonar a owl:Class ;
+    rdfs:label "Passive sonar"@en,
+        "Sonar passif"@fr ;
+    rdfs:comment "Sonar passif / hydrophone : écoute sans émettre. En réseau, fournit une localisation spatiale (détection/classification de contacts)."@fr ;
+    rdfs:subClassOf nmo:AcousticSensor ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:PayloadHostingCapability a owl:Class ;
+    rdfs:label "Payload hosting capability"@en,
+        "Capacité d'emport"@fr ;
+    rdfs:comment "Capacité d'emport : accueillir, alimenter et interfacer une charge utile."@fr ;
+    rdfs:subClassOf nmo:SupportCapability ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:PhysicalSubstance a owl:Class ;
+    rdfs:label "Physical substance"@en,
+        "Substance physique"@fr ;
+    rdfs:comment "Substance physique (matière sans individualité d'objet)."@fr ;
+    rdfs:subClassOf nmo:PhysicalEntity ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:Pier a owl:Class ;
+    rdfs:label "Pier"@en,
+        "Jetée"@fr ;
+    rdfs:comment "Jetée : ouvrage avancé en mer, accostage et protection."@fr ;
+    rdfs:subClassOf nmo:CoastalInfrastructure ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:PipeSegment a owl:Class ;
+    rdfs:label "Pipe segment"@en,
+        "Segment de conduite"@fr ;
+    rdfs:comment "Segment de conduite posé ou ensouillé. Cible typique d'inspection."@fr ;
+    rdfs:subClassOf nmo:ArtificialObject ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:PortInfrastructure a owl:Class ;
+    rdfs:label "Port infrastructure"@en,
+        "Infrastructure portuaire"@fr ;
+    rdfs:comment "Infrastructure portuaire générale."@fr ;
+    rdfs:subClassOf nmo:CoastalInfrastructure ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:PositionEstimationCapability a owl:Class ;
+    rdfs:label "Position estimation capability"@en,
+        "Capacité d'estimation de position"@fr ;
+    rdfs:comment "Capacité d'estimation de position propre par fusion de senseurs de navigation."@fr ;
+    rdfs:subClassOf nmo:NavigationCapability ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:PropulsionSystem a owl:Class ;
+    rdfs:label "Propulsion system"@en,
+        "Système de propulsion"@fr ;
+    rdfs:comment "Système de propulsion principale ou d'appoint (hélice, hydrojet, thrusters vectoriels des ROV/AUV, rotors)."@fr ;
+    rdfs:subClassOf nmo:Actuator ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:Pycnocline a owl:Class ;
+    rdfs:label "Pycnocline"@en,
+        "Pycnocline"@fr ;
+    rdfs:comment "Couche de fort gradient de densité (combinaison des gradients de température et de salinité). Barrière physique au mélange vertical."@fr ;
+    rdfs:subClassOf nmo:EnvironmentalFeature ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:Quay a owl:Class ;
+    rdfs:label "Quay"@en,
+        "Quai"@fr ;
+    rdfs:comment "Quai : ouvrage d'accostage à terre."@fr ;
+    rdfs:subClassOf nmo:CoastalInfrastructure ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:RadioCommunication a owl:Class ;
+    rdfs:label "Radio communication"@en,
+        "Communication radio"@fr ;
+    rdfs:comment "Communication radio : surface et air uniquement."@fr ;
+    rdfs:subClassOf nmo:CommunicationCapability ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:RadioFrequencyPerception a owl:Class ;
+    rdfs:label "Radio-frequency perception"@en,
+        "Perception radioélectrique"@fr ;
+    rdfs:comment "Perception radioélectrique, en surface et dans l'air uniquement."@fr ;
+    rdfs:subClassOf nmo:PerceptionCapability ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:RadioTransceiver a owl:Class ;
+    rdfs:label "Radio transceiver"@en,
+        "Émetteur-récepteur radio"@fr ;
+    rdfs:comment "Émetteur-récepteur radio : liaison de surface et aérienne. Inopérant sous l'eau."@fr ;
+    rdfs:subClassOf nmo:CommunicationDevice ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:RadioactiveObject a owl:Class ;
+    rdfs:label "Radioactive object"@en,
+        "Objet radioactif"@fr ;
+    rdfs:comment "Objet à risque radiologique immergé."@fr ;
+    rdfs:subClassOf nmo:HazardousObject ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:RecoveryCapability a owl:Class ;
+    rdfs:label "Recovery capability"@en,
+        "Capacité de récupération"@fr ;
+    rdfs:comment "Capacité à récupérer un engin ou un équipement. Opération sensible à l'état de mer."@fr ;
+    rdfs:subClassOf nmo:InteractionCapability ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:RecoverySystem a owl:Class ;
+    rdfs:label "Recovery system"@en,
+        "Système de récupération"@fr ;
+    rdfs:comment "Système de récupération : reprend à bord un engin ou un équipement. Opération sensible à l'état de mer."@fr ;
+    rdfs:subClassOf nmo:Actuator ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:Reef a owl:Class ;
+    rdfs:label "Reef"@en,
+        "Récif"@fr ;
+    rdfs:comment "Récif : haut-fond rocheux ou corallien. Danger pour la navigation, relief de masquage acoustique."@fr ;
+    rdfs:subClassOf nmo:NaturalObject ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:RemotelyOperatedVehicle a owl:Class ;
+    rdfs:label "Remotely operated vehicle"@en,
+        "ROV"@fr ;
+    rdfs:comment "ROV : relié par ombilical, contrôlé en temps réel. Adapté aux interventions et manipulations délicates."@fr ;
+    rdfs:subClassOf nmo:UncrewedUnderwaterVehicle ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:RestrictedArea a owl:Class ;
+    rdfs:label "Restricted area"@en,
+        "Zone restreinte"@fr ;
+    rdfs:comment "Zone d'accès restreint ou réglementé, quelle qu'en soit la raison (réglementaire, sécurité, environnementale)."@fr ;
+    rdfs:subClassOf nmo:SpatialRegion ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:Rock a owl:Class ;
+    rdfs:label "Rock"@en,
+        "Rocher"@fr ;
+    rdfs:comment "Rocher isolé sur le fond ou affleurant. Écho ponctuel dur, confusable avec un objet artificiel."@fr ;
+    rdfs:subClassOf nmo:NaturalObject ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:RouteFollowingCapability a owl:Class ;
+    rdfs:label "Route-following capability"@en,
+        "Capacité de suivi de route"@fr ;
+    rdfs:comment "Capacité de suivi d'une route planifiée."@fr ;
+    rdfs:subClassOf nmo:NavigationCapability ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:SailingPlatform a owl:Class ;
+    rdfs:label "Sailing platform"@en,
+        "Plateforme à voile"@fr ;
+    rdfs:comment "Plateforme à propulsion vélique. La navigation s'y fait par rapport au vent (tirer des bords) — cas d'école d'une autonomie spécifique à la plateforme."@fr ;
+    rdfs:subClassOf nmo:SurfacePlatform ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:SamplingCapability a owl:Class ;
+    rdfs:label "Sampling capability"@en,
+        "Capacité de prélèvement"@fr ;
+    rdfs:comment "Capacité à prélever un échantillon du milieu ou du fond."@fr ;
+    rdfs:subClassOf nmo:InteractionCapability ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:SamplingSystem a owl:Class ;
+    rdfs:label "Sampling system"@en,
+        "Système de prélèvement"@fr ;
+    rdfs:comment "Système de prélèvement : échantillonne le milieu ou le fond."@fr ;
+    rdfs:subClassOf nmo:Actuator ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:SatelliteCommunication a owl:Class ;
+    rdfs:label "Satellite communication"@en,
+        "Communication satellite"@fr ;
+    rdfs:comment "Communication satellite : longue portée, en surface ou émersion."@fr ;
+    rdfs:subClassOf nmo:CommunicationCapability ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:SatellitePlatform a owl:Class ;
+    rdfs:label "Satellite platform"@en,
+        "Plateforme satellitaire"@fr ;
+    rdfs:comment "Plateforme satellitaire (observation, communication, positionnement)."@fr ;
+    rdfs:subClassOf nmo:AirPlatform ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:SatelliteTerminal a owl:Class ;
+    rdfs:label "Satellite terminal"@en,
+        "Terminal satellite"@fr ;
+    rdfs:comment "Terminal satellite : liaison longue portée, en surface ou émersion uniquement."@fr ;
+    rdfs:subClassOf nmo:CommunicationDevice ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:Seabed a owl:Class ;
+    rdfs:label "Seabed"@en,
+        "Fond marin"@fr ;
+    rdfs:comment "Substrat au fond de l'eau. Sa composition et sa texture (vase, sable, roche) sont déterminées par rétrodiffusion acoustique et gouvernent la réverbération et la détection d'objets posés."@fr ;
+    rdfs:subClassOf nmo:PhysicalMedium ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:SeabedRelief a owl:Class ;
+    rdfs:label "Seabed relief"@en,
+        "Relief du fond"@fr ;
+    rdfs:comment "Topographie du fond et profondeur. Crée masques et zones d'ombre pour la détection."@fr ;
+    rdfs:subClassOf nmo:EnvironmentalFeature ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:SedimentTransport a owl:Class ;
+    rdfs:label "Sediment transport"@en,
+        "Transport sédimentaire"@fr ;
+    rdfs:comment "Déplacement de sédiments par les courants. Modifie la turbidité, peut ensevelir progressivement les objets posés."@fr ;
+    rdfs:subClassOf nmo:EnvironmentalPhenomenon ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:SelfMonitoringCapability a owl:Class ;
+    rdfs:label "Self-monitoring capability"@en,
+        "Capacité d'auto-surveillance"@fr ;
+    rdfs:comment "Capacité d'auto-surveillance de la plateforme (état interne, ressources)."@fr ;
+    rdfs:subClassOf nmo:SupportCapability ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:Shell a owl:Class ;
+    rdfs:label "Shell"@en,
+        "Obus"@fr ;
+    rdfs:comment "Obus non explosé immergé."@fr ;
+    rdfs:subClassOf nmo:UnexplodedOrdnance ;
+    nmo:hasUsageDomain nmo:MilitaryUse .
+
+nmo:Ship a owl:Class ;
+    rdfs:label "Ship"@en,
+        "Navire"@fr ;
+    rdfs:comment "Navire : bâtiment de surface de taille significative. Classe générique — les spécialisations (combat, commerce, travaux) restent à introduire."@fr ;
+    rdfs:subClassOf nmo:SurfacePlatform ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:Warship a owl:Class ;
+    rdfs:label "Warship"@en,
+        "Bâtiment de combat"@fr ;
+    rdfs:comment "Bâtiment de surface à vocation militaire (frégate, patrouilleur, chasseur de mines, bâtiment de soutien étatique). Porte typiquement senseurs de veille et effecteurs d'armement."@fr ;
+    rdfs:subClassOf nmo:Ship ;
+    nmo:hasUsageDomain nmo:MilitaryUse .
+
+nmo:MerchantShip a owl:Class ;
+    rdfs:label "Merchant ship"@en,
+        "Navire de commerce"@fr ;
+    rdfs:comment "Navire de surface civil de transport (cargo, pétrolier, porte-conteneurs). Généralement non armé ; objet de protection ou de menace dans les scénarios d'escorte."@fr ;
+    rdfs:subClassOf nmo:Ship ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:FastAttackCraft a owl:Class ;
+    rdfs:label "Fast attack craft"@en,
+        "Vedette rapide"@fr ;
+    rdfs:comment "Petite embarcation rapide et manœuvrante, faiblement armée. Sa caractéristique physique déterminante est la vitesse ; son caractère menaçant relève d'une relation de scénario (allégeance), hors de l'ontologie."@fr ;
+    rdfs:subClassOf nmo:Ship ;
+    nmo:hasUsageDomain nmo:MilitaryUse .
+
+nmo:ShipDebris a owl:Class ;
+    rdfs:label "Ship debris"@en,
+        "Débris de navire"@fr ;
+    rdfs:comment "Débris provenant d'un navire."@fr ;
+    rdfs:subClassOf nmo:Debris ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:Shipwreck a owl:Class ;
+    rdfs:label "Shipwreck"@en,
+        "Épave de navire"@fr ;
+    rdfs:comment "Épave de navire. Repère sonar fort, abri biologique, source de fausses alarmes en chasse aux mines."@fr ;
+    rdfs:subClassOf nmo:Wreck ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:SolarPanel a owl:Class ;
+    rdfs:label "Solar panel"@en,
+        "Panneau solaire"@fr ;
+    rdfs:comment "Panneau solaire : recharge des plateformes de surface longue endurance."@fr ;
+    rdfs:subClassOf nmo:EnergyDevice ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:StationKeepingCapability a owl:Class ;
+    rdfs:label "Station-keeping capability"@en,
+        "Capacité de maintien en position"@fr ;
+    rdfs:comment "Capacité à maintenir une position fixe malgré les forçages dynamiques (courant, vent). Distincte du suivi de cible mobile (TargetFollowingCapability)."@fr ;
+    rdfs:subClassOf nmo:MobilityCapability ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:Stratification a owl:Class ;
+    rdfs:label "Stratification"@en,
+        "Stratification"@fr ;
+    rdfs:comment "Organisation de la colonne d'eau en couches de propriétés distinctes. Cadre d'ensemble des clines (thermo-, halo-, pycnocline)."@fr ;
+    rdfs:subClassOf nmo:EnvironmentalPhenomenon ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:Submarine a owl:Class ;
+    rdfs:label "Submarine"@en,
+        "Sous-marin"@fr ;
+    rdfs:comment "Sous-marin habité, à vocation essentiellement militaire (le submersible civil est MannedSubmersible)."@fr ;
+    rdfs:subClassOf nmo:UnderwaterPlatform ;
+    nmo:hasUsageDomain nmo:MilitaryUse .
+
+nmo:SubmarineCable a owl:Class ;
+    rdfs:label "Submarine cable"@en,
+        "Câble sous-marin"@fr ;
+    rdfs:comment "Câble sous-marin de télécommunication ou d'énergie."@fr ;
+    rdfs:subClassOf nmo:SubseaInfrastructure ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:SubseaManifold a owl:Class ;
+    rdfs:label "Subsea manifold"@en,
+        "Collecteur sous-marin"@fr ;
+    rdfs:comment "Collecteur sous-marin (nœud de production pétrolière/gazière)."@fr ;
+    rdfs:subClassOf nmo:SubseaInfrastructure ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:SubseaPipeline a owl:Class ;
+    rdfs:label "Subsea pipeline"@en,
+        "Pipeline sous-marin"@fr ;
+    rdfs:comment "Pipeline sous-marin."@fr ;
+    rdfs:subClassOf nmo:SubseaInfrastructure ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:SubseaStation a owl:Class ;
+    rdfs:label "Subsea station"@en,
+        "Station sous-marine"@fr ;
+    rdfs:comment "Station sous-marine posée (observatoire, nœud de recharge ou de communication)."@fr ;
+    rdfs:subClassOf nmo:SubseaInfrastructure ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:SubseaWellhead a owl:Class ;
+    rdfs:label "Subsea wellhead"@en,
+        "Tête de puits sous-marine"@fr ;
+    rdfs:comment "Tête de puits sous-marine."@fr ;
+    rdfs:subClassOf nmo:SubseaInfrastructure ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:SurfaceBuoy a owl:Class ;
+    rdfs:label "Surface buoy"@en,
+        "Bouée de surface"@fr ;
+    rdfs:comment "Bouée de surface considérée comme plateforme : porte des équipements."@fr ;
+    rdfs:subClassOf nmo:SurfacePlatform ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:SurfaceMobility a owl:Class ;
+    rdfs:label "Surface mobility"@en,
+        "Mobilité de surface"@fr ;
+    rdfs:comment "Mobilité à la surface de l'eau."@fr ;
+    rdfs:subClassOf nmo:MobilityCapability ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:SurfacingCapability a owl:Class ;
+    rdfs:label "Surfacing capability"@en,
+        "Capacité de remontée en surface"@fr ;
+    rdfs:comment "Capacité à remonter en surface. Conditionne l'accès au GNSS et aux communications radio."@fr ;
+    rdfs:subClassOf nmo:MobilityCapability ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:TargetFollowingCapability a owl:Class ;
+    rdfs:label "Target-following capability"@en,
+        "Capacité de suivi de cible mobile"@fr ;
+    rdfs:comment "Capacité de guidage relatif à une référence mobile : poursuite d'une cible, tenue de poste sur cible en mouvement. Distincte de StationKeepingCapability, qui vise le maintien d'une position fixe. Usages civils : escorte, convoyage, essais en mer."@fr ;
+    rdfs:subClassOf nmo:NavigationCapability ;
+    nmo:manifestKey "navigation.follow_target" ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:Thermocline a owl:Class ;
+    rdfs:label "Thermocline"@en,
+        "Thermocline"@fr ;
+    rdfs:comment "Couche de fort gradient de température. Induit un gradient de célérité du son qui courbe les rais acoustiques et crée des zones d'ombre sonar."@fr ;
+    rdfs:subClassOf nmo:EnvironmentalFeature ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:Tide a owl:Class ;
+    rdfs:label "Tide"@en,
+        "Marée"@fr ;
+    rdfs:comment "Variation périodique du niveau et des courants d'origine astronomique. Conditionne les fenêtres d'accès aux zones peu profondes et aux ports."@fr ;
+    rdfs:subClassOf nmo:EnvironmentalPhenomenon ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:Torpedo a owl:Class ;
+    rdfs:label "Torpedo"@en,
+        "Torpille"@fr ;
+    rdfs:comment "Torpille, considérée ici comme munition présente dans le milieu (épave d'arme, exercice perdu)."@fr ;
+    rdfs:subClassOf nmo:UnexplodedOrdnance ;
+    nmo:hasUsageDomain nmo:MilitaryUse .
+
+nmo:UncrewedAerialVehicle a owl:Class ;
+    rdfs:label "Uncrewed aerial vehicle"@en,
+        "Drone aérien"@fr ;
+    rdfs:comment "Drone aérien (UAV) : voilure fixe ou VTOL, opéré depuis la terre ou une plateforme navale."@fr ;
+    rdfs:subClassOf nmo:AirPlatform ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:UncrewedSurfaceVehicle a owl:Class ;
+    rdfs:label "Uncrewed surface vehicle"@en,
+        "Drone de surface"@fr ;
+    rdfs:comment "Drone de surface (USV) : plateforme d'appui offrant stabilité de surface, relais de communication et endurance aux opérations sous-marines."@fr ;
+    rdfs:subClassOf nmo:SurfacePlatform ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:UnderwaterGlider a owl:Class ;
+    rdfs:label "Underwater glider"@en,
+        "Planeur sous-marin"@fr ;
+    rdfs:comment "Planeur sous-marin : propulsion par variation de flottabilité, très longue endurance, faible vitesse."@fr ;
+    rdfs:subClassOf nmo:UncrewedUnderwaterVehicle ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:UnderwaterMobility a owl:Class ;
+    rdfs:label "Underwater mobility"@en,
+        "Mobilité sous-marine"@fr ;
+    rdfs:comment "Mobilité dans la colonne d'eau."@fr ;
+    rdfs:subClassOf nmo:MobilityCapability ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:UnidentifiedDebris a owl:Class ;
+    rdfs:label "Unidentified debris"@en,
+        "Débris non identifié"@fr ;
+    rdfs:comment "Débris dont l'origine n'est pas établie. Cas nominal en début de classification."@fr ;
+    rdfs:subClassOf nmo:Debris ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:VegetationMass a owl:Class ;
+    rdfs:label "Vegetation mass"@en,
+        "Masse végétale"@fr ;
+    rdfs:comment "Masse végétale (algues, herbiers). Masque visuel et acoustique des objets posés."@fr ;
+    rdfs:subClassOf nmo:NaturalObject ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:WaterColumn a owl:Class ;
+    rdfs:label "Water column"@en,
+        "Colonne d'eau"@fr ;
+    rdfs:comment "Milieu liquide entre la surface et le fond. Milieu de propagation acoustique privilégié ; ses gradients (température, salinité) gouvernent les trajets sonores."@fr ;
+    rdfs:subClassOf nmo:PhysicalMedium ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:Wave a owl:Class ;
+    rdfs:label "Wave"@en,
+        "Vague"@fr ;
+    rdfs:comment "Agitation de la surface (houle, vagues). Forçage mécanique sur les plateformes de surface et à l'interface (mise à l'eau, récupération) ; dégrade la détection radar de petits objets."@fr ;
+    rdfs:subClassOf nmo:EnvironmentalPhenomenon ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:WaypointNavigationCapability a owl:Class ;
+    rdfs:label "Waypoint navigation capability"@en,
+        "Capacité de navigation par points de passage"@fr ;
+    rdfs:comment "Capacité à rejoindre un point ou une zone désignés par une suite de points de passage."@fr ;
+    rdfs:subClassOf nmo:NavigationCapability ;
+    nmo:manifestKey "navigation.goto" ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:Wind a owl:Class ;
+    rdfs:label "Wind"@en,
+        "Vent"@fr ;
+    rdfs:comment "Action mécanique du vent sur les plateformes de surface et aériennes : dérive, gîte, limites d'emploi des drones."@fr ;
+    rdfs:subClassOf nmo:EnvironmentalPhenomenon ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:WindTurbine a owl:Class ;
+    rdfs:label "Wind turbine"@en,
+        "Éolienne"@fr ;
+    rdfs:comment "Éolienne en mer, posée ou flottante. Obstacle et source de bruit acoustique rayonné."@fr ;
+    rdfs:subClassOf nmo:OffshoreInfrastructure ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:WiredCommunication a owl:Class ;
+    rdfs:label "Wired communication"@en,
+        "Communication filaire"@fr ;
+    rdfs:comment "Communication filaire (ombilical) : déterministe et haut débit, au prix de la liberté de mouvement."@fr ;
+    rdfs:subClassOf nmo:CommunicationCapability ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:WiredCommunicationDevice a owl:Class ;
+    rdfs:label "Wired communication device"@en,
+        "Équipement de communication filaire"@fr ;
+    rdfs:comment "Équipement de communication filaire (ombilical, câble) : lien déterministe et haut débit au prix de la liberté de mouvement."@fr ;
+    rdfs:subClassOf nmo:CommunicationDevice ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:affectedByPhenomenon a owl:ObjectProperty ;
+    rdfs:label "affected by phenomenon"@en,
+        "est affecté par le phénomène"@fr ;
+    rdfs:domain nmo:PhysicalEntity ;
+    rdfs:range nmo:EnvironmentalPhenomenon .
+
+nmo:altitude a owl:DatatypeProperty ;
+    rdfs:label "altitude"@en,
+        "altitude"@fr ;
+    rdfs:domain nmo:PhysicalState ;
+    rdfs:range xsd:decimal ;
+    skos:closeMatch wgs84:alt .
+
+nmo:anchoredTo a owl:ObjectProperty ;
+    rdfs:label "anchored to"@en,
+        "est ancré à"@fr ;
+    rdfs:domain nmo:PhysicalEntity ;
+    rdfs:range nmo:PhysicalEntity .
+
+nmo:attachedTo a owl:ObjectProperty ;
+    rdfs:label "attached to"@en,
+        "est attaché à"@fr ;
+    rdfs:domain nmo:PhysicalEntity ;
+    rdfs:range nmo:PhysicalEntity .
+
+nmo:batteryLevel a owl:DatatypeProperty ;
+    rdfs:label "battery level"@en,
+        "niveau de batterie"@fr ;
+    rdfs:domain nmo:SystemState ;
+    rdfs:range xsd:decimal .
+
+nmo:buriedIn a owl:ObjectProperty ;
+    rdfs:label "buried in"@en,
+        "est enfoui dans"@fr ;
+    rdfs:domain nmo:PhysicalEntity ;
+    rdfs:range nmo:PhysicalMedium .
+
+nmo:capabilityAvailabilityLimitedBy a owl:ObjectProperty ;
+    rdfs:label "capability availability limited by"@en,
+        "disponibilité limitée par"@fr ;
+    rdfs:domain nmo:PhysicalCapability ;
+    rdfs:range nmo:PhysicalState .
+
+nmo:configurationOf a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "configuration of"@en,
+        "configuration de"@fr ;
+    rdfs:domain nmo:Configuration ;
+    rdfs:range nmo:PhysicalSystem ;
+    owl:inverseOf nmo:hasConfiguration .
+
+nmo:connectedTo a owl:ObjectProperty ;
+    rdfs:label "connected to"@en,
+        "est connecté à"@fr ;
+    rdfs:domain nmo:PhysicalEntity ;
+    rdfs:range nmo:PhysicalEntity .
+
+nmo:containsPhysicalEntity a owl:ObjectProperty ;
+    rdfs:label "contains physical entity"@en,
+        "contient l'entité physique"@fr ;
+    rdfs:domain nmo:SpatialRegion ;
+    rdfs:range nmo:PhysicalEntity ;
+    owl:inverseOf nmo:locatedIn .
+
+nmo:contributesToCapability a owl:ObjectProperty ;
+    rdfs:label "contributes to capability"@en,
+        "contribue à la capacité"@fr ;
+    rdfs:domain nmo:Equipment ;
+    rdfs:range nmo:PhysicalCapability .
+
+nmo:depth a owl:DatatypeProperty ;
+    rdfs:label "depth"@en,
+        "profondeur"@fr ;
+    rdfs:domain nmo:PhysicalState ;
+    rdfs:range xsd:decimal .
+
+nmo:enablesCapability a owl:ObjectProperty ;
+    rdfs:label "enables capability"@en,
+        "active la capacité"@fr ;
+    rdfs:domain nmo:Configuration ;
+    rdfs:range nmo:PhysicalCapability .
+
+nmo:floatingOn a owl:ObjectProperty ;
+    rdfs:label "floating on"@en,
+        "flotte sur"@fr ;
+    rdfs:domain nmo:PhysicalEntity ;
+    rdfs:range nmo:WaterVolume .
+
+nmo:hasAvailableCapability a owl:ObjectProperty ;
+    rdfs:label "has available capability"@en,
+        "a pour capacité disponible"@fr ;
+    rdfs:domain nmo:PhysicalSystem ;
+    rdfs:range nmo:PhysicalCapability .
+
+nmo:hasEnvironmentalFeature a owl:ObjectProperty ;
+    rdfs:label "has environmental feature"@en,
+        "a pour caractéristique environnementale"@fr ;
+    rdfs:domain nmo:SpatialRegion ;
+    rdfs:range nmo:EnvironmentalFeature .
+
+nmo:hasEnvironmentalState a owl:ObjectProperty ;
+    rdfs:label "has environmental state"@en,
+        "a pour état environnemental"@fr ;
+    rdfs:domain nmo:PhysicalMedium ;
+    rdfs:range nmo:EnvironmentalState .
+
+nmo:hasMedium a owl:ObjectProperty ;
+    rdfs:label "has medium"@en,
+        "a pour milieu"@fr ;
+    rdfs:domain nmo:SpatialRegion ;
+    rdfs:range nmo:PhysicalMedium .
+
+nmo:hasPotentialCapability a owl:ObjectProperty ;
+    rdfs:label "has potential capability"@en,
+        "a pour capacité potentielle"@fr ;
+    rdfs:domain nmo:SystemModel ;
+    rdfs:range nmo:PhysicalCapability .
+
+nmo:hasPropertyValue a owl:ObjectProperty ;
+    rdfs:label "has property value"@en,
+        "a pour valeur de propriété"@fr ;
+    rdfs:domain nmo:PhysicalState ;
+    rdfs:range nmo:PropertyValue .
+
+nmo:hasSystemModel a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "has system model"@en,
+        "a pour modèle de système"@fr ;
+    rdfs:domain nmo:PhysicalSystem ;
+    rdfs:range nmo:SystemModel .
+
+nmo:hasUsageDomain a owl:ObjectProperty ;
+    rdfs:label "has usage domain"@en,
+        "a pour domaine d'usage"@fr ;
+    rdfs:range nmo:UsageDomain .
+
+nmo:heading a owl:DatatypeProperty ;
+    rdfs:label "heading"@en,
+        "cap"@fr ;
+    rdfs:domain nmo:PhysicalState ;
+    rdfs:range xsd:decimal .
+
+nmo:historicalPeriod a owl:DatatypeProperty ;
+    rdfs:label "historical period"@en,
+        "période historique"@fr ;
+    rdfs:domain nmo:PhysicalObject ;
+    rdfs:range xsd:string .
+
+nmo:identifier a owl:DatatypeProperty ;
+    rdfs:label "identifier"@en,
+        "identifiant"@fr ;
+    rdfs:domain nmo:PhysicalEntity ;
+    rdfs:range xsd:string .
+
+nmo:includesEquipment a owl:ObjectProperty ;
+    rdfs:label "includes equipment"@en,
+        "inclut l'équipement"@fr ;
+    rdfs:domain nmo:Configuration ;
+    rdfs:range nmo:Equipment .
+
+nmo:installedAsPayload a owl:ObjectProperty ;
+    rdfs:label "installed as payload"@en,
+        "est installé comme charge utile dans"@fr ;
+    rdfs:domain nmo:Equipment ;
+    rdfs:range nmo:Configuration .
+
+nmo:installedOn a owl:ObjectProperty ;
+    rdfs:label "installed on"@en,
+        "est installé sur"@fr ;
+    rdfs:domain nmo:Equipment ;
+    rdfs:range nmo:PhysicalSystem .
+
+nmo:integrityStatus a owl:DatatypeProperty ;
+    rdfs:label "integrity status"@en,
+        "état d'intégrité"@fr ;
+    rdfs:domain nmo:SystemState ;
+    rdfs:range xsd:string .
+
+nmo:laidOn a owl:ObjectProperty ;
+    rdfs:label "laid on"@en,
+        "est posé sur"@fr ;
+    rdfs:domain nmo:PhysicalEntity ;
+    rdfs:range nmo:SeabedArea .
+
+nmo:latitude a owl:DatatypeProperty ;
+    rdfs:label "latitude"@en,
+        "latitude"@fr ;
+    rdfs:domain nmo:PhysicalState ;
+    rdfs:range xsd:decimal ;
+    skos:closeMatch wgs84:lat .
+
+nmo:longitude a owl:DatatypeProperty ;
+    rdfs:label "longitude"@en,
+        "longitude"@fr ;
+    rdfs:domain nmo:PhysicalState ;
+    rdfs:range xsd:decimal ;
+    skos:closeMatch wgs84:long .
+
+nmo:manifestKey a owl:AnnotationProperty ;
+    rdfs:label "manifest key"@en,
+        "clé de manifeste"@fr ;
+    rdfs:comment "Identifiant normatif de famille d'actions typées dans les manifestes de capacités (contrat supervision-guidage, LSGA v3 §4.3). Notation pointée famille.action. Les manifestes des autonomies référencent ces clés définies par l'ontologie ; ils n'en créent jamais."@fr ;
+    rdfs:range xsd:string .
+
+nmo:mooredTo a owl:ObjectProperty ;
+    rdfs:label "moored to"@en,
+        "est amarré à"@fr ;
+    rdfs:domain nmo:PhysicalEntity ;
+    rdfs:range nmo:PhysicalEntity .
+
+nmo:numericValue a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "numeric value"@en,
+        "valeur numérique"@fr ;
+    rdfs:domain nmo:PropertyValue ;
+    rdfs:range xsd:decimal .
+
+nmo:operationalStatus a owl:DatatypeProperty ;
+    rdfs:label "operational status"@en,
+        "statut opérationnel"@fr ;
+    rdfs:domain nmo:SystemState ;
+    rdfs:range xsd:string .
+
+nmo:poweredBy a owl:ObjectProperty ;
+    rdfs:label "powered by"@en,
+        "est alimenté par"@fr ;
+    rdfs:domain nmo:PhysicalSystem ;
+    rdfs:range nmo:EnergyDevice .
+
+nmo:pressure a owl:DatatypeProperty ;
+    rdfs:label "pressure"@en,
+        "pression"@fr ;
+    rdfs:domain nmo:EnvironmentalState ;
+    rdfs:range xsd:decimal .
+
+nmo:salinity a owl:DatatypeProperty ;
+    rdfs:label "salinity"@en,
+        "salinité"@fr ;
+    rdfs:domain nmo:EnvironmentalState ;
+    rdfs:range xsd:decimal .
+
+nmo:seaStateCode a owl:DatatypeProperty ;
+    rdfs:label "sea-state code"@en,
+        "code d'état de mer"@fr ;
+    rdfs:domain nmo:EnvironmentalState ;
+    rdfs:range xsd:integer .
+
+nmo:speed a owl:DatatypeProperty ;
+    rdfs:label "speed"@en,
+        "vitesse"@fr ;
+    rdfs:domain nmo:PhysicalState ;
+    rdfs:range xsd:decimal .
+
+nmo:stateOf a owl:ObjectProperty ;
+    rdfs:label "state of"@en,
+        "état de"@fr ;
+    rdfs:domain nmo:PhysicalState ;
+    rdfs:range nmo:PhysicalEntity ;
+    owl:inverseOf nmo:hasState .
+
+nmo:submergedIn a owl:ObjectProperty ;
+    rdfs:label "submerged in"@en,
+        "est immergé dans"@fr ;
+    rdfs:domain nmo:PhysicalEntity ;
+    rdfs:range nmo:WaterVolume .
+
+nmo:temperature a owl:DatatypeProperty ;
+    rdfs:label "temperature"@en,
+        "température"@fr ;
+    rdfs:domain nmo:EnvironmentalState ;
+    rdfs:range xsd:decimal .
+
+nmo:textValue a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "text value"@en,
+        "valeur textuelle"@fr ;
+    rdfs:domain nmo:PropertyValue ;
+    rdfs:range xsd:string .
+
+nmo:turbidity a owl:DatatypeProperty ;
+    rdfs:label "turbidity"@en,
+        "turbidité"@fr ;
+    rdfs:domain nmo:EnvironmentalState ;
+    rdfs:range xsd:decimal .
+
+nmo:unitSymbol a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "unit symbol"@en,
+        "symbole d'unité"@fr ;
+    rdfs:domain nmo:PropertyValue ;
+    rdfs:range xsd:string .
+
+nmo:validAtTime a owl:DatatypeProperty ;
+    rdfs:label "valid at time"@en,
+        "valide à l'instant"@fr ;
+    rdfs:domain nmo:PhysicalState ;
+    rdfs:range xsd:dateTime .
+
+nmo:valueForProperty a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "value for property"@en,
+        "valeur de la propriété"@fr ;
+    rdfs:domain nmo:PropertyValue ;
+    rdfs:range nmo:PhysicalProperty .
+
+nmo:visibilityRange a owl:DatatypeProperty ;
+    rdfs:label "visibility range"@en,
+        "portée de visibilité"@fr ;
+    rdfs:domain nmo:EnvironmentalState ;
+    rdfs:range xsd:decimal .
+
+nmo:FieldSensor a owl:Class ;
+    rdfs:label "Field sensor"@en,
+        "Senseur de champ"@fr ;
+    rdfs:comment "Senseur de champ (magnétique, électrique). Détecte les perturbations locales du champ terrestre causées par les masses métalliques."@fr ;
+    rdfs:subClassOf nmo:Sensor ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:Infrastructure a owl:Class ;
+    rdfs:label "Infrastructure"@en,
+        "Infrastructure"@fr ;
+    rdfs:comment "Système physique fixe et permanent, support d'activités. Ne se déplace pas mais peut porter des équipements."@fr ;
+    rdfs:subClassOf nmo:PhysicalSystem ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:SeabedArea a owl:Class ;
+    rdfs:label "Seabed area"@en,
+        "Zone de fond marin"@fr ;
+    rdfs:comment "Zone délimitée du fond marin (emprise 2D sur le fond)."@fr ;
+    rdfs:subClassOf nmo:SpatialRegion ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:StorageDevice a owl:Class ;
+    rdfs:label "Storage device"@en,
+        "Équipement de stockage"@fr ;
+    rdfs:comment "Équipement de stockage embarqué."@fr ;
+    rdfs:subClassOf nmo:Equipment ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:hasConfiguration a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "has configuration"@en,
+        "a pour configuration"@fr ;
+    rdfs:domain nmo:PhysicalSystem ;
+    rdfs:range nmo:Configuration .
+
+nmo:hasPhysicalPart a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "has physical part"@en,
+        "a pour partie physique"@fr ;
+    rdfs:domain nmo:PhysicalSystem ;
+    rdfs:range nmo:PhysicalEntity ;
+    owl:inverseOf nmo:isPhysicalPartOf .
+
+nmo:hasState a owl:ObjectProperty ;
+    rdfs:label "has state"@en,
+        "a pour état"@fr ;
+    rdfs:domain nmo:PhysicalEntity ;
+    rdfs:range nmo:PhysicalState .
+
+nmo:isPhysicalPartOf a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "is physical part of"@en,
+        "est une partie physique de"@fr ;
+    rdfs:domain nmo:PhysicalEntity ;
+    rdfs:range nmo:PhysicalSystem ;
+    owl:inverseOf nmo:hasPhysicalPart .
+
+nmo:locatedIn a owl:ObjectProperty ;
+    rdfs:label "located in"@en,
+        "est localisé dans"@fr ;
+    rdfs:domain nmo:PhysicalEntity ;
+    rdfs:range nmo:SpatialRegion .
+
+nmo:MaritimeEnvironmentEntity a owl:Class ;
+    rdfs:label "Maritime environment entity"@en,
+        "Entité environnementale maritime"@fr ;
+    rdfs:comment "Racine des entités environnementales maritimes : caractéristiques (features) et phénomènes."@fr ;
+    rdfs:subClassOf nmo:PhysicalEntity ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:PhysicalProperty a owl:Class ;
+    rdfs:label "Physical property"@en,
+        "Propriété physique"@fr ;
+    rdfs:comment "Caractéristique physique mesurable d'une entité. Alignée sur sosa:ObservableProperty."@fr ;
+    nmo:hasUsageDomain nmo:CivilUse ;
+    skos:closeMatch sosa:ObservableProperty .
+
+nmo:RadioFrequencySensor a owl:Class ;
+    rdfs:label "Radio-frequency sensor"@en,
+        "Senseur radioélectrique"@fr ;
+    rdfs:comment "Senseur radioélectrique. Les ondes radio ne pénètrent pratiquement pas l'eau de mer : usage limité à la surface et à l'air."@fr ;
+    rdfs:subClassOf nmo:Sensor ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:SystemModel a owl:Class ;
+    rdfs:label "System model"@en,
+        "Modèle de système"@fr ;
+    rdfs:comment "Modèle (type constructeur) d'un système : porte les capacités potentielles, que la configuration et l'état rendent — ou non — disponibles."@fr ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:WaterVolume a owl:Class ;
+    rdfs:label "Water volume"@en,
+        "Volume d'eau"@fr ;
+    rdfs:comment "Volume d'eau délimité en trois dimensions dans la colonne d'eau."@fr ;
+    rdfs:subClassOf nmo:SpatialRegion ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:Debris a owl:Class ;
+    rdfs:label "Debris"@en,
+        "Débris"@fr ;
+    rdfs:comment "Débris ou objet perdu, posé ou dérivant. Générateur de fausses alarmes en détection."@fr ;
+    rdfs:subClassOf nmo:PhysicalObject ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:EnvironmentalSensor a owl:Class ;
+    rdfs:label "Environmental sensor"@en,
+        "Senseur environnemental"@fr ;
+    rdfs:comment "Senseur mesurant les propriétés du milieu (colonne d'eau, météo-océano)."@fr ;
+    rdfs:subClassOf nmo:Sensor ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:ExplosiveObject a owl:Class ;
+    rdfs:label "Explosive object"@en,
+        "Objet explosif"@fr ;
+    rdfs:comment "Objet contenant une charge explosive. Couvre les usages militaires (mines, munitions) et civils (démolition sous-marine)."@fr ;
+    rdfs:subClassOf nmo:HazardousObject ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:FixedPlatform a owl:Class ;
+    rdfs:label "Fixed platform"@en,
+        "Plateforme fixe"@fr ;
+    rdfs:comment "Plateforme fixe : porteur immobile d'équipements (station, bouée instrumentée)."@fr ;
+    rdfs:subClassOf nmo:Platform ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:HazardousObject a owl:Class ;
+    rdfs:label "Hazardous object"@en,
+        "Objet dangereux"@fr ;
+    rdfs:comment "Objet présentant un danger intrinsèque (chimique, radioactif, explosif) indépendamment de toute intention."@fr ;
+    rdfs:subClassOf nmo:PhysicalObject ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:OffshoreInfrastructure a owl:Class ;
+    rdfs:label "Offshore infrastructure"@en,
+        "Infrastructure offshore"@fr ;
+    rdfs:comment "Infrastructure en mer ouverte (plateforme, éolienne, aquaculture)."@fr ;
+    rdfs:subClassOf nmo:MaritimeInfrastructure ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:OpticalSensor a owl:Class ;
+    rdfs:label "Optical sensor"@en,
+        "Senseur optique"@fr ;
+    rdfs:comment "Senseur optique. Portée fortement dégradée par la turbidité de l'eau ; usage sous-marin à courte distance seulement."@fr ;
+    rdfs:subClassOf nmo:Sensor ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:SystemState a owl:Class ;
+    rdfs:label "System state"@en,
+        "État système"@fr ;
+    rdfs:comment "État courant d'un système physique à un instant donné (statut opérationnel, ressources). Côté LSGA : fluents de l'état initial du Problem HDDL, re-capturés au replan."@fr ;
+    rdfs:subClassOf nmo:PhysicalState ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:UncrewedUnderwaterVehicle a owl:Class ;
+    rdfs:label "Uncrewed underwater vehicle"@en,
+        "Drone sous-marin"@fr ;
+    rdfs:comment "Drone sous-marin (UUV) : véhicule sous-marin sans équipage, regroupant AUV, ROV et planeurs."@fr ;
+    rdfs:subClassOf nmo:UnderwaterPlatform ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:UnderwaterPlatform a owl:Class ;
+    rdfs:label "Underwater platform"@en,
+        "Plateforme sous-marine"@fr ;
+    rdfs:comment "Plateforme évoluant dans la colonne d'eau."@fr ;
+    rdfs:subClassOf nmo:Platform ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:UnexplodedOrdnance a owl:Class ;
+    rdfs:label "Unexploded ordnance"@en,
+        "Munition non explosée"@fr ;
+    rdfs:comment "Munition non explosée (UXO) immergée, détectable notamment par perturbation magnétique."@fr ;
+    rdfs:subClassOf nmo:ExplosiveObject ;
+    nmo:hasUsageDomain nmo:MilitaryUse .
+
+nmo:Wreck a owl:Class ;
+    rdfs:label "Wreck"@en,
+        "Épave"@fr ;
+    rdfs:comment "Épave : vestige immergé d'une plateforme ou d'un équipement. Objet passif — une fois coulée, une plateforme ne porte plus et n'agit plus."@fr ;
+    rdfs:subClassOf nmo:PhysicalObject ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:ComputingDevice a owl:Class ;
+    rdfs:label "Computing device"@en,
+        "Équipement de calcul"@fr ;
+    rdfs:comment "Équipement de calcul embarqué."@fr ;
+    rdfs:subClassOf nmo:Equipment ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:MaritimeInfrastructure a owl:Class ;
+    rdfs:label "Maritime infrastructure"@en,
+        "Infrastructure maritime"@fr ;
+    rdfs:comment "Infrastructure liée au milieu maritime (côtière, offshore, sous-marine, de navigation)."@fr ;
+    rdfs:subClassOf nmo:Infrastructure ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:NavalMine a owl:Class ;
+    rdfs:label "Naval mine"@en,
+        "Mine navale"@fr ;
+    rdfs:comment "Mine navale : engin explosif déposé volontairement dans le milieu. Passive une fois posée."@fr ;
+    rdfs:subClassOf nmo:ExplosiveObject ;
+    nmo:hasUsageDomain nmo:MilitaryUse .
+
+nmo:UsageDomain a owl:Class ;
+    rdfs:label "Usage domain"@en,
+        "Domaine d'usage"@fr ;
+    rdfs:comment "Domaine d'usage d'un concept au regard de la diffusabilité : civil (librement diffusable), dual-use, militaire (hors diffusion publique). Support du filtrage des exports."@fr ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:AcousticSensor a owl:Class ;
+    rdfs:label "Acoustic sensor"@en,
+        "Senseur acoustique"@fr ;
+    rdfs:comment "Senseur exploitant la propagation acoustique — le canal privilégié sous l'eau, où les ondes radio et optiques portent peu."@fr ;
+    rdfs:subClassOf nmo:Sensor ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:AirPlatform a owl:Class ;
+    rdfs:label "Air platform"@en,
+        "Plateforme aérienne"@fr ;
+    rdfs:comment "Plateforme évoluant dans l'atmosphère (ou au-delà pour les satellites)."@fr ;
+    rdfs:subClassOf nmo:Platform ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:CoastalInfrastructure a owl:Class ;
+    rdfs:label "Coastal infrastructure"@en,
+        "Infrastructure côtière"@fr ;
+    rdfs:comment "Infrastructure côtière (ouvrages portuaires et de protection)."@fr ;
+    rdfs:subClassOf nmo:MaritimeInfrastructure ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:CommunicationCapability a owl:Class ;
+    rdfs:label "Communication capability"@en,
+        "Capacité de communication"@fr ;
+    rdfs:comment "Capacité à échanger de l'information avec d'autres systèmes."@fr ;
+    rdfs:subClassOf nmo:PhysicalCapability ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:Configuration a owl:Class ;
+    rdfs:label "Configuration"@en,
+        "Configuration"@fr ;
+    rdfs:comment "Organisation physique effective des composants d'un système."@fr ;
+    owl:disjointWith nmo:PhysicalState ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:NaturalObject a owl:Class ;
+    rdfs:label "Natural object"@en,
+        "Objet naturel"@fr ;
+    rdfs:comment "Objet passif d'origine naturelle présent dans le milieu."@fr ;
+    rdfs:subClassOf nmo:PhysicalObject ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:NavigationCapability a owl:Class ;
+    rdfs:label "Navigation capability"@en,
+        "Capacité de navigation"@fr ;
+    rdfs:comment "Capacité de conduite du déplacement : savoir où l'on est et rejoindre où l'on va."@fr ;
+    rdfs:subClassOf nmo:PhysicalCapability ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:NavigationInfrastructure a owl:Class ;
+    rdfs:label "Navigation infrastructure"@en,
+        "Infrastructure de navigation"@fr ;
+    rdfs:comment "Aide à la navigation passive : balise, bouée, marque, phare."@fr ;
+    rdfs:subClassOf nmo:MaritimeInfrastructure ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:Platform a owl:Class ;
+    rdfs:label "Platform"@en,
+        "Plateforme"@fr ;
+    rdfs:comment "Système physique servant de porteur à des équipements."@fr ;
+    rdfs:subClassOf nmo:PhysicalSystem ;
+    nmo:hasUsageDomain nmo:CivilUse ;
+    rdfs:subClassOf sosa:Platform .
+
+nmo:PropertyValue a owl:Class ;
+    rdfs:label "Property value"@en,
+        "Valeur de propriété"@fr ;
+    rdfs:comment "Valeur datée d'une propriété pour une entité (patron de réification propriété-valeur)."@fr ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:SubseaInfrastructure a owl:Class ;
+    rdfs:label "Subsea infrastructure"@en,
+        "Infrastructure sous-marine"@fr ;
+    rdfs:comment "Infrastructure posée sur le fond ou ensouillée (câbles, pipelines, têtes de puits). Cible typique d'inspection."@fr ;
+    rdfs:subClassOf nmo:MaritimeInfrastructure ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:SurfacePlatform a owl:Class ;
+    rdfs:label "Surface platform"@en,
+        "Plateforme de surface"@fr ;
+    rdfs:comment "Plateforme évoluant à la surface de l'eau."@fr ;
+    rdfs:subClassOf nmo:Platform ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:CommunicationDevice a owl:Class ;
+    rdfs:label "Communication device"@en,
+        "Équipement de communication"@fr ;
+    rdfs:comment "Équipement de communication : transmet de l'information entre plateformes ou vers l'infrastructure."@fr ;
+    rdfs:subClassOf nmo:Equipment ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:EnergyDevice a owl:Class ;
+    rdfs:label "Energy device"@en,
+        "Équipement énergétique"@fr ;
+    rdfs:comment "Équipement énergétique : produit, stocke ou distribue l'énergie de la plateforme."@fr ;
+    rdfs:subClassOf nmo:Equipment ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:EnvironmentalFeature a owl:Class ;
+    rdfs:label "Environmental feature"@en,
+        "Caractéristique environnementale"@fr ;
+    rdfs:comment "Caractéristique structurelle du milieu, quasi statique à l'échelle d'un scénario (thermocline, relief, glace)."@fr ;
+    rdfs:subClassOf nmo:MaritimeEnvironmentEntity ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:InteractionCapability a owl:Class ;
+    rdfs:label "Interaction capability"@en,
+        "Capacité d'interaction"@fr ;
+    rdfs:comment "Capacité à agir physiquement sur un objet du monde."@fr ;
+    rdfs:subClassOf nmo:PhysicalCapability ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:NavigationSensor a owl:Class ;
+    rdfs:label "Navigation sensor"@en,
+        "Senseur de navigation"@fr ;
+    rdfs:comment "Senseur de navigation : fournit position, cap, vitesse ou profondeur à la plateforme porteuse."@fr ;
+    rdfs:subClassOf nmo:Sensor ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:PhysicalMedium a owl:Class ;
+    rdfs:label "Physical medium"@en,
+        "Milieu physique"@fr ;
+    rdfs:comment "Milieu physique de propagation et d'évolution (atmosphère, colonne d'eau, fond). Détermine quels senseurs et quelles communications sont opérants."@fr ;
+    rdfs:subClassOf nmo:PhysicalEntity ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:SupportCapability a owl:Class ;
+    rdfs:label "Support capability"@en,
+        "Capacité de soutien"@fr ;
+    rdfs:comment "Capacité de soutien interne à la plateforme (énergie, calcul, stockage, emport)."@fr ;
+    rdfs:subClassOf nmo:PhysicalCapability ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:ArtificialObject a owl:Class ;
+    rdfs:label "Artificial object"@en,
+        "Objet artificiel"@fr ;
+    rdfs:comment "Objet passif d'origine humaine : ne porte rien, n'agit pas, est perçu ou subi."@fr ;
+    rdfs:subClassOf nmo:PhysicalObject ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:EnvironmentalPhenomenon a owl:Class ;
+    rdfs:label "Environmental phenomenon"@en,
+        "Phénomène environnemental"@fr ;
+    rdfs:comment "Phénomène dynamique du milieu exerçant un forçage sur les plateformes (courant, vague, vent, marée)."@fr ;
+    rdfs:subClassOf nmo:MaritimeEnvironmentEntity ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:EnvironmentalState a owl:Class ;
+    rdfs:label "Environmental state"@en,
+        "État environnemental"@fr ;
+    rdfs:comment "État courant du milieu à un instant donné (conditions météo-océano en vigueur)."@fr ;
+    rdfs:subClassOf nmo:PhysicalState ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:PerceptionCapability a owl:Class ;
+    rdfs:label "Perception capability"@en,
+        "Capacité de perception"@fr ;
+    rdfs:comment "Capacité à percevoir le monde au travers de senseurs."@fr ;
+    rdfs:subClassOf nmo:PhysicalCapability ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:PhysicalObject a owl:Class ;
+    rdfs:label "Physical object"@en,
+        "Objet physique"@fr ;
+    rdfs:comment "Entité matérielle considérée principalement comme un objet, sans exigence de composition fonctionnelle."@fr ;
+    rdfs:subClassOf nmo:PhysicalEntity ;
+    nmo:hasUsageDomain nmo:CivilUse ;
+    skos:closeMatch sosa:FeatureOfInterest .
+
+nmo:Sensor a owl:Class ;
+    rdfs:label "Sensor"@en,
+        "Senseur"@fr ;
+    rdfs:comment "Dispositif physique réalisant une observation d'une propriété du monde. Aligné sur sosa:Sensor."@fr ;
+    rdfs:subClassOf nmo:Equipment ;
+    nmo:hasUsageDomain nmo:CivilUse ;
+    rdfs:subClassOf sosa:Sensor .
+
+nmo:Actuator a owl:Class ;
+    rdfs:label "Actuator"@en,
+        "Actionneur"@fr ;
+    rdfs:comment "Dispositif physique d'action : modifie l'état de sa plateforme, manipule un objet ou met en œuvre un équipement. Aligné sur sosa:Actuator."@fr ;
+    rdfs:subClassOf nmo:Equipment ;
+    nmo:hasUsageDomain nmo:CivilUse ;
+    rdfs:subClassOf sosa:Actuator .
+
+nmo:WeaponSystem a owl:Class ;
+    rdfs:label "Weapon system"@en,
+        "Système d'arme"@fr ;
+    rdfs:comment "Effecteur d'armement porté par une plateforme : met en œuvre l'engagement d'une cible désignée. Porte la capacité d'engagement (EngagementCapability). L'ontologie décrit l'effecteur physique ; le résultat d'un engagement est adjugé côté exécution (cellule blanche) en première version LSGA."@fr ;
+    rdfs:subClassOf nmo:Actuator ;
+    nmo:enablesCapability nmo:EngagementCapability ;
+    nmo:hasUsageDomain nmo:MilitaryUse .
+
+nmo:GunSystem a owl:Class ;
+    rdfs:label "Gun system"@en,
+        "Système d'artillerie"@fr ;
+    rdfs:comment "Artillerie navale : arme à tir tendu et cadence élevée, portée courte à moyenne. Effecteur d'engagement de cibles proches (surface, air rapproché)."@fr ;
+    rdfs:subClassOf nmo:WeaponSystem ;
+    nmo:hasUsageDomain nmo:MilitaryUse .
+
+nmo:MissileSystem a owl:Class ;
+    rdfs:label "Missile system"@en,
+        "Système de missiles"@fr ;
+    rdfs:comment "Système de missiles embarqués : effecteur d'engagement de cibles à moyenne ou longue portée."@fr ;
+    rdfs:subClassOf nmo:WeaponSystem ;
+    nmo:hasUsageDomain nmo:MilitaryUse .
+
+nmo:MobilityCapability a owl:Class ;
+    rdfs:label "Mobility capability"@en,
+        "Capacité de mobilité"@fr ;
+    rdfs:comment "Capacité à se déplacer dans un milieu."@fr ;
+    rdfs:subClassOf nmo:PhysicalCapability ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:Equipment a owl:Class ;
+    rdfs:label "Equipment"@en,
+        "Équipement"@fr ;
+    rdfs:comment "Système physique porté par une plateforme : senseur, actionneur, communication, calcul, énergie, stockage. Ne se déplace pas par lui-même — c'est le porteur qui bouge."@fr ;
+    rdfs:subClassOf nmo:PhysicalSystem ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:PhysicalSystem a owl:Class ;
+    rdfs:label "Physical system"@en,
+        "Système physique"@fr ;
+    rdfs:comment "Entité physique composée de parties organisées remplissant une ou plusieurs fonctions."@fr ;
+    rdfs:subClassOf nmo:PhysicalEntity ;
+    owl:disjointWith nmo:PhysicalObject ;
+    nmo:hasUsageDomain nmo:CivilUse ;
+    skos:closeMatch ssn:System .
+
+nmo:PhysicalCapability a owl:Class ;
+    rdfs:label "Physical capability"@en,
+        "Capacité physique"@fr ;
+    rdfs:comment "Fonction qu'un système physique est susceptible de fournir selon son type, sa configuration et son état."@fr ;
+    owl:disjointWith nmo:PhysicalProperty ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:SpatialRegion a owl:Class ;
+    rdfs:label "Spatial region"@en,
+        "Région spatiale"@fr ;
+    rdfs:comment "Emprise spatiale (le « où »). Support de la géométrie, alignée sur geo:Feature (GeoSPARQL). Vocabulaire des zones du schéma de scénario."@fr ;
+    nmo:hasUsageDomain nmo:CivilUse ;
+    rdfs:subClassOf geo:Feature .
+
+nmo:PhysicalState a owl:Class ;
+    rdfs:label "Physical state"@en,
+        "État physique"@fr ;
+    rdfs:comment "État instantané d'une entité physique."@fr ;
+    owl:disjointWith nmo:PhysicalCapability ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:PhysicalEntity a owl:Class ;
+    rdfs:label "Physical entity"@en,
+        "Entité physique"@fr ;
+    rdfs:comment "Toute entité ayant une existence physique dans le monde simulé."@fr ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
