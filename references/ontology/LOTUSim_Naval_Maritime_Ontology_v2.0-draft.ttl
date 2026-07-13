@@ -16,11 +16,11 @@
     dct:title "LOTUSim Naval Maritime Ontology"@en ;
     dct:creator "Estelle Chauveau (Naval Group, PO LOTUSim)" ;
     dct:publisher "Naval Group" ;
-    dct:modified "2026-07-12"^^xsd:date ;
+    dct:modified "2026-07-13"^^xsd:date ;
     # dct:license : à renseigner après validation juridique (Nathalie, NGSA) — EPL-2.0 comme le repo, ou licence dédiée type CC-BY-4.0
     rdfs:comment "Ontologie de référence décrivant le monde naval physique simulable à un instant donné. Elle exclut les missions, objectifs, tâches, rôles opérationnels, observations, événements, doctrine et planification."@fr,
         "Vocabulaire normatif de LOTUSim : les types du profil HDDL, le vocabulaire du schéma de scénario (agents, zones) et les familles des manifestes de capacités (nmo:manifestKey) en dérivent. Chaque classe porte une annotation de diffusabilité (nmo:hasUsageDomain : civil / dual-use / militaire) conditionnant sa présence dans les exports publics."@fr ;
-    owl:versionInfo "1.1.0-draft" .
+    owl:versionInfo "2.0.0-draft" .
 
 nmo:AIAccelerator a owl:Class ;
     rdfs:label "AI accelerator"@en,
@@ -2031,4 +2031,211 @@ nmo:PhysicalEntity a owl:Class ;
         "Entité physique"@fr ;
     rdfs:comment "Toute entité ayant une existence physique dans le monde simulé."@fr ;
     nmo:hasUsageDomain nmo:CivilUse .
+
+#################################################################
+# Controlled additions for reference-model consolidation
+# Only concepts explicitly validated during Mission/Task Catalog work
+#################################################################
+
+nmo:EntityGroup a owl:Class ;
+    rdfs:label "Entity group"@en,
+        "Groupe d'entités"@fr ;
+    rdfs:comment "Aggregate of entities considered together for a stable structural purpose. Operational group roles remain in the Scenario Model."@en ;
+    rdfs:subClassOf nmo:Entity ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:PlatformGroup a owl:Class ;
+    rdfs:label "Platform group"@en,
+        "Groupe de plateformes"@fr ;
+    rdfs:comment "Collection of platforms considered as one aggregate. Convoy, task group, swarm and escort group are scenario roles, not ontology subclasses."@en ;
+    rdfs:subClassOf nmo:EntityGroup ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:hasMember a owl:ObjectProperty ;
+    rdfs:label "has member"@en,
+        "a pour membre"@fr ;
+    rdfs:domain nmo:EntityGroup ;
+    rdfs:range nmo:Entity .
+
+nmo:Route a owl:Class ;
+    rdfs:label "Route"@en,
+        "Route"@fr ;
+    rdfs:comment "Ordered spatial path used to organize movement between locations."@en ;
+    rdfs:subClassOf nmo:SpatialRegion ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:Corridor a owl:Class ;
+    rdfs:label "Corridor"@en,
+        "Corridor"@fr ;
+    rdfs:comment "Bounded spatial passage through which movement or an operation may be organized."@en ;
+    rdfs:subClassOf nmo:SpatialRegion ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:Person a owl:Class ;
+    rdfs:label "Person"@en,
+        "Personne"@fr ;
+    rdfs:comment "Human physical entity represented in a maritime scenario."@en ;
+    rdfs:subClassOf nmo:PhysicalEntity ;
+    nmo:hasUsageDomain nmo:CivilUse .
+
+nmo:PersonnelGroup a owl:Class ;
+    rdfs:label "Personnel group"@en,
+        "Groupe de personnel"@fr ;
+    rdfs:comment "Collection of persons considered as one structural aggregate."@en ;
+    rdfs:subClassOf nmo:EntityGroup ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:Payload a owl:Class ;
+    rdfs:label "Payload"@en,
+        "Charge utile"@fr ;
+    rdfs:comment "Equipment or material carried by a platform for an operational purpose."@en ;
+    rdfs:subClassOf nmo:PhysicalObject ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:MilitaryPayload a owl:Class ;
+    rdfs:label "Military payload"@en,
+        "Charge utile militaire"@fr ;
+    rdfs:comment "Payload specifically designed for a military operational purpose."@en ;
+    rdfs:subClassOf nmo:Payload ;
+    nmo:hasUsageDomain nmo:MilitaryUse .
+
+nmo:Materiel a owl:Class ;
+    rdfs:label "Materiel"@en,
+        "Matériel"@fr ;
+    rdfs:comment "Physical supplies, equipment or goods transported, transferred or consumed in support activities."@en ;
+    rdfs:subClassOf nmo:PhysicalObject ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:Decoy a owl:Class ;
+    rdfs:label "Decoy"@en,
+        "Leurre"@fr ;
+    rdfs:comment "Physical object designed to create a deceptive signature or apparent target."@en ;
+    rdfs:subClassOf nmo:PhysicalObject ;
+    nmo:hasUsageDomain nmo:MilitaryUse .
+
+nmo:CommunicationLink a owl:Class ;
+    rdfs:label "Communication link"@en,
+        "Liaison de communication"@fr ;
+    rdfs:comment "Technical communication connection between two or more communicating entities."@en ;
+    rdfs:subClassOf nmo:PhysicalEntity ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:CommunicationNetwork a owl:Class ;
+    rdfs:label "Communication network"@en,
+        "Réseau de communication"@fr ;
+    rdfs:comment "Set of communication entities and links providing connectivity."@en ;
+    rdfs:subClassOf nmo:PhysicalEntity ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:LaunchAndRecoveryInfrastructure a owl:Class ;
+    rdfs:label "Launch and recovery infrastructure"@en,
+        "Infrastructure de mise à l'eau et de récupération"@fr ;
+    rdfs:comment "Infrastructure supporting launch, docking or recovery of platforms."@en ;
+    rdfs:subClassOf nmo:Infrastructure ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:NavalBase a owl:Class ;
+    rdfs:label "Naval base"@en,
+        "Base navale"@fr ;
+    rdfs:comment "Military infrastructure supporting naval command, logistics, maintenance, berthing and operations. It may contain a harbour but is not a subclass of Harbour."@en ;
+    rdfs:subClassOf nmo:Infrastructure ;
+    nmo:hasUsageDomain nmo:MilitaryUse .
+
+nmo:MaritimeCriticalInfrastructure a owl:Class ;
+    rdfs:label "Maritime critical infrastructure"@en,
+        "Infrastructure maritime critique"@fr ;
+    rdfs:comment "Maritime infrastructure whose loss or degradation has significant operational or societal consequences."@en ;
+    rdfs:subClassOf nmo:Infrastructure ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:TrackingCapability a owl:Class ;
+    rdfs:label "Tracking capability"@en,
+        "Capacité de suivi"@fr ;
+    rdfs:comment "Capability to maintain an estimate of an observed entity state over time."@en ;
+    rdfs:subClassOf nmo:PerceptionCapability ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:IdentificationCapability a owl:Class ;
+    rdfs:label "Identification capability"@en,
+        "Capacité d'identification"@fr ;
+    rdfs:comment "Capability to establish an identity assessment for an observed entity."@en ;
+    rdfs:subClassOf nmo:PerceptionCapability ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:AssessmentCapability a owl:Class ;
+    rdfs:label "Assessment capability"@en,
+        "Capacité d'évaluation"@fr ;
+    rdfs:comment "Capability to derive an operational assessment from available information."@en ;
+    rdfs:subClassOf nmo:DataProcessingCapability ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:ThreatAssessmentCapability a owl:Class ;
+    rdfs:label "Threat assessment capability"@en,
+        "Capacité d'évaluation de menace"@fr ;
+    rdfs:comment "Capability to assess whether an observed entity or activity poses an operational threat."@en ;
+    rdfs:subClassOf nmo:AssessmentCapability ;
+    nmo:hasUsageDomain nmo:MilitaryUse .
+
+nmo:CoordinationCapability a owl:Class ;
+    rdfs:label "Coordination capability"@en,
+        "Capacité de coordination"@fr ;
+    rdfs:comment "Capability to synchronize actions or relative states among multiple actors."@en ;
+    rdfs:subClassOf nmo:DataProcessingCapability ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:SurveyCapability a owl:Class ;
+    rdfs:label "Survey capability"@en,
+        "Capacité de levé"@fr ;
+    rdfs:comment "Capability to systematically characterize an area, route, infrastructure or physical environment."@en ;
+    rdfs:subClassOf nmo:PerceptionCapability ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:InspectionCapability a owl:Class ;
+    rdfs:label "Inspection capability"@en,
+        "Capacité d'inspection"@fr ;
+    rdfs:comment "Capability to examine an object or infrastructure at the required level of detail."@en ;
+    rdfs:subClassOf nmo:PerceptionCapability ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:ProtectionCapability a owl:Class ;
+    rdfs:label "Protection capability"@en,
+        "Capacité de protection"@fr ;
+    rdfs:comment "Capability to preserve another entity, group, area, infrastructure or service against harmful effects."@en ;
+    rdfs:subClassOf nmo:InteractionCapability ;
+    nmo:hasUsageDomain nmo:MilitaryUse .
+
+nmo:InterdictionCapability a owl:Class ;
+    rdfs:label "Interdiction capability"@en,
+        "Capacité d'interdiction"@fr ;
+    rdfs:comment "Capability to prevent, constrain, stop or control an entity, movement or activity."@en ;
+    rdfs:subClassOf nmo:InteractionCapability ;
+    nmo:hasUsageDomain nmo:MilitaryUse .
+
+nmo:TransportCapability a owl:Class ;
+    rdfs:label "Transport capability"@en,
+        "Capacité de transport"@fr ;
+    rdfs:comment "Capability to transport personnel, payload or materiel."@en ;
+    rdfs:subClassOf nmo:SupportCapability ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:LogisticsCapability a owl:Class ;
+    rdfs:label "Logistics capability"@en,
+        "Capacité logistique"@fr ;
+    rdfs:comment "Capability to resupply, transfer, refuel, recharge or otherwise sustain platforms and forces."@en ;
+    rdfs:subClassOf nmo:SupportCapability ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:RelayCapability a owl:Class ;
+    rdfs:label "Relay capability"@en,
+        "Capacité de relais"@fr ;
+    rdfs:comment "Capability to relay communications between otherwise disconnected or range-limited entities."@en ;
+    rdfs:subClassOf nmo:CommunicationCapability ;
+    nmo:hasUsageDomain nmo:DualUse .
+
+nmo:ElectronicWarfareCapability a owl:Class ;
+    rdfs:label "Electronic warfare capability"@en,
+        "Capacité de guerre électronique"@fr ;
+    rdfs:comment "Capability to sense, exploit, protect or apply effects in the electromagnetic environment."@en ;
+    rdfs:subClassOf nmo:PhysicalCapability ;
+    nmo:hasUsageDomain nmo:MilitaryUse .
 
