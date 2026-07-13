@@ -12,14 +12,14 @@
     <owl:Ontology rdf:about="https://ontology.lotusim.org/naval-maritime">
         <terms:creator>Estelle Chauveau (Naval Group, PO LOTUSim)</terms:creator>
         <terms:description xml:lang="en">Physical-world ontology for LOTUSim covering systems, platforms, equipment, physical objects, infrastructure, maritime environment, states, configurations, properties and physical capabilities.</terms:description>
-        <terms:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-07-12</terms:modified>
+        <terms:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-07-13</terms:modified>
         <terms:publisher>Naval Group</terms:publisher>
         <terms:title xml:lang="en">LOTUSim Naval Maritime Ontology</terms:title>
         <rdfs:comment xml:lang="fr">Ontologie de référence décrivant le monde naval physique simulable à un instant donné. Elle exclut les missions, objectifs, tâches, rôles opérationnels, observations, événements, doctrine et planification.</rdfs:comment>
         <rdfs:comment xml:lang="fr">Vocabulaire normatif de LOTUSim : les types du profil HDDL, le vocabulaire du schéma de scénario (agents, zones) et les familles des manifestes de capacités (nmo:manifestKey) en dérivent. Chaque classe porte une annotation de diffusabilité (nmo:hasUsageDomain : civil / dual-use / militaire) conditionnant sa présence dans les exports publics.</rdfs:comment>
         <rdfs:label xml:lang="en">LOTUSim Naval Maritime Ontology</rdfs:label>
         <rdfs:label xml:lang="fr">Ontologie navale maritime LOTUSim</rdfs:label>
-        <owl:versionInfo>1.1.0-draft</owl:versionInfo>
+        <owl:versionInfo>2.0.0-draft</owl:versionInfo>
     </owl:Ontology>
     
 
@@ -313,6 +313,18 @@
         <rdfs:range rdf:resource="https://ontology.lotusim.org/naval-maritime#PhysicalMedium"/>
         <rdfs:label xml:lang="fr">a pour milieu</rdfs:label>
         <rdfs:label xml:lang="en">has medium</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://ontology.lotusim.org/naval-maritime#hasMember -->
+
+
+    <owl:ObjectProperty rdf:about="https://ontology.lotusim.org/naval-maritime#hasMember">
+        <rdfs:domain rdf:resource="https://ontology.lotusim.org/naval-maritime#EntityGroup"/>
+        <rdfs:range rdf:resource="https://ontology.lotusim.org/naval-maritime#Entity"/>
+        <rdfs:label xml:lang="fr">a pour membre</rdfs:label>
+        <rdfs:label xml:lang="en">has member</rdfs:label>
     </owl:ObjectProperty>
     
 
@@ -991,6 +1003,15 @@
     
 
 
+    <!-- https://ontology.lotusim.org/naval-maritime#AssessmentCapability -->
+
+
+    <owl:Class rdf:about="https://ontology.lotusim.org/naval-maritime#AssessmentCapability">
+        <rdfs:subClassOf rdf:resource="https://ontology.lotusim.org/naval-maritime#DataProcessingCapability"/>
+    </owl:Class>
+    
+
+
     <!-- https://ontology.lotusim.org/naval-maritime#Atmosphere -->
 
 
@@ -1207,6 +1228,24 @@
     
 
 
+    <!-- https://ontology.lotusim.org/naval-maritime#CommunicationLink -->
+
+
+    <owl:Class rdf:about="https://ontology.lotusim.org/naval-maritime#CommunicationLink">
+        <rdfs:subClassOf rdf:resource="https://ontology.lotusim.org/naval-maritime#PhysicalEntity"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.lotusim.org/naval-maritime#CommunicationNetwork -->
+
+
+    <owl:Class rdf:about="https://ontology.lotusim.org/naval-maritime#CommunicationNetwork">
+        <rdfs:subClassOf rdf:resource="https://ontology.lotusim.org/naval-maritime#PhysicalEntity"/>
+    </owl:Class>
+    
+
+
     <!-- https://ontology.lotusim.org/naval-maritime#Compass -->
 
 
@@ -1252,6 +1291,24 @@
     
 
 
+    <!-- https://ontology.lotusim.org/naval-maritime#CoordinationCapability -->
+
+
+    <owl:Class rdf:about="https://ontology.lotusim.org/naval-maritime#CoordinationCapability">
+        <rdfs:subClassOf rdf:resource="https://ontology.lotusim.org/naval-maritime#DataProcessingCapability"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.lotusim.org/naval-maritime#Corridor -->
+
+
+    <owl:Class rdf:about="https://ontology.lotusim.org/naval-maritime#Corridor">
+        <rdfs:subClassOf rdf:resource="https://ontology.lotusim.org/naval-maritime#SpatialRegion"/>
+    </owl:Class>
+    
+
+
     <!-- https://ontology.lotusim.org/naval-maritime#Current -->
 
 
@@ -1292,6 +1349,15 @@
 
 
     <owl:Class rdf:about="https://ontology.lotusim.org/naval-maritime#Debris">
+        <rdfs:subClassOf rdf:resource="https://ontology.lotusim.org/naval-maritime#PhysicalObject"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.lotusim.org/naval-maritime#Decoy -->
+
+
+    <owl:Class rdf:about="https://ontology.lotusim.org/naval-maritime#Decoy">
         <rdfs:subClassOf rdf:resource="https://ontology.lotusim.org/naval-maritime#PhysicalObject"/>
     </owl:Class>
     
@@ -1396,6 +1462,15 @@
     
 
 
+    <!-- https://ontology.lotusim.org/naval-maritime#ElectronicWarfareCapability -->
+
+
+    <owl:Class rdf:about="https://ontology.lotusim.org/naval-maritime#ElectronicWarfareCapability">
+        <rdfs:subClassOf rdf:resource="https://ontology.lotusim.org/naval-maritime#PhysicalCapability"/>
+    </owl:Class>
+    
+
+
     <!-- https://ontology.lotusim.org/naval-maritime#EmbeddedComputer -->
 
 
@@ -1428,6 +1503,22 @@
 
     <owl:Class rdf:about="https://ontology.lotusim.org/naval-maritime#EngagementCapability">
         <rdfs:subClassOf rdf:resource="https://ontology.lotusim.org/naval-maritime#InteractionCapability"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.lotusim.org/naval-maritime#Entity -->
+
+
+    <owl:Class rdf:about="https://ontology.lotusim.org/naval-maritime#Entity"/>
+    
+
+
+    <!-- https://ontology.lotusim.org/naval-maritime#EntityGroup -->
+
+
+    <owl:Class rdf:about="https://ontology.lotusim.org/naval-maritime#EntityGroup">
+        <rdfs:subClassOf rdf:resource="https://ontology.lotusim.org/naval-maritime#Entity"/>
     </owl:Class>
     
 
@@ -1702,6 +1793,15 @@
     
 
 
+    <!-- https://ontology.lotusim.org/naval-maritime#IdentificationCapability -->
+
+
+    <owl:Class rdf:about="https://ontology.lotusim.org/naval-maritime#IdentificationCapability">
+        <rdfs:subClassOf rdf:resource="https://ontology.lotusim.org/naval-maritime#PerceptionCapability"/>
+    </owl:Class>
+    
+
+
     <!-- https://ontology.lotusim.org/naval-maritime#ImagingRadar -->
 
 
@@ -1756,6 +1856,15 @@
     
 
 
+    <!-- https://ontology.lotusim.org/naval-maritime#InspectionCapability -->
+
+
+    <owl:Class rdf:about="https://ontology.lotusim.org/naval-maritime#InspectionCapability">
+        <rdfs:subClassOf rdf:resource="https://ontology.lotusim.org/naval-maritime#PerceptionCapability"/>
+    </owl:Class>
+    
+
+
     <!-- https://ontology.lotusim.org/naval-maritime#InstrumentedBuoy -->
 
 
@@ -1770,6 +1879,24 @@
 
     <owl:Class rdf:about="https://ontology.lotusim.org/naval-maritime#InteractionCapability">
         <rdfs:subClassOf rdf:resource="https://ontology.lotusim.org/naval-maritime#PhysicalCapability"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.lotusim.org/naval-maritime#InterdictionCapability -->
+
+
+    <owl:Class rdf:about="https://ontology.lotusim.org/naval-maritime#InterdictionCapability">
+        <rdfs:subClassOf rdf:resource="https://ontology.lotusim.org/naval-maritime#InteractionCapability"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.lotusim.org/naval-maritime#LaunchAndRecoveryInfrastructure -->
+
+
+    <owl:Class rdf:about="https://ontology.lotusim.org/naval-maritime#LaunchAndRecoveryInfrastructure">
+        <rdfs:subClassOf rdf:resource="https://ontology.lotusim.org/naval-maritime#Infrastructure"/>
     </owl:Class>
     
 
@@ -1797,6 +1924,15 @@
 
     <owl:Class rdf:about="https://ontology.lotusim.org/naval-maritime#LocalizationCapability">
         <rdfs:subClassOf rdf:resource="https://ontology.lotusim.org/naval-maritime#NavigationCapability"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.lotusim.org/naval-maritime#LogisticsCapability -->
+
+
+    <owl:Class rdf:about="https://ontology.lotusim.org/naval-maritime#LogisticsCapability">
+        <rdfs:subClassOf rdf:resource="https://ontology.lotusim.org/naval-maritime#SupportCapability"/>
     </owl:Class>
     
 
@@ -1864,6 +2000,15 @@
     
 
 
+    <!-- https://ontology.lotusim.org/naval-maritime#MaritimeCriticalInfrastructure -->
+
+
+    <owl:Class rdf:about="https://ontology.lotusim.org/naval-maritime#MaritimeCriticalInfrastructure">
+        <rdfs:subClassOf rdf:resource="https://ontology.lotusim.org/naval-maritime#Infrastructure"/>
+    </owl:Class>
+    
+
+
     <!-- https://ontology.lotusim.org/naval-maritime#MaritimeEnvironmentEntity -->
 
 
@@ -1900,6 +2045,15 @@
     
 
 
+    <!-- https://ontology.lotusim.org/naval-maritime#Materiel -->
+
+
+    <owl:Class rdf:about="https://ontology.lotusim.org/naval-maritime#Materiel">
+        <rdfs:subClassOf rdf:resource="https://ontology.lotusim.org/naval-maritime#PhysicalObject"/>
+    </owl:Class>
+    
+
+
     <!-- https://ontology.lotusim.org/naval-maritime#MerchantShip -->
 
 
@@ -1914,6 +2068,15 @@
 
     <owl:Class rdf:about="https://ontology.lotusim.org/naval-maritime#MeteorologicalSensor">
         <rdfs:subClassOf rdf:resource="https://ontology.lotusim.org/naval-maritime#EnvironmentalSensor"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.lotusim.org/naval-maritime#MilitaryPayload -->
+
+
+    <owl:Class rdf:about="https://ontology.lotusim.org/naval-maritime#MilitaryPayload">
+        <rdfs:subClassOf rdf:resource="https://ontology.lotusim.org/naval-maritime#Payload"/>
     </owl:Class>
     
 
@@ -1977,6 +2140,15 @@
 
     <owl:Class rdf:about="https://ontology.lotusim.org/naval-maritime#NaturalObject">
         <rdfs:subClassOf rdf:resource="https://ontology.lotusim.org/naval-maritime#PhysicalObject"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.lotusim.org/naval-maritime#NavalBase -->
+
+
+    <owl:Class rdf:about="https://ontology.lotusim.org/naval-maritime#NavalBase">
+        <rdfs:subClassOf rdf:resource="https://ontology.lotusim.org/naval-maritime#Infrastructure"/>
     </owl:Class>
     
 
@@ -2134,6 +2306,15 @@
     
 
 
+    <!-- https://ontology.lotusim.org/naval-maritime#Payload -->
+
+
+    <owl:Class rdf:about="https://ontology.lotusim.org/naval-maritime#Payload">
+        <rdfs:subClassOf rdf:resource="https://ontology.lotusim.org/naval-maritime#PhysicalObject"/>
+    </owl:Class>
+    
+
+
     <!-- https://ontology.lotusim.org/naval-maritime#PayloadHostingCapability -->
 
 
@@ -2148,6 +2329,24 @@
 
     <owl:Class rdf:about="https://ontology.lotusim.org/naval-maritime#PerceptionCapability">
         <rdfs:subClassOf rdf:resource="https://ontology.lotusim.org/naval-maritime#PhysicalCapability"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.lotusim.org/naval-maritime#Person -->
+
+
+    <owl:Class rdf:about="https://ontology.lotusim.org/naval-maritime#Person">
+        <rdfs:subClassOf rdf:resource="https://ontology.lotusim.org/naval-maritime#PhysicalEntity"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.lotusim.org/naval-maritime#PersonnelGroup -->
+
+
+    <owl:Class rdf:about="https://ontology.lotusim.org/naval-maritime#PersonnelGroup">
+        <rdfs:subClassOf rdf:resource="https://ontology.lotusim.org/naval-maritime#EntityGroup"/>
     </owl:Class>
     
 
@@ -2248,6 +2447,15 @@
     
 
 
+    <!-- https://ontology.lotusim.org/naval-maritime#PlatformGroup -->
+
+
+    <owl:Class rdf:about="https://ontology.lotusim.org/naval-maritime#PlatformGroup">
+        <rdfs:subClassOf rdf:resource="https://ontology.lotusim.org/naval-maritime#EntityGroup"/>
+    </owl:Class>
+    
+
+
     <!-- https://ontology.lotusim.org/naval-maritime#PortInfrastructure -->
 
 
@@ -2278,6 +2486,15 @@
 
     <owl:Class rdf:about="https://ontology.lotusim.org/naval-maritime#PropulsionSystem">
         <rdfs:subClassOf rdf:resource="https://ontology.lotusim.org/naval-maritime#Actuator"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.lotusim.org/naval-maritime#ProtectionCapability -->
+
+
+    <owl:Class rdf:about="https://ontology.lotusim.org/naval-maritime#ProtectionCapability">
+        <rdfs:subClassOf rdf:resource="https://ontology.lotusim.org/naval-maritime#InteractionCapability"/>
     </owl:Class>
     
 
@@ -2372,6 +2589,15 @@
     
 
 
+    <!-- https://ontology.lotusim.org/naval-maritime#RelayCapability -->
+
+
+    <owl:Class rdf:about="https://ontology.lotusim.org/naval-maritime#RelayCapability">
+        <rdfs:subClassOf rdf:resource="https://ontology.lotusim.org/naval-maritime#CommunicationCapability"/>
+    </owl:Class>
+    
+
+
     <!-- https://ontology.lotusim.org/naval-maritime#RemotelyOperatedVehicle -->
 
 
@@ -2395,6 +2621,15 @@
 
     <owl:Class rdf:about="https://ontology.lotusim.org/naval-maritime#Rock">
         <rdfs:subClassOf rdf:resource="https://ontology.lotusim.org/naval-maritime#NaturalObject"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.lotusim.org/naval-maritime#Route -->
+
+
+    <owl:Class rdf:about="https://ontology.lotusim.org/naval-maritime#Route">
+        <rdfs:subClassOf rdf:resource="https://ontology.lotusim.org/naval-maritime#SpatialRegion"/>
     </owl:Class>
     
 
@@ -2706,6 +2941,15 @@
     
 
 
+    <!-- https://ontology.lotusim.org/naval-maritime#SurveyCapability -->
+
+
+    <owl:Class rdf:about="https://ontology.lotusim.org/naval-maritime#SurveyCapability">
+        <rdfs:subClassOf rdf:resource="https://ontology.lotusim.org/naval-maritime#PerceptionCapability"/>
+    </owl:Class>
+    
+
+
     <!-- https://ontology.lotusim.org/naval-maritime#SystemModel -->
 
 
@@ -2740,6 +2984,15 @@
     
 
 
+    <!-- https://ontology.lotusim.org/naval-maritime#ThreatAssessmentCapability -->
+
+
+    <owl:Class rdf:about="https://ontology.lotusim.org/naval-maritime#ThreatAssessmentCapability">
+        <rdfs:subClassOf rdf:resource="https://ontology.lotusim.org/naval-maritime#AssessmentCapability"/>
+    </owl:Class>
+    
+
+
     <!-- https://ontology.lotusim.org/naval-maritime#Tide -->
 
 
@@ -2754,6 +3007,24 @@
 
     <owl:Class rdf:about="https://ontology.lotusim.org/naval-maritime#Torpedo">
         <rdfs:subClassOf rdf:resource="https://ontology.lotusim.org/naval-maritime#UnexplodedOrdnance"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.lotusim.org/naval-maritime#TrackingCapability -->
+
+
+    <owl:Class rdf:about="https://ontology.lotusim.org/naval-maritime#TrackingCapability">
+        <rdfs:subClassOf rdf:resource="https://ontology.lotusim.org/naval-maritime#PerceptionCapability"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.lotusim.org/naval-maritime#TransportCapability -->
+
+
+    <owl:Class rdf:about="https://ontology.lotusim.org/naval-maritime#TransportCapability">
+        <rdfs:subClassOf rdf:resource="https://ontology.lotusim.org/naval-maritime#SupportCapability"/>
     </owl:Class>
     
 
@@ -3110,6 +3381,15 @@
     
 
 
+    <!-- https://ontology.lotusim.org/naval-maritime#AssessmentCapability -->
+
+
+    <owl:NamedIndividual rdf:about="https://ontology.lotusim.org/naval-maritime#AssessmentCapability">
+        <hasUsageDomain rdf:resource="https://ontology.lotusim.org/naval-maritime#DualUse"/>
+    </owl:NamedIndividual>
+    
+
+
     <!-- https://ontology.lotusim.org/naval-maritime#Atmosphere -->
 
 
@@ -3337,6 +3617,24 @@
     
 
 
+    <!-- https://ontology.lotusim.org/naval-maritime#CommunicationLink -->
+
+
+    <owl:NamedIndividual rdf:about="https://ontology.lotusim.org/naval-maritime#CommunicationLink">
+        <hasUsageDomain rdf:resource="https://ontology.lotusim.org/naval-maritime#DualUse"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.lotusim.org/naval-maritime#CommunicationNetwork -->
+
+
+    <owl:NamedIndividual rdf:about="https://ontology.lotusim.org/naval-maritime#CommunicationNetwork">
+        <hasUsageDomain rdf:resource="https://ontology.lotusim.org/naval-maritime#DualUse"/>
+    </owl:NamedIndividual>
+    
+
+
     <!-- https://ontology.lotusim.org/naval-maritime#Compass -->
 
 
@@ -3377,6 +3675,24 @@
 
 
     <owl:NamedIndividual rdf:about="https://ontology.lotusim.org/naval-maritime#ControlSurface">
+        <hasUsageDomain rdf:resource="https://ontology.lotusim.org/naval-maritime#DualUse"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.lotusim.org/naval-maritime#CoordinationCapability -->
+
+
+    <owl:NamedIndividual rdf:about="https://ontology.lotusim.org/naval-maritime#CoordinationCapability">
+        <hasUsageDomain rdf:resource="https://ontology.lotusim.org/naval-maritime#DualUse"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.lotusim.org/naval-maritime#Corridor -->
+
+
+    <owl:NamedIndividual rdf:about="https://ontology.lotusim.org/naval-maritime#Corridor">
         <hasUsageDomain rdf:resource="https://ontology.lotusim.org/naval-maritime#DualUse"/>
     </owl:NamedIndividual>
     
@@ -3423,6 +3739,15 @@
 
     <owl:NamedIndividual rdf:about="https://ontology.lotusim.org/naval-maritime#Debris">
         <hasUsageDomain rdf:resource="https://ontology.lotusim.org/naval-maritime#CivilUse"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.lotusim.org/naval-maritime#Decoy -->
+
+
+    <owl:NamedIndividual rdf:about="https://ontology.lotusim.org/naval-maritime#Decoy">
+        <hasUsageDomain rdf:resource="https://ontology.lotusim.org/naval-maritime#MilitaryUse"/>
     </owl:NamedIndividual>
     
 
@@ -3537,6 +3862,15 @@
     
 
 
+    <!-- https://ontology.lotusim.org/naval-maritime#ElectronicWarfareCapability -->
+
+
+    <owl:NamedIndividual rdf:about="https://ontology.lotusim.org/naval-maritime#ElectronicWarfareCapability">
+        <hasUsageDomain rdf:resource="https://ontology.lotusim.org/naval-maritime#MilitaryUse"/>
+    </owl:NamedIndividual>
+    
+
+
     <!-- https://ontology.lotusim.org/naval-maritime#EmbeddedComputer -->
 
 
@@ -3569,6 +3903,15 @@
 
     <owl:NamedIndividual rdf:about="https://ontology.lotusim.org/naval-maritime#EngagementCapability">
         <hasUsageDomain rdf:resource="https://ontology.lotusim.org/naval-maritime#MilitaryUse"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.lotusim.org/naval-maritime#EntityGroup -->
+
+
+    <owl:NamedIndividual rdf:about="https://ontology.lotusim.org/naval-maritime#EntityGroup">
+        <hasUsageDomain rdf:resource="https://ontology.lotusim.org/naval-maritime#DualUse"/>
     </owl:NamedIndividual>
     
 
@@ -3843,6 +4186,15 @@
     
 
 
+    <!-- https://ontology.lotusim.org/naval-maritime#IdentificationCapability -->
+
+
+    <owl:NamedIndividual rdf:about="https://ontology.lotusim.org/naval-maritime#IdentificationCapability">
+        <hasUsageDomain rdf:resource="https://ontology.lotusim.org/naval-maritime#DualUse"/>
+    </owl:NamedIndividual>
+    
+
+
     <!-- https://ontology.lotusim.org/naval-maritime#ImagingRadar -->
 
 
@@ -3897,6 +4249,15 @@
     
 
 
+    <!-- https://ontology.lotusim.org/naval-maritime#InspectionCapability -->
+
+
+    <owl:NamedIndividual rdf:about="https://ontology.lotusim.org/naval-maritime#InspectionCapability">
+        <hasUsageDomain rdf:resource="https://ontology.lotusim.org/naval-maritime#DualUse"/>
+    </owl:NamedIndividual>
+    
+
+
     <!-- https://ontology.lotusim.org/naval-maritime#InstrumentedBuoy -->
 
 
@@ -3910,6 +4271,24 @@
 
 
     <owl:NamedIndividual rdf:about="https://ontology.lotusim.org/naval-maritime#InteractionCapability">
+        <hasUsageDomain rdf:resource="https://ontology.lotusim.org/naval-maritime#DualUse"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.lotusim.org/naval-maritime#InterdictionCapability -->
+
+
+    <owl:NamedIndividual rdf:about="https://ontology.lotusim.org/naval-maritime#InterdictionCapability">
+        <hasUsageDomain rdf:resource="https://ontology.lotusim.org/naval-maritime#MilitaryUse"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.lotusim.org/naval-maritime#LaunchAndRecoveryInfrastructure -->
+
+
+    <owl:NamedIndividual rdf:about="https://ontology.lotusim.org/naval-maritime#LaunchAndRecoveryInfrastructure">
         <hasUsageDomain rdf:resource="https://ontology.lotusim.org/naval-maritime#DualUse"/>
     </owl:NamedIndividual>
     
@@ -3937,6 +4316,15 @@
 
 
     <owl:NamedIndividual rdf:about="https://ontology.lotusim.org/naval-maritime#LocalizationCapability">
+        <hasUsageDomain rdf:resource="https://ontology.lotusim.org/naval-maritime#DualUse"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.lotusim.org/naval-maritime#LogisticsCapability -->
+
+
+    <owl:NamedIndividual rdf:about="https://ontology.lotusim.org/naval-maritime#LogisticsCapability">
         <hasUsageDomain rdf:resource="https://ontology.lotusim.org/naval-maritime#DualUse"/>
     </owl:NamedIndividual>
     
@@ -4005,6 +4393,15 @@
     
 
 
+    <!-- https://ontology.lotusim.org/naval-maritime#MaritimeCriticalInfrastructure -->
+
+
+    <owl:NamedIndividual rdf:about="https://ontology.lotusim.org/naval-maritime#MaritimeCriticalInfrastructure">
+        <hasUsageDomain rdf:resource="https://ontology.lotusim.org/naval-maritime#DualUse"/>
+    </owl:NamedIndividual>
+    
+
+
     <!-- https://ontology.lotusim.org/naval-maritime#MaritimeEnvironmentEntity -->
 
 
@@ -4041,6 +4438,15 @@
     
 
 
+    <!-- https://ontology.lotusim.org/naval-maritime#Materiel -->
+
+
+    <owl:NamedIndividual rdf:about="https://ontology.lotusim.org/naval-maritime#Materiel">
+        <hasUsageDomain rdf:resource="https://ontology.lotusim.org/naval-maritime#DualUse"/>
+    </owl:NamedIndividual>
+    
+
+
     <!-- https://ontology.lotusim.org/naval-maritime#MerchantShip -->
 
 
@@ -4055,6 +4461,15 @@
 
     <owl:NamedIndividual rdf:about="https://ontology.lotusim.org/naval-maritime#MeteorologicalSensor">
         <hasUsageDomain rdf:resource="https://ontology.lotusim.org/naval-maritime#CivilUse"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.lotusim.org/naval-maritime#MilitaryPayload -->
+
+
+    <owl:NamedIndividual rdf:about="https://ontology.lotusim.org/naval-maritime#MilitaryPayload">
+        <hasUsageDomain rdf:resource="https://ontology.lotusim.org/naval-maritime#MilitaryUse"/>
     </owl:NamedIndividual>
     
 
@@ -4129,6 +4544,15 @@
 
     <owl:NamedIndividual rdf:about="https://ontology.lotusim.org/naval-maritime#NaturalObject">
         <hasUsageDomain rdf:resource="https://ontology.lotusim.org/naval-maritime#CivilUse"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.lotusim.org/naval-maritime#NavalBase -->
+
+
+    <owl:NamedIndividual rdf:about="https://ontology.lotusim.org/naval-maritime#NavalBase">
+        <hasUsageDomain rdf:resource="https://ontology.lotusim.org/naval-maritime#MilitaryUse"/>
     </owl:NamedIndividual>
     
 
@@ -4286,6 +4710,15 @@
     
 
 
+    <!-- https://ontology.lotusim.org/naval-maritime#Payload -->
+
+
+    <owl:NamedIndividual rdf:about="https://ontology.lotusim.org/naval-maritime#Payload">
+        <hasUsageDomain rdf:resource="https://ontology.lotusim.org/naval-maritime#DualUse"/>
+    </owl:NamedIndividual>
+    
+
+
     <!-- https://ontology.lotusim.org/naval-maritime#PayloadHostingCapability -->
 
 
@@ -4300,6 +4733,24 @@
 
     <owl:NamedIndividual rdf:about="https://ontology.lotusim.org/naval-maritime#PerceptionCapability">
         <hasUsageDomain rdf:resource="https://ontology.lotusim.org/naval-maritime#CivilUse"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.lotusim.org/naval-maritime#Person -->
+
+
+    <owl:NamedIndividual rdf:about="https://ontology.lotusim.org/naval-maritime#Person">
+        <hasUsageDomain rdf:resource="https://ontology.lotusim.org/naval-maritime#CivilUse"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.lotusim.org/naval-maritime#PersonnelGroup -->
+
+
+    <owl:NamedIndividual rdf:about="https://ontology.lotusim.org/naval-maritime#PersonnelGroup">
+        <hasUsageDomain rdf:resource="https://ontology.lotusim.org/naval-maritime#DualUse"/>
     </owl:NamedIndividual>
     
 
@@ -4403,6 +4854,15 @@
     
 
 
+    <!-- https://ontology.lotusim.org/naval-maritime#PlatformGroup -->
+
+
+    <owl:NamedIndividual rdf:about="https://ontology.lotusim.org/naval-maritime#PlatformGroup">
+        <hasUsageDomain rdf:resource="https://ontology.lotusim.org/naval-maritime#DualUse"/>
+    </owl:NamedIndividual>
+    
+
+
     <!-- https://ontology.lotusim.org/naval-maritime#PortInfrastructure -->
 
 
@@ -4435,6 +4895,15 @@
 
     <owl:NamedIndividual rdf:about="https://ontology.lotusim.org/naval-maritime#PropulsionSystem">
         <hasUsageDomain rdf:resource="https://ontology.lotusim.org/naval-maritime#DualUse"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.lotusim.org/naval-maritime#ProtectionCapability -->
+
+
+    <owl:NamedIndividual rdf:about="https://ontology.lotusim.org/naval-maritime#ProtectionCapability">
+        <hasUsageDomain rdf:resource="https://ontology.lotusim.org/naval-maritime#MilitaryUse"/>
     </owl:NamedIndividual>
     
 
@@ -4529,6 +4998,15 @@
     
 
 
+    <!-- https://ontology.lotusim.org/naval-maritime#RelayCapability -->
+
+
+    <owl:NamedIndividual rdf:about="https://ontology.lotusim.org/naval-maritime#RelayCapability">
+        <hasUsageDomain rdf:resource="https://ontology.lotusim.org/naval-maritime#DualUse"/>
+    </owl:NamedIndividual>
+    
+
+
     <!-- https://ontology.lotusim.org/naval-maritime#RemotelyOperatedVehicle -->
 
 
@@ -4551,6 +5029,15 @@
 
 
     <owl:NamedIndividual rdf:about="https://ontology.lotusim.org/naval-maritime#Rock">
+        <hasUsageDomain rdf:resource="https://ontology.lotusim.org/naval-maritime#CivilUse"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.lotusim.org/naval-maritime#Route -->
+
+
+    <owl:NamedIndividual rdf:about="https://ontology.lotusim.org/naval-maritime#Route">
         <hasUsageDomain rdf:resource="https://ontology.lotusim.org/naval-maritime#CivilUse"/>
     </owl:NamedIndividual>
     
@@ -4862,6 +5349,15 @@
     
 
 
+    <!-- https://ontology.lotusim.org/naval-maritime#SurveyCapability -->
+
+
+    <owl:NamedIndividual rdf:about="https://ontology.lotusim.org/naval-maritime#SurveyCapability">
+        <hasUsageDomain rdf:resource="https://ontology.lotusim.org/naval-maritime#DualUse"/>
+    </owl:NamedIndividual>
+    
+
+
     <!-- https://ontology.lotusim.org/naval-maritime#SystemModel -->
 
 
@@ -4898,6 +5394,15 @@
     
 
 
+    <!-- https://ontology.lotusim.org/naval-maritime#ThreatAssessmentCapability -->
+
+
+    <owl:NamedIndividual rdf:about="https://ontology.lotusim.org/naval-maritime#ThreatAssessmentCapability">
+        <hasUsageDomain rdf:resource="https://ontology.lotusim.org/naval-maritime#MilitaryUse"/>
+    </owl:NamedIndividual>
+    
+
+
     <!-- https://ontology.lotusim.org/naval-maritime#Tide -->
 
 
@@ -4912,6 +5417,24 @@
 
     <owl:NamedIndividual rdf:about="https://ontology.lotusim.org/naval-maritime#Torpedo">
         <hasUsageDomain rdf:resource="https://ontology.lotusim.org/naval-maritime#MilitaryUse"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.lotusim.org/naval-maritime#TrackingCapability -->
+
+
+    <owl:NamedIndividual rdf:about="https://ontology.lotusim.org/naval-maritime#TrackingCapability">
+        <hasUsageDomain rdf:resource="https://ontology.lotusim.org/naval-maritime#DualUse"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.lotusim.org/naval-maritime#TransportCapability -->
+
+
+    <owl:NamedIndividual rdf:about="https://ontology.lotusim.org/naval-maritime#TransportCapability">
+        <hasUsageDomain rdf:resource="https://ontology.lotusim.org/naval-maritime#DualUse"/>
     </owl:NamedIndividual>
     
 
@@ -5200,6 +5723,11 @@
         <rdfs:label xml:lang="en">Artificial object</rdfs:label>
         <rdfs:label xml:lang="fr">Objet artificiel</rdfs:label>
     </rdf:Description>
+    <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#AssessmentCapability">
+        <rdfs:comment xml:lang="en">Capability to derive an operational assessment from available information.</rdfs:comment>
+        <rdfs:label xml:lang="en">Assessment capability</rdfs:label>
+        <rdfs:label xml:lang="fr">Capacité d&apos;évaluation</rdfs:label>
+    </rdf:Description>
     <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#Atmosphere">
         <rdfs:comment xml:lang="fr">Milieu gazeux au-dessus de la surface. Siège des phénomènes météorologiques et milieu de propagation des ondes radio et optiques.</rdfs:comment>
         <rdfs:label xml:lang="en">Atmosphere</rdfs:label>
@@ -5320,6 +5848,16 @@
         <rdfs:label xml:lang="en">Communication device</rdfs:label>
         <rdfs:label xml:lang="fr">Équipement de communication</rdfs:label>
     </rdf:Description>
+    <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#CommunicationLink">
+        <rdfs:comment xml:lang="en">Technical communication connection between two or more communicating entities.</rdfs:comment>
+        <rdfs:label xml:lang="en">Communication link</rdfs:label>
+        <rdfs:label xml:lang="fr">Liaison de communication</rdfs:label>
+    </rdf:Description>
+    <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#CommunicationNetwork">
+        <rdfs:comment xml:lang="en">Set of communication entities and links providing connectivity.</rdfs:comment>
+        <rdfs:label xml:lang="en">Communication network</rdfs:label>
+        <rdfs:label xml:lang="fr">Réseau de communication</rdfs:label>
+    </rdf:Description>
     <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#Compass">
         <rdfs:comment xml:lang="fr">Compas : cap magnétique ou gyroscopique.</rdfs:comment>
         <rdfs:label xml:lang="fr">Compas</rdfs:label>
@@ -5345,6 +5883,16 @@
         <rdfs:label xml:lang="en">Control surface</rdfs:label>
         <rdfs:label xml:lang="fr">Gouverne</rdfs:label>
     </rdf:Description>
+    <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#CoordinationCapability">
+        <rdfs:comment xml:lang="en">Capability to synchronize actions or relative states among multiple actors.</rdfs:comment>
+        <rdfs:label xml:lang="fr">Capacité de coordination</rdfs:label>
+        <rdfs:label xml:lang="en">Coordination capability</rdfs:label>
+    </rdf:Description>
+    <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#Corridor">
+        <rdfs:comment xml:lang="en">Bounded spatial passage through which movement or an operation may be organized.</rdfs:comment>
+        <rdfs:label xml:lang="en">Corridor</rdfs:label>
+        <rdfs:label xml:lang="fr">Corridor</rdfs:label>
+    </rdf:Description>
     <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#Current">
         <rdfs:comment xml:lang="fr">Courant marin : déplace et fait dériver les plateformes, en particulier les plus lentes (AUV, glider, ROV) ; contraint la navigation et la tenue de trajectoire.</rdfs:comment>
         <rdfs:label xml:lang="fr">Courant</rdfs:label>
@@ -5369,6 +5917,11 @@
         <rdfs:comment xml:lang="fr">Débris ou objet perdu, posé ou dérivant. Générateur de fausses alarmes en détection.</rdfs:comment>
         <rdfs:label xml:lang="en">Debris</rdfs:label>
         <rdfs:label xml:lang="fr">Débris</rdfs:label>
+    </rdf:Description>
+    <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#Decoy">
+        <rdfs:comment xml:lang="en">Physical object designed to create a deceptive signature or apparent target.</rdfs:comment>
+        <rdfs:label xml:lang="en">Decoy</rdfs:label>
+        <rdfs:label xml:lang="fr">Leurre</rdfs:label>
     </rdf:Description>
     <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#DemolitionCharge">
         <rdfs:comment xml:lang="fr">Charge de démolition : explosif mis en œuvre pour neutraliser un engin ou détruire une structure.</rdfs:comment>
@@ -5425,6 +5978,11 @@
         <rdfs:label xml:lang="en">Echo sounder</rdfs:label>
         <rdfs:label xml:lang="fr">Sondeur</rdfs:label>
     </rdf:Description>
+    <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#ElectronicWarfareCapability">
+        <rdfs:comment xml:lang="en">Capability to sense, exploit, protect or apply effects in the electromagnetic environment.</rdfs:comment>
+        <rdfs:label xml:lang="fr">Capacité de guerre électronique</rdfs:label>
+        <rdfs:label xml:lang="en">Electronic warfare capability</rdfs:label>
+    </rdf:Description>
     <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#EmbeddedComputer">
         <rdfs:comment xml:lang="fr">Ordinateur embarqué : calculateur généraliste de la plateforme.</rdfs:comment>
         <rdfs:label xml:lang="en">Embedded computer</rdfs:label>
@@ -5445,6 +6003,11 @@
         <rdfs:label xml:lang="fr">Capacité d&apos;engagement</rdfs:label>
         <rdfs:label xml:lang="en">Engagement capability</rdfs:label>
         <manifestKey>engage.attack_target</manifestKey>
+    </rdf:Description>
+    <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#EntityGroup">
+        <rdfs:comment xml:lang="en">Aggregate of entities considered together for a stable structural purpose. Operational group roles remain in the Scenario Model.</rdfs:comment>
+        <rdfs:label xml:lang="en">Entity group</rdfs:label>
+        <rdfs:label xml:lang="fr">Groupe d&apos;entités</rdfs:label>
     </rdf:Description>
     <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#EnvironmentalFeature">
         <rdfs:comment xml:lang="fr">Caractéristique structurelle du milieu, quasi statique à l&apos;échelle d&apos;un scénario (thermocline, relief, glace).</rdfs:comment>
@@ -5596,6 +6159,11 @@
         <rdfs:label xml:lang="en">Ice object</rdfs:label>
         <rdfs:label xml:lang="fr">Objet de glace</rdfs:label>
     </rdf:Description>
+    <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#IdentificationCapability">
+        <rdfs:comment xml:lang="en">Capability to establish an identity assessment for an observed entity.</rdfs:comment>
+        <rdfs:label xml:lang="fr">Capacité d&apos;identification</rdfs:label>
+        <rdfs:label xml:lang="en">Identification capability</rdfs:label>
+    </rdf:Description>
     <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#ImagingRadar">
         <rdfs:comment xml:lang="fr">Radar imageur ou à onde de surface haute fréquence (détection au-delà de l&apos;horizon).</rdfs:comment>
         <rdfs:label xml:lang="en">Imaging radar</rdfs:label>
@@ -5626,6 +6194,11 @@
         <rdfs:label xml:lang="en">Infrastructure</rdfs:label>
         <rdfs:label xml:lang="fr">Infrastructure</rdfs:label>
     </rdf:Description>
+    <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#InspectionCapability">
+        <rdfs:comment xml:lang="en">Capability to examine an object or infrastructure at the required level of detail.</rdfs:comment>
+        <rdfs:label xml:lang="fr">Capacité d&apos;inspection</rdfs:label>
+        <rdfs:label xml:lang="en">Inspection capability</rdfs:label>
+    </rdf:Description>
     <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#InstrumentedBuoy">
         <rdfs:comment xml:lang="fr">Bouée ou mouillage instrumenté : plateforme fixe de mesure.</rdfs:comment>
         <rdfs:label xml:lang="fr">Bouée instrumentée</rdfs:label>
@@ -5635,6 +6208,16 @@
         <rdfs:comment xml:lang="fr">Capacité à agir physiquement sur un objet du monde.</rdfs:comment>
         <rdfs:label xml:lang="fr">Capacité d&apos;interaction</rdfs:label>
         <rdfs:label xml:lang="en">Interaction capability</rdfs:label>
+    </rdf:Description>
+    <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#InterdictionCapability">
+        <rdfs:comment xml:lang="en">Capability to prevent, constrain, stop or control an entity, movement or activity.</rdfs:comment>
+        <rdfs:label xml:lang="fr">Capacité d&apos;interdiction</rdfs:label>
+        <rdfs:label xml:lang="en">Interdiction capability</rdfs:label>
+    </rdf:Description>
+    <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#LaunchAndRecoveryInfrastructure">
+        <rdfs:comment xml:lang="en">Infrastructure supporting launch, docking or recovery of platforms.</rdfs:comment>
+        <rdfs:label xml:lang="fr">Infrastructure de mise à l&apos;eau et de récupération</rdfs:label>
+        <rdfs:label xml:lang="en">Launch and recovery infrastructure</rdfs:label>
     </rdf:Description>
     <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#Lidar">
         <rdfs:comment xml:lang="fr">Lidar : télémétrie laser. En version bathymétrique, pénètre les eaux claires peu profondes ; portée dégradée par la turbidité.</rdfs:comment>
@@ -5650,6 +6233,11 @@
         <rdfs:comment xml:lang="fr">Capacité à estimer la position d&apos;un objet ou la sienne propre.</rdfs:comment>
         <rdfs:label xml:lang="fr">Capacité de localisation</rdfs:label>
         <rdfs:label xml:lang="en">Localization capability</rdfs:label>
+    </rdf:Description>
+    <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#LogisticsCapability">
+        <rdfs:comment xml:lang="en">Capability to resupply, transfer, refuel, recharge or otherwise sustain platforms and forces.</rdfs:comment>
+        <rdfs:label xml:lang="fr">Capacité logistique</rdfs:label>
+        <rdfs:label xml:lang="en">Logistics capability</rdfs:label>
     </rdf:Description>
     <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#LostEquipment">
         <rdfs:comment xml:lang="fr">Équipement perdu à la mer (engin de pêche, instrument, charge).</rdfs:comment>
@@ -5686,6 +6274,11 @@
         <rdfs:label xml:lang="en">Maritime area</rdfs:label>
         <rdfs:label xml:lang="fr">Zone maritime</rdfs:label>
     </rdf:Description>
+    <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#MaritimeCriticalInfrastructure">
+        <rdfs:comment xml:lang="en">Maritime infrastructure whose loss or degradation has significant operational or societal consequences.</rdfs:comment>
+        <rdfs:label xml:lang="fr">Infrastructure maritime critique</rdfs:label>
+        <rdfs:label xml:lang="en">Maritime critical infrastructure</rdfs:label>
+    </rdf:Description>
     <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#MaritimeEnvironmentEntity">
         <rdfs:comment xml:lang="fr">Racine des entités environnementales maritimes : caractéristiques (features) et phénomènes.</rdfs:comment>
         <rdfs:label xml:lang="fr">Entité environnementale maritime</rdfs:label>
@@ -5706,6 +6299,11 @@
         <rdfs:label xml:lang="en">Marking system</rdfs:label>
         <rdfs:label xml:lang="fr">Système de balisage</rdfs:label>
     </rdf:Description>
+    <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#Materiel">
+        <rdfs:comment xml:lang="en">Physical supplies, equipment or goods transported, transferred or consumed in support activities.</rdfs:comment>
+        <rdfs:label xml:lang="en">Materiel</rdfs:label>
+        <rdfs:label xml:lang="fr">Matériel</rdfs:label>
+    </rdf:Description>
     <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#MerchantShip">
         <rdfs:comment xml:lang="fr">Navire de surface civil de transport (cargo, pétrolier, porte-conteneurs). Généralement non armé ; objet de protection ou de menace dans les scénarios d&apos;escorte.</rdfs:comment>
         <rdfs:label xml:lang="en">Merchant ship</rdfs:label>
@@ -5715,6 +6313,11 @@
         <rdfs:comment xml:lang="fr">Capteur météorologique (vent, pression, température de l&apos;air).</rdfs:comment>
         <rdfs:label xml:lang="fr">Capteur météorologique</rdfs:label>
         <rdfs:label xml:lang="en">Meteorological sensor</rdfs:label>
+    </rdf:Description>
+    <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#MilitaryPayload">
+        <rdfs:comment xml:lang="en">Payload specifically designed for a military operational purpose.</rdfs:comment>
+        <rdfs:label xml:lang="fr">Charge utile militaire</rdfs:label>
+        <rdfs:label xml:lang="en">Military payload</rdfs:label>
     </rdf:Description>
     <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#MissileSystem">
         <rdfs:comment xml:lang="fr">Système de missiles embarqués : effecteur d&apos;engagement de cibles à moyenne ou longue portée.</rdfs:comment>
@@ -5750,6 +6353,11 @@
         <rdfs:comment xml:lang="fr">Objet passif d&apos;origine naturelle présent dans le milieu.</rdfs:comment>
         <rdfs:label xml:lang="en">Natural object</rdfs:label>
         <rdfs:label xml:lang="fr">Objet naturel</rdfs:label>
+    </rdf:Description>
+    <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#NavalBase">
+        <rdfs:comment xml:lang="en">Military infrastructure supporting naval command, logistics, maintenance, berthing and operations. It may contain a harbour but is not a subclass of Harbour.</rdfs:comment>
+        <rdfs:label xml:lang="fr">Base navale</rdfs:label>
+        <rdfs:label xml:lang="en">Naval base</rdfs:label>
     </rdf:Description>
     <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#NavalMine">
         <rdfs:comment xml:lang="fr">Mine navale : engin explosif déposé volontairement dans le milieu. Passive une fois posée.</rdfs:comment>
@@ -5836,6 +6444,11 @@
         <rdfs:label xml:lang="en">Passive sonar</rdfs:label>
         <rdfs:label xml:lang="fr">Sonar passif</rdfs:label>
     </rdf:Description>
+    <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#Payload">
+        <rdfs:comment xml:lang="en">Equipment or material carried by a platform for an operational purpose.</rdfs:comment>
+        <rdfs:label xml:lang="fr">Charge utile</rdfs:label>
+        <rdfs:label xml:lang="en">Payload</rdfs:label>
+    </rdf:Description>
     <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#PayloadHostingCapability">
         <rdfs:comment xml:lang="fr">Capacité d&apos;emport : accueillir, alimenter et interfacer une charge utile.</rdfs:comment>
         <rdfs:label xml:lang="fr">Capacité d&apos;emport</rdfs:label>
@@ -5845,6 +6458,16 @@
         <rdfs:comment xml:lang="fr">Capacité à percevoir le monde au travers de senseurs.</rdfs:comment>
         <rdfs:label xml:lang="fr">Capacité de perception</rdfs:label>
         <rdfs:label xml:lang="en">Perception capability</rdfs:label>
+    </rdf:Description>
+    <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#Person">
+        <rdfs:comment xml:lang="en">Human physical entity represented in a maritime scenario.</rdfs:comment>
+        <rdfs:label xml:lang="en">Person</rdfs:label>
+        <rdfs:label xml:lang="fr">Personne</rdfs:label>
+    </rdf:Description>
+    <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#PersonnelGroup">
+        <rdfs:comment xml:lang="en">Collection of persons considered as one structural aggregate.</rdfs:comment>
+        <rdfs:label xml:lang="fr">Groupe de personnel</rdfs:label>
+        <rdfs:label xml:lang="en">Personnel group</rdfs:label>
     </rdf:Description>
     <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#PhysicalCapability">
         <rdfs:comment xml:lang="fr">Fonction qu&apos;un système physique est susceptible de fournir selon son type, sa configuration et son état.</rdfs:comment>
@@ -5904,6 +6527,11 @@
         <rdfs:label xml:lang="fr">Plateforme</rdfs:label>
         <rdfs:label xml:lang="en">Platform</rdfs:label>
     </rdf:Description>
+    <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#PlatformGroup">
+        <rdfs:comment xml:lang="en">Collection of platforms considered as one aggregate. Convoy, task group, swarm and escort group are scenario roles, not ontology subclasses.</rdfs:comment>
+        <rdfs:label xml:lang="fr">Groupe de plateformes</rdfs:label>
+        <rdfs:label xml:lang="en">Platform group</rdfs:label>
+    </rdf:Description>
     <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#PortInfrastructure">
         <rdfs:comment xml:lang="fr">Infrastructure portuaire générale.</rdfs:comment>
         <rdfs:label xml:lang="fr">Infrastructure portuaire</rdfs:label>
@@ -5923,6 +6551,11 @@
         <rdfs:comment xml:lang="fr">Système de propulsion principale ou d&apos;appoint (hélice, hydrojet, thrusters vectoriels des ROV/AUV, rotors).</rdfs:comment>
         <rdfs:label xml:lang="en">Propulsion system</rdfs:label>
         <rdfs:label xml:lang="fr">Système de propulsion</rdfs:label>
+    </rdf:Description>
+    <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#ProtectionCapability">
+        <rdfs:comment xml:lang="en">Capability to preserve another entity, group, area, infrastructure or service against harmful effects.</rdfs:comment>
+        <rdfs:label xml:lang="fr">Capacité de protection</rdfs:label>
+        <rdfs:label xml:lang="en">Protection capability</rdfs:label>
     </rdf:Description>
     <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#Pycnocline">
         <rdfs:comment xml:lang="fr">Couche de fort gradient de densité (combinaison des gradients de température et de salinité). Barrière physique au mélange vertical.</rdfs:comment>
@@ -5974,6 +6607,11 @@
         <rdfs:label xml:lang="en">Reef</rdfs:label>
         <rdfs:label xml:lang="fr">Récif</rdfs:label>
     </rdf:Description>
+    <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#RelayCapability">
+        <rdfs:comment xml:lang="en">Capability to relay communications between otherwise disconnected or range-limited entities.</rdfs:comment>
+        <rdfs:label xml:lang="fr">Capacité de relais</rdfs:label>
+        <rdfs:label xml:lang="en">Relay capability</rdfs:label>
+    </rdf:Description>
     <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#RemotelyOperatedVehicle">
         <rdfs:comment xml:lang="fr">ROV : relié par ombilical, contrôlé en temps réel. Adapté aux interventions et manipulations délicates.</rdfs:comment>
         <rdfs:label xml:lang="fr">ROV</rdfs:label>
@@ -5988,6 +6626,11 @@
         <rdfs:comment xml:lang="fr">Rocher isolé sur le fond ou affleurant. Écho ponctuel dur, confusable avec un objet artificiel.</rdfs:comment>
         <rdfs:label xml:lang="fr">Rocher</rdfs:label>
         <rdfs:label xml:lang="en">Rock</rdfs:label>
+    </rdf:Description>
+    <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#Route">
+        <rdfs:comment xml:lang="en">Ordered spatial path used to organize movement between locations.</rdfs:comment>
+        <rdfs:label xml:lang="en">Route</rdfs:label>
+        <rdfs:label xml:lang="fr">Route</rdfs:label>
     </rdf:Description>
     <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#RouteFollowingCapability">
         <rdfs:comment xml:lang="fr">Capacité de suivi d&apos;une route planifiée.</rdfs:comment>
@@ -6159,6 +6802,11 @@
         <rdfs:label xml:lang="fr">Capacité de remontée en surface</rdfs:label>
         <rdfs:label xml:lang="en">Surfacing capability</rdfs:label>
     </rdf:Description>
+    <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#SurveyCapability">
+        <rdfs:comment xml:lang="en">Capability to systematically characterize an area, route, infrastructure or physical environment.</rdfs:comment>
+        <rdfs:label xml:lang="fr">Capacité de levé</rdfs:label>
+        <rdfs:label xml:lang="en">Survey capability</rdfs:label>
+    </rdf:Description>
     <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#SystemModel">
         <rdfs:comment xml:lang="fr">Modèle (type constructeur) d&apos;un système : porte les capacités potentielles, que la configuration et l&apos;état rendent — ou non — disponibles.</rdfs:comment>
         <rdfs:label xml:lang="fr">Modèle de système</rdfs:label>
@@ -6180,6 +6828,11 @@
         <rdfs:label xml:lang="en">Thermocline</rdfs:label>
         <rdfs:label xml:lang="fr">Thermocline</rdfs:label>
     </rdf:Description>
+    <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#ThreatAssessmentCapability">
+        <rdfs:comment xml:lang="en">Capability to assess whether an observed entity or activity poses an operational threat.</rdfs:comment>
+        <rdfs:label xml:lang="fr">Capacité d&apos;évaluation de menace</rdfs:label>
+        <rdfs:label xml:lang="en">Threat assessment capability</rdfs:label>
+    </rdf:Description>
     <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#Tide">
         <rdfs:comment xml:lang="fr">Variation périodique du niveau et des courants d&apos;origine astronomique. Conditionne les fenêtres d&apos;accès aux zones peu profondes et aux ports.</rdfs:comment>
         <rdfs:label xml:lang="fr">Marée</rdfs:label>
@@ -6189,6 +6842,16 @@
         <rdfs:comment xml:lang="fr">Torpille, considérée ici comme munition présente dans le milieu (épave d&apos;arme, exercice perdu).</rdfs:comment>
         <rdfs:label xml:lang="en">Torpedo</rdfs:label>
         <rdfs:label xml:lang="fr">Torpille</rdfs:label>
+    </rdf:Description>
+    <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#TrackingCapability">
+        <rdfs:comment xml:lang="en">Capability to maintain an estimate of an observed entity state over time.</rdfs:comment>
+        <rdfs:label xml:lang="fr">Capacité de suivi</rdfs:label>
+        <rdfs:label xml:lang="en">Tracking capability</rdfs:label>
+    </rdf:Description>
+    <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#TransportCapability">
+        <rdfs:comment xml:lang="en">Capability to transport personnel, payload or materiel.</rdfs:comment>
+        <rdfs:label xml:lang="fr">Capacité de transport</rdfs:label>
+        <rdfs:label xml:lang="en">Transport capability</rdfs:label>
     </rdf:Description>
     <rdf:Description rdf:about="https://ontology.lotusim.org/naval-maritime#UncrewedAerialVehicle">
         <rdfs:comment xml:lang="fr">Drone aérien (UAV) : voilure fixe ou VTOL, opéré depuis la terre ou une plateforme navale.</rdfs:comment>

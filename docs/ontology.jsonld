@@ -43,7 +43,7 @@
   } ],
   "http://purl.org/dc/terms/modified" : [ {
     "@type" : "http://www.w3.org/2001/XMLSchema#date",
-    "@value" : "2026-07-12"
+    "@value" : "2026-07-13"
   } ],
   "http://purl.org/dc/terms/publisher" : [ {
     "@value" : "Naval Group"
@@ -67,7 +67,7 @@
     "@value" : "Ontologie navale maritime LOTUSim"
   } ],
   "http://www.w3.org/2002/07/owl#versionInfo" : [ {
-    "@value" : "1.1.0-draft"
+    "@value" : "2.0.0-draft"
   } ]
 }, {
   "@id" : "https://ontology.lotusim.org/naval-maritime#AIAccelerator",
@@ -412,6 +412,26 @@
   } ],
   "https://ontology.lotusim.org/naval-maritime#hasUsageDomain" : [ {
     "@id" : "https://ontology.lotusim.org/naval-maritime#CivilUse"
+  } ]
+}, {
+  "@id" : "https://ontology.lotusim.org/naval-maritime#AssessmentCapability",
+  "@type" : [ "http://www.w3.org/2002/07/owl#Class", "http://www.w3.org/2002/07/owl#NamedIndividual" ],
+  "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
+    "@language" : "en",
+    "@value" : "Capability to derive an operational assessment from available information."
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+    "@language" : "en",
+    "@value" : "Assessment capability"
+  }, {
+    "@language" : "fr",
+    "@value" : "Capacité d'évaluation"
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#DataProcessingCapability"
+  } ],
+  "https://ontology.lotusim.org/naval-maritime#hasUsageDomain" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#DualUse"
   } ]
 }, {
   "@id" : "https://ontology.lotusim.org/naval-maritime#Atmosphere",
@@ -907,6 +927,46 @@
     "@id" : "https://ontology.lotusim.org/naval-maritime#CivilUse"
   } ]
 }, {
+  "@id" : "https://ontology.lotusim.org/naval-maritime#CommunicationLink",
+  "@type" : [ "http://www.w3.org/2002/07/owl#Class", "http://www.w3.org/2002/07/owl#NamedIndividual" ],
+  "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
+    "@language" : "en",
+    "@value" : "Technical communication connection between two or more communicating entities."
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+    "@language" : "en",
+    "@value" : "Communication link"
+  }, {
+    "@language" : "fr",
+    "@value" : "Liaison de communication"
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#PhysicalEntity"
+  } ],
+  "https://ontology.lotusim.org/naval-maritime#hasUsageDomain" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#DualUse"
+  } ]
+}, {
+  "@id" : "https://ontology.lotusim.org/naval-maritime#CommunicationNetwork",
+  "@type" : [ "http://www.w3.org/2002/07/owl#Class", "http://www.w3.org/2002/07/owl#NamedIndividual" ],
+  "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
+    "@language" : "en",
+    "@value" : "Set of communication entities and links providing connectivity."
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+    "@language" : "en",
+    "@value" : "Communication network"
+  }, {
+    "@language" : "fr",
+    "@value" : "Réseau de communication"
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#PhysicalEntity"
+  } ],
+  "https://ontology.lotusim.org/naval-maritime#hasUsageDomain" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#DualUse"
+  } ]
+}, {
   "@id" : "https://ontology.lotusim.org/naval-maritime#Compass",
   "@type" : [ "http://www.w3.org/2002/07/owl#Class", "http://www.w3.org/2002/07/owl#NamedIndividual" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
@@ -1002,6 +1062,46 @@
   } ],
   "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
     "@id" : "https://ontology.lotusim.org/naval-maritime#Actuator"
+  } ],
+  "https://ontology.lotusim.org/naval-maritime#hasUsageDomain" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#DualUse"
+  } ]
+}, {
+  "@id" : "https://ontology.lotusim.org/naval-maritime#CoordinationCapability",
+  "@type" : [ "http://www.w3.org/2002/07/owl#Class", "http://www.w3.org/2002/07/owl#NamedIndividual" ],
+  "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
+    "@language" : "en",
+    "@value" : "Capability to synchronize actions or relative states among multiple actors."
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+    "@language" : "fr",
+    "@value" : "Capacité de coordination"
+  }, {
+    "@language" : "en",
+    "@value" : "Coordination capability"
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#DataProcessingCapability"
+  } ],
+  "https://ontology.lotusim.org/naval-maritime#hasUsageDomain" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#DualUse"
+  } ]
+}, {
+  "@id" : "https://ontology.lotusim.org/naval-maritime#Corridor",
+  "@type" : [ "http://www.w3.org/2002/07/owl#Class", "http://www.w3.org/2002/07/owl#NamedIndividual" ],
+  "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
+    "@language" : "en",
+    "@value" : "Bounded spatial passage through which movement or an operation may be organized."
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+    "@language" : "en",
+    "@value" : "Corridor"
+  }, {
+    "@language" : "fr",
+    "@value" : "Corridor"
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#SpatialRegion"
   } ],
   "https://ontology.lotusim.org/naval-maritime#hasUsageDomain" : [ {
     "@id" : "https://ontology.lotusim.org/naval-maritime#DualUse"
@@ -1105,6 +1205,26 @@
   } ],
   "https://ontology.lotusim.org/naval-maritime#hasUsageDomain" : [ {
     "@id" : "https://ontology.lotusim.org/naval-maritime#CivilUse"
+  } ]
+}, {
+  "@id" : "https://ontology.lotusim.org/naval-maritime#Decoy",
+  "@type" : [ "http://www.w3.org/2002/07/owl#Class", "http://www.w3.org/2002/07/owl#NamedIndividual" ],
+  "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
+    "@language" : "en",
+    "@value" : "Physical object designed to create a deceptive signature or apparent target."
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+    "@language" : "en",
+    "@value" : "Decoy"
+  }, {
+    "@language" : "fr",
+    "@value" : "Leurre"
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#PhysicalObject"
+  } ],
+  "https://ontology.lotusim.org/naval-maritime#hasUsageDomain" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#MilitaryUse"
   } ]
 }, {
   "@id" : "https://ontology.lotusim.org/naval-maritime#DemolitionCharge",
@@ -1340,6 +1460,26 @@
     "@id" : "https://ontology.lotusim.org/naval-maritime#CivilUse"
   } ]
 }, {
+  "@id" : "https://ontology.lotusim.org/naval-maritime#ElectronicWarfareCapability",
+  "@type" : [ "http://www.w3.org/2002/07/owl#Class", "http://www.w3.org/2002/07/owl#NamedIndividual" ],
+  "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
+    "@language" : "en",
+    "@value" : "Capability to sense, exploit, protect or apply effects in the electromagnetic environment."
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+    "@language" : "fr",
+    "@value" : "Capacité de guerre électronique"
+  }, {
+    "@language" : "en",
+    "@value" : "Electronic warfare capability"
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#PhysicalCapability"
+  } ],
+  "https://ontology.lotusim.org/naval-maritime#hasUsageDomain" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#MilitaryUse"
+  } ]
+}, {
   "@id" : "https://ontology.lotusim.org/naval-maritime#EmbeddedComputer",
   "@type" : [ "http://www.w3.org/2002/07/owl#Class", "http://www.w3.org/2002/07/owl#NamedIndividual" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
@@ -1421,6 +1561,29 @@
   } ],
   "https://ontology.lotusim.org/naval-maritime#manifestKey" : [ {
     "@value" : "engage.attack_target"
+  } ]
+}, {
+  "@id" : "https://ontology.lotusim.org/naval-maritime#Entity",
+  "@type" : [ "http://www.w3.org/2002/07/owl#Class" ]
+}, {
+  "@id" : "https://ontology.lotusim.org/naval-maritime#EntityGroup",
+  "@type" : [ "http://www.w3.org/2002/07/owl#Class", "http://www.w3.org/2002/07/owl#NamedIndividual" ],
+  "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
+    "@language" : "en",
+    "@value" : "Aggregate of entities considered together for a stable structural purpose. Operational group roles remain in the Scenario Model."
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+    "@language" : "en",
+    "@value" : "Entity group"
+  }, {
+    "@language" : "fr",
+    "@value" : "Groupe d'entités"
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#Entity"
+  } ],
+  "https://ontology.lotusim.org/naval-maritime#hasUsageDomain" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#DualUse"
   } ]
 }, {
   "@id" : "https://ontology.lotusim.org/naval-maritime#EnvironmentalFeature",
@@ -2023,6 +2186,26 @@
     "@id" : "https://ontology.lotusim.org/naval-maritime#CivilUse"
   } ]
 }, {
+  "@id" : "https://ontology.lotusim.org/naval-maritime#IdentificationCapability",
+  "@type" : [ "http://www.w3.org/2002/07/owl#Class", "http://www.w3.org/2002/07/owl#NamedIndividual" ],
+  "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
+    "@language" : "en",
+    "@value" : "Capability to establish an identity assessment for an observed entity."
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+    "@language" : "fr",
+    "@value" : "Capacité d'identification"
+  }, {
+    "@language" : "en",
+    "@value" : "Identification capability"
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#PerceptionCapability"
+  } ],
+  "https://ontology.lotusim.org/naval-maritime#hasUsageDomain" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#DualUse"
+  } ]
+}, {
   "@id" : "https://ontology.lotusim.org/naval-maritime#ImagingRadar",
   "@type" : [ "http://www.w3.org/2002/07/owl#Class", "http://www.w3.org/2002/07/owl#NamedIndividual" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
@@ -2143,6 +2326,26 @@
     "@id" : "https://ontology.lotusim.org/naval-maritime#CivilUse"
   } ]
 }, {
+  "@id" : "https://ontology.lotusim.org/naval-maritime#InspectionCapability",
+  "@type" : [ "http://www.w3.org/2002/07/owl#Class", "http://www.w3.org/2002/07/owl#NamedIndividual" ],
+  "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
+    "@language" : "en",
+    "@value" : "Capability to examine an object or infrastructure at the required level of detail."
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+    "@language" : "fr",
+    "@value" : "Capacité d'inspection"
+  }, {
+    "@language" : "en",
+    "@value" : "Inspection capability"
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#PerceptionCapability"
+  } ],
+  "https://ontology.lotusim.org/naval-maritime#hasUsageDomain" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#DualUse"
+  } ]
+}, {
   "@id" : "https://ontology.lotusim.org/naval-maritime#InstrumentedBuoy",
   "@type" : [ "http://www.w3.org/2002/07/owl#Class", "http://www.w3.org/2002/07/owl#NamedIndividual" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
@@ -2178,6 +2381,46 @@
   } ],
   "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
     "@id" : "https://ontology.lotusim.org/naval-maritime#PhysicalCapability"
+  } ],
+  "https://ontology.lotusim.org/naval-maritime#hasUsageDomain" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#DualUse"
+  } ]
+}, {
+  "@id" : "https://ontology.lotusim.org/naval-maritime#InterdictionCapability",
+  "@type" : [ "http://www.w3.org/2002/07/owl#Class", "http://www.w3.org/2002/07/owl#NamedIndividual" ],
+  "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
+    "@language" : "en",
+    "@value" : "Capability to prevent, constrain, stop or control an entity, movement or activity."
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+    "@language" : "fr",
+    "@value" : "Capacité d'interdiction"
+  }, {
+    "@language" : "en",
+    "@value" : "Interdiction capability"
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#InteractionCapability"
+  } ],
+  "https://ontology.lotusim.org/naval-maritime#hasUsageDomain" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#MilitaryUse"
+  } ]
+}, {
+  "@id" : "https://ontology.lotusim.org/naval-maritime#LaunchAndRecoveryInfrastructure",
+  "@type" : [ "http://www.w3.org/2002/07/owl#Class", "http://www.w3.org/2002/07/owl#NamedIndividual" ],
+  "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
+    "@language" : "en",
+    "@value" : "Infrastructure supporting launch, docking or recovery of platforms."
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+    "@language" : "fr",
+    "@value" : "Infrastructure de mise à l'eau et de récupération"
+  }, {
+    "@language" : "en",
+    "@value" : "Launch and recovery infrastructure"
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#Infrastructure"
   } ],
   "https://ontology.lotusim.org/naval-maritime#hasUsageDomain" : [ {
     "@id" : "https://ontology.lotusim.org/naval-maritime#DualUse"
@@ -2238,6 +2481,26 @@
   } ],
   "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
     "@id" : "https://ontology.lotusim.org/naval-maritime#NavigationCapability"
+  } ],
+  "https://ontology.lotusim.org/naval-maritime#hasUsageDomain" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#DualUse"
+  } ]
+}, {
+  "@id" : "https://ontology.lotusim.org/naval-maritime#LogisticsCapability",
+  "@type" : [ "http://www.w3.org/2002/07/owl#Class", "http://www.w3.org/2002/07/owl#NamedIndividual" ],
+  "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
+    "@language" : "en",
+    "@value" : "Capability to resupply, transfer, refuel, recharge or otherwise sustain platforms and forces."
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+    "@language" : "fr",
+    "@value" : "Capacité logistique"
+  }, {
+    "@language" : "en",
+    "@value" : "Logistics capability"
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#SupportCapability"
   } ],
   "https://ontology.lotusim.org/naval-maritime#hasUsageDomain" : [ {
     "@id" : "https://ontology.lotusim.org/naval-maritime#DualUse"
@@ -2383,6 +2646,26 @@
     "@id" : "https://ontology.lotusim.org/naval-maritime#CivilUse"
   } ]
 }, {
+  "@id" : "https://ontology.lotusim.org/naval-maritime#MaritimeCriticalInfrastructure",
+  "@type" : [ "http://www.w3.org/2002/07/owl#Class", "http://www.w3.org/2002/07/owl#NamedIndividual" ],
+  "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
+    "@language" : "en",
+    "@value" : "Maritime infrastructure whose loss or degradation has significant operational or societal consequences."
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+    "@language" : "fr",
+    "@value" : "Infrastructure maritime critique"
+  }, {
+    "@language" : "en",
+    "@value" : "Maritime critical infrastructure"
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#Infrastructure"
+  } ],
+  "https://ontology.lotusim.org/naval-maritime#hasUsageDomain" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#DualUse"
+  } ]
+}, {
   "@id" : "https://ontology.lotusim.org/naval-maritime#MaritimeEnvironmentEntity",
   "@type" : [ "http://www.w3.org/2002/07/owl#Class", "http://www.w3.org/2002/07/owl#NamedIndividual" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
@@ -2463,6 +2746,26 @@
     "@id" : "https://ontology.lotusim.org/naval-maritime#DualUse"
   } ]
 }, {
+  "@id" : "https://ontology.lotusim.org/naval-maritime#Materiel",
+  "@type" : [ "http://www.w3.org/2002/07/owl#Class", "http://www.w3.org/2002/07/owl#NamedIndividual" ],
+  "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
+    "@language" : "en",
+    "@value" : "Physical supplies, equipment or goods transported, transferred or consumed in support activities."
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+    "@language" : "en",
+    "@value" : "Materiel"
+  }, {
+    "@language" : "fr",
+    "@value" : "Matériel"
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#PhysicalObject"
+  } ],
+  "https://ontology.lotusim.org/naval-maritime#hasUsageDomain" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#DualUse"
+  } ]
+}, {
   "@id" : "https://ontology.lotusim.org/naval-maritime#MerchantShip",
   "@type" : [ "http://www.w3.org/2002/07/owl#Class", "http://www.w3.org/2002/07/owl#NamedIndividual" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
@@ -2501,6 +2804,26 @@
   } ],
   "https://ontology.lotusim.org/naval-maritime#hasUsageDomain" : [ {
     "@id" : "https://ontology.lotusim.org/naval-maritime#CivilUse"
+  } ]
+}, {
+  "@id" : "https://ontology.lotusim.org/naval-maritime#MilitaryPayload",
+  "@type" : [ "http://www.w3.org/2002/07/owl#Class", "http://www.w3.org/2002/07/owl#NamedIndividual" ],
+  "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
+    "@language" : "en",
+    "@value" : "Payload specifically designed for a military operational purpose."
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+    "@language" : "fr",
+    "@value" : "Charge utile militaire"
+  }, {
+    "@language" : "en",
+    "@value" : "Military payload"
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#Payload"
+  } ],
+  "https://ontology.lotusim.org/naval-maritime#hasUsageDomain" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#MilitaryUse"
   } ]
 }, {
   "@id" : "https://ontology.lotusim.org/naval-maritime#MilitaryUse",
@@ -2654,6 +2977,26 @@
   } ],
   "https://ontology.lotusim.org/naval-maritime#hasUsageDomain" : [ {
     "@id" : "https://ontology.lotusim.org/naval-maritime#CivilUse"
+  } ]
+}, {
+  "@id" : "https://ontology.lotusim.org/naval-maritime#NavalBase",
+  "@type" : [ "http://www.w3.org/2002/07/owl#Class", "http://www.w3.org/2002/07/owl#NamedIndividual" ],
+  "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
+    "@language" : "en",
+    "@value" : "Military infrastructure supporting naval command, logistics, maintenance, berthing and operations. It may contain a harbour but is not a subclass of Harbour."
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+    "@language" : "fr",
+    "@value" : "Base navale"
+  }, {
+    "@language" : "en",
+    "@value" : "Naval base"
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#Infrastructure"
+  } ],
+  "https://ontology.lotusim.org/naval-maritime#hasUsageDomain" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#MilitaryUse"
   } ]
 }, {
   "@id" : "https://ontology.lotusim.org/naval-maritime#NavalMine",
@@ -2996,6 +3339,26 @@
     "@id" : "https://ontology.lotusim.org/naval-maritime#DualUse"
   } ]
 }, {
+  "@id" : "https://ontology.lotusim.org/naval-maritime#Payload",
+  "@type" : [ "http://www.w3.org/2002/07/owl#Class", "http://www.w3.org/2002/07/owl#NamedIndividual" ],
+  "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
+    "@language" : "en",
+    "@value" : "Equipment or material carried by a platform for an operational purpose."
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+    "@language" : "fr",
+    "@value" : "Charge utile"
+  }, {
+    "@language" : "en",
+    "@value" : "Payload"
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#PhysicalObject"
+  } ],
+  "https://ontology.lotusim.org/naval-maritime#hasUsageDomain" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#DualUse"
+  } ]
+}, {
   "@id" : "https://ontology.lotusim.org/naval-maritime#PayloadHostingCapability",
   "@type" : [ "http://www.w3.org/2002/07/owl#Class", "http://www.w3.org/2002/07/owl#NamedIndividual" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
@@ -3034,6 +3397,46 @@
   } ],
   "https://ontology.lotusim.org/naval-maritime#hasUsageDomain" : [ {
     "@id" : "https://ontology.lotusim.org/naval-maritime#CivilUse"
+  } ]
+}, {
+  "@id" : "https://ontology.lotusim.org/naval-maritime#Person",
+  "@type" : [ "http://www.w3.org/2002/07/owl#Class", "http://www.w3.org/2002/07/owl#NamedIndividual" ],
+  "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
+    "@language" : "en",
+    "@value" : "Human physical entity represented in a maritime scenario."
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+    "@language" : "en",
+    "@value" : "Person"
+  }, {
+    "@language" : "fr",
+    "@value" : "Personne"
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#PhysicalEntity"
+  } ],
+  "https://ontology.lotusim.org/naval-maritime#hasUsageDomain" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#CivilUse"
+  } ]
+}, {
+  "@id" : "https://ontology.lotusim.org/naval-maritime#PersonnelGroup",
+  "@type" : [ "http://www.w3.org/2002/07/owl#Class", "http://www.w3.org/2002/07/owl#NamedIndividual" ],
+  "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
+    "@language" : "en",
+    "@value" : "Collection of persons considered as one structural aggregate."
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+    "@language" : "fr",
+    "@value" : "Groupe de personnel"
+  }, {
+    "@language" : "en",
+    "@value" : "Personnel group"
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#EntityGroup"
+  } ],
+  "https://ontology.lotusim.org/naval-maritime#hasUsageDomain" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#DualUse"
   } ]
 }, {
   "@id" : "https://ontology.lotusim.org/naval-maritime#PhysicalCapability",
@@ -3263,6 +3666,26 @@
     "@id" : "https://ontology.lotusim.org/naval-maritime#CivilUse"
   } ]
 }, {
+  "@id" : "https://ontology.lotusim.org/naval-maritime#PlatformGroup",
+  "@type" : [ "http://www.w3.org/2002/07/owl#Class", "http://www.w3.org/2002/07/owl#NamedIndividual" ],
+  "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
+    "@language" : "en",
+    "@value" : "Collection of platforms considered as one aggregate. Convoy, task group, swarm and escort group are scenario roles, not ontology subclasses."
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+    "@language" : "fr",
+    "@value" : "Groupe de plateformes"
+  }, {
+    "@language" : "en",
+    "@value" : "Platform group"
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#EntityGroup"
+  } ],
+  "https://ontology.lotusim.org/naval-maritime#hasUsageDomain" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#DualUse"
+  } ]
+}, {
   "@id" : "https://ontology.lotusim.org/naval-maritime#PortInfrastructure",
   "@type" : [ "http://www.w3.org/2002/07/owl#Class", "http://www.w3.org/2002/07/owl#NamedIndividual" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
@@ -3338,6 +3761,26 @@
   } ],
   "https://ontology.lotusim.org/naval-maritime#hasUsageDomain" : [ {
     "@id" : "https://ontology.lotusim.org/naval-maritime#DualUse"
+  } ]
+}, {
+  "@id" : "https://ontology.lotusim.org/naval-maritime#ProtectionCapability",
+  "@type" : [ "http://www.w3.org/2002/07/owl#Class", "http://www.w3.org/2002/07/owl#NamedIndividual" ],
+  "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
+    "@language" : "en",
+    "@value" : "Capability to preserve another entity, group, area, infrastructure or service against harmful effects."
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+    "@language" : "fr",
+    "@value" : "Capacité de protection"
+  }, {
+    "@language" : "en",
+    "@value" : "Protection capability"
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#InteractionCapability"
+  } ],
+  "https://ontology.lotusim.org/naval-maritime#hasUsageDomain" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#MilitaryUse"
   } ]
 }, {
   "@id" : "https://ontology.lotusim.org/naval-maritime#Pycnocline",
@@ -3540,6 +3983,26 @@
     "@id" : "https://ontology.lotusim.org/naval-maritime#CivilUse"
   } ]
 }, {
+  "@id" : "https://ontology.lotusim.org/naval-maritime#RelayCapability",
+  "@type" : [ "http://www.w3.org/2002/07/owl#Class", "http://www.w3.org/2002/07/owl#NamedIndividual" ],
+  "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
+    "@language" : "en",
+    "@value" : "Capability to relay communications between otherwise disconnected or range-limited entities."
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+    "@language" : "fr",
+    "@value" : "Capacité de relais"
+  }, {
+    "@language" : "en",
+    "@value" : "Relay capability"
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#CommunicationCapability"
+  } ],
+  "https://ontology.lotusim.org/naval-maritime#hasUsageDomain" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#DualUse"
+  } ]
+}, {
   "@id" : "https://ontology.lotusim.org/naval-maritime#RemotelyOperatedVehicle",
   "@type" : [ "http://www.w3.org/2002/07/owl#Class", "http://www.w3.org/2002/07/owl#NamedIndividual" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
@@ -3595,6 +4058,26 @@
   } ],
   "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
     "@id" : "https://ontology.lotusim.org/naval-maritime#NaturalObject"
+  } ],
+  "https://ontology.lotusim.org/naval-maritime#hasUsageDomain" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#CivilUse"
+  } ]
+}, {
+  "@id" : "https://ontology.lotusim.org/naval-maritime#Route",
+  "@type" : [ "http://www.w3.org/2002/07/owl#Class", "http://www.w3.org/2002/07/owl#NamedIndividual" ],
+  "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
+    "@language" : "en",
+    "@value" : "Ordered spatial path used to organize movement between locations."
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+    "@language" : "en",
+    "@value" : "Route"
+  }, {
+    "@language" : "fr",
+    "@value" : "Route"
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#SpatialRegion"
   } ],
   "https://ontology.lotusim.org/naval-maritime#hasUsageDomain" : [ {
     "@id" : "https://ontology.lotusim.org/naval-maritime#CivilUse"
@@ -4282,6 +4765,26 @@
     "@id" : "https://ontology.lotusim.org/naval-maritime#DualUse"
   } ]
 }, {
+  "@id" : "https://ontology.lotusim.org/naval-maritime#SurveyCapability",
+  "@type" : [ "http://www.w3.org/2002/07/owl#Class", "http://www.w3.org/2002/07/owl#NamedIndividual" ],
+  "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
+    "@language" : "en",
+    "@value" : "Capability to systematically characterize an area, route, infrastructure or physical environment."
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+    "@language" : "fr",
+    "@value" : "Capacité de levé"
+  }, {
+    "@language" : "en",
+    "@value" : "Survey capability"
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#PerceptionCapability"
+  } ],
+  "https://ontology.lotusim.org/naval-maritime#hasUsageDomain" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#DualUse"
+  } ]
+}, {
   "@id" : "https://ontology.lotusim.org/naval-maritime#SystemModel",
   "@type" : [ "http://www.w3.org/2002/07/owl#Class", "http://www.w3.org/2002/07/owl#NamedIndividual" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
@@ -4362,6 +4865,26 @@
     "@id" : "https://ontology.lotusim.org/naval-maritime#CivilUse"
   } ]
 }, {
+  "@id" : "https://ontology.lotusim.org/naval-maritime#ThreatAssessmentCapability",
+  "@type" : [ "http://www.w3.org/2002/07/owl#Class", "http://www.w3.org/2002/07/owl#NamedIndividual" ],
+  "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
+    "@language" : "en",
+    "@value" : "Capability to assess whether an observed entity or activity poses an operational threat."
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+    "@language" : "fr",
+    "@value" : "Capacité d'évaluation de menace"
+  }, {
+    "@language" : "en",
+    "@value" : "Threat assessment capability"
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#AssessmentCapability"
+  } ],
+  "https://ontology.lotusim.org/naval-maritime#hasUsageDomain" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#MilitaryUse"
+  } ]
+}, {
   "@id" : "https://ontology.lotusim.org/naval-maritime#Tide",
   "@type" : [ "http://www.w3.org/2002/07/owl#Class", "http://www.w3.org/2002/07/owl#NamedIndividual" ],
   "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
@@ -4400,6 +4923,46 @@
   } ],
   "https://ontology.lotusim.org/naval-maritime#hasUsageDomain" : [ {
     "@id" : "https://ontology.lotusim.org/naval-maritime#MilitaryUse"
+  } ]
+}, {
+  "@id" : "https://ontology.lotusim.org/naval-maritime#TrackingCapability",
+  "@type" : [ "http://www.w3.org/2002/07/owl#Class", "http://www.w3.org/2002/07/owl#NamedIndividual" ],
+  "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
+    "@language" : "en",
+    "@value" : "Capability to maintain an estimate of an observed entity state over time."
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+    "@language" : "fr",
+    "@value" : "Capacité de suivi"
+  }, {
+    "@language" : "en",
+    "@value" : "Tracking capability"
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#PerceptionCapability"
+  } ],
+  "https://ontology.lotusim.org/naval-maritime#hasUsageDomain" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#DualUse"
+  } ]
+}, {
+  "@id" : "https://ontology.lotusim.org/naval-maritime#TransportCapability",
+  "@type" : [ "http://www.w3.org/2002/07/owl#Class", "http://www.w3.org/2002/07/owl#NamedIndividual" ],
+  "http://www.w3.org/2000/01/rdf-schema#comment" : [ {
+    "@language" : "en",
+    "@value" : "Capability to transport personnel, payload or materiel."
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+    "@language" : "fr",
+    "@value" : "Capacité de transport"
+  }, {
+    "@language" : "en",
+    "@value" : "Transport capability"
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#SupportCapability"
+  } ],
+  "https://ontology.lotusim.org/naval-maritime#hasUsageDomain" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#DualUse"
   } ]
 }, {
   "@id" : "https://ontology.lotusim.org/naval-maritime#UncrewedAerialVehicle",
@@ -5136,6 +5699,22 @@
   } ],
   "http://www.w3.org/2000/01/rdf-schema#range" : [ {
     "@id" : "https://ontology.lotusim.org/naval-maritime#PhysicalMedium"
+  } ]
+}, {
+  "@id" : "https://ontology.lotusim.org/naval-maritime#hasMember",
+  "@type" : [ "http://www.w3.org/2002/07/owl#ObjectProperty" ],
+  "http://www.w3.org/2000/01/rdf-schema#domain" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#EntityGroup"
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+    "@language" : "fr",
+    "@value" : "a pour membre"
+  }, {
+    "@language" : "en",
+    "@value" : "has member"
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#range" : [ {
+    "@id" : "https://ontology.lotusim.org/naval-maritime#Entity"
   } ]
 }, {
   "@id" : "https://ontology.lotusim.org/naval-maritime#hasPhysicalPart",

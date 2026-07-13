@@ -1,14 +1,14 @@
 <https://ontology.lotusim.org/naval-maritime> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Ontology> .
 <https://ontology.lotusim.org/naval-maritime> <http://purl.org/dc/terms/creator> "Estelle Chauveau (Naval Group, PO LOTUSim)" .
 <https://ontology.lotusim.org/naval-maritime> <http://purl.org/dc/terms/description> "Physical-world ontology for LOTUSim covering systems, platforms, equipment, physical objects, infrastructure, maritime environment, states, configurations, properties and physical capabilities."@en .
-<https://ontology.lotusim.org/naval-maritime> <http://purl.org/dc/terms/modified> "2026-07-12"^^<http://www.w3.org/2001/XMLSchema#date> .
+<https://ontology.lotusim.org/naval-maritime> <http://purl.org/dc/terms/modified> "2026-07-13"^^<http://www.w3.org/2001/XMLSchema#date> .
 <https://ontology.lotusim.org/naval-maritime> <http://purl.org/dc/terms/publisher> "Naval Group" .
 <https://ontology.lotusim.org/naval-maritime> <http://purl.org/dc/terms/title> "LOTUSim Naval Maritime Ontology"@en .
 <https://ontology.lotusim.org/naval-maritime> <http://www.w3.org/2000/01/rdf-schema#comment> "Ontologie de référence décrivant le monde naval physique simulable à un instant donné. Elle exclut les missions, objectifs, tâches, rôles opérationnels, observations, événements, doctrine et planification."@fr .
 <https://ontology.lotusim.org/naval-maritime> <http://www.w3.org/2000/01/rdf-schema#comment> "Vocabulaire normatif de LOTUSim : les types du profil HDDL, le vocabulaire du schéma de scénario (agents, zones) et les familles des manifestes de capacités (nmo:manifestKey) en dérivent. Chaque classe porte une annotation de diffusabilité (nmo:hasUsageDomain : civil / dual-use / militaire) conditionnant sa présence dans les exports publics."@fr .
 <https://ontology.lotusim.org/naval-maritime> <http://www.w3.org/2000/01/rdf-schema#label> "LOTUSim Naval Maritime Ontology"@en .
 <https://ontology.lotusim.org/naval-maritime> <http://www.w3.org/2000/01/rdf-schema#label> "Ontologie navale maritime LOTUSim"@fr .
-<https://ontology.lotusim.org/naval-maritime> <http://www.w3.org/2002/07/owl#versionInfo> "1.1.0-draft" .
+<https://ontology.lotusim.org/naval-maritime> <http://www.w3.org/2002/07/owl#versionInfo> "2.0.0-draft" .
 # 
 # 
 # #################################################################
@@ -179,6 +179,14 @@
 <https://ontology.lotusim.org/naval-maritime#hasMedium> <http://www.w3.org/2000/01/rdf-schema#range> <https://ontology.lotusim.org/naval-maritime#PhysicalMedium> .
 <https://ontology.lotusim.org/naval-maritime#hasMedium> <http://www.w3.org/2000/01/rdf-schema#label> "a pour milieu"@fr .
 <https://ontology.lotusim.org/naval-maritime#hasMedium> <http://www.w3.org/2000/01/rdf-schema#label> "has medium"@en .
+# 
+# https://ontology.lotusim.org/naval-maritime#hasMember
+<https://ontology.lotusim.org/naval-maritime#hasMember> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://ontology.lotusim.org/naval-maritime#hasMember> <http://www.w3.org/2000/01/rdf-schema#domain> <https://ontology.lotusim.org/naval-maritime#EntityGroup> .
+<https://ontology.lotusim.org/naval-maritime#hasMember> <http://www.w3.org/2000/01/rdf-schema#range> <https://ontology.lotusim.org/naval-maritime#Entity> .
+<https://ontology.lotusim.org/naval-maritime#Entity> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://ontology.lotusim.org/naval-maritime#hasMember> <http://www.w3.org/2000/01/rdf-schema#label> "a pour membre"@fr .
+<https://ontology.lotusim.org/naval-maritime#hasMember> <http://www.w3.org/2000/01/rdf-schema#label> "has member"@en .
 # 
 # https://ontology.lotusim.org/naval-maritime#hasPhysicalPart
 <https://ontology.lotusim.org/naval-maritime#hasPhysicalPart> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
@@ -557,6 +565,10 @@
 <https://ontology.lotusim.org/naval-maritime#ArtificialObject> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
 <https://ontology.lotusim.org/naval-maritime#ArtificialObject> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#PhysicalObject> .
 # 
+# https://ontology.lotusim.org/naval-maritime#AssessmentCapability
+<https://ontology.lotusim.org/naval-maritime#AssessmentCapability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://ontology.lotusim.org/naval-maritime#AssessmentCapability> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#DataProcessingCapability> .
+# 
 # https://ontology.lotusim.org/naval-maritime#Atmosphere
 <https://ontology.lotusim.org/naval-maritime#Atmosphere> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
 <https://ontology.lotusim.org/naval-maritime#Atmosphere> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#PhysicalMedium> .
@@ -653,6 +665,14 @@
 <https://ontology.lotusim.org/naval-maritime#CommunicationDevice> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
 <https://ontology.lotusim.org/naval-maritime#CommunicationDevice> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#Equipment> .
 # 
+# https://ontology.lotusim.org/naval-maritime#CommunicationLink
+<https://ontology.lotusim.org/naval-maritime#CommunicationLink> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://ontology.lotusim.org/naval-maritime#CommunicationLink> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#PhysicalEntity> .
+# 
+# https://ontology.lotusim.org/naval-maritime#CommunicationNetwork
+<https://ontology.lotusim.org/naval-maritime#CommunicationNetwork> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://ontology.lotusim.org/naval-maritime#CommunicationNetwork> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#PhysicalEntity> .
+# 
 # https://ontology.lotusim.org/naval-maritime#Compass
 <https://ontology.lotusim.org/naval-maritime#Compass> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
 <https://ontology.lotusim.org/naval-maritime#Compass> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#NavigationSensor> .
@@ -673,6 +693,14 @@
 <https://ontology.lotusim.org/naval-maritime#ControlSurface> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
 <https://ontology.lotusim.org/naval-maritime#ControlSurface> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#Actuator> .
 # 
+# https://ontology.lotusim.org/naval-maritime#CoordinationCapability
+<https://ontology.lotusim.org/naval-maritime#CoordinationCapability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://ontology.lotusim.org/naval-maritime#CoordinationCapability> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#DataProcessingCapability> .
+# 
+# https://ontology.lotusim.org/naval-maritime#Corridor
+<https://ontology.lotusim.org/naval-maritime#Corridor> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://ontology.lotusim.org/naval-maritime#Corridor> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#SpatialRegion> .
+# 
 # https://ontology.lotusim.org/naval-maritime#Current
 <https://ontology.lotusim.org/naval-maritime#Current> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
 <https://ontology.lotusim.org/naval-maritime#Current> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#EnvironmentalPhenomenon> .
@@ -692,6 +720,10 @@
 # https://ontology.lotusim.org/naval-maritime#Debris
 <https://ontology.lotusim.org/naval-maritime#Debris> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
 <https://ontology.lotusim.org/naval-maritime#Debris> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#PhysicalObject> .
+# 
+# https://ontology.lotusim.org/naval-maritime#Decoy
+<https://ontology.lotusim.org/naval-maritime#Decoy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://ontology.lotusim.org/naval-maritime#Decoy> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#PhysicalObject> .
 # 
 # https://ontology.lotusim.org/naval-maritime#DemolitionCharge
 <https://ontology.lotusim.org/naval-maritime#DemolitionCharge> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
@@ -737,6 +769,10 @@
 <https://ontology.lotusim.org/naval-maritime#EchoSounder> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
 <https://ontology.lotusim.org/naval-maritime#EchoSounder> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#AcousticSensor> .
 # 
+# https://ontology.lotusim.org/naval-maritime#ElectronicWarfareCapability
+<https://ontology.lotusim.org/naval-maritime#ElectronicWarfareCapability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://ontology.lotusim.org/naval-maritime#ElectronicWarfareCapability> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#PhysicalCapability> .
+# 
 # https://ontology.lotusim.org/naval-maritime#EmbeddedComputer
 <https://ontology.lotusim.org/naval-maritime#EmbeddedComputer> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
 <https://ontology.lotusim.org/naval-maritime#EmbeddedComputer> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#ComputingDevice> .
@@ -752,6 +788,12 @@
 # https://ontology.lotusim.org/naval-maritime#EngagementCapability
 <https://ontology.lotusim.org/naval-maritime#EngagementCapability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
 <https://ontology.lotusim.org/naval-maritime#EngagementCapability> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#InteractionCapability> .
+# 
+# https://ontology.lotusim.org/naval-maritime#Entity
+# 
+# https://ontology.lotusim.org/naval-maritime#EntityGroup
+<https://ontology.lotusim.org/naval-maritime#EntityGroup> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://ontology.lotusim.org/naval-maritime#EntityGroup> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#Entity> .
 # 
 # https://ontology.lotusim.org/naval-maritime#EnvironmentalFeature
 <https://ontology.lotusim.org/naval-maritime#EnvironmentalFeature> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
@@ -873,6 +915,10 @@
 <https://ontology.lotusim.org/naval-maritime#IceObject> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
 <https://ontology.lotusim.org/naval-maritime#IceObject> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#NaturalObject> .
 # 
+# https://ontology.lotusim.org/naval-maritime#IdentificationCapability
+<https://ontology.lotusim.org/naval-maritime#IdentificationCapability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://ontology.lotusim.org/naval-maritime#IdentificationCapability> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#PerceptionCapability> .
+# 
 # https://ontology.lotusim.org/naval-maritime#ImagingRadar
 <https://ontology.lotusim.org/naval-maritime#ImagingRadar> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
 <https://ontology.lotusim.org/naval-maritime#ImagingRadar> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#RadioFrequencySensor> .
@@ -897,6 +943,10 @@
 <https://ontology.lotusim.org/naval-maritime#Infrastructure> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
 <https://ontology.lotusim.org/naval-maritime#Infrastructure> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#PhysicalSystem> .
 # 
+# https://ontology.lotusim.org/naval-maritime#InspectionCapability
+<https://ontology.lotusim.org/naval-maritime#InspectionCapability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://ontology.lotusim.org/naval-maritime#InspectionCapability> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#PerceptionCapability> .
+# 
 # https://ontology.lotusim.org/naval-maritime#InstrumentedBuoy
 <https://ontology.lotusim.org/naval-maritime#InstrumentedBuoy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
 <https://ontology.lotusim.org/naval-maritime#InstrumentedBuoy> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#FixedPlatform> .
@@ -904,6 +954,14 @@
 # https://ontology.lotusim.org/naval-maritime#InteractionCapability
 <https://ontology.lotusim.org/naval-maritime#InteractionCapability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
 <https://ontology.lotusim.org/naval-maritime#InteractionCapability> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#PhysicalCapability> .
+# 
+# https://ontology.lotusim.org/naval-maritime#InterdictionCapability
+<https://ontology.lotusim.org/naval-maritime#InterdictionCapability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://ontology.lotusim.org/naval-maritime#InterdictionCapability> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#InteractionCapability> .
+# 
+# https://ontology.lotusim.org/naval-maritime#LaunchAndRecoveryInfrastructure
+<https://ontology.lotusim.org/naval-maritime#LaunchAndRecoveryInfrastructure> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://ontology.lotusim.org/naval-maritime#LaunchAndRecoveryInfrastructure> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#Infrastructure> .
 # 
 # https://ontology.lotusim.org/naval-maritime#Lidar
 <https://ontology.lotusim.org/naval-maritime#Lidar> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
@@ -916,6 +974,10 @@
 # https://ontology.lotusim.org/naval-maritime#LocalizationCapability
 <https://ontology.lotusim.org/naval-maritime#LocalizationCapability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
 <https://ontology.lotusim.org/naval-maritime#LocalizationCapability> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#NavigationCapability> .
+# 
+# https://ontology.lotusim.org/naval-maritime#LogisticsCapability
+<https://ontology.lotusim.org/naval-maritime#LogisticsCapability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://ontology.lotusim.org/naval-maritime#LogisticsCapability> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#SupportCapability> .
 # 
 # https://ontology.lotusim.org/naval-maritime#LostEquipment
 <https://ontology.lotusim.org/naval-maritime#LostEquipment> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
@@ -945,6 +1007,10 @@
 <https://ontology.lotusim.org/naval-maritime#MaritimeArea> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
 <https://ontology.lotusim.org/naval-maritime#MaritimeArea> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#SpatialRegion> .
 # 
+# https://ontology.lotusim.org/naval-maritime#MaritimeCriticalInfrastructure
+<https://ontology.lotusim.org/naval-maritime#MaritimeCriticalInfrastructure> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://ontology.lotusim.org/naval-maritime#MaritimeCriticalInfrastructure> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#Infrastructure> .
+# 
 # https://ontology.lotusim.org/naval-maritime#MaritimeEnvironmentEntity
 <https://ontology.lotusim.org/naval-maritime#MaritimeEnvironmentEntity> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
 <https://ontology.lotusim.org/naval-maritime#MaritimeEnvironmentEntity> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#PhysicalEntity> .
@@ -961,6 +1027,10 @@
 <https://ontology.lotusim.org/naval-maritime#MarkingSystem> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
 <https://ontology.lotusim.org/naval-maritime#MarkingSystem> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#Actuator> .
 # 
+# https://ontology.lotusim.org/naval-maritime#Materiel
+<https://ontology.lotusim.org/naval-maritime#Materiel> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://ontology.lotusim.org/naval-maritime#Materiel> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#PhysicalObject> .
+# 
 # https://ontology.lotusim.org/naval-maritime#MerchantShip
 <https://ontology.lotusim.org/naval-maritime#MerchantShip> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
 <https://ontology.lotusim.org/naval-maritime#MerchantShip> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#Ship> .
@@ -968,6 +1038,10 @@
 # https://ontology.lotusim.org/naval-maritime#MeteorologicalSensor
 <https://ontology.lotusim.org/naval-maritime#MeteorologicalSensor> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
 <https://ontology.lotusim.org/naval-maritime#MeteorologicalSensor> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#EnvironmentalSensor> .
+# 
+# https://ontology.lotusim.org/naval-maritime#MilitaryPayload
+<https://ontology.lotusim.org/naval-maritime#MilitaryPayload> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://ontology.lotusim.org/naval-maritime#MilitaryPayload> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#Payload> .
 # 
 # https://ontology.lotusim.org/naval-maritime#MissileSystem
 <https://ontology.lotusim.org/naval-maritime#MissileSystem> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
@@ -996,6 +1070,10 @@
 # https://ontology.lotusim.org/naval-maritime#NaturalObject
 <https://ontology.lotusim.org/naval-maritime#NaturalObject> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
 <https://ontology.lotusim.org/naval-maritime#NaturalObject> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#PhysicalObject> .
+# 
+# https://ontology.lotusim.org/naval-maritime#NavalBase
+<https://ontology.lotusim.org/naval-maritime#NavalBase> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://ontology.lotusim.org/naval-maritime#NavalBase> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#Infrastructure> .
 # 
 # https://ontology.lotusim.org/naval-maritime#NavalMine
 <https://ontology.lotusim.org/naval-maritime#NavalMine> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
@@ -1065,6 +1143,10 @@
 <https://ontology.lotusim.org/naval-maritime#PassiveSonar> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
 <https://ontology.lotusim.org/naval-maritime#PassiveSonar> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#AcousticSensor> .
 # 
+# https://ontology.lotusim.org/naval-maritime#Payload
+<https://ontology.lotusim.org/naval-maritime#Payload> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://ontology.lotusim.org/naval-maritime#Payload> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#PhysicalObject> .
+# 
 # https://ontology.lotusim.org/naval-maritime#PayloadHostingCapability
 <https://ontology.lotusim.org/naval-maritime#PayloadHostingCapability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
 <https://ontology.lotusim.org/naval-maritime#PayloadHostingCapability> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#SupportCapability> .
@@ -1072,6 +1154,14 @@
 # https://ontology.lotusim.org/naval-maritime#PerceptionCapability
 <https://ontology.lotusim.org/naval-maritime#PerceptionCapability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
 <https://ontology.lotusim.org/naval-maritime#PerceptionCapability> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#PhysicalCapability> .
+# 
+# https://ontology.lotusim.org/naval-maritime#Person
+<https://ontology.lotusim.org/naval-maritime#Person> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://ontology.lotusim.org/naval-maritime#Person> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#PhysicalEntity> .
+# 
+# https://ontology.lotusim.org/naval-maritime#PersonnelGroup
+<https://ontology.lotusim.org/naval-maritime#PersonnelGroup> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://ontology.lotusim.org/naval-maritime#PersonnelGroup> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#EntityGroup> .
 # 
 # https://ontology.lotusim.org/naval-maritime#PhysicalCapability
 <https://ontology.lotusim.org/naval-maritime#PhysicalCapability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
@@ -1117,6 +1207,10 @@
 <https://ontology.lotusim.org/naval-maritime#Platform> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/sosa/Platform> .
 <https://ontology.lotusim.org/naval-maritime#Platform> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#PhysicalSystem> .
 # 
+# https://ontology.lotusim.org/naval-maritime#PlatformGroup
+<https://ontology.lotusim.org/naval-maritime#PlatformGroup> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://ontology.lotusim.org/naval-maritime#PlatformGroup> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#EntityGroup> .
+# 
 # https://ontology.lotusim.org/naval-maritime#PortInfrastructure
 <https://ontology.lotusim.org/naval-maritime#PortInfrastructure> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
 <https://ontology.lotusim.org/naval-maritime#PortInfrastructure> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#CoastalInfrastructure> .
@@ -1131,6 +1225,10 @@
 # https://ontology.lotusim.org/naval-maritime#PropulsionSystem
 <https://ontology.lotusim.org/naval-maritime#PropulsionSystem> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
 <https://ontology.lotusim.org/naval-maritime#PropulsionSystem> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#Actuator> .
+# 
+# https://ontology.lotusim.org/naval-maritime#ProtectionCapability
+<https://ontology.lotusim.org/naval-maritime#ProtectionCapability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://ontology.lotusim.org/naval-maritime#ProtectionCapability> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#InteractionCapability> .
 # 
 # https://ontology.lotusim.org/naval-maritime#Pycnocline
 <https://ontology.lotusim.org/naval-maritime#Pycnocline> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
@@ -1172,6 +1270,10 @@
 <https://ontology.lotusim.org/naval-maritime#Reef> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
 <https://ontology.lotusim.org/naval-maritime#Reef> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#NaturalObject> .
 # 
+# https://ontology.lotusim.org/naval-maritime#RelayCapability
+<https://ontology.lotusim.org/naval-maritime#RelayCapability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://ontology.lotusim.org/naval-maritime#RelayCapability> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#CommunicationCapability> .
+# 
 # https://ontology.lotusim.org/naval-maritime#RemotelyOperatedVehicle
 <https://ontology.lotusim.org/naval-maritime#RemotelyOperatedVehicle> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
 <https://ontology.lotusim.org/naval-maritime#RemotelyOperatedVehicle> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#UncrewedUnderwaterVehicle> .
@@ -1183,6 +1285,10 @@
 # https://ontology.lotusim.org/naval-maritime#Rock
 <https://ontology.lotusim.org/naval-maritime#Rock> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
 <https://ontology.lotusim.org/naval-maritime#Rock> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#NaturalObject> .
+# 
+# https://ontology.lotusim.org/naval-maritime#Route
+<https://ontology.lotusim.org/naval-maritime#Route> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://ontology.lotusim.org/naval-maritime#Route> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#SpatialRegion> .
 # 
 # https://ontology.lotusim.org/naval-maritime#RouteFollowingCapability
 <https://ontology.lotusim.org/naval-maritime#RouteFollowingCapability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
@@ -1321,6 +1427,10 @@
 <https://ontology.lotusim.org/naval-maritime#SurfacingCapability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
 <https://ontology.lotusim.org/naval-maritime#SurfacingCapability> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#MobilityCapability> .
 # 
+# https://ontology.lotusim.org/naval-maritime#SurveyCapability
+<https://ontology.lotusim.org/naval-maritime#SurveyCapability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://ontology.lotusim.org/naval-maritime#SurveyCapability> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#PerceptionCapability> .
+# 
 # https://ontology.lotusim.org/naval-maritime#SystemModel
 <https://ontology.lotusim.org/naval-maritime#SystemModel> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
 # 
@@ -1336,6 +1446,10 @@
 <https://ontology.lotusim.org/naval-maritime#Thermocline> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
 <https://ontology.lotusim.org/naval-maritime#Thermocline> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#EnvironmentalFeature> .
 # 
+# https://ontology.lotusim.org/naval-maritime#ThreatAssessmentCapability
+<https://ontology.lotusim.org/naval-maritime#ThreatAssessmentCapability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://ontology.lotusim.org/naval-maritime#ThreatAssessmentCapability> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#AssessmentCapability> .
+# 
 # https://ontology.lotusim.org/naval-maritime#Tide
 <https://ontology.lotusim.org/naval-maritime#Tide> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
 <https://ontology.lotusim.org/naval-maritime#Tide> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#EnvironmentalPhenomenon> .
@@ -1343,6 +1457,14 @@
 # https://ontology.lotusim.org/naval-maritime#Torpedo
 <https://ontology.lotusim.org/naval-maritime#Torpedo> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
 <https://ontology.lotusim.org/naval-maritime#Torpedo> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#UnexplodedOrdnance> .
+# 
+# https://ontology.lotusim.org/naval-maritime#TrackingCapability
+<https://ontology.lotusim.org/naval-maritime#TrackingCapability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://ontology.lotusim.org/naval-maritime#TrackingCapability> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#PerceptionCapability> .
+# 
+# https://ontology.lotusim.org/naval-maritime#TransportCapability
+<https://ontology.lotusim.org/naval-maritime#TransportCapability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://ontology.lotusim.org/naval-maritime#TransportCapability> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://ontology.lotusim.org/naval-maritime#SupportCapability> .
 # 
 # https://ontology.lotusim.org/naval-maritime#UncrewedAerialVehicle
 <https://ontology.lotusim.org/naval-maritime#UncrewedAerialVehicle> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
@@ -1506,6 +1628,10 @@
 <https://ontology.lotusim.org/naval-maritime#ArtificialObject> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
 <https://ontology.lotusim.org/naval-maritime#ArtificialObject> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#CivilUse> .
 # 
+# https://ontology.lotusim.org/naval-maritime#AssessmentCapability
+<https://ontology.lotusim.org/naval-maritime#AssessmentCapability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<https://ontology.lotusim.org/naval-maritime#AssessmentCapability> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#DualUse> .
+# 
 # https://ontology.lotusim.org/naval-maritime#Atmosphere
 <https://ontology.lotusim.org/naval-maritime#Atmosphere> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
 <https://ontology.lotusim.org/naval-maritime#Atmosphere> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#CivilUse> .
@@ -1608,6 +1734,14 @@
 <https://ontology.lotusim.org/naval-maritime#CommunicationDevice> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
 <https://ontology.lotusim.org/naval-maritime#CommunicationDevice> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#CivilUse> .
 # 
+# https://ontology.lotusim.org/naval-maritime#CommunicationLink
+<https://ontology.lotusim.org/naval-maritime#CommunicationLink> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<https://ontology.lotusim.org/naval-maritime#CommunicationLink> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#DualUse> .
+# 
+# https://ontology.lotusim.org/naval-maritime#CommunicationNetwork
+<https://ontology.lotusim.org/naval-maritime#CommunicationNetwork> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<https://ontology.lotusim.org/naval-maritime#CommunicationNetwork> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#DualUse> .
+# 
 # https://ontology.lotusim.org/naval-maritime#Compass
 <https://ontology.lotusim.org/naval-maritime#Compass> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
 <https://ontology.lotusim.org/naval-maritime#Compass> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#CivilUse> .
@@ -1628,6 +1762,14 @@
 <https://ontology.lotusim.org/naval-maritime#ControlSurface> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
 <https://ontology.lotusim.org/naval-maritime#ControlSurface> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#DualUse> .
 # 
+# https://ontology.lotusim.org/naval-maritime#CoordinationCapability
+<https://ontology.lotusim.org/naval-maritime#CoordinationCapability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<https://ontology.lotusim.org/naval-maritime#CoordinationCapability> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#DualUse> .
+# 
+# https://ontology.lotusim.org/naval-maritime#Corridor
+<https://ontology.lotusim.org/naval-maritime#Corridor> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<https://ontology.lotusim.org/naval-maritime#Corridor> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#DualUse> .
+# 
 # https://ontology.lotusim.org/naval-maritime#Current
 <https://ontology.lotusim.org/naval-maritime#Current> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
 <https://ontology.lotusim.org/naval-maritime#Current> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#CivilUse> .
@@ -1647,6 +1789,10 @@
 # https://ontology.lotusim.org/naval-maritime#Debris
 <https://ontology.lotusim.org/naval-maritime#Debris> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
 <https://ontology.lotusim.org/naval-maritime#Debris> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#CivilUse> .
+# 
+# https://ontology.lotusim.org/naval-maritime#Decoy
+<https://ontology.lotusim.org/naval-maritime#Decoy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<https://ontology.lotusim.org/naval-maritime#Decoy> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#MilitaryUse> .
 # 
 # https://ontology.lotusim.org/naval-maritime#DemolitionCharge
 <https://ontology.lotusim.org/naval-maritime#DemolitionCharge> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
@@ -1697,6 +1843,10 @@
 <https://ontology.lotusim.org/naval-maritime#EchoSounder> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
 <https://ontology.lotusim.org/naval-maritime#EchoSounder> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#CivilUse> .
 # 
+# https://ontology.lotusim.org/naval-maritime#ElectronicWarfareCapability
+<https://ontology.lotusim.org/naval-maritime#ElectronicWarfareCapability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<https://ontology.lotusim.org/naval-maritime#ElectronicWarfareCapability> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#MilitaryUse> .
+# 
 # https://ontology.lotusim.org/naval-maritime#EmbeddedComputer
 <https://ontology.lotusim.org/naval-maritime#EmbeddedComputer> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
 <https://ontology.lotusim.org/naval-maritime#EmbeddedComputer> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#CivilUse> .
@@ -1712,6 +1862,10 @@
 # https://ontology.lotusim.org/naval-maritime#EngagementCapability
 <https://ontology.lotusim.org/naval-maritime#EngagementCapability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
 <https://ontology.lotusim.org/naval-maritime#EngagementCapability> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#MilitaryUse> .
+# 
+# https://ontology.lotusim.org/naval-maritime#EntityGroup
+<https://ontology.lotusim.org/naval-maritime#EntityGroup> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<https://ontology.lotusim.org/naval-maritime#EntityGroup> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#DualUse> .
 # 
 # https://ontology.lotusim.org/naval-maritime#EnvironmentalFeature
 <https://ontology.lotusim.org/naval-maritime#EnvironmentalFeature> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
@@ -1833,6 +1987,10 @@
 <https://ontology.lotusim.org/naval-maritime#IceObject> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
 <https://ontology.lotusim.org/naval-maritime#IceObject> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#CivilUse> .
 # 
+# https://ontology.lotusim.org/naval-maritime#IdentificationCapability
+<https://ontology.lotusim.org/naval-maritime#IdentificationCapability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<https://ontology.lotusim.org/naval-maritime#IdentificationCapability> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#DualUse> .
+# 
 # https://ontology.lotusim.org/naval-maritime#ImagingRadar
 <https://ontology.lotusim.org/naval-maritime#ImagingRadar> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
 <https://ontology.lotusim.org/naval-maritime#ImagingRadar> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#MilitaryUse> .
@@ -1857,6 +2015,10 @@
 <https://ontology.lotusim.org/naval-maritime#Infrastructure> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
 <https://ontology.lotusim.org/naval-maritime#Infrastructure> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#CivilUse> .
 # 
+# https://ontology.lotusim.org/naval-maritime#InspectionCapability
+<https://ontology.lotusim.org/naval-maritime#InspectionCapability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<https://ontology.lotusim.org/naval-maritime#InspectionCapability> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#DualUse> .
+# 
 # https://ontology.lotusim.org/naval-maritime#InstrumentedBuoy
 <https://ontology.lotusim.org/naval-maritime#InstrumentedBuoy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
 <https://ontology.lotusim.org/naval-maritime#InstrumentedBuoy> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#CivilUse> .
@@ -1864,6 +2026,14 @@
 # https://ontology.lotusim.org/naval-maritime#InteractionCapability
 <https://ontology.lotusim.org/naval-maritime#InteractionCapability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
 <https://ontology.lotusim.org/naval-maritime#InteractionCapability> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#DualUse> .
+# 
+# https://ontology.lotusim.org/naval-maritime#InterdictionCapability
+<https://ontology.lotusim.org/naval-maritime#InterdictionCapability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<https://ontology.lotusim.org/naval-maritime#InterdictionCapability> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#MilitaryUse> .
+# 
+# https://ontology.lotusim.org/naval-maritime#LaunchAndRecoveryInfrastructure
+<https://ontology.lotusim.org/naval-maritime#LaunchAndRecoveryInfrastructure> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<https://ontology.lotusim.org/naval-maritime#LaunchAndRecoveryInfrastructure> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#DualUse> .
 # 
 # https://ontology.lotusim.org/naval-maritime#Lidar
 <https://ontology.lotusim.org/naval-maritime#Lidar> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
@@ -1876,6 +2046,10 @@
 # https://ontology.lotusim.org/naval-maritime#LocalizationCapability
 <https://ontology.lotusim.org/naval-maritime#LocalizationCapability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
 <https://ontology.lotusim.org/naval-maritime#LocalizationCapability> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#DualUse> .
+# 
+# https://ontology.lotusim.org/naval-maritime#LogisticsCapability
+<https://ontology.lotusim.org/naval-maritime#LogisticsCapability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<https://ontology.lotusim.org/naval-maritime#LogisticsCapability> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#DualUse> .
 # 
 # https://ontology.lotusim.org/naval-maritime#LostEquipment
 <https://ontology.lotusim.org/naval-maritime#LostEquipment> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
@@ -1905,6 +2079,10 @@
 <https://ontology.lotusim.org/naval-maritime#MaritimeArea> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
 <https://ontology.lotusim.org/naval-maritime#MaritimeArea> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#CivilUse> .
 # 
+# https://ontology.lotusim.org/naval-maritime#MaritimeCriticalInfrastructure
+<https://ontology.lotusim.org/naval-maritime#MaritimeCriticalInfrastructure> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<https://ontology.lotusim.org/naval-maritime#MaritimeCriticalInfrastructure> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#DualUse> .
+# 
 # https://ontology.lotusim.org/naval-maritime#MaritimeEnvironmentEntity
 <https://ontology.lotusim.org/naval-maritime#MaritimeEnvironmentEntity> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
 <https://ontology.lotusim.org/naval-maritime#MaritimeEnvironmentEntity> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#CivilUse> .
@@ -1921,6 +2099,10 @@
 <https://ontology.lotusim.org/naval-maritime#MarkingSystem> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
 <https://ontology.lotusim.org/naval-maritime#MarkingSystem> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#DualUse> .
 # 
+# https://ontology.lotusim.org/naval-maritime#Materiel
+<https://ontology.lotusim.org/naval-maritime#Materiel> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<https://ontology.lotusim.org/naval-maritime#Materiel> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#DualUse> .
+# 
 # https://ontology.lotusim.org/naval-maritime#MerchantShip
 <https://ontology.lotusim.org/naval-maritime#MerchantShip> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
 <https://ontology.lotusim.org/naval-maritime#MerchantShip> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#CivilUse> .
@@ -1928,6 +2110,10 @@
 # https://ontology.lotusim.org/naval-maritime#MeteorologicalSensor
 <https://ontology.lotusim.org/naval-maritime#MeteorologicalSensor> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
 <https://ontology.lotusim.org/naval-maritime#MeteorologicalSensor> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#CivilUse> .
+# 
+# https://ontology.lotusim.org/naval-maritime#MilitaryPayload
+<https://ontology.lotusim.org/naval-maritime#MilitaryPayload> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<https://ontology.lotusim.org/naval-maritime#MilitaryPayload> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#MilitaryUse> .
 # 
 # https://ontology.lotusim.org/naval-maritime#MilitaryUse
 <https://ontology.lotusim.org/naval-maritime#MilitaryUse> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://ontology.lotusim.org/naval-maritime#UsageDomain> .
@@ -1961,6 +2147,10 @@
 # https://ontology.lotusim.org/naval-maritime#NaturalObject
 <https://ontology.lotusim.org/naval-maritime#NaturalObject> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
 <https://ontology.lotusim.org/naval-maritime#NaturalObject> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#CivilUse> .
+# 
+# https://ontology.lotusim.org/naval-maritime#NavalBase
+<https://ontology.lotusim.org/naval-maritime#NavalBase> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<https://ontology.lotusim.org/naval-maritime#NavalBase> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#MilitaryUse> .
 # 
 # https://ontology.lotusim.org/naval-maritime#NavalMine
 <https://ontology.lotusim.org/naval-maritime#NavalMine> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
@@ -2030,6 +2220,10 @@
 <https://ontology.lotusim.org/naval-maritime#PassiveSonar> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
 <https://ontology.lotusim.org/naval-maritime#PassiveSonar> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#DualUse> .
 # 
+# https://ontology.lotusim.org/naval-maritime#Payload
+<https://ontology.lotusim.org/naval-maritime#Payload> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<https://ontology.lotusim.org/naval-maritime#Payload> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#DualUse> .
+# 
 # https://ontology.lotusim.org/naval-maritime#PayloadHostingCapability
 <https://ontology.lotusim.org/naval-maritime#PayloadHostingCapability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
 <https://ontology.lotusim.org/naval-maritime#PayloadHostingCapability> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#CivilUse> .
@@ -2037,6 +2231,14 @@
 # https://ontology.lotusim.org/naval-maritime#PerceptionCapability
 <https://ontology.lotusim.org/naval-maritime#PerceptionCapability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
 <https://ontology.lotusim.org/naval-maritime#PerceptionCapability> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#CivilUse> .
+# 
+# https://ontology.lotusim.org/naval-maritime#Person
+<https://ontology.lotusim.org/naval-maritime#Person> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<https://ontology.lotusim.org/naval-maritime#Person> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#CivilUse> .
+# 
+# https://ontology.lotusim.org/naval-maritime#PersonnelGroup
+<https://ontology.lotusim.org/naval-maritime#PersonnelGroup> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<https://ontology.lotusim.org/naval-maritime#PersonnelGroup> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#DualUse> .
 # 
 # https://ontology.lotusim.org/naval-maritime#PhysicalCapability
 <https://ontology.lotusim.org/naval-maritime#PhysicalCapability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
@@ -2082,6 +2284,10 @@
 <https://ontology.lotusim.org/naval-maritime#Platform> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
 <https://ontology.lotusim.org/naval-maritime#Platform> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#CivilUse> .
 # 
+# https://ontology.lotusim.org/naval-maritime#PlatformGroup
+<https://ontology.lotusim.org/naval-maritime#PlatformGroup> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<https://ontology.lotusim.org/naval-maritime#PlatformGroup> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#DualUse> .
+# 
 # https://ontology.lotusim.org/naval-maritime#PortInfrastructure
 <https://ontology.lotusim.org/naval-maritime#PortInfrastructure> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
 <https://ontology.lotusim.org/naval-maritime#PortInfrastructure> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#CivilUse> .
@@ -2097,6 +2303,10 @@
 # https://ontology.lotusim.org/naval-maritime#PropulsionSystem
 <https://ontology.lotusim.org/naval-maritime#PropulsionSystem> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
 <https://ontology.lotusim.org/naval-maritime#PropulsionSystem> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#DualUse> .
+# 
+# https://ontology.lotusim.org/naval-maritime#ProtectionCapability
+<https://ontology.lotusim.org/naval-maritime#ProtectionCapability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<https://ontology.lotusim.org/naval-maritime#ProtectionCapability> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#MilitaryUse> .
 # 
 # https://ontology.lotusim.org/naval-maritime#Pycnocline
 <https://ontology.lotusim.org/naval-maritime#Pycnocline> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
@@ -2138,6 +2348,10 @@
 <https://ontology.lotusim.org/naval-maritime#Reef> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
 <https://ontology.lotusim.org/naval-maritime#Reef> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#CivilUse> .
 # 
+# https://ontology.lotusim.org/naval-maritime#RelayCapability
+<https://ontology.lotusim.org/naval-maritime#RelayCapability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<https://ontology.lotusim.org/naval-maritime#RelayCapability> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#DualUse> .
+# 
 # https://ontology.lotusim.org/naval-maritime#RemotelyOperatedVehicle
 <https://ontology.lotusim.org/naval-maritime#RemotelyOperatedVehicle> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
 <https://ontology.lotusim.org/naval-maritime#RemotelyOperatedVehicle> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#DualUse> .
@@ -2149,6 +2363,10 @@
 # https://ontology.lotusim.org/naval-maritime#Rock
 <https://ontology.lotusim.org/naval-maritime#Rock> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
 <https://ontology.lotusim.org/naval-maritime#Rock> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#CivilUse> .
+# 
+# https://ontology.lotusim.org/naval-maritime#Route
+<https://ontology.lotusim.org/naval-maritime#Route> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<https://ontology.lotusim.org/naval-maritime#Route> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#CivilUse> .
 # 
 # https://ontology.lotusim.org/naval-maritime#RouteFollowingCapability
 <https://ontology.lotusim.org/naval-maritime#RouteFollowingCapability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
@@ -2286,6 +2504,10 @@
 <https://ontology.lotusim.org/naval-maritime#SurfacingCapability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
 <https://ontology.lotusim.org/naval-maritime#SurfacingCapability> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#DualUse> .
 # 
+# https://ontology.lotusim.org/naval-maritime#SurveyCapability
+<https://ontology.lotusim.org/naval-maritime#SurveyCapability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<https://ontology.lotusim.org/naval-maritime#SurveyCapability> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#DualUse> .
+# 
 # https://ontology.lotusim.org/naval-maritime#SystemModel
 <https://ontology.lotusim.org/naval-maritime#SystemModel> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
 <https://ontology.lotusim.org/naval-maritime#SystemModel> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#CivilUse> .
@@ -2302,6 +2524,10 @@
 <https://ontology.lotusim.org/naval-maritime#Thermocline> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
 <https://ontology.lotusim.org/naval-maritime#Thermocline> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#CivilUse> .
 # 
+# https://ontology.lotusim.org/naval-maritime#ThreatAssessmentCapability
+<https://ontology.lotusim.org/naval-maritime#ThreatAssessmentCapability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<https://ontology.lotusim.org/naval-maritime#ThreatAssessmentCapability> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#MilitaryUse> .
+# 
 # https://ontology.lotusim.org/naval-maritime#Tide
 <https://ontology.lotusim.org/naval-maritime#Tide> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
 <https://ontology.lotusim.org/naval-maritime#Tide> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#CivilUse> .
@@ -2309,6 +2535,14 @@
 # https://ontology.lotusim.org/naval-maritime#Torpedo
 <https://ontology.lotusim.org/naval-maritime#Torpedo> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
 <https://ontology.lotusim.org/naval-maritime#Torpedo> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#MilitaryUse> .
+# 
+# https://ontology.lotusim.org/naval-maritime#TrackingCapability
+<https://ontology.lotusim.org/naval-maritime#TrackingCapability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<https://ontology.lotusim.org/naval-maritime#TrackingCapability> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#DualUse> .
+# 
+# https://ontology.lotusim.org/naval-maritime#TransportCapability
+<https://ontology.lotusim.org/naval-maritime#TransportCapability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
+<https://ontology.lotusim.org/naval-maritime#TransportCapability> <https://ontology.lotusim.org/naval-maritime#hasUsageDomain> <https://ontology.lotusim.org/naval-maritime#DualUse> .
 # 
 # https://ontology.lotusim.org/naval-maritime#UncrewedAerialVehicle
 <https://ontology.lotusim.org/naval-maritime#UncrewedAerialVehicle> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
@@ -2472,6 +2706,10 @@
 <https://ontology.lotusim.org/naval-maritime#ArtificialObject> <http://www.w3.org/2000/01/rdf-schema#label> "Artificial object"@en .
 <https://ontology.lotusim.org/naval-maritime#ArtificialObject> <http://www.w3.org/2000/01/rdf-schema#label> "Objet artificiel"@fr .
 # 
+<https://ontology.lotusim.org/naval-maritime#AssessmentCapability> <http://www.w3.org/2000/01/rdf-schema#comment> "Capability to derive an operational assessment from available information."@en .
+<https://ontology.lotusim.org/naval-maritime#AssessmentCapability> <http://www.w3.org/2000/01/rdf-schema#label> "Assessment capability"@en .
+<https://ontology.lotusim.org/naval-maritime#AssessmentCapability> <http://www.w3.org/2000/01/rdf-schema#label> "Capacité d'évaluation"@fr .
+# 
 <https://ontology.lotusim.org/naval-maritime#Atmosphere> <http://www.w3.org/2000/01/rdf-schema#comment> "Milieu gazeux au-dessus de la surface. Siège des phénomènes météorologiques et milieu de propagation des ondes radio et optiques."@fr .
 <https://ontology.lotusim.org/naval-maritime#Atmosphere> <http://www.w3.org/2000/01/rdf-schema#label> "Atmosphere"@en .
 <https://ontology.lotusim.org/naval-maritime#Atmosphere> <http://www.w3.org/2000/01/rdf-schema#label> "Atmosphère"@fr .
@@ -2568,6 +2806,14 @@
 <https://ontology.lotusim.org/naval-maritime#CommunicationDevice> <http://www.w3.org/2000/01/rdf-schema#label> "Communication device"@en .
 <https://ontology.lotusim.org/naval-maritime#CommunicationDevice> <http://www.w3.org/2000/01/rdf-schema#label> "Équipement de communication"@fr .
 # 
+<https://ontology.lotusim.org/naval-maritime#CommunicationLink> <http://www.w3.org/2000/01/rdf-schema#comment> "Technical communication connection between two or more communicating entities."@en .
+<https://ontology.lotusim.org/naval-maritime#CommunicationLink> <http://www.w3.org/2000/01/rdf-schema#label> "Communication link"@en .
+<https://ontology.lotusim.org/naval-maritime#CommunicationLink> <http://www.w3.org/2000/01/rdf-schema#label> "Liaison de communication"@fr .
+# 
+<https://ontology.lotusim.org/naval-maritime#CommunicationNetwork> <http://www.w3.org/2000/01/rdf-schema#comment> "Set of communication entities and links providing connectivity."@en .
+<https://ontology.lotusim.org/naval-maritime#CommunicationNetwork> <http://www.w3.org/2000/01/rdf-schema#label> "Communication network"@en .
+<https://ontology.lotusim.org/naval-maritime#CommunicationNetwork> <http://www.w3.org/2000/01/rdf-schema#label> "Réseau de communication"@fr .
+# 
 <https://ontology.lotusim.org/naval-maritime#Compass> <http://www.w3.org/2000/01/rdf-schema#comment> "Compas : cap magnétique ou gyroscopique."@fr .
 <https://ontology.lotusim.org/naval-maritime#Compass> <http://www.w3.org/2000/01/rdf-schema#label> "Compas"@fr .
 <https://ontology.lotusim.org/naval-maritime#Compass> <http://www.w3.org/2000/01/rdf-schema#label> "Compass"@en .
@@ -2588,6 +2834,14 @@
 <https://ontology.lotusim.org/naval-maritime#ControlSurface> <http://www.w3.org/2000/01/rdf-schema#label> "Control surface"@en .
 <https://ontology.lotusim.org/naval-maritime#ControlSurface> <http://www.w3.org/2000/01/rdf-schema#label> "Gouverne"@fr .
 # 
+<https://ontology.lotusim.org/naval-maritime#CoordinationCapability> <http://www.w3.org/2000/01/rdf-schema#comment> "Capability to synchronize actions or relative states among multiple actors."@en .
+<https://ontology.lotusim.org/naval-maritime#CoordinationCapability> <http://www.w3.org/2000/01/rdf-schema#label> "Capacité de coordination"@fr .
+<https://ontology.lotusim.org/naval-maritime#CoordinationCapability> <http://www.w3.org/2000/01/rdf-schema#label> "Coordination capability"@en .
+# 
+<https://ontology.lotusim.org/naval-maritime#Corridor> <http://www.w3.org/2000/01/rdf-schema#comment> "Bounded spatial passage through which movement or an operation may be organized."@en .
+<https://ontology.lotusim.org/naval-maritime#Corridor> <http://www.w3.org/2000/01/rdf-schema#label> "Corridor"@en .
+<https://ontology.lotusim.org/naval-maritime#Corridor> <http://www.w3.org/2000/01/rdf-schema#label> "Corridor"@fr .
+# 
 <https://ontology.lotusim.org/naval-maritime#Current> <http://www.w3.org/2000/01/rdf-schema#comment> "Courant marin : déplace et fait dériver les plateformes, en particulier les plus lentes (AUV, glider, ROV) ; contraint la navigation et la tenue de trajectoire."@fr .
 <https://ontology.lotusim.org/naval-maritime#Current> <http://www.w3.org/2000/01/rdf-schema#label> "Courant"@fr .
 <https://ontology.lotusim.org/naval-maritime#Current> <http://www.w3.org/2000/01/rdf-schema#label> "Current"@en .
@@ -2607,6 +2861,10 @@
 <https://ontology.lotusim.org/naval-maritime#Debris> <http://www.w3.org/2000/01/rdf-schema#comment> "Débris ou objet perdu, posé ou dérivant. Générateur de fausses alarmes en détection."@fr .
 <https://ontology.lotusim.org/naval-maritime#Debris> <http://www.w3.org/2000/01/rdf-schema#label> "Debris"@en .
 <https://ontology.lotusim.org/naval-maritime#Debris> <http://www.w3.org/2000/01/rdf-schema#label> "Débris"@fr .
+# 
+<https://ontology.lotusim.org/naval-maritime#Decoy> <http://www.w3.org/2000/01/rdf-schema#comment> "Physical object designed to create a deceptive signature or apparent target."@en .
+<https://ontology.lotusim.org/naval-maritime#Decoy> <http://www.w3.org/2000/01/rdf-schema#label> "Decoy"@en .
+<https://ontology.lotusim.org/naval-maritime#Decoy> <http://www.w3.org/2000/01/rdf-schema#label> "Leurre"@fr .
 # 
 <https://ontology.lotusim.org/naval-maritime#DemolitionCharge> <http://www.w3.org/2000/01/rdf-schema#comment> "Charge de démolition : explosif mis en œuvre pour neutraliser un engin ou détruire une structure."@fr .
 <https://ontology.lotusim.org/naval-maritime#DemolitionCharge> <http://www.w3.org/2000/01/rdf-schema#label> "Charge de démolition"@fr .
@@ -2652,6 +2910,10 @@
 <https://ontology.lotusim.org/naval-maritime#EchoSounder> <http://www.w3.org/2000/01/rdf-schema#label> "Echo sounder"@en .
 <https://ontology.lotusim.org/naval-maritime#EchoSounder> <http://www.w3.org/2000/01/rdf-schema#label> "Sondeur"@fr .
 # 
+<https://ontology.lotusim.org/naval-maritime#ElectronicWarfareCapability> <http://www.w3.org/2000/01/rdf-schema#comment> "Capability to sense, exploit, protect or apply effects in the electromagnetic environment."@en .
+<https://ontology.lotusim.org/naval-maritime#ElectronicWarfareCapability> <http://www.w3.org/2000/01/rdf-schema#label> "Capacité de guerre électronique"@fr .
+<https://ontology.lotusim.org/naval-maritime#ElectronicWarfareCapability> <http://www.w3.org/2000/01/rdf-schema#label> "Electronic warfare capability"@en .
+# 
 <https://ontology.lotusim.org/naval-maritime#EmbeddedComputer> <http://www.w3.org/2000/01/rdf-schema#comment> "Ordinateur embarqué : calculateur généraliste de la plateforme."@fr .
 <https://ontology.lotusim.org/naval-maritime#EmbeddedComputer> <http://www.w3.org/2000/01/rdf-schema#label> "Embedded computer"@en .
 <https://ontology.lotusim.org/naval-maritime#EmbeddedComputer> <http://www.w3.org/2000/01/rdf-schema#label> "Ordinateur embarqué"@fr .
@@ -2668,6 +2930,10 @@
 <https://ontology.lotusim.org/naval-maritime#EngagementCapability> <http://www.w3.org/2000/01/rdf-schema#label> "Capacité d'engagement"@fr .
 <https://ontology.lotusim.org/naval-maritime#EngagementCapability> <http://www.w3.org/2000/01/rdf-schema#label> "Engagement capability"@en .
 <https://ontology.lotusim.org/naval-maritime#EngagementCapability> <https://ontology.lotusim.org/naval-maritime#manifestKey> "engage.attack_target" .
+# 
+<https://ontology.lotusim.org/naval-maritime#EntityGroup> <http://www.w3.org/2000/01/rdf-schema#comment> "Aggregate of entities considered together for a stable structural purpose. Operational group roles remain in the Scenario Model."@en .
+<https://ontology.lotusim.org/naval-maritime#EntityGroup> <http://www.w3.org/2000/01/rdf-schema#label> "Entity group"@en .
+<https://ontology.lotusim.org/naval-maritime#EntityGroup> <http://www.w3.org/2000/01/rdf-schema#label> "Groupe d'entités"@fr .
 # 
 <https://ontology.lotusim.org/naval-maritime#EnvironmentalFeature> <http://www.w3.org/2000/01/rdf-schema#comment> "Caractéristique structurelle du milieu, quasi statique à l'échelle d'un scénario (thermocline, relief, glace)."@fr .
 <https://ontology.lotusim.org/naval-maritime#EnvironmentalFeature> <http://www.w3.org/2000/01/rdf-schema#label> "Caractéristique environnementale"@fr .
@@ -2789,6 +3055,10 @@
 <https://ontology.lotusim.org/naval-maritime#IceObject> <http://www.w3.org/2000/01/rdf-schema#label> "Ice object"@en .
 <https://ontology.lotusim.org/naval-maritime#IceObject> <http://www.w3.org/2000/01/rdf-schema#label> "Objet de glace"@fr .
 # 
+<https://ontology.lotusim.org/naval-maritime#IdentificationCapability> <http://www.w3.org/2000/01/rdf-schema#comment> "Capability to establish an identity assessment for an observed entity."@en .
+<https://ontology.lotusim.org/naval-maritime#IdentificationCapability> <http://www.w3.org/2000/01/rdf-schema#label> "Capacité d'identification"@fr .
+<https://ontology.lotusim.org/naval-maritime#IdentificationCapability> <http://www.w3.org/2000/01/rdf-schema#label> "Identification capability"@en .
+# 
 <https://ontology.lotusim.org/naval-maritime#ImagingRadar> <http://www.w3.org/2000/01/rdf-schema#comment> "Radar imageur ou à onde de surface haute fréquence (détection au-delà de l'horizon)."@fr .
 <https://ontology.lotusim.org/naval-maritime#ImagingRadar> <http://www.w3.org/2000/01/rdf-schema#label> "Imaging radar"@en .
 <https://ontology.lotusim.org/naval-maritime#ImagingRadar> <http://www.w3.org/2000/01/rdf-schema#label> "Radar imageur"@fr .
@@ -2813,6 +3083,10 @@
 <https://ontology.lotusim.org/naval-maritime#Infrastructure> <http://www.w3.org/2000/01/rdf-schema#label> "Infrastructure"@en .
 <https://ontology.lotusim.org/naval-maritime#Infrastructure> <http://www.w3.org/2000/01/rdf-schema#label> "Infrastructure"@fr .
 # 
+<https://ontology.lotusim.org/naval-maritime#InspectionCapability> <http://www.w3.org/2000/01/rdf-schema#comment> "Capability to examine an object or infrastructure at the required level of detail."@en .
+<https://ontology.lotusim.org/naval-maritime#InspectionCapability> <http://www.w3.org/2000/01/rdf-schema#label> "Capacité d'inspection"@fr .
+<https://ontology.lotusim.org/naval-maritime#InspectionCapability> <http://www.w3.org/2000/01/rdf-schema#label> "Inspection capability"@en .
+# 
 <https://ontology.lotusim.org/naval-maritime#InstrumentedBuoy> <http://www.w3.org/2000/01/rdf-schema#comment> "Bouée ou mouillage instrumenté : plateforme fixe de mesure."@fr .
 <https://ontology.lotusim.org/naval-maritime#InstrumentedBuoy> <http://www.w3.org/2000/01/rdf-schema#label> "Bouée instrumentée"@fr .
 <https://ontology.lotusim.org/naval-maritime#InstrumentedBuoy> <http://www.w3.org/2000/01/rdf-schema#label> "Instrumented buoy"@en .
@@ -2820,6 +3094,14 @@
 <https://ontology.lotusim.org/naval-maritime#InteractionCapability> <http://www.w3.org/2000/01/rdf-schema#comment> "Capacité à agir physiquement sur un objet du monde."@fr .
 <https://ontology.lotusim.org/naval-maritime#InteractionCapability> <http://www.w3.org/2000/01/rdf-schema#label> "Capacité d'interaction"@fr .
 <https://ontology.lotusim.org/naval-maritime#InteractionCapability> <http://www.w3.org/2000/01/rdf-schema#label> "Interaction capability"@en .
+# 
+<https://ontology.lotusim.org/naval-maritime#InterdictionCapability> <http://www.w3.org/2000/01/rdf-schema#comment> "Capability to prevent, constrain, stop or control an entity, movement or activity."@en .
+<https://ontology.lotusim.org/naval-maritime#InterdictionCapability> <http://www.w3.org/2000/01/rdf-schema#label> "Capacité d'interdiction"@fr .
+<https://ontology.lotusim.org/naval-maritime#InterdictionCapability> <http://www.w3.org/2000/01/rdf-schema#label> "Interdiction capability"@en .
+# 
+<https://ontology.lotusim.org/naval-maritime#LaunchAndRecoveryInfrastructure> <http://www.w3.org/2000/01/rdf-schema#comment> "Infrastructure supporting launch, docking or recovery of platforms."@en .
+<https://ontology.lotusim.org/naval-maritime#LaunchAndRecoveryInfrastructure> <http://www.w3.org/2000/01/rdf-schema#label> "Infrastructure de mise à l'eau et de récupération"@fr .
+<https://ontology.lotusim.org/naval-maritime#LaunchAndRecoveryInfrastructure> <http://www.w3.org/2000/01/rdf-schema#label> "Launch and recovery infrastructure"@en .
 # 
 <https://ontology.lotusim.org/naval-maritime#Lidar> <http://www.w3.org/2000/01/rdf-schema#comment> "Lidar : télémétrie laser. En version bathymétrique, pénètre les eaux claires peu profondes ; portée dégradée par la turbidité."@fr .
 <https://ontology.lotusim.org/naval-maritime#Lidar> <http://www.w3.org/2000/01/rdf-schema#label> "Lidar"@en .
@@ -2832,6 +3114,10 @@
 <https://ontology.lotusim.org/naval-maritime#LocalizationCapability> <http://www.w3.org/2000/01/rdf-schema#comment> "Capacité à estimer la position d'un objet ou la sienne propre."@fr .
 <https://ontology.lotusim.org/naval-maritime#LocalizationCapability> <http://www.w3.org/2000/01/rdf-schema#label> "Capacité de localisation"@fr .
 <https://ontology.lotusim.org/naval-maritime#LocalizationCapability> <http://www.w3.org/2000/01/rdf-schema#label> "Localization capability"@en .
+# 
+<https://ontology.lotusim.org/naval-maritime#LogisticsCapability> <http://www.w3.org/2000/01/rdf-schema#comment> "Capability to resupply, transfer, refuel, recharge or otherwise sustain platforms and forces."@en .
+<https://ontology.lotusim.org/naval-maritime#LogisticsCapability> <http://www.w3.org/2000/01/rdf-schema#label> "Capacité logistique"@fr .
+<https://ontology.lotusim.org/naval-maritime#LogisticsCapability> <http://www.w3.org/2000/01/rdf-schema#label> "Logistics capability"@en .
 # 
 <https://ontology.lotusim.org/naval-maritime#LostEquipment> <http://www.w3.org/2000/01/rdf-schema#comment> "Équipement perdu à la mer (engin de pêche, instrument, charge)."@fr .
 <https://ontology.lotusim.org/naval-maritime#LostEquipment> <http://www.w3.org/2000/01/rdf-schema#label> "Lost equipment"@en .
@@ -2861,6 +3147,10 @@
 <https://ontology.lotusim.org/naval-maritime#MaritimeArea> <http://www.w3.org/2000/01/rdf-schema#label> "Maritime area"@en .
 <https://ontology.lotusim.org/naval-maritime#MaritimeArea> <http://www.w3.org/2000/01/rdf-schema#label> "Zone maritime"@fr .
 # 
+<https://ontology.lotusim.org/naval-maritime#MaritimeCriticalInfrastructure> <http://www.w3.org/2000/01/rdf-schema#comment> "Maritime infrastructure whose loss or degradation has significant operational or societal consequences."@en .
+<https://ontology.lotusim.org/naval-maritime#MaritimeCriticalInfrastructure> <http://www.w3.org/2000/01/rdf-schema#label> "Infrastructure maritime critique"@fr .
+<https://ontology.lotusim.org/naval-maritime#MaritimeCriticalInfrastructure> <http://www.w3.org/2000/01/rdf-schema#label> "Maritime critical infrastructure"@en .
+# 
 <https://ontology.lotusim.org/naval-maritime#MaritimeEnvironmentEntity> <http://www.w3.org/2000/01/rdf-schema#comment> "Racine des entités environnementales maritimes : caractéristiques (features) et phénomènes."@fr .
 <https://ontology.lotusim.org/naval-maritime#MaritimeEnvironmentEntity> <http://www.w3.org/2000/01/rdf-schema#label> "Entité environnementale maritime"@fr .
 <https://ontology.lotusim.org/naval-maritime#MaritimeEnvironmentEntity> <http://www.w3.org/2000/01/rdf-schema#label> "Maritime environment entity"@en .
@@ -2877,6 +3167,10 @@
 <https://ontology.lotusim.org/naval-maritime#MarkingSystem> <http://www.w3.org/2000/01/rdf-schema#label> "Marking system"@en .
 <https://ontology.lotusim.org/naval-maritime#MarkingSystem> <http://www.w3.org/2000/01/rdf-schema#label> "Système de balisage"@fr .
 # 
+<https://ontology.lotusim.org/naval-maritime#Materiel> <http://www.w3.org/2000/01/rdf-schema#comment> "Physical supplies, equipment or goods transported, transferred or consumed in support activities."@en .
+<https://ontology.lotusim.org/naval-maritime#Materiel> <http://www.w3.org/2000/01/rdf-schema#label> "Materiel"@en .
+<https://ontology.lotusim.org/naval-maritime#Materiel> <http://www.w3.org/2000/01/rdf-schema#label> "Matériel"@fr .
+# 
 <https://ontology.lotusim.org/naval-maritime#MerchantShip> <http://www.w3.org/2000/01/rdf-schema#comment> "Navire de surface civil de transport (cargo, pétrolier, porte-conteneurs). Généralement non armé ; objet de protection ou de menace dans les scénarios d'escorte."@fr .
 <https://ontology.lotusim.org/naval-maritime#MerchantShip> <http://www.w3.org/2000/01/rdf-schema#label> "Merchant ship"@en .
 <https://ontology.lotusim.org/naval-maritime#MerchantShip> <http://www.w3.org/2000/01/rdf-schema#label> "Navire de commerce"@fr .
@@ -2884,6 +3178,10 @@
 <https://ontology.lotusim.org/naval-maritime#MeteorologicalSensor> <http://www.w3.org/2000/01/rdf-schema#comment> "Capteur météorologique (vent, pression, température de l'air)."@fr .
 <https://ontology.lotusim.org/naval-maritime#MeteorologicalSensor> <http://www.w3.org/2000/01/rdf-schema#label> "Capteur météorologique"@fr .
 <https://ontology.lotusim.org/naval-maritime#MeteorologicalSensor> <http://www.w3.org/2000/01/rdf-schema#label> "Meteorological sensor"@en .
+# 
+<https://ontology.lotusim.org/naval-maritime#MilitaryPayload> <http://www.w3.org/2000/01/rdf-schema#comment> "Payload specifically designed for a military operational purpose."@en .
+<https://ontology.lotusim.org/naval-maritime#MilitaryPayload> <http://www.w3.org/2000/01/rdf-schema#label> "Charge utile militaire"@fr .
+<https://ontology.lotusim.org/naval-maritime#MilitaryPayload> <http://www.w3.org/2000/01/rdf-schema#label> "Military payload"@en .
 # 
 <https://ontology.lotusim.org/naval-maritime#MissileSystem> <http://www.w3.org/2000/01/rdf-schema#comment> "Système de missiles embarqués : effecteur d'engagement de cibles à moyenne ou longue portée."@fr .
 <https://ontology.lotusim.org/naval-maritime#MissileSystem> <http://www.w3.org/2000/01/rdf-schema#label> "Missile system"@en .
@@ -2912,6 +3210,10 @@
 <https://ontology.lotusim.org/naval-maritime#NaturalObject> <http://www.w3.org/2000/01/rdf-schema#comment> "Objet passif d'origine naturelle présent dans le milieu."@fr .
 <https://ontology.lotusim.org/naval-maritime#NaturalObject> <http://www.w3.org/2000/01/rdf-schema#label> "Natural object"@en .
 <https://ontology.lotusim.org/naval-maritime#NaturalObject> <http://www.w3.org/2000/01/rdf-schema#label> "Objet naturel"@fr .
+# 
+<https://ontology.lotusim.org/naval-maritime#NavalBase> <http://www.w3.org/2000/01/rdf-schema#comment> "Military infrastructure supporting naval command, logistics, maintenance, berthing and operations. It may contain a harbour but is not a subclass of Harbour."@en .
+<https://ontology.lotusim.org/naval-maritime#NavalBase> <http://www.w3.org/2000/01/rdf-schema#label> "Base navale"@fr .
+<https://ontology.lotusim.org/naval-maritime#NavalBase> <http://www.w3.org/2000/01/rdf-schema#label> "Naval base"@en .
 # 
 <https://ontology.lotusim.org/naval-maritime#NavalMine> <http://www.w3.org/2000/01/rdf-schema#comment> "Mine navale : engin explosif déposé volontairement dans le milieu. Passive une fois posée."@fr .
 <https://ontology.lotusim.org/naval-maritime#NavalMine> <http://www.w3.org/2000/01/rdf-schema#label> "Mine navale"@fr .
@@ -2981,6 +3283,10 @@
 <https://ontology.lotusim.org/naval-maritime#PassiveSonar> <http://www.w3.org/2000/01/rdf-schema#label> "Passive sonar"@en .
 <https://ontology.lotusim.org/naval-maritime#PassiveSonar> <http://www.w3.org/2000/01/rdf-schema#label> "Sonar passif"@fr .
 # 
+<https://ontology.lotusim.org/naval-maritime#Payload> <http://www.w3.org/2000/01/rdf-schema#comment> "Equipment or material carried by a platform for an operational purpose."@en .
+<https://ontology.lotusim.org/naval-maritime#Payload> <http://www.w3.org/2000/01/rdf-schema#label> "Charge utile"@fr .
+<https://ontology.lotusim.org/naval-maritime#Payload> <http://www.w3.org/2000/01/rdf-schema#label> "Payload"@en .
+# 
 <https://ontology.lotusim.org/naval-maritime#PayloadHostingCapability> <http://www.w3.org/2000/01/rdf-schema#comment> "Capacité d'emport : accueillir, alimenter et interfacer une charge utile."@fr .
 <https://ontology.lotusim.org/naval-maritime#PayloadHostingCapability> <http://www.w3.org/2000/01/rdf-schema#label> "Capacité d'emport"@fr .
 <https://ontology.lotusim.org/naval-maritime#PayloadHostingCapability> <http://www.w3.org/2000/01/rdf-schema#label> "Payload hosting capability"@en .
@@ -2988,6 +3294,14 @@
 <https://ontology.lotusim.org/naval-maritime#PerceptionCapability> <http://www.w3.org/2000/01/rdf-schema#comment> "Capacité à percevoir le monde au travers de senseurs."@fr .
 <https://ontology.lotusim.org/naval-maritime#PerceptionCapability> <http://www.w3.org/2000/01/rdf-schema#label> "Capacité de perception"@fr .
 <https://ontology.lotusim.org/naval-maritime#PerceptionCapability> <http://www.w3.org/2000/01/rdf-schema#label> "Perception capability"@en .
+# 
+<https://ontology.lotusim.org/naval-maritime#Person> <http://www.w3.org/2000/01/rdf-schema#comment> "Human physical entity represented in a maritime scenario."@en .
+<https://ontology.lotusim.org/naval-maritime#Person> <http://www.w3.org/2000/01/rdf-schema#label> "Person"@en .
+<https://ontology.lotusim.org/naval-maritime#Person> <http://www.w3.org/2000/01/rdf-schema#label> "Personne"@fr .
+# 
+<https://ontology.lotusim.org/naval-maritime#PersonnelGroup> <http://www.w3.org/2000/01/rdf-schema#comment> "Collection of persons considered as one structural aggregate."@en .
+<https://ontology.lotusim.org/naval-maritime#PersonnelGroup> <http://www.w3.org/2000/01/rdf-schema#label> "Groupe de personnel"@fr .
+<https://ontology.lotusim.org/naval-maritime#PersonnelGroup> <http://www.w3.org/2000/01/rdf-schema#label> "Personnel group"@en .
 # 
 <https://ontology.lotusim.org/naval-maritime#PhysicalCapability> <http://www.w3.org/2000/01/rdf-schema#comment> "Fonction qu'un système physique est susceptible de fournir selon son type, sa configuration et son état."@fr .
 <https://ontology.lotusim.org/naval-maritime#PhysicalCapability> <http://www.w3.org/2000/01/rdf-schema#label> "Capacité physique"@fr .
@@ -3036,6 +3350,10 @@
 <https://ontology.lotusim.org/naval-maritime#Platform> <http://www.w3.org/2000/01/rdf-schema#label> "Plateforme"@fr .
 <https://ontology.lotusim.org/naval-maritime#Platform> <http://www.w3.org/2000/01/rdf-schema#label> "Platform"@en .
 # 
+<https://ontology.lotusim.org/naval-maritime#PlatformGroup> <http://www.w3.org/2000/01/rdf-schema#comment> "Collection of platforms considered as one aggregate. Convoy, task group, swarm and escort group are scenario roles, not ontology subclasses."@en .
+<https://ontology.lotusim.org/naval-maritime#PlatformGroup> <http://www.w3.org/2000/01/rdf-schema#label> "Groupe de plateformes"@fr .
+<https://ontology.lotusim.org/naval-maritime#PlatformGroup> <http://www.w3.org/2000/01/rdf-schema#label> "Platform group"@en .
+# 
 <https://ontology.lotusim.org/naval-maritime#PortInfrastructure> <http://www.w3.org/2000/01/rdf-schema#comment> "Infrastructure portuaire générale."@fr .
 <https://ontology.lotusim.org/naval-maritime#PortInfrastructure> <http://www.w3.org/2000/01/rdf-schema#label> "Infrastructure portuaire"@fr .
 <https://ontology.lotusim.org/naval-maritime#PortInfrastructure> <http://www.w3.org/2000/01/rdf-schema#label> "Port infrastructure"@en .
@@ -3051,6 +3369,10 @@
 <https://ontology.lotusim.org/naval-maritime#PropulsionSystem> <http://www.w3.org/2000/01/rdf-schema#comment> "Système de propulsion principale ou d'appoint (hélice, hydrojet, thrusters vectoriels des ROV/AUV, rotors)."@fr .
 <https://ontology.lotusim.org/naval-maritime#PropulsionSystem> <http://www.w3.org/2000/01/rdf-schema#label> "Propulsion system"@en .
 <https://ontology.lotusim.org/naval-maritime#PropulsionSystem> <http://www.w3.org/2000/01/rdf-schema#label> "Système de propulsion"@fr .
+# 
+<https://ontology.lotusim.org/naval-maritime#ProtectionCapability> <http://www.w3.org/2000/01/rdf-schema#comment> "Capability to preserve another entity, group, area, infrastructure or service against harmful effects."@en .
+<https://ontology.lotusim.org/naval-maritime#ProtectionCapability> <http://www.w3.org/2000/01/rdf-schema#label> "Capacité de protection"@fr .
+<https://ontology.lotusim.org/naval-maritime#ProtectionCapability> <http://www.w3.org/2000/01/rdf-schema#label> "Protection capability"@en .
 # 
 <https://ontology.lotusim.org/naval-maritime#Pycnocline> <http://www.w3.org/2000/01/rdf-schema#comment> "Couche de fort gradient de densité (combinaison des gradients de température et de salinité). Barrière physique au mélange vertical."@fr .
 <https://ontology.lotusim.org/naval-maritime#Pycnocline> <http://www.w3.org/2000/01/rdf-schema#label> "Pycnocline"@en .
@@ -3092,6 +3414,10 @@
 <https://ontology.lotusim.org/naval-maritime#Reef> <http://www.w3.org/2000/01/rdf-schema#label> "Reef"@en .
 <https://ontology.lotusim.org/naval-maritime#Reef> <http://www.w3.org/2000/01/rdf-schema#label> "Récif"@fr .
 # 
+<https://ontology.lotusim.org/naval-maritime#RelayCapability> <http://www.w3.org/2000/01/rdf-schema#comment> "Capability to relay communications between otherwise disconnected or range-limited entities."@en .
+<https://ontology.lotusim.org/naval-maritime#RelayCapability> <http://www.w3.org/2000/01/rdf-schema#label> "Capacité de relais"@fr .
+<https://ontology.lotusim.org/naval-maritime#RelayCapability> <http://www.w3.org/2000/01/rdf-schema#label> "Relay capability"@en .
+# 
 <https://ontology.lotusim.org/naval-maritime#RemotelyOperatedVehicle> <http://www.w3.org/2000/01/rdf-schema#comment> "ROV : relié par ombilical, contrôlé en temps réel. Adapté aux interventions et manipulations délicates."@fr .
 <https://ontology.lotusim.org/naval-maritime#RemotelyOperatedVehicle> <http://www.w3.org/2000/01/rdf-schema#label> "ROV"@fr .
 <https://ontology.lotusim.org/naval-maritime#RemotelyOperatedVehicle> <http://www.w3.org/2000/01/rdf-schema#label> "Remotely operated vehicle"@en .
@@ -3103,6 +3429,10 @@
 <https://ontology.lotusim.org/naval-maritime#Rock> <http://www.w3.org/2000/01/rdf-schema#comment> "Rocher isolé sur le fond ou affleurant. Écho ponctuel dur, confusable avec un objet artificiel."@fr .
 <https://ontology.lotusim.org/naval-maritime#Rock> <http://www.w3.org/2000/01/rdf-schema#label> "Rocher"@fr .
 <https://ontology.lotusim.org/naval-maritime#Rock> <http://www.w3.org/2000/01/rdf-schema#label> "Rock"@en .
+# 
+<https://ontology.lotusim.org/naval-maritime#Route> <http://www.w3.org/2000/01/rdf-schema#comment> "Ordered spatial path used to organize movement between locations."@en .
+<https://ontology.lotusim.org/naval-maritime#Route> <http://www.w3.org/2000/01/rdf-schema#label> "Route"@en .
+<https://ontology.lotusim.org/naval-maritime#Route> <http://www.w3.org/2000/01/rdf-schema#label> "Route"@fr .
 # 
 <https://ontology.lotusim.org/naval-maritime#RouteFollowingCapability> <http://www.w3.org/2000/01/rdf-schema#comment> "Capacité de suivi d'une route planifiée."@fr .
 <https://ontology.lotusim.org/naval-maritime#RouteFollowingCapability> <http://www.w3.org/2000/01/rdf-schema#label> "Capacité de suivi de route"@fr .
@@ -3240,6 +3570,10 @@
 <https://ontology.lotusim.org/naval-maritime#SurfacingCapability> <http://www.w3.org/2000/01/rdf-schema#label> "Capacité de remontée en surface"@fr .
 <https://ontology.lotusim.org/naval-maritime#SurfacingCapability> <http://www.w3.org/2000/01/rdf-schema#label> "Surfacing capability"@en .
 # 
+<https://ontology.lotusim.org/naval-maritime#SurveyCapability> <http://www.w3.org/2000/01/rdf-schema#comment> "Capability to systematically characterize an area, route, infrastructure or physical environment."@en .
+<https://ontology.lotusim.org/naval-maritime#SurveyCapability> <http://www.w3.org/2000/01/rdf-schema#label> "Capacité de levé"@fr .
+<https://ontology.lotusim.org/naval-maritime#SurveyCapability> <http://www.w3.org/2000/01/rdf-schema#label> "Survey capability"@en .
+# 
 <https://ontology.lotusim.org/naval-maritime#SystemModel> <http://www.w3.org/2000/01/rdf-schema#comment> "Modèle (type constructeur) d'un système : porte les capacités potentielles, que la configuration et l'état rendent — ou non — disponibles."@fr .
 <https://ontology.lotusim.org/naval-maritime#SystemModel> <http://www.w3.org/2000/01/rdf-schema#label> "Modèle de système"@fr .
 <https://ontology.lotusim.org/naval-maritime#SystemModel> <http://www.w3.org/2000/01/rdf-schema#label> "System model"@en .
@@ -3257,6 +3591,10 @@
 <https://ontology.lotusim.org/naval-maritime#Thermocline> <http://www.w3.org/2000/01/rdf-schema#label> "Thermocline"@en .
 <https://ontology.lotusim.org/naval-maritime#Thermocline> <http://www.w3.org/2000/01/rdf-schema#label> "Thermocline"@fr .
 # 
+<https://ontology.lotusim.org/naval-maritime#ThreatAssessmentCapability> <http://www.w3.org/2000/01/rdf-schema#comment> "Capability to assess whether an observed entity or activity poses an operational threat."@en .
+<https://ontology.lotusim.org/naval-maritime#ThreatAssessmentCapability> <http://www.w3.org/2000/01/rdf-schema#label> "Capacité d'évaluation de menace"@fr .
+<https://ontology.lotusim.org/naval-maritime#ThreatAssessmentCapability> <http://www.w3.org/2000/01/rdf-schema#label> "Threat assessment capability"@en .
+# 
 <https://ontology.lotusim.org/naval-maritime#Tide> <http://www.w3.org/2000/01/rdf-schema#comment> "Variation périodique du niveau et des courants d'origine astronomique. Conditionne les fenêtres d'accès aux zones peu profondes et aux ports."@fr .
 <https://ontology.lotusim.org/naval-maritime#Tide> <http://www.w3.org/2000/01/rdf-schema#label> "Marée"@fr .
 <https://ontology.lotusim.org/naval-maritime#Tide> <http://www.w3.org/2000/01/rdf-schema#label> "Tide"@en .
@@ -3264,6 +3602,14 @@
 <https://ontology.lotusim.org/naval-maritime#Torpedo> <http://www.w3.org/2000/01/rdf-schema#comment> "Torpille, considérée ici comme munition présente dans le milieu (épave d'arme, exercice perdu)."@fr .
 <https://ontology.lotusim.org/naval-maritime#Torpedo> <http://www.w3.org/2000/01/rdf-schema#label> "Torpedo"@en .
 <https://ontology.lotusim.org/naval-maritime#Torpedo> <http://www.w3.org/2000/01/rdf-schema#label> "Torpille"@fr .
+# 
+<https://ontology.lotusim.org/naval-maritime#TrackingCapability> <http://www.w3.org/2000/01/rdf-schema#comment> "Capability to maintain an estimate of an observed entity state over time."@en .
+<https://ontology.lotusim.org/naval-maritime#TrackingCapability> <http://www.w3.org/2000/01/rdf-schema#label> "Capacité de suivi"@fr .
+<https://ontology.lotusim.org/naval-maritime#TrackingCapability> <http://www.w3.org/2000/01/rdf-schema#label> "Tracking capability"@en .
+# 
+<https://ontology.lotusim.org/naval-maritime#TransportCapability> <http://www.w3.org/2000/01/rdf-schema#comment> "Capability to transport personnel, payload or materiel."@en .
+<https://ontology.lotusim.org/naval-maritime#TransportCapability> <http://www.w3.org/2000/01/rdf-schema#label> "Capacité de transport"@fr .
+<https://ontology.lotusim.org/naval-maritime#TransportCapability> <http://www.w3.org/2000/01/rdf-schema#label> "Transport capability"@en .
 # 
 <https://ontology.lotusim.org/naval-maritime#UncrewedAerialVehicle> <http://www.w3.org/2000/01/rdf-schema#comment> "Drone aérien (UAV) : voilure fixe ou VTOL, opéré depuis la terre ou une plateforme navale."@fr .
 <https://ontology.lotusim.org/naval-maritime#UncrewedAerialVehicle> <http://www.w3.org/2000/01/rdf-schema#label> "Drone aérien"@fr .

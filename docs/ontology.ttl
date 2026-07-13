@@ -9,14 +9,14 @@
 <https://ontology.lotusim.org/naval-maritime> rdf:type owl:Ontology ;
                                                <http://purl.org/dc/terms/creator> "Estelle Chauveau (Naval Group, PO LOTUSim)" ;
                                                <http://purl.org/dc/terms/description> "Physical-world ontology for LOTUSim covering systems, platforms, equipment, physical objects, infrastructure, maritime environment, states, configurations, properties and physical capabilities."@en ;
-                                               <http://purl.org/dc/terms/modified> "2026-07-12"^^xsd:date ;
+                                               <http://purl.org/dc/terms/modified> "2026-07-13"^^xsd:date ;
                                                <http://purl.org/dc/terms/publisher> "Naval Group" ;
                                                <http://purl.org/dc/terms/title> "LOTUSim Naval Maritime Ontology"@en ;
                                                rdfs:comment "Ontologie de référence décrivant le monde naval physique simulable à un instant donné. Elle exclut les missions, objectifs, tâches, rôles opérationnels, observations, événements, doctrine et planification."@fr ,
                                                             "Vocabulaire normatif de LOTUSim : les types du profil HDDL, le vocabulaire du schéma de scénario (agents, zones) et les familles des manifestes de capacités (nmo:manifestKey) en dérivent. Chaque classe porte une annotation de diffusabilité (nmo:hasUsageDomain : civil / dual-use / militaire) conditionnant sa présence dans les exports publics."@fr ;
                                                rdfs:label "LOTUSim Naval Maritime Ontology"@en ,
                                                           "Ontologie navale maritime LOTUSim"@fr ;
-                                               owl:versionInfo "1.1.0-draft" .
+                                               owl:versionInfo "2.0.0-draft" .
 
 #################################################################
 #    Annotation properties
@@ -196,6 +196,14 @@ xsd:date rdf:type rdfs:Datatype .
            rdfs:range :PhysicalMedium ;
            rdfs:label "a pour milieu"@fr ,
                       "has medium"@en .
+
+
+###  https://ontology.lotusim.org/naval-maritime#hasMember
+:hasMember rdf:type owl:ObjectProperty ;
+           rdfs:domain :EntityGroup ;
+           rdfs:range :Entity ;
+           rdfs:label "a pour membre"@fr ,
+                      "has member"@en .
 
 
 ###  https://ontology.lotusim.org/naval-maritime#hasPhysicalPart
@@ -624,6 +632,11 @@ xsd:date rdf:type rdfs:Datatype .
                   rdfs:subClassOf :PhysicalObject .
 
 
+###  https://ontology.lotusim.org/naval-maritime#AssessmentCapability
+:AssessmentCapability rdf:type owl:Class ;
+                      rdfs:subClassOf :DataProcessingCapability .
+
+
 ###  https://ontology.lotusim.org/naval-maritime#Atmosphere
 :Atmosphere rdf:type owl:Class ;
             rdfs:subClassOf :PhysicalMedium .
@@ -744,6 +757,16 @@ xsd:date rdf:type rdfs:Datatype .
                      rdfs:subClassOf :Equipment .
 
 
+###  https://ontology.lotusim.org/naval-maritime#CommunicationLink
+:CommunicationLink rdf:type owl:Class ;
+                   rdfs:subClassOf :PhysicalEntity .
+
+
+###  https://ontology.lotusim.org/naval-maritime#CommunicationNetwork
+:CommunicationNetwork rdf:type owl:Class ;
+                      rdfs:subClassOf :PhysicalEntity .
+
+
 ###  https://ontology.lotusim.org/naval-maritime#Compass
 :Compass rdf:type owl:Class ;
          rdfs:subClassOf :NavigationSensor .
@@ -769,6 +792,16 @@ xsd:date rdf:type rdfs:Datatype .
                 rdfs:subClassOf :Actuator .
 
 
+###  https://ontology.lotusim.org/naval-maritime#CoordinationCapability
+:CoordinationCapability rdf:type owl:Class ;
+                        rdfs:subClassOf :DataProcessingCapability .
+
+
+###  https://ontology.lotusim.org/naval-maritime#Corridor
+:Corridor rdf:type owl:Class ;
+          rdfs:subClassOf :SpatialRegion .
+
+
 ###  https://ontology.lotusim.org/naval-maritime#Current
 :Current rdf:type owl:Class ;
          rdfs:subClassOf :EnvironmentalPhenomenon .
@@ -792,6 +825,11 @@ xsd:date rdf:type rdfs:Datatype .
 ###  https://ontology.lotusim.org/naval-maritime#Debris
 :Debris rdf:type owl:Class ;
         rdfs:subClassOf :PhysicalObject .
+
+
+###  https://ontology.lotusim.org/naval-maritime#Decoy
+:Decoy rdf:type owl:Class ;
+       rdfs:subClassOf :PhysicalObject .
 
 
 ###  https://ontology.lotusim.org/naval-maritime#DemolitionCharge
@@ -849,6 +887,11 @@ xsd:date rdf:type rdfs:Datatype .
              rdfs:subClassOf :AcousticSensor .
 
 
+###  https://ontology.lotusim.org/naval-maritime#ElectronicWarfareCapability
+:ElectronicWarfareCapability rdf:type owl:Class ;
+                             rdfs:subClassOf :PhysicalCapability .
+
+
 ###  https://ontology.lotusim.org/naval-maritime#EmbeddedComputer
 :EmbeddedComputer rdf:type owl:Class ;
                   rdfs:subClassOf :ComputingDevice .
@@ -867,6 +910,15 @@ xsd:date rdf:type rdfs:Datatype .
 ###  https://ontology.lotusim.org/naval-maritime#EngagementCapability
 :EngagementCapability rdf:type owl:Class ;
                       rdfs:subClassOf :InteractionCapability .
+
+
+###  https://ontology.lotusim.org/naval-maritime#Entity
+:Entity rdf:type owl:Class .
+
+
+###  https://ontology.lotusim.org/naval-maritime#EntityGroup
+:EntityGroup rdf:type owl:Class ;
+             rdfs:subClassOf :Entity .
 
 
 ###  https://ontology.lotusim.org/naval-maritime#EnvironmentalFeature
@@ -1019,6 +1071,11 @@ xsd:date rdf:type rdfs:Datatype .
            rdfs:subClassOf :NaturalObject .
 
 
+###  https://ontology.lotusim.org/naval-maritime#IdentificationCapability
+:IdentificationCapability rdf:type owl:Class ;
+                          rdfs:subClassOf :PerceptionCapability .
+
+
 ###  https://ontology.lotusim.org/naval-maritime#ImagingRadar
 :ImagingRadar rdf:type owl:Class ;
               rdfs:subClassOf :RadioFrequencySensor .
@@ -1049,6 +1106,11 @@ xsd:date rdf:type rdfs:Datatype .
                 rdfs:subClassOf :PhysicalSystem .
 
 
+###  https://ontology.lotusim.org/naval-maritime#InspectionCapability
+:InspectionCapability rdf:type owl:Class ;
+                      rdfs:subClassOf :PerceptionCapability .
+
+
 ###  https://ontology.lotusim.org/naval-maritime#InstrumentedBuoy
 :InstrumentedBuoy rdf:type owl:Class ;
                   rdfs:subClassOf :FixedPlatform .
@@ -1057,6 +1119,16 @@ xsd:date rdf:type rdfs:Datatype .
 ###  https://ontology.lotusim.org/naval-maritime#InteractionCapability
 :InteractionCapability rdf:type owl:Class ;
                        rdfs:subClassOf :PhysicalCapability .
+
+
+###  https://ontology.lotusim.org/naval-maritime#InterdictionCapability
+:InterdictionCapability rdf:type owl:Class ;
+                        rdfs:subClassOf :InteractionCapability .
+
+
+###  https://ontology.lotusim.org/naval-maritime#LaunchAndRecoveryInfrastructure
+:LaunchAndRecoveryInfrastructure rdf:type owl:Class ;
+                                 rdfs:subClassOf :Infrastructure .
 
 
 ###  https://ontology.lotusim.org/naval-maritime#Lidar
@@ -1072,6 +1144,11 @@ xsd:date rdf:type rdfs:Datatype .
 ###  https://ontology.lotusim.org/naval-maritime#LocalizationCapability
 :LocalizationCapability rdf:type owl:Class ;
                         rdfs:subClassOf :NavigationCapability .
+
+
+###  https://ontology.lotusim.org/naval-maritime#LogisticsCapability
+:LogisticsCapability rdf:type owl:Class ;
+                     rdfs:subClassOf :SupportCapability .
 
 
 ###  https://ontology.lotusim.org/naval-maritime#LostEquipment
@@ -1109,6 +1186,11 @@ xsd:date rdf:type rdfs:Datatype .
               rdfs:subClassOf :SpatialRegion .
 
 
+###  https://ontology.lotusim.org/naval-maritime#MaritimeCriticalInfrastructure
+:MaritimeCriticalInfrastructure rdf:type owl:Class ;
+                                rdfs:subClassOf :Infrastructure .
+
+
 ###  https://ontology.lotusim.org/naval-maritime#MaritimeEnvironmentEntity
 :MaritimeEnvironmentEntity rdf:type owl:Class ;
                            rdfs:subClassOf :PhysicalEntity .
@@ -1129,6 +1211,11 @@ xsd:date rdf:type rdfs:Datatype .
                rdfs:subClassOf :Actuator .
 
 
+###  https://ontology.lotusim.org/naval-maritime#Materiel
+:Materiel rdf:type owl:Class ;
+          rdfs:subClassOf :PhysicalObject .
+
+
 ###  https://ontology.lotusim.org/naval-maritime#MerchantShip
 :MerchantShip rdf:type owl:Class ;
               rdfs:subClassOf :Ship .
@@ -1137,6 +1224,11 @@ xsd:date rdf:type rdfs:Datatype .
 ###  https://ontology.lotusim.org/naval-maritime#MeteorologicalSensor
 :MeteorologicalSensor rdf:type owl:Class ;
                       rdfs:subClassOf :EnvironmentalSensor .
+
+
+###  https://ontology.lotusim.org/naval-maritime#MilitaryPayload
+:MilitaryPayload rdf:type owl:Class ;
+                 rdfs:subClassOf :Payload .
 
 
 ###  https://ontology.lotusim.org/naval-maritime#MissileSystem
@@ -1172,6 +1264,11 @@ xsd:date rdf:type rdfs:Datatype .
 ###  https://ontology.lotusim.org/naval-maritime#NaturalObject
 :NaturalObject rdf:type owl:Class ;
                rdfs:subClassOf :PhysicalObject .
+
+
+###  https://ontology.lotusim.org/naval-maritime#NavalBase
+:NavalBase rdf:type owl:Class ;
+           rdfs:subClassOf :Infrastructure .
 
 
 ###  https://ontology.lotusim.org/naval-maritime#NavalMine
@@ -1259,6 +1356,11 @@ xsd:date rdf:type rdfs:Datatype .
               rdfs:subClassOf :AcousticSensor .
 
 
+###  https://ontology.lotusim.org/naval-maritime#Payload
+:Payload rdf:type owl:Class ;
+         rdfs:subClassOf :PhysicalObject .
+
+
 ###  https://ontology.lotusim.org/naval-maritime#PayloadHostingCapability
 :PayloadHostingCapability rdf:type owl:Class ;
                           rdfs:subClassOf :SupportCapability .
@@ -1267,6 +1369,16 @@ xsd:date rdf:type rdfs:Datatype .
 ###  https://ontology.lotusim.org/naval-maritime#PerceptionCapability
 :PerceptionCapability rdf:type owl:Class ;
                       rdfs:subClassOf :PhysicalCapability .
+
+
+###  https://ontology.lotusim.org/naval-maritime#Person
+:Person rdf:type owl:Class ;
+        rdfs:subClassOf :PhysicalEntity .
+
+
+###  https://ontology.lotusim.org/naval-maritime#PersonnelGroup
+:PersonnelGroup rdf:type owl:Class ;
+                rdfs:subClassOf :EntityGroup .
 
 
 ###  https://ontology.lotusim.org/naval-maritime#PhysicalCapability
@@ -1324,6 +1436,11 @@ xsd:date rdf:type rdfs:Datatype .
                           :PhysicalSystem .
 
 
+###  https://ontology.lotusim.org/naval-maritime#PlatformGroup
+:PlatformGroup rdf:type owl:Class ;
+               rdfs:subClassOf :EntityGroup .
+
+
 ###  https://ontology.lotusim.org/naval-maritime#PortInfrastructure
 :PortInfrastructure rdf:type owl:Class ;
                     rdfs:subClassOf :CoastalInfrastructure .
@@ -1341,6 +1458,11 @@ xsd:date rdf:type rdfs:Datatype .
 ###  https://ontology.lotusim.org/naval-maritime#PropulsionSystem
 :PropulsionSystem rdf:type owl:Class ;
                   rdfs:subClassOf :Actuator .
+
+
+###  https://ontology.lotusim.org/naval-maritime#ProtectionCapability
+:ProtectionCapability rdf:type owl:Class ;
+                      rdfs:subClassOf :InteractionCapability .
 
 
 ###  https://ontology.lotusim.org/naval-maritime#Pycnocline
@@ -1393,6 +1515,11 @@ xsd:date rdf:type rdfs:Datatype .
       rdfs:subClassOf :NaturalObject .
 
 
+###  https://ontology.lotusim.org/naval-maritime#RelayCapability
+:RelayCapability rdf:type owl:Class ;
+                 rdfs:subClassOf :CommunicationCapability .
+
+
 ###  https://ontology.lotusim.org/naval-maritime#RemotelyOperatedVehicle
 :RemotelyOperatedVehicle rdf:type owl:Class ;
                          rdfs:subClassOf :UncrewedUnderwaterVehicle .
@@ -1406,6 +1533,11 @@ xsd:date rdf:type rdfs:Datatype .
 ###  https://ontology.lotusim.org/naval-maritime#Rock
 :Rock rdf:type owl:Class ;
       rdfs:subClassOf :NaturalObject .
+
+
+###  https://ontology.lotusim.org/naval-maritime#Route
+:Route rdf:type owl:Class ;
+       rdfs:subClassOf :SpatialRegion .
 
 
 ###  https://ontology.lotusim.org/naval-maritime#RouteFollowingCapability
@@ -1579,6 +1711,11 @@ xsd:date rdf:type rdfs:Datatype .
                      rdfs:subClassOf :MobilityCapability .
 
 
+###  https://ontology.lotusim.org/naval-maritime#SurveyCapability
+:SurveyCapability rdf:type owl:Class ;
+                  rdfs:subClassOf :PerceptionCapability .
+
+
 ###  https://ontology.lotusim.org/naval-maritime#SystemModel
 :SystemModel rdf:type owl:Class .
 
@@ -1598,6 +1735,11 @@ xsd:date rdf:type rdfs:Datatype .
              rdfs:subClassOf :EnvironmentalFeature .
 
 
+###  https://ontology.lotusim.org/naval-maritime#ThreatAssessmentCapability
+:ThreatAssessmentCapability rdf:type owl:Class ;
+                            rdfs:subClassOf :AssessmentCapability .
+
+
 ###  https://ontology.lotusim.org/naval-maritime#Tide
 :Tide rdf:type owl:Class ;
       rdfs:subClassOf :EnvironmentalPhenomenon .
@@ -1606,6 +1748,16 @@ xsd:date rdf:type rdfs:Datatype .
 ###  https://ontology.lotusim.org/naval-maritime#Torpedo
 :Torpedo rdf:type owl:Class ;
          rdfs:subClassOf :UnexplodedOrdnance .
+
+
+###  https://ontology.lotusim.org/naval-maritime#TrackingCapability
+:TrackingCapability rdf:type owl:Class ;
+                    rdfs:subClassOf :PerceptionCapability .
+
+
+###  https://ontology.lotusim.org/naval-maritime#TransportCapability
+:TransportCapability rdf:type owl:Class ;
+                     rdfs:subClassOf :SupportCapability .
 
 
 ###  https://ontology.lotusim.org/naval-maritime#UncrewedAerialVehicle
@@ -1801,6 +1953,11 @@ xsd:date rdf:type rdfs:Datatype .
                   :hasUsageDomain :CivilUse .
 
 
+###  https://ontology.lotusim.org/naval-maritime#AssessmentCapability
+:AssessmentCapability rdf:type owl:NamedIndividual ;
+                      :hasUsageDomain :DualUse .
+
+
 ###  https://ontology.lotusim.org/naval-maritime#Atmosphere
 :Atmosphere rdf:type owl:NamedIndividual ;
             :hasUsageDomain :CivilUse .
@@ -1928,6 +2085,16 @@ xsd:date rdf:type rdfs:Datatype .
                      :hasUsageDomain :CivilUse .
 
 
+###  https://ontology.lotusim.org/naval-maritime#CommunicationLink
+:CommunicationLink rdf:type owl:NamedIndividual ;
+                   :hasUsageDomain :DualUse .
+
+
+###  https://ontology.lotusim.org/naval-maritime#CommunicationNetwork
+:CommunicationNetwork rdf:type owl:NamedIndividual ;
+                      :hasUsageDomain :DualUse .
+
+
 ###  https://ontology.lotusim.org/naval-maritime#Compass
 :Compass rdf:type owl:NamedIndividual ;
          :hasUsageDomain :CivilUse .
@@ -1953,6 +2120,16 @@ xsd:date rdf:type rdfs:Datatype .
                 :hasUsageDomain :DualUse .
 
 
+###  https://ontology.lotusim.org/naval-maritime#CoordinationCapability
+:CoordinationCapability rdf:type owl:NamedIndividual ;
+                        :hasUsageDomain :DualUse .
+
+
+###  https://ontology.lotusim.org/naval-maritime#Corridor
+:Corridor rdf:type owl:NamedIndividual ;
+          :hasUsageDomain :DualUse .
+
+
 ###  https://ontology.lotusim.org/naval-maritime#Current
 :Current rdf:type owl:NamedIndividual ;
          :hasUsageDomain :CivilUse .
@@ -1976,6 +2153,11 @@ xsd:date rdf:type rdfs:Datatype .
 ###  https://ontology.lotusim.org/naval-maritime#Debris
 :Debris rdf:type owl:NamedIndividual ;
         :hasUsageDomain :CivilUse .
+
+
+###  https://ontology.lotusim.org/naval-maritime#Decoy
+:Decoy rdf:type owl:NamedIndividual ;
+       :hasUsageDomain :MilitaryUse .
 
 
 ###  https://ontology.lotusim.org/naval-maritime#DemolitionCharge
@@ -2040,6 +2222,11 @@ xsd:date rdf:type rdfs:Datatype .
              :hasUsageDomain :CivilUse .
 
 
+###  https://ontology.lotusim.org/naval-maritime#ElectronicWarfareCapability
+:ElectronicWarfareCapability rdf:type owl:NamedIndividual ;
+                             :hasUsageDomain :MilitaryUse .
+
+
 ###  https://ontology.lotusim.org/naval-maritime#EmbeddedComputer
 :EmbeddedComputer rdf:type owl:NamedIndividual ;
                   :hasUsageDomain :CivilUse .
@@ -2058,6 +2245,11 @@ xsd:date rdf:type rdfs:Datatype .
 ###  https://ontology.lotusim.org/naval-maritime#EngagementCapability
 :EngagementCapability rdf:type owl:NamedIndividual ;
                       :hasUsageDomain :MilitaryUse .
+
+
+###  https://ontology.lotusim.org/naval-maritime#EntityGroup
+:EntityGroup rdf:type owl:NamedIndividual ;
+             :hasUsageDomain :DualUse .
 
 
 ###  https://ontology.lotusim.org/naval-maritime#EnvironmentalFeature
@@ -2210,6 +2402,11 @@ xsd:date rdf:type rdfs:Datatype .
            :hasUsageDomain :CivilUse .
 
 
+###  https://ontology.lotusim.org/naval-maritime#IdentificationCapability
+:IdentificationCapability rdf:type owl:NamedIndividual ;
+                          :hasUsageDomain :DualUse .
+
+
 ###  https://ontology.lotusim.org/naval-maritime#ImagingRadar
 :ImagingRadar rdf:type owl:NamedIndividual ;
               :hasUsageDomain :MilitaryUse .
@@ -2240,6 +2437,11 @@ xsd:date rdf:type rdfs:Datatype .
                 :hasUsageDomain :CivilUse .
 
 
+###  https://ontology.lotusim.org/naval-maritime#InspectionCapability
+:InspectionCapability rdf:type owl:NamedIndividual ;
+                      :hasUsageDomain :DualUse .
+
+
 ###  https://ontology.lotusim.org/naval-maritime#InstrumentedBuoy
 :InstrumentedBuoy rdf:type owl:NamedIndividual ;
                   :hasUsageDomain :CivilUse .
@@ -2248,6 +2450,16 @@ xsd:date rdf:type rdfs:Datatype .
 ###  https://ontology.lotusim.org/naval-maritime#InteractionCapability
 :InteractionCapability rdf:type owl:NamedIndividual ;
                        :hasUsageDomain :DualUse .
+
+
+###  https://ontology.lotusim.org/naval-maritime#InterdictionCapability
+:InterdictionCapability rdf:type owl:NamedIndividual ;
+                        :hasUsageDomain :MilitaryUse .
+
+
+###  https://ontology.lotusim.org/naval-maritime#LaunchAndRecoveryInfrastructure
+:LaunchAndRecoveryInfrastructure rdf:type owl:NamedIndividual ;
+                                 :hasUsageDomain :DualUse .
 
 
 ###  https://ontology.lotusim.org/naval-maritime#Lidar
@@ -2263,6 +2475,11 @@ xsd:date rdf:type rdfs:Datatype .
 ###  https://ontology.lotusim.org/naval-maritime#LocalizationCapability
 :LocalizationCapability rdf:type owl:NamedIndividual ;
                         :hasUsageDomain :DualUse .
+
+
+###  https://ontology.lotusim.org/naval-maritime#LogisticsCapability
+:LogisticsCapability rdf:type owl:NamedIndividual ;
+                     :hasUsageDomain :DualUse .
 
 
 ###  https://ontology.lotusim.org/naval-maritime#LostEquipment
@@ -2300,6 +2517,11 @@ xsd:date rdf:type rdfs:Datatype .
               :hasUsageDomain :CivilUse .
 
 
+###  https://ontology.lotusim.org/naval-maritime#MaritimeCriticalInfrastructure
+:MaritimeCriticalInfrastructure rdf:type owl:NamedIndividual ;
+                                :hasUsageDomain :DualUse .
+
+
 ###  https://ontology.lotusim.org/naval-maritime#MaritimeEnvironmentEntity
 :MaritimeEnvironmentEntity rdf:type owl:NamedIndividual ;
                            :hasUsageDomain :CivilUse .
@@ -2320,6 +2542,11 @@ xsd:date rdf:type rdfs:Datatype .
                :hasUsageDomain :DualUse .
 
 
+###  https://ontology.lotusim.org/naval-maritime#Materiel
+:Materiel rdf:type owl:NamedIndividual ;
+          :hasUsageDomain :DualUse .
+
+
 ###  https://ontology.lotusim.org/naval-maritime#MerchantShip
 :MerchantShip rdf:type owl:NamedIndividual ;
               :hasUsageDomain :CivilUse .
@@ -2328,6 +2555,11 @@ xsd:date rdf:type rdfs:Datatype .
 ###  https://ontology.lotusim.org/naval-maritime#MeteorologicalSensor
 :MeteorologicalSensor rdf:type owl:NamedIndividual ;
                       :hasUsageDomain :CivilUse .
+
+
+###  https://ontology.lotusim.org/naval-maritime#MilitaryPayload
+:MilitaryPayload rdf:type owl:NamedIndividual ;
+                 :hasUsageDomain :MilitaryUse .
 
 
 ###  https://ontology.lotusim.org/naval-maritime#MilitaryUse
@@ -2370,6 +2602,11 @@ xsd:date rdf:type rdfs:Datatype .
 ###  https://ontology.lotusim.org/naval-maritime#NaturalObject
 :NaturalObject rdf:type owl:NamedIndividual ;
                :hasUsageDomain :CivilUse .
+
+
+###  https://ontology.lotusim.org/naval-maritime#NavalBase
+:NavalBase rdf:type owl:NamedIndividual ;
+           :hasUsageDomain :MilitaryUse .
 
 
 ###  https://ontology.lotusim.org/naval-maritime#NavalMine
@@ -2457,6 +2694,11 @@ xsd:date rdf:type rdfs:Datatype .
               :hasUsageDomain :DualUse .
 
 
+###  https://ontology.lotusim.org/naval-maritime#Payload
+:Payload rdf:type owl:NamedIndividual ;
+         :hasUsageDomain :DualUse .
+
+
 ###  https://ontology.lotusim.org/naval-maritime#PayloadHostingCapability
 :PayloadHostingCapability rdf:type owl:NamedIndividual ;
                           :hasUsageDomain :CivilUse .
@@ -2465,6 +2707,16 @@ xsd:date rdf:type rdfs:Datatype .
 ###  https://ontology.lotusim.org/naval-maritime#PerceptionCapability
 :PerceptionCapability rdf:type owl:NamedIndividual ;
                       :hasUsageDomain :CivilUse .
+
+
+###  https://ontology.lotusim.org/naval-maritime#Person
+:Person rdf:type owl:NamedIndividual ;
+        :hasUsageDomain :CivilUse .
+
+
+###  https://ontology.lotusim.org/naval-maritime#PersonnelGroup
+:PersonnelGroup rdf:type owl:NamedIndividual ;
+                :hasUsageDomain :DualUse .
 
 
 ###  https://ontology.lotusim.org/naval-maritime#PhysicalCapability
@@ -2522,6 +2774,11 @@ xsd:date rdf:type rdfs:Datatype .
           :hasUsageDomain :CivilUse .
 
 
+###  https://ontology.lotusim.org/naval-maritime#PlatformGroup
+:PlatformGroup rdf:type owl:NamedIndividual ;
+               :hasUsageDomain :DualUse .
+
+
 ###  https://ontology.lotusim.org/naval-maritime#PortInfrastructure
 :PortInfrastructure rdf:type owl:NamedIndividual ;
                     :hasUsageDomain :CivilUse .
@@ -2540,6 +2797,11 @@ xsd:date rdf:type rdfs:Datatype .
 ###  https://ontology.lotusim.org/naval-maritime#PropulsionSystem
 :PropulsionSystem rdf:type owl:NamedIndividual ;
                   :hasUsageDomain :DualUse .
+
+
+###  https://ontology.lotusim.org/naval-maritime#ProtectionCapability
+:ProtectionCapability rdf:type owl:NamedIndividual ;
+                      :hasUsageDomain :MilitaryUse .
 
 
 ###  https://ontology.lotusim.org/naval-maritime#Pycnocline
@@ -2592,6 +2854,11 @@ xsd:date rdf:type rdfs:Datatype .
       :hasUsageDomain :CivilUse .
 
 
+###  https://ontology.lotusim.org/naval-maritime#RelayCapability
+:RelayCapability rdf:type owl:NamedIndividual ;
+                 :hasUsageDomain :DualUse .
+
+
 ###  https://ontology.lotusim.org/naval-maritime#RemotelyOperatedVehicle
 :RemotelyOperatedVehicle rdf:type owl:NamedIndividual ;
                          :hasUsageDomain :DualUse .
@@ -2605,6 +2872,11 @@ xsd:date rdf:type rdfs:Datatype .
 ###  https://ontology.lotusim.org/naval-maritime#Rock
 :Rock rdf:type owl:NamedIndividual ;
       :hasUsageDomain :CivilUse .
+
+
+###  https://ontology.lotusim.org/naval-maritime#Route
+:Route rdf:type owl:NamedIndividual ;
+       :hasUsageDomain :CivilUse .
 
 
 ###  https://ontology.lotusim.org/naval-maritime#RouteFollowingCapability
@@ -2777,6 +3049,11 @@ xsd:date rdf:type rdfs:Datatype .
                      :hasUsageDomain :DualUse .
 
 
+###  https://ontology.lotusim.org/naval-maritime#SurveyCapability
+:SurveyCapability rdf:type owl:NamedIndividual ;
+                  :hasUsageDomain :DualUse .
+
+
 ###  https://ontology.lotusim.org/naval-maritime#SystemModel
 :SystemModel rdf:type owl:NamedIndividual ;
              :hasUsageDomain :CivilUse .
@@ -2797,6 +3074,11 @@ xsd:date rdf:type rdfs:Datatype .
              :hasUsageDomain :CivilUse .
 
 
+###  https://ontology.lotusim.org/naval-maritime#ThreatAssessmentCapability
+:ThreatAssessmentCapability rdf:type owl:NamedIndividual ;
+                            :hasUsageDomain :MilitaryUse .
+
+
 ###  https://ontology.lotusim.org/naval-maritime#Tide
 :Tide rdf:type owl:NamedIndividual ;
       :hasUsageDomain :CivilUse .
@@ -2805,6 +3087,16 @@ xsd:date rdf:type rdfs:Datatype .
 ###  https://ontology.lotusim.org/naval-maritime#Torpedo
 :Torpedo rdf:type owl:NamedIndividual ;
          :hasUsageDomain :MilitaryUse .
+
+
+###  https://ontology.lotusim.org/naval-maritime#TrackingCapability
+:TrackingCapability rdf:type owl:NamedIndividual ;
+                    :hasUsageDomain :DualUse .
+
+
+###  https://ontology.lotusim.org/naval-maritime#TransportCapability
+:TransportCapability rdf:type owl:NamedIndividual ;
+                     :hasUsageDomain :DualUse .
 
 
 ###  https://ontology.lotusim.org/naval-maritime#UncrewedAerialVehicle
@@ -3002,6 +3294,11 @@ xsd:date rdf:type rdfs:Datatype .
                              "Objet artificiel"@fr .
 
 
+:AssessmentCapability rdfs:comment "Capability to derive an operational assessment from available information."@en ;
+                      rdfs:label "Assessment capability"@en ,
+                                 "Capacité d'évaluation"@fr .
+
+
 :Atmosphere rdfs:comment "Milieu gazeux au-dessus de la surface. Siège des phénomènes météorologiques et milieu de propagation des ondes radio et optiques."@fr ;
             rdfs:label "Atmosphere"@en ,
                        "Atmosphère"@fr .
@@ -3122,6 +3419,16 @@ xsd:date rdf:type rdfs:Datatype .
                                 "Équipement de communication"@fr .
 
 
+:CommunicationLink rdfs:comment "Technical communication connection between two or more communicating entities."@en ;
+                   rdfs:label "Communication link"@en ,
+                              "Liaison de communication"@fr .
+
+
+:CommunicationNetwork rdfs:comment "Set of communication entities and links providing connectivity."@en ;
+                      rdfs:label "Communication network"@en ,
+                                 "Réseau de communication"@fr .
+
+
 :Compass rdfs:comment "Compas : cap magnétique ou gyroscopique."@fr ;
          rdfs:label "Compas"@fr ,
                     "Compass"@en .
@@ -3147,6 +3454,16 @@ xsd:date rdf:type rdfs:Datatype .
                            "Gouverne"@fr .
 
 
+:CoordinationCapability rdfs:comment "Capability to synchronize actions or relative states among multiple actors."@en ;
+                        rdfs:label "Capacité de coordination"@fr ,
+                                   "Coordination capability"@en .
+
+
+:Corridor rdfs:comment "Bounded spatial passage through which movement or an operation may be organized."@en ;
+          rdfs:label "Corridor"@en ,
+                     "Corridor"@fr .
+
+
 :Current rdfs:comment "Courant marin : déplace et fait dériver les plateformes, en particulier les plus lentes (AUV, glider, ROV) ; contraint la navigation et la tenue de trajectoire."@fr ;
          rdfs:label "Courant"@fr ,
                     "Current"@en .
@@ -3170,6 +3487,11 @@ xsd:date rdf:type rdfs:Datatype .
 :Debris rdfs:comment "Débris ou objet perdu, posé ou dérivant. Générateur de fausses alarmes en détection."@fr ;
         rdfs:label "Debris"@en ,
                    "Débris"@fr .
+
+
+:Decoy rdfs:comment "Physical object designed to create a deceptive signature or apparent target."@en ;
+       rdfs:label "Decoy"@en ,
+                  "Leurre"@fr .
 
 
 :DemolitionCharge rdfs:comment "Charge de démolition : explosif mis en œuvre pour neutraliser un engin ou détruire une structure."@fr ;
@@ -3227,6 +3549,11 @@ xsd:date rdf:type rdfs:Datatype .
                         "Sondeur"@fr .
 
 
+:ElectronicWarfareCapability rdfs:comment "Capability to sense, exploit, protect or apply effects in the electromagnetic environment."@en ;
+                             rdfs:label "Capacité de guerre électronique"@fr ,
+                                        "Electronic warfare capability"@en .
+
+
 :EmbeddedComputer rdfs:comment "Ordinateur embarqué : calculateur généraliste de la plateforme."@fr ;
                   rdfs:label "Embedded computer"@en ,
                              "Ordinateur embarqué"@fr .
@@ -3246,6 +3573,11 @@ xsd:date rdf:type rdfs:Datatype .
                       rdfs:label "Capacité d'engagement"@fr ,
                                  "Engagement capability"@en ;
                       :manifestKey "engage.attack_target" .
+
+
+:EntityGroup rdfs:comment "Aggregate of entities considered together for a stable structural purpose. Operational group roles remain in the Scenario Model."@en ;
+             rdfs:label "Entity group"@en ,
+                        "Groupe d'entités"@fr .
 
 
 :EnvironmentalFeature rdfs:comment "Caractéristique structurelle du milieu, quasi statique à l'échelle d'un scénario (thermocline, relief, glace)."@fr ;
@@ -3398,6 +3730,11 @@ xsd:date rdf:type rdfs:Datatype .
                       "Objet de glace"@fr .
 
 
+:IdentificationCapability rdfs:comment "Capability to establish an identity assessment for an observed entity."@en ;
+                          rdfs:label "Capacité d'identification"@fr ,
+                                     "Identification capability"@en .
+
+
 :ImagingRadar rdfs:comment "Radar imageur ou à onde de surface haute fréquence (détection au-delà de l'horizon)."@fr ;
               rdfs:label "Imaging radar"@en ,
                          "Radar imageur"@fr .
@@ -3428,6 +3765,11 @@ xsd:date rdf:type rdfs:Datatype .
                            "Infrastructure"@fr .
 
 
+:InspectionCapability rdfs:comment "Capability to examine an object or infrastructure at the required level of detail."@en ;
+                      rdfs:label "Capacité d'inspection"@fr ,
+                                 "Inspection capability"@en .
+
+
 :InstrumentedBuoy rdfs:comment "Bouée ou mouillage instrumenté : plateforme fixe de mesure."@fr ;
                   rdfs:label "Bouée instrumentée"@fr ,
                              "Instrumented buoy"@en .
@@ -3436,6 +3778,16 @@ xsd:date rdf:type rdfs:Datatype .
 :InteractionCapability rdfs:comment "Capacité à agir physiquement sur un objet du monde."@fr ;
                        rdfs:label "Capacité d'interaction"@fr ,
                                   "Interaction capability"@en .
+
+
+:InterdictionCapability rdfs:comment "Capability to prevent, constrain, stop or control an entity, movement or activity."@en ;
+                        rdfs:label "Capacité d'interdiction"@fr ,
+                                   "Interdiction capability"@en .
+
+
+:LaunchAndRecoveryInfrastructure rdfs:comment "Infrastructure supporting launch, docking or recovery of platforms."@en ;
+                                 rdfs:label "Infrastructure de mise à l'eau et de récupération"@fr ,
+                                            "Launch and recovery infrastructure"@en .
 
 
 :Lidar rdfs:comment "Lidar : télémétrie laser. En version bathymétrique, pénètre les eaux claires peu profondes ; portée dégradée par la turbidité."@fr ;
@@ -3451,6 +3803,11 @@ xsd:date rdf:type rdfs:Datatype .
 :LocalizationCapability rdfs:comment "Capacité à estimer la position d'un objet ou la sienne propre."@fr ;
                         rdfs:label "Capacité de localisation"@fr ,
                                    "Localization capability"@en .
+
+
+:LogisticsCapability rdfs:comment "Capability to resupply, transfer, refuel, recharge or otherwise sustain platforms and forces."@en ;
+                     rdfs:label "Capacité logistique"@fr ,
+                                "Logistics capability"@en .
 
 
 :LostEquipment rdfs:comment "Équipement perdu à la mer (engin de pêche, instrument, charge)."@fr ;
@@ -3488,6 +3845,11 @@ xsd:date rdf:type rdfs:Datatype .
                          "Zone maritime"@fr .
 
 
+:MaritimeCriticalInfrastructure rdfs:comment "Maritime infrastructure whose loss or degradation has significant operational or societal consequences."@en ;
+                                rdfs:label "Infrastructure maritime critique"@fr ,
+                                           "Maritime critical infrastructure"@en .
+
+
 :MaritimeEnvironmentEntity rdfs:comment "Racine des entités environnementales maritimes : caractéristiques (features) et phénomènes."@fr ;
                            rdfs:label "Entité environnementale maritime"@fr ,
                                       "Maritime environment entity"@en .
@@ -3508,6 +3870,11 @@ xsd:date rdf:type rdfs:Datatype .
                           "Système de balisage"@fr .
 
 
+:Materiel rdfs:comment "Physical supplies, equipment or goods transported, transferred or consumed in support activities."@en ;
+          rdfs:label "Materiel"@en ,
+                     "Matériel"@fr .
+
+
 :MerchantShip rdfs:comment "Navire de surface civil de transport (cargo, pétrolier, porte-conteneurs). Généralement non armé ; objet de protection ou de menace dans les scénarios d'escorte."@fr ;
               rdfs:label "Merchant ship"@en ,
                          "Navire de commerce"@fr .
@@ -3516,6 +3883,11 @@ xsd:date rdf:type rdfs:Datatype .
 :MeteorologicalSensor rdfs:comment "Capteur météorologique (vent, pression, température de l'air)."@fr ;
                       rdfs:label "Capteur météorologique"@fr ,
                                  "Meteorological sensor"@en .
+
+
+:MilitaryPayload rdfs:comment "Payload specifically designed for a military operational purpose."@en ;
+                 rdfs:label "Charge utile militaire"@fr ,
+                            "Military payload"@en .
 
 
 :MissileSystem rdfs:comment "Système de missiles embarqués : effecteur d'engagement de cibles à moyenne ou longue portée."@fr ;
@@ -3551,6 +3923,11 @@ xsd:date rdf:type rdfs:Datatype .
 :NaturalObject rdfs:comment "Objet passif d'origine naturelle présent dans le milieu."@fr ;
                rdfs:label "Natural object"@en ,
                           "Objet naturel"@fr .
+
+
+:NavalBase rdfs:comment "Military infrastructure supporting naval command, logistics, maintenance, berthing and operations. It may contain a harbour but is not a subclass of Harbour."@en ;
+           rdfs:label "Base navale"@fr ,
+                      "Naval base"@en .
 
 
 :NavalMine rdfs:comment "Mine navale : engin explosif déposé volontairement dans le milieu. Passive une fois posée."@fr ;
@@ -3638,6 +4015,11 @@ xsd:date rdf:type rdfs:Datatype .
                          "Sonar passif"@fr .
 
 
+:Payload rdfs:comment "Equipment or material carried by a platform for an operational purpose."@en ;
+         rdfs:label "Charge utile"@fr ,
+                    "Payload"@en .
+
+
 :PayloadHostingCapability rdfs:comment "Capacité d'emport : accueillir, alimenter et interfacer une charge utile."@fr ;
                           rdfs:label "Capacité d'emport"@fr ,
                                      "Payload hosting capability"@en .
@@ -3646,6 +4028,16 @@ xsd:date rdf:type rdfs:Datatype .
 :PerceptionCapability rdfs:comment "Capacité à percevoir le monde au travers de senseurs."@fr ;
                       rdfs:label "Capacité de perception"@fr ,
                                  "Perception capability"@en .
+
+
+:Person rdfs:comment "Human physical entity represented in a maritime scenario."@en ;
+        rdfs:label "Person"@en ,
+                   "Personne"@fr .
+
+
+:PersonnelGroup rdfs:comment "Collection of persons considered as one structural aggregate."@en ;
+                rdfs:label "Groupe de personnel"@fr ,
+                           "Personnel group"@en .
 
 
 :PhysicalCapability rdfs:comment "Fonction qu'un système physique est susceptible de fournir selon son type, sa configuration et son état."@fr ;
@@ -3706,6 +4098,11 @@ xsd:date rdf:type rdfs:Datatype .
                      "Platform"@en .
 
 
+:PlatformGroup rdfs:comment "Collection of platforms considered as one aggregate. Convoy, task group, swarm and escort group are scenario roles, not ontology subclasses."@en ;
+               rdfs:label "Groupe de plateformes"@fr ,
+                          "Platform group"@en .
+
+
 :PortInfrastructure rdfs:comment "Infrastructure portuaire générale."@fr ;
                     rdfs:label "Infrastructure portuaire"@fr ,
                                "Port infrastructure"@en .
@@ -3724,6 +4121,11 @@ xsd:date rdf:type rdfs:Datatype .
 :PropulsionSystem rdfs:comment "Système de propulsion principale ou d'appoint (hélice, hydrojet, thrusters vectoriels des ROV/AUV, rotors)."@fr ;
                   rdfs:label "Propulsion system"@en ,
                              "Système de propulsion"@fr .
+
+
+:ProtectionCapability rdfs:comment "Capability to preserve another entity, group, area, infrastructure or service against harmful effects."@en ;
+                      rdfs:label "Capacité de protection"@fr ,
+                                 "Protection capability"@en .
 
 
 :Pycnocline rdfs:comment "Couche de fort gradient de densité (combinaison des gradients de température et de salinité). Barrière physique au mélange vertical."@fr ;
@@ -3776,6 +4178,11 @@ xsd:date rdf:type rdfs:Datatype .
                  "Récif"@fr .
 
 
+:RelayCapability rdfs:comment "Capability to relay communications between otherwise disconnected or range-limited entities."@en ;
+                 rdfs:label "Capacité de relais"@fr ,
+                            "Relay capability"@en .
+
+
 :RemotelyOperatedVehicle rdfs:comment "ROV : relié par ombilical, contrôlé en temps réel. Adapté aux interventions et manipulations délicates."@fr ;
                          rdfs:label "ROV"@fr ,
                                     "Remotely operated vehicle"@en .
@@ -3789,6 +4196,11 @@ xsd:date rdf:type rdfs:Datatype .
 :Rock rdfs:comment "Rocher isolé sur le fond ou affleurant. Écho ponctuel dur, confusable avec un objet artificiel."@fr ;
       rdfs:label "Rocher"@fr ,
                  "Rock"@en .
+
+
+:Route rdfs:comment "Ordered spatial path used to organize movement between locations."@en ;
+       rdfs:label "Route"@en ,
+                  "Route"@fr .
 
 
 :RouteFollowingCapability rdfs:comment "Capacité de suivi d'une route planifiée."@fr ;
@@ -3961,6 +4373,11 @@ xsd:date rdf:type rdfs:Datatype .
                                 "Surfacing capability"@en .
 
 
+:SurveyCapability rdfs:comment "Capability to systematically characterize an area, route, infrastructure or physical environment."@en ;
+                  rdfs:label "Capacité de levé"@fr ,
+                             "Survey capability"@en .
+
+
 :SystemModel rdfs:comment "Modèle (type constructeur) d'un système : porte les capacités potentielles, que la configuration et l'état rendent — ou non — disponibles."@fr ;
              rdfs:label "Modèle de système"@fr ,
                         "System model"@en .
@@ -3982,6 +4399,11 @@ xsd:date rdf:type rdfs:Datatype .
                         "Thermocline"@fr .
 
 
+:ThreatAssessmentCapability rdfs:comment "Capability to assess whether an observed entity or activity poses an operational threat."@en ;
+                            rdfs:label "Capacité d'évaluation de menace"@fr ,
+                                       "Threat assessment capability"@en .
+
+
 :Tide rdfs:comment "Variation périodique du niveau et des courants d'origine astronomique. Conditionne les fenêtres d'accès aux zones peu profondes et aux ports."@fr ;
       rdfs:label "Marée"@fr ,
                  "Tide"@en .
@@ -3990,6 +4412,16 @@ xsd:date rdf:type rdfs:Datatype .
 :Torpedo rdfs:comment "Torpille, considérée ici comme munition présente dans le milieu (épave d'arme, exercice perdu)."@fr ;
          rdfs:label "Torpedo"@en ,
                     "Torpille"@fr .
+
+
+:TrackingCapability rdfs:comment "Capability to maintain an estimate of an observed entity state over time."@en ;
+                    rdfs:label "Capacité de suivi"@fr ,
+                               "Tracking capability"@en .
+
+
+:TransportCapability rdfs:comment "Capability to transport personnel, payload or materiel."@en ;
+                     rdfs:label "Capacité de transport"@fr ,
+                                "Transport capability"@en .
 
 
 :UncrewedAerialVehicle rdfs:comment "Drone aérien (UAV) : voilure fixe ou VTOL, opéré depuis la terre ou une plateforme navale."@fr ;
