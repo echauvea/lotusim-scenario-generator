@@ -2490,7 +2490,7 @@ traceability:
 | Locate Missing Entity | CT-06 | CT-02 |
 | Locate Emitter | CT-06 | CT-11 |
 
-## 8.1 Semantic pilot introduced in v0.6.0
+## 8.1 Semantic foundation introduced in v0.6.0
 
 The first semantic implementation covers TC-001 Navigate, TC-006 Follow and TC-023 Escort. Candidate state names are intentionally provisional until normalization into the LOTUSim State Model.
 
@@ -2509,4 +2509,3 @@ The first semantic implementation covers TC-001 Navigate, TC-006 Follow and TC-0
 ## Changes 0.3.3 → 0.3.4
 
 - Recomputed `used_by_missions` after completion of MC-028 through MC-033.
-

@@ -1,7 +1,7 @@
 # LOTUSim Mission Catalog
 
 > **Status:** working draft  
-> **Version:** 0.7.0  
+> **Version:** 1.0.3  
 > **Date:** 2026-07-13  
 > **Scope:** military maritime missions supported or considered by LOTUSim.
 

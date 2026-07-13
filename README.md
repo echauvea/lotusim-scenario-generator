@@ -37,7 +37,6 @@ L’ontologie fournit les concepts et relations structurelles, le Mission Catalo
 │   ├── architecture/            Architecture de référence de LSG
 │   ├── dem/                     Versions courantes de la méthode DEM
 │   └── archive/dem/             Versions DEM obsolètes ou fusionnées
-├── work-in-progress/            Expérimentations non normatives
 └── docs/                        Site WIDOCO généré et publié par GitHub Pages
 ```
 
@@ -64,6 +63,6 @@ Les scripts personnels `generer_doc.bat` et `ouvrir_doc.bat` restent volontairem
 
 ## Statut
 
-Les référentiels sont encore à des niveaux de maturité différents : l’architecture est une proposition à valider, l’ontologie et les catalogues sont des brouillons de travail, et DEM-1/DEM-2 sont des spécifications méthodologiques en brouillon. Le pilote sémantique v0.6.0 reste expérimental et ne remplace pas le Task Catalog courant.
+Les référentiels sont encore à des niveaux de maturité différents : l’architecture est une proposition à valider, l’ontologie et les catalogues sont des brouillons de travail, et DEM-1/DEM-2 sont des spécifications méthodologiques en brouillon. Le Task Catalog v0.6.0 est la version courante ; son enrichissement sémantique reste partiel et devra être poursuivi méthodiquement.
 
 La liste exhaustive, les versions, le statut et le caractère normatif ou informatif de chaque document figurent dans [specification/INDEX.md](specification/INDEX.md).
