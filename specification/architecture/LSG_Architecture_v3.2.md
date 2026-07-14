@@ -1052,7 +1052,7 @@ Chaque document se valide contre le POC au fil de l'eau, pas en cascade.
 | **Profil HDDL LOTUSim** | À produire — **premier livrable** | Pivot de faisabilité de la traduction doctrine → HDDL |
 | **LOTUSim Naval Ontology** | v2.0-draft existante | 263 classes dont 46 capacités ; annotations `nmo:hasUsageDomain` (diffusabilité) et `nmo:manifestKey` (§6.4) ; NETN-ETR et C2SIM en checklist (Annexe B) |
 | **LOTUSim Mission Catalog** | v1.0.3 existante | 66 missions, 9 familles doctrinales, capacités requises par mission |
-| **LOTUSim Task Catalog** | v0.6.0 existante | 64 verbes canoniques, 79 signatures typées, capacités par signature |
+| **LOTUSim Task Catalog** | v0.6.1 existante | 64 verbes canoniques, 79 signatures typées, capacités par signature |
 | **Naval Domain** (Domain HDDL) | À produire | La doctrine formalisée — chemin critique, experts métier requis |
 | **Benchmark Suite** | À produire | Scénarios de référence, métriques, protocoles |
 
@@ -1198,7 +1198,7 @@ multi-processus de la stack LOTUSim.
 2. **§9.2** : la vérification d'intégrité référentielle est outillée
    (`validate_referentials.py`, exécution en CI).
 3. **§10.3 et Annexe D** : statuts des référentiels mis à jour — Naval
-   Ontology v2.0-draft, Mission Catalog v1.0.3, Task Catalog v0.6.0 existent ;
+   Ontology v2.0-draft, Mission Catalog v1.0.3, Task Catalog v0.6.1 existent ;
    la « famille documentaire à venir » ne concerne plus que le Profil HDDL, le
    Naval Domain et la Benchmark Suite.
 4. **§11.3 point 3 resserré** : le vocabulaire des clés de manifeste est
@@ -1216,7 +1216,7 @@ multi-processus de la stack LOTUSim.
 
 - **LOTUSim Naval Maritime Ontology** v2.0-draft (`.ttl`, OWL/Turtle) ;
 - **LOTUSim Mission Catalog** v1.0.3 ;
-- **LOTUSim Task Catalog** v0.6.0.
+- **LOTUSim Task Catalog** v0.6.1.
 
 **Documents amont et connexes** :
 
