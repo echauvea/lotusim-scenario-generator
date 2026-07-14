@@ -3773,6 +3773,423 @@ traceability:
       mission: MC-044
 ```
 
+### MC-042 — Reconnoitre Landing Area
+
+```yaml
+id: MC-042
+name: Reconnoitre Landing Area
+status: candidate
+version: 0.1.0
+
+classification:
+  mission_type: MT-01
+  primary_family: littoral-and-amphibious-support
+  operational_intent: conduct
+  mission_target: area
+
+specification:
+  purpose: >
+    Establish operational understanding of a prospective landing area in order to support
+    amphibious planning and reduce uncertainty before force commitment.
+  description: >
+    Assigned forces observe and characterize a designated littoral landing area, its approaches
+    and relevant activity. They detect, localize and report terrain, obstacles, infrastructure,
+    contacts and hazards that may affect an amphibious operation.
+  applicable_contexts:
+    - amphibious-operations
+    - littoral-warfare
+    - pre-operation-intelligence-preparation
+    - contested-environment
+  preconditions:
+    - prospective-landing-area-defined
+    - reconnaissance-objectives-defined
+    - suitable-sensing-assets-available
+    - reporting-arrangements-established
+  desired_end_state: >
+    The designated landing area and its approaches are sufficiently understood to support
+    amphibious planning, with relevant hazards, contacts and access constraints reported.
+  success_criteria:
+    - required-landing-area-observations-completed
+    - relevant-hazards-and-contacts-reported
+    - required-operational-understanding-established
+  failure_criteria:
+    - required-area-cannot-be-observed
+    - critical-hazard-or-contact-remains-unassessed
+    - collected-information-insufficient-for-amphibious-planning
+
+required_capabilities:
+  mandatory:
+    - MobilityCapability
+    - PerceptionCapability
+    - DetectionCapability
+    - CommunicationCapability
+  optional:
+    - SurveyCapability
+    - LocalizationCapability
+    - ClassificationCapability
+    - IdentificationCapability
+    - AssessmentCapability
+
+traceability:
+  task_candidates:
+    - TC-001
+    - TC-003
+    - TC-004
+    - TC-011
+    - TC-012
+    - TC-013
+    - TC-014
+    - TC-015
+    - TC-019
+    - TC-020
+    - TC-021
+    - TC-039
+  ontology_concepts:
+    - SpatialRegion
+    - MaritimeArea
+    - Infrastructure
+    - PhysicalObject
+  related_missions:
+    - relation: may-enable
+      mission: MC-043
+    - relation: may-enable
+      mission: MC-044
+```
+
+### MC-043 — Survey Littoral Access Route
+
+```yaml
+id: MC-043
+name: Survey Littoral Access Route
+status: candidate
+version: 0.1.0
+
+classification:
+  mission_type: MT-03
+  primary_family: littoral-and-amphibious-support
+  operational_intent: survey
+  mission_target: route
+
+specification:
+  purpose: >
+    Systematically characterize a littoral access route and its immediate surroundings to
+    determine whether it can support the intended movement of amphibious forces.
+  description: >
+    Assigned forces traverse or remotely survey a designated route from the maritime approach
+    toward a landing area. They map the route, measure relevant environmental characteristics,
+    detect obstacles and hazards, and report constraints affecting access and manoeuvre.
+  applicable_contexts:
+    - amphibious-operations
+    - littoral-access-planning
+    - route-preparation
+    - contested-environment
+  preconditions:
+    - candidate-littoral-route-defined
+    - survey-criteria-defined
+    - suitable-survey-assets-available
+    - required-access-authorization-established
+  desired_end_state: >
+    The littoral access route is characterized to the required level and its suitability,
+    constraints, hazards and access conditions are reported.
+  success_criteria:
+    - required-route-coverage-achieved
+    - relevant-route-characteristics-measured
+    - obstacles-and-hazards-reported
+    - route-suitability-assessed
+  failure_criteria:
+    - required-route-segment-not-surveyed
+    - critical-route-condition-remains-unknown
+    - survey-information-insufficient-for-access-decision
+
+required_capabilities:
+  mandatory:
+    - SurveyCapability
+    - NavigationCapability
+    - MobilityCapability
+    - PerceptionCapability
+    - CommunicationCapability
+  optional:
+    - DetectionCapability
+    - AssessmentCapability
+    - PositionEstimationCapability
+
+traceability:
+  task_candidates:
+    - TC-001
+    - TC-004
+    - TC-011
+    - TC-012
+    - TC-019
+    - TC-020
+    - TC-021
+    - TC-039
+  ontology_concepts:
+    - Route
+    - Corridor
+    - SpatialRegion
+    - MaritimeArea
+  related_missions:
+    - relation: enabled-by
+      mission: MC-042
+    - relation: may-enable
+      mission: MC-044
+    - relation: may-enable
+      mission: MC-046
+```
+
+### MC-044 — Support Amphibious Operations
+
+```yaml
+id: MC-044
+name: Support Amphibious Operations
+status: candidate
+version: 0.1.0
+
+classification:
+  mission_type: MT-09
+  primary_family: littoral-and-amphibious-support
+  operational_intent: support
+  mission_target: platform-group
+
+specification:
+  purpose: >
+    Enable an amphibious force to approach, land, manoeuvre or withdraw by providing the
+    maritime support required by the supported operation.
+  description: >
+    Assigned maritime forces coordinate and deliver selected mobility, transport, deployment,
+    protection, communication, sensing or engagement support to an amphibious force. The exact
+    support package depends on the phase, threat and objectives of the supported operation.
+  applicable_contexts:
+    - amphibious-landing
+    - amphibious-manoeuvre
+    - amphibious-withdrawal
+    - littoral-warfare
+    - joint-operations
+  preconditions:
+    - supported-amphibious-operation-defined
+    - support-requirements-defined
+    - coordination-arrangements-established
+    - assigned-support-assets-available
+  desired_end_state: >
+    The amphibious force receives the required maritime support and can complete the supported
+    phase of its operation under the specified access, timing and protection conditions.
+  success_criteria:
+    - required-amphibious-support-delivered
+    - supported-force-reaches-required-operational-condition
+    - coordination-with-supported-force-maintained
+  failure_criteria:
+    - critical-support-not-delivered
+    - supported-force-cannot-complete-required-phase
+    - coordination-failure-compromises-supported-operation
+
+required_capabilities:
+  mandatory:
+    - SupportCapability
+    - CoordinationCapability
+    - CommunicationCapability
+    - MobilityCapability
+  optional:
+    - TransportCapability
+    - DeploymentCapability
+    - ProtectionCapability
+    - EngagementCapability
+    - AssessmentCapability
+
+traceability:
+  task_candidates:
+    - TC-001
+    - TC-023
+    - TC-028
+    - TC-036
+    - TC-038
+    - TC-039
+    - TC-043
+    - TC-051
+    - TC-059
+  ontology_concepts:
+    - PlatformGroup
+    - Platform
+    - SpatialRegion
+    - MaritimeArea
+    - PhysicalObject
+  related_missions:
+    - relation: may-require
+      mission: MC-042
+    - relation: may-require
+      mission: MC-043
+    - relation: may-require
+      mission: MC-046
+    - relation: supported-by
+      mission: MC-041
+```
+
+### MC-045 — Support Special Operations
+
+```yaml
+id: MC-045
+name: Support Special Operations
+status: candidate
+version: 0.1.0
+
+classification:
+  mission_type: MT-09
+  primary_family: littoral-and-amphibious-support
+  operational_intent: support
+  mission_target: personnel
+
+specification:
+  purpose: >
+    Enable a designated special operations force to deploy, operate, sustain or recover in a
+    maritime or littoral objective area.
+  description: >
+    Assigned maritime forces provide selected transport, deployment, recovery, communication,
+    sensing, protection or coordination support to a special operations force while preserving
+    the timing, discretion and operational constraints of the supported activity.
+  applicable_contexts:
+    - special-operations
+    - littoral-warfare
+    - covert-or-discreet-support
+    - joint-operations
+  preconditions:
+    - supported-special-operation-defined
+    - support-requirements-and-constraints-defined
+    - coordination-and-communication-arrangements-established
+    - suitable-support-assets-available
+  desired_end_state: >
+    The supported special operations force receives the required maritime support and reaches
+    the specified operational condition without unacceptable compromise or delay.
+  success_criteria:
+    - required-special-operations-support-delivered
+    - supported-force-reaches-required-operational-condition
+    - required-discretion-and-timing-preserved
+  failure_criteria:
+    - critical-support-not-delivered
+    - supported-force-cannot-reach-required-operational-condition
+    - support-activity-causes-unacceptable-compromise-or-delay
+
+required_capabilities:
+  mandatory:
+    - SupportCapability
+    - CoordinationCapability
+    - CommunicationCapability
+  optional:
+    - MobilityCapability
+    - TransportCapability
+    - DeploymentCapability
+    - RecoveryCapability
+    - ProtectionCapability
+    - PerceptionCapability
+
+traceability:
+  task_candidates:
+    - TC-001
+    - TC-038
+    - TC-039
+    - TC-040
+    - TC-043
+    - TC-044
+    - TC-049
+    - TC-051
+    - TC-059
+  ontology_concepts:
+    - PersonnelGroup
+    - Person
+    - Platform
+    - PhysicalObject
+    - SpatialRegion
+  related_missions:
+    - relation: may-require
+      mission: MC-042
+    - relation: may-require
+      mission: MC-046
+    - relation: may-require
+      mission: MC-061
+```
+
+### MC-046 — Secure Littoral Access Corridor
+
+```yaml
+id: MC-046
+name: Secure Littoral Access Corridor
+status: candidate
+version: 0.1.0
+
+classification:
+  mission_type: MT-04
+  primary_family: littoral-and-amphibious-support
+  operational_intent: protect
+  mission_target: corridor
+
+specification:
+  purpose: >
+    Establish and maintain a sufficiently secure littoral corridor for the movement of a
+    designated friendly force between the maritime approach and its objective area.
+  description: >
+    Assigned forces survey, monitor and protect a designated access corridor. They detect and
+    handle relevant hazards and threats, preserve route availability and report changes that
+    could affect the authorized movement of the supported force.
+  applicable_contexts:
+    - amphibious-operations
+    - littoral-access
+    - force-protection
+    - contested-environment
+  preconditions:
+    - littoral-corridor-defined
+    - supported-movement-defined
+    - corridor-security-criteria-defined
+    - assigned-protection-assets-available
+  desired_end_state: >
+    The designated littoral corridor remains available and sufficiently secure for the required
+    friendly movement during the specified operational period.
+  success_criteria:
+    - corridor-surveyed-and-monitored
+    - relevant-hazards-and-threats-handled
+    - supported-movement-completed-under-required-protection-conditions
+  failure_criteria:
+    - corridor-becomes-unavailable
+    - unresolved-threat-prevents-supported-movement
+    - required-protection-continuity-not-maintained
+
+required_capabilities:
+  mandatory:
+    - ProtectionCapability
+    - MobilityCapability
+    - PerceptionCapability
+    - CommunicationCapability
+  optional:
+    - SurveyCapability
+    - DetectionCapability
+    - TrackingCapability
+    - EngagementCapability
+    - InterdictionCapability
+
+traceability:
+  task_candidates:
+    - TC-001
+    - TC-002
+    - TC-004
+    - TC-012
+    - TC-016
+    - TC-023
+    - TC-025
+    - TC-026
+    - TC-028
+    - TC-036
+    - TC-039
+  ontology_concepts:
+    - Corridor
+    - Route
+    - SpatialRegion
+    - PlatformGroup
+  related_missions:
+    - relation: enabled-by
+      mission: MC-043
+    - relation: supports
+      mission: MC-044
+    - relation: may-support
+      mission: MC-045
+```
+
 
 
 ## 13. Changes v1.0.3 → v1.0.4
@@ -3780,6 +4197,7 @@ traceability:
 - Confirmed the section 5 inventory as the authoritative source for mission identities MC-001 through MC-066.
 - Normalized MC-034 through MC-038 to the canonical mission schema.
 - Added canonical specifications for MC-039 through MC-041 by reusing relevant material from the divergent proposals under their correct mission identities.
+- Added canonical specifications for the Littoral and Amphibious Support family MC-042 through MC-046.
 - Replaced free-text task references in MC-034 through MC-038 with stable Task Catalog identifiers.
 - Replaced unavailable capability and ontology references with concepts defined by the current Naval Ontology.
 - Isolated the conflicting former MC-039 through MC-066 blocks as non-normative legacy proposals pending reassignment or reuse.
