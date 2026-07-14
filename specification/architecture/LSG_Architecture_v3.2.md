@@ -3,7 +3,7 @@
 > **Statut** : proposition v3.2 — unification de LSGA v2 (Estelle Chauveau) et des
 > travaux d'exécution tsm (Cyril Moron). À valider conjointement.
 > **Date** : 2026-07-13
-> **Lignée** : étend [LSGA v2](lsga-architecture-v2.md) (génération) au cycle
+> **Lignée** : étend [LSGA v2](https://github.com/cmoron-lab/tactical_scenario_maker/blob/main/docs/lsga-architecture-v2.md) (génération, dans le dépôt `tactical_scenario_maker`) au cycle
 > complet du scénario — génération, exécution, arbitrage. Changements v2 → v3
 > en [Annexe C](#annexe-c--changements) ; changements v3.1 → v3.2 idem.
 
@@ -1220,9 +1220,13 @@ multi-processus de la stack LOTUSim.
 
 **Documents amont et connexes** :
 
-- [LSGA v2](lsga-architecture-v2.md) (Estelle Chauveau) — le document d'origine
-  du niveau 1 ; sa version .docx reste la référence éditoriale côté PO.
-- Runbook du rig d'intégration : [rig-e2e.md](rig-e2e.md).
+- [LSGA v2](https://github.com/cmoron-lab/tactical_scenario_maker/blob/main/docs/lsga-architecture-v2.md) (Estelle Chauveau) — le document d'origine
+  du niveau 1 ; sa version .docx reste la référence éditoriale côté PO. Hébergé
+  dans le dépôt `tactical_scenario_maker` (Cyril Moron), pas dans ce dépôt —
+  voir [note de coordination](../notes/2026-07-14-etat-des-lieux-interface-tsm.md)
+  sur l'absence de source canonique unique pour ce document.
+- Runbook du rig d'intégration : [rig-e2e.md](https://github.com/cmoron-lab/tactical_scenario_maker/blob/main/docs/rig-e2e.md)
+  (également dans `tactical_scenario_maker`).
 - À produire : Profil HDDL LOTUSim, Naval Domain, Benchmark Suite (§10.3).
 - Historique : la review LSGA v2 (11/07), la note « Trois niveaux de
   décision » (12/07), le document de convergence `architecture-unifiee.md` et
