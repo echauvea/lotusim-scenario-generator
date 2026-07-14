@@ -71,6 +71,6 @@ Les scripts personnels `generer_doc.bat` et `ouvrir_doc.bat` restent volontairem
 
 ## Statut
 
-Les référentiels sont encore à des niveaux de maturité différents : l’architecture est une proposition à valider, l’ontologie et les catalogues sont des brouillons de travail, et DEM-1/DEM-2 sont des spécifications méthodologiques en brouillon. Le Task Catalog v0.6.1 est la version courante ; le pilote Navigate, Follow et Escort est aligné sur DEM-1/DEM-2 v0.3, mais l’enrichissement sémantique des autres tâches reste à poursuivre méthodiquement.
+Les référentiels sont encore à des niveaux de maturité différents : l’architecture est une proposition à valider, l’ontologie et les catalogues sont des brouillons de travail, et DEM-1/DEM-2 sont des spécifications méthodologiques en brouillon. Le Task Catalog v0.7.0 est la version courante : les 79 signatures sont affectées à une Semantic Family unique selon DEM-1/DEM-2 v0.4 ; l’enrichissement sémantique détaillé des tâches reste à poursuivre méthodiquement.
 
 La liste exhaustive, les versions, le statut et le caractère normatif ou informatif de chaque document figurent dans [specification/INDEX.md](specification/INDEX.md).
