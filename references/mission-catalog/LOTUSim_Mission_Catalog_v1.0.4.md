@@ -4731,6 +4731,484 @@ traceability:
       mission: MC-063
 ```
 
+### MC-054 — Conduct Electronic Surveillance
+
+```yaml
+id: MC-054
+name: Conduct Electronic Surveillance
+status: candidate
+version: 0.1.0
+
+classification:
+  mission_type: MT-01
+  primary_family: electromagnetic-and-information-activities
+  operational_intent: conduct
+  mission_target: area
+
+specification:
+  purpose: >
+    Acquire and maintain awareness of relevant electromagnetic activity within a designated
+    operating area and period.
+  description: >
+    Assigned assets monitor the radio-frequency environment, detect and characterize relevant
+    emissions, associate them with sources when possible, and report changes or activity of
+    operational interest without prescribing a subsequent effect.
+  applicable_contexts:
+    - maritime-domain-awareness
+    - threat-warning
+    - force-protection
+    - operational-environment-preparation
+  preconditions:
+    - surveillance-area-and-period-defined
+    - electronic-surveillance-objectives-defined
+    - suitable-sensors-available
+    - reporting-arrangements-established
+  desired_end_state: >
+    Relevant electromagnetic activity in the designated area is detected, characterized and
+    reported to the required level of confidence and continuity.
+  success_criteria:
+    - required-electromagnetic-coverage-achieved
+    - relevant-emissions-detected-and-characterized
+    - significant-electromagnetic-activity-reported
+  failure_criteria:
+    - required-coverage-not-achieved
+    - significant-emission-remains-undetected
+    - collected-information-insufficient-for-required-awareness
+
+required_capabilities:
+  mandatory:
+    - ElectronicWarfareCapability
+    - PerceptionCapability
+    - DetectionCapability
+    - CommunicationCapability
+  optional:
+    - LocalizationCapability
+    - ClassificationCapability
+    - IdentificationCapability
+    - TrackingCapability
+    - AssessmentCapability
+
+traceability:
+  task_candidates:
+    - TC-011
+    - TC-012
+    - TC-013
+    - TC-014
+    - TC-015
+    - TC-016
+    - TC-017
+    - TC-020
+    - TC-021
+    - TC-039
+    - TC-062
+  ontology_concepts:
+    - RadioFrequencyPerception
+    - RadioFrequencySensor
+    - Sensor
+    - Platform
+    - SpatialRegion
+  related_missions:
+    - relation: may-enable
+      mission: MC-055
+    - relation: may-enable
+      mission: MC-057
+    - relation: may-contribute-to
+      mission: MC-018
+```
+
+### MC-055 — Conduct Electronic Attack
+
+```yaml
+id: MC-055
+name: Conduct Electronic Attack
+status: candidate
+version: 0.1.0
+
+classification:
+  mission_type: MT-06
+  primary_family: electromagnetic-and-information-activities
+  operational_intent: conduct
+  mission_target: physical-object
+
+specification:
+  purpose: >
+    Apply authorized electromagnetic effects to degrade, deceive, disable or neutralize a
+    designated adversary emitter, sensor or electronic system.
+  description: >
+    Assigned electronic-warfare assets identify the designated target, select an authorized
+    effect and apply jamming or deceptive emissions for the required duration. They monitor the
+    target response and assess whether the requested operational effect has been achieved.
+  applicable_contexts:
+    - high-intensity-warfare
+    - force-protection
+    - strike-support
+    - contested-electromagnetic-environment
+  preconditions:
+    - electronic-attack-target-designated
+    - target-sufficiently-identified
+    - electronic-attack-authorized
+    - suitable-effect-capability-available
+  desired_end_state: >
+    The designated adversary electronic system is degraded, deceived, disabled or neutralized
+    to the degree and for the duration required by the supported operation.
+  success_criteria:
+    - authorized-electromagnetic-effect-applied
+    - required-target-degradation-or-deception-achieved
+    - effect-assessed-and-reported
+  failure_criteria:
+    - required-effect-not-achieved
+    - target-remains-operationally-effective
+    - unacceptable-interference-affects-friendly-or-protected-systems
+
+required_capabilities:
+  mandatory:
+    - ElectronicWarfareCapability
+    - IdentificationCapability
+    - EngagementCapability
+    - CommunicationCapability
+  optional:
+    - DetectionCapability
+    - TrackingCapability
+    - CoordinationCapability
+    - AssessmentCapability
+
+traceability:
+  task_candidates:
+    - TC-012
+    - TC-015
+    - TC-016
+    - TC-021
+    - TC-039
+    - TC-043
+    - TC-063
+    - TC-064
+  ontology_concepts:
+    - RadioFrequencySensor
+    - CommunicationDevice
+    - Sensor
+    - PhysicalObject
+  related_missions:
+    - relation: enabled-by
+      mission: MC-054
+    - relation: may-support
+      mission: MC-039
+    - relation: broader-or-overlapping
+      mission: MC-057
+```
+
+### MC-056 — Protect Friendly Communications
+
+```yaml
+id: MC-056
+name: Protect Friendly Communications
+status: candidate
+version: 0.1.0
+
+classification:
+  mission_type: MT-04
+  primary_family: electromagnetic-and-information-activities
+  operational_intent: protect
+  mission_target: communication-service
+
+specification:
+  purpose: >
+    Preserve the availability, integrity and authorized use of designated friendly communication
+    services against interference, disruption or electromagnetic attack.
+  description: >
+    Assigned assets monitor protected communication links and networks, detect degradation or
+    hostile interference, coordinate protective measures and maintain or restore the required
+    service level for designated users.
+  applicable_contexts:
+    - force-protection
+    - degraded-communications-environment
+    - contested-electromagnetic-environment
+    - distributed-operations
+  preconditions:
+    - protected-communication-service-defined
+    - required-service-level-defined
+    - monitoring-and-protection-resources-available
+    - authorized-users-and-priorities-defined
+  desired_end_state: >
+    The designated friendly communication service remains available to authorized users at the
+    required level despite relevant interference or attack.
+  success_criteria:
+    - protected-service-meets-required-availability
+    - harmful-interference-detected-and-handled
+    - authorized-communications-preserved
+  failure_criteria:
+    - protected-service-falls-below-required-availability
+    - authorized-users-lose-critical-connectivity
+    - harmful-interference-remains-unhandled
+
+required_capabilities:
+  mandatory:
+    - ProtectionCapability
+    - CommunicationCapability
+    - ElectronicWarfareCapability
+    - SelfMonitoringCapability
+  optional:
+    - DetectionCapability
+    - CoordinationCapability
+    - RelayCapability
+    - AssessmentCapability
+
+traceability:
+  task_candidates:
+    - TC-005
+    - TC-012
+    - TC-021
+    - TC-028
+    - TC-039
+    - TC-043
+    - TC-044
+    - TC-045
+    - TC-062
+  ontology_concepts:
+    - CommunicationLink
+    - CommunicationNetwork
+    - CommunicationDevice
+    - RadioTransceiver
+  related_missions:
+    - relation: opposed-by
+      mission: MC-057
+    - relation: may-use
+      mission: MC-050
+```
+
+### MC-057 — Disrupt Adversary Communications
+
+```yaml
+id: MC-057
+name: Disrupt Adversary Communications
+status: candidate
+version: 0.1.0
+
+classification:
+  mission_type: MT-05
+  primary_family: electromagnetic-and-information-activities
+  operational_intent: interdict
+  mission_target: communication-service
+
+specification:
+  purpose: >
+    Prevent or constrain designated adversary participants from using a communication service
+    effectively during a specified operational period.
+  description: >
+    Assigned electronic-warfare assets identify relevant adversary communication activity and
+    apply authorized jamming or deceptive emissions. They monitor service degradation and adapt
+    the effect while limiting interference with friendly or protected communications.
+  applicable_contexts:
+    - command-and-control-disruption
+    - force-protection
+    - high-intensity-warfare
+    - contested-electromagnetic-environment
+  preconditions:
+    - adversary-communication-service-designated
+    - disruption-effect-and-period-defined
+    - disruption-authorized
+    - suitable-electronic-warfare-assets-available
+  desired_end_state: >
+    The designated adversary communication service cannot support effective operational use for
+    the required period, without unacceptable impact on protected communications.
+  success_criteria:
+    - required-adversary-service-degradation-achieved
+    - disruption-maintained-for-required-period
+    - protected-communications-remain-within-authorized-impact-limits
+  failure_criteria:
+    - adversary-service-remains-operationally-effective
+    - disruption-cannot-be-maintained
+    - unacceptable-interference-affects-protected-communications
+
+required_capabilities:
+  mandatory:
+    - InterdictionCapability
+    - ElectronicWarfareCapability
+    - CommunicationCapability
+  optional:
+    - DetectionCapability
+    - IdentificationCapability
+    - TrackingCapability
+    - AssessmentCapability
+
+traceability:
+  task_candidates:
+    - TC-012
+    - TC-015
+    - TC-016
+    - TC-021
+    - TC-026
+    - TC-039
+    - TC-063
+    - TC-064
+  ontology_concepts:
+    - CommunicationLink
+    - CommunicationNetwork
+    - CommunicationDevice
+    - RadioTransceiver
+  related_missions:
+    - relation: enabled-by
+      mission: MC-054
+    - relation: opposed-by
+      mission: MC-056
+    - relation: specialization-of
+      mission: MC-055
+```
+
+### MC-058 — Conduct Maritime Deception
+
+```yaml
+id: MC-058
+name: Conduct Maritime Deception
+status: candidate
+version: 0.1.0
+
+classification:
+  mission_type: MT-09
+  primary_family: electromagnetic-and-information-activities
+  operational_intent: conduct
+  mission_target: maritime-activity
+
+specification:
+  purpose: >
+    Influence an adversary's understanding or decision process by presenting a controlled false,
+    ambiguous or misleading representation of friendly maritime activity.
+  description: >
+    Assigned forces coordinate observable actions, emissions, information or physical signatures
+    intended to create a specified adversary perception. Execution is monitored and adjusted to
+    support the protected operation without compromising friendly intent.
+  applicable_contexts:
+    - force-protection
+    - manoeuvre-support
+    - strike-support
+    - contested-information-environment
+  preconditions:
+    - deception-objective-and-audience-defined
+    - desired-adversary-perception-defined
+    - deception-plan-authorized
+    - observable-actions-or-signatures-available
+  desired_end_state: >
+    The adversary acts, delays or allocates attention in a manner that supports the friendly
+    operation, while the protected friendly intent remains acceptably concealed.
+  success_criteria:
+    - planned-deception-signatures-presented
+    - indicators-support-desired-adversary-perception
+    - protected-friendly-intent-not-unacceptably-exposed
+  failure_criteria:
+    - deception-signatures-not-presented-as-planned
+    - adversary-behaviour-inconsistent-with-required-effect
+    - deception-compromises-protected-friendly-operation
+
+required_capabilities:
+  mandatory:
+    - SupportCapability
+    - CoordinationCapability
+    - CommunicationCapability
+  optional:
+    - ElectronicWarfareCapability
+    - DeploymentCapability
+    - AssessmentCapability
+    - MobilityCapability
+
+traceability:
+  task_candidates:
+    - TC-021
+    - TC-038
+    - TC-039
+    - TC-040
+    - TC-043
+    - TC-046
+    - TC-063
+    - TC-064
+  ontology_concepts:
+    - Decoy
+    - CommunicationDevice
+    - Platform
+    - PhysicalObject
+  related_missions:
+    - relation: may-use
+      mission: MC-059
+    - relation: may-support
+      mission: MC-039
+    - relation: may-support
+      mission: MC-040
+```
+
+### MC-059 — Deploy Decoy
+
+```yaml
+id: MC-059
+name: Deploy Decoy
+status: candidate
+version: 0.1.0
+
+classification:
+  mission_type: MT-04
+  primary_family: electromagnetic-and-information-activities
+  operational_intent: support
+  mission_target: physical-object
+
+specification:
+  purpose: >
+    Protect a designated friendly force or activity by placing a decoy where it can create the
+    required false signature, attraction or ambiguity.
+  description: >
+    An assigned platform transports and deploys a designated decoy at the required location and
+    time, activates or configures its observable signature when applicable, and confirms that it
+    contributes to the intended protective or deceptive effect.
+  applicable_contexts:
+    - force-protection
+    - threat-deflection
+    - maritime-deception
+    - contested-environment
+  preconditions:
+    - protected-force-or-activity-defined
+    - decoy-and-deployment-location-defined
+    - intended-protective-effect-defined
+    - compatible-deployment-platform-available
+  desired_end_state: >
+    The decoy is deployed and presents the required signature or attraction so that exposure of
+    the protected force or activity is reduced to the specified level.
+  success_criteria:
+    - decoy-deployed-at-required-location-and-time
+    - required-decoy-signature-or-effect-established
+    - protected-force-exposure-reduced-as-required
+  failure_criteria:
+    - decoy-not-deployed
+    - decoy-fails-to-present-required-effect
+    - deployment-increases-risk-to-protected-force
+
+required_capabilities:
+  mandatory:
+    - ProtectionCapability
+    - DeploymentCapability
+    - SupportCapability
+  optional:
+    - ElectronicWarfareCapability
+    - TransportCapability
+    - CommunicationCapability
+    - AssessmentCapability
+
+traceability:
+  task_candidates:
+    - TC-001
+    - TC-021
+    - TC-038
+    - TC-039
+    - TC-043
+    - TC-048
+    - TC-049
+    - TC-064
+  ontology_concepts:
+    - Decoy
+    - PhysicalObject
+    - Platform
+  related_missions:
+    - relation: may-support
+      mission: MC-058
+    - relation: may-support
+      mission: MC-028
+```
+
 
 
 ## 13. Changes v1.0.3 → v1.0.4
@@ -4740,6 +5218,7 @@ traceability:
 - Added canonical specifications for MC-039 through MC-041 by reusing relevant material from the divergent proposals under their correct mission identities.
 - Added canonical specifications for the Littoral and Amphibious Support family MC-042 through MC-046.
 - Added canonical specifications for the Sustainment and Force Support family MC-047 through MC-053.
+- Added canonical specifications for the Electromagnetic and Information Activities family MC-054 through MC-059.
 - Replaced free-text task references in MC-034 through MC-038 with stable Task Catalog identifiers.
 - Replaced unavailable capability and ontology references with concepts defined by the current Naval Ontology.
 - Isolated the conflicting former MC-039 through MC-066 blocks as non-normative legacy proposals pending reassignment or reuse.
