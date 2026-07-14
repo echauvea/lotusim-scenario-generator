@@ -15,11 +15,11 @@ Cet index est la source unique d’inventaire documentaire du dépôt **LSG — 
 | Document | Version déclarée | Statut | Autorité | Rôle et observations |
 |---|---:|---|---|---|
 | [Architecture LSG](architecture/LSG_Architecture_v3.2.md) | v3.2 | Proposition courante, à valider conjointement | Informatif jusqu’à validation | Architecture globale de génération, exécution et arbitrage. Les documents amont `lsga-architecture-v2.md` et `rig-e2e.md` cités par la source ne sont pas présents dans ce dépôt. |
-| [DEM-1 — Semantic Design Rules](dem/DEM-1_Semantic_Design_Rules_v0.4.md) | v0.4 | Brouillon courant | Normatif pour la méthode | Règles de conception sémantique et cardinalité d’une Semantic Family par signature typée. |
-| [DEM-2 — Task Catalog Specification](dem/DEM-2_Task_Catalog_Specification_v0.4.md) | v0.4 | Brouillon courant | Normatif pour la méthode | Métamodèle canonique des Semantic Families, propriété au niveau signature et schéma explicatif des verbes multi-familles. |
+| [DEM-1 — Semantic Design Rules](dem/DEM-1_Semantic_Design_Rules_v0.5.md) | v0.5 | Brouillon courant | Normatif pour la méthode | Règles de conception sémantique, sorties d’exécution typées et connaissance relative à son détenteur. |
+| [DEM-2 — Task Catalog Specification](dem/DEM-2_Task_Catalog_Specification_v0.5.md) | v0.5 | Brouillon courant | Normatif pour la méthode | Métamodèle canonique complété par `execution_output` et la progression de connaissance ISR. |
 | [Naval Maritime Ontology](../references/ontology/LOTUSim_Naval_Maritime_Ontology_v2.0-draft.ttl) | 2.0.0-draft | Brouillon courant | Normatif pour les concepts, types, capacités, équipements et relations structurelles | La version interne et le nom de fichier sont cohérents. |
 | [Mission Catalog](../references/mission-catalog/LOTUSim_Mission_Catalog_v1.0.4.md) | v1.0.4 | Courant, brouillon de travail | Normatif pour les missions et objectifs | Les 66 missions disposent d’une spécification active conforme au métamodèle canonique. |
-| [Task Catalog](../references/task-catalog/LOTUSim_Task_Catalog_v0.7.0.md) | v0.7.0 | Courant, brouillon de travail | Normatif pour les tâches et leurs sémantiques | Sept Semantic Families définies ; les 79 signatures ont un identifiant stable et une affectation familiale unique. |
+| [Task Catalog](../references/task-catalog/LOTUSim_Task_Catalog_v0.8.0.md) | v0.8.0 | Courant, brouillon de travail | Normatif pour les tâches et leurs sémantiques | Les sept signatures de Observe, Detect, Localize, Classify, Identify et Track disposent d’une sémantique opérationnelle complète. |
 
 ## Archives des catalogues
 
@@ -29,6 +29,7 @@ Cet index est la source unique d’inventaire documentaire du dépôt **LSG — 
 | [Task Catalog baseline](../references/task-catalog/archive/LOTUSim_Task_Catalog_v0.5.3.md) | v0.5.3 dans le nom / 0.3.4 dans l’en-tête historique | Archivé | Non normatif | Baseline antérieure au pilote sémantique, remplacée successivement par v0.6.0 puis v0.6.1. |
 | [Task Catalog — pilote initial](../references/task-catalog/archive/LOTUSim_Task_Catalog_v0.6.0.md) | v0.6.0 | Archivé | Non normatif | Remplacé par v0.6.1 après correction des anomalies révélées par le pilote sémantique. |
 | [Task Catalog — pilote corrigé](../references/task-catalog/archive/LOTUSim_Task_Catalog_v0.6.1.md) | v0.6.1 | Archivé | Non normatif | Remplacé par v0.7.0 après stabilisation et affectation des Semantic Families au niveau signature. |
+| [Task Catalog — Semantic Families](../references/task-catalog/archive/LOTUSim_Task_Catalog_v0.7.0.md) | v0.7.0 | Archivé | Non normatif | Remplacé par v0.8.0 après enrichissement du noyau ISR. |
 
 ## Archives DEM
 
@@ -42,6 +43,8 @@ Cet index est la source unique d’inventaire documentaire du dépôt **LSG — 
 | [DEM-2 — Task Catalog Specification](archive/dem/DEM-2_Task_Catalog_Specification_v0.2.md) | v0.2 | Archivé | Non normatif | Version consolidée remplacée par DEM-2 v0.3 après stabilisation du métamodèle canonique. |
 | [DEM-1 — Semantic Design Rules](archive/dem/DEM-1_Semantic_Design_Rules_v0.3.md) | v0.3 | Archivé | Non normatif | Remplacé par DEM-1 v0.4 après adoption de l’affectation familiale au niveau signature. |
 | [DEM-2 — Task Catalog Specification](archive/dem/DEM-2_Task_Catalog_Specification_v0.3.md) | v0.3 | Archivé | Non normatif | Remplacé par DEM-2 v0.4 après ajout du métamodèle des familles et du schéma explicatif. |
+| [DEM-1 — Semantic Design Rules](archive/dem/DEM-1_Semantic_Design_Rules_v0.4.md) | v0.4 | Archivé | Non normatif | Remplacé par DEM-1 v0.5 après introduction des sorties d’exécution et des règles de connaissance ISR. |
+| [DEM-2 — Task Catalog Specification](archive/dem/DEM-2_Task_Catalog_Specification_v0.4.md) | v0.4 | Archivé | Non normatif | Remplacé par DEM-2 v0.5 après formalisation de la progression ISR. |
 | [DEM Part 1 — Task Semantics & State Model](archive/dem/DEM_Part1_Task_Semantics_State_Model_v0.1.md) | v0.1 | Archivé | Non normatif | Ancien document composite. Ses décisions utiles sont réparties entre DEM-1 et DEM-2 ; aucun Task Semantics Catalog séparé ne doit être recréé. |
 
 ## Documents de gouvernance et de support
@@ -64,8 +67,8 @@ Cet index est la source unique d’inventaire documentaire du dépôt **LSG — 
 
 - Les 66 identifiants de mission `MC-001` à `MC-066` sont présents dans l’inventaire canonique et les 64 identifiants de tâche `TC-001` à `TC-064` sont présents, sans doublon d’en-tête détecté.
 - Le Mission Catalog v1.0.4 contient 66 spécifications actives conformes au métamodèle. Les anciennes propositions incompatibles autrefois numérotées MC-039 à MC-066 sont conservées dans une annexe explicitement non normative.
-- Le Task Catalog v0.7.0 reprend les 64 tâches et 79 signatures. Chaque signature possède un identifiant stable et exactement une Semantic Family ; la sémantique opérationnelle détaillée reste à généraliser au-delà du pilote.
-- Les références de versions de l’architecture v3.2 ont été actualisées vers Mission Catalog v1.0.4 et Task Catalog v0.7.0.
+- Le Task Catalog v0.8.0 reprend les 64 tâches et 79 signatures. Onze signatures possèdent désormais une sémantique complète : les quatre du pilote et les sept du noyau ISR. Les 68 autres restent à enrichir progressivement.
+- Les références de versions de l’architecture v3.2 ont été actualisées vers Mission Catalog v1.0.4 et Task Catalog v0.8.0.
 - La version d’architecture fournie comme source courante contient deux liens vers LSGA v2 et un lien vers `rig-e2e.md`, alors que ces fichiers sont absents du dépôt. Ils sont conservés tels quels dans le document source et restent donc à résoudre.
 
 ## Décisions humaines encore requises
