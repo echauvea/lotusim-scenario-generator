@@ -1,0 +1,809 @@
+model:
+  id: LOTUSIM-SM
+  version: 0.1.0
+  status: draft
+  date: 2026-07-14
+  scope: >
+    Foundational dynamic state vocabulary derived from the four semantic-pilot
+    signatures, the seven core ISR signatures, their mission requirements and
+    relevant Naval Maritime Ontology concepts.
+  normative_source: true
+  identifier_policy:
+    state: SM-ST-NNN
+    type: SM-TY-NNN
+    deferred_candidate: SM-CAND-NNN
+  categories: [world, knowledge, execution, resource]
+  namespaces:
+    nmo: ../ontology/LOTUSim_Naval_Maritime_Ontology_v2.0-draft.ttl
+    task_catalog: ../task-catalog/LOTUSim_Task_Catalog_v0.8.1.md
+    mission_catalog: ../mission-catalog/LOTUSim_Mission_Catalog_v1.0.4.md
+
+state_model_types:
+  - id: SM-TY-001
+    symbol: information_holder
+    definition: Force, organization, platform or service for which a knowledge assertion is valid.
+    ontology_mapping: pending
+    compatible_realizations: [nmo:Platform, nmo:PhysicalEntity]
+
+  - id: SM-TY-002
+    symbol: observation_record
+    definition: Immutable record of evidence acquired during an observation activity.
+    ontology_mapping: intentionally_outside_physical_ontology
+
+  - id: SM-TY-003
+    symbol: detection_evidence
+    definition: Evidence supporting detection of a physical entity.
+    ontology_mapping: intentionally_outside_physical_ontology
+
+  - id: SM-TY-004
+    symbol: emission
+    definition: Dynamic emitted signal or signature treated as an object of force-relative knowledge.
+    ontology_mapping: pending
+
+  - id: SM-TY-005
+    symbol: emission_detection_evidence
+    definition: Evidence supporting detection of an emission.
+    ontology_mapping: intentionally_outside_physical_ontology
+
+  - id: SM-TY-006
+    symbol: location_estimate
+    definition: Estimated target location with provenance, time and quality carried by the execution result.
+    ontology_mapping: intentionally_outside_physical_ontology
+
+  - id: SM-TY-007
+    symbol: classification_assessment
+    definition: Holder-relative assessment of the physical class or type of a detected entity.
+    ontology_mapping: intentionally_outside_physical_ontology
+
+  - id: SM-TY-008
+    symbol: identity_assessment
+    definition: Holder-relative assessment of the identity or affiliation of a detected entity.
+    ontology_mapping: intentionally_outside_physical_ontology
+
+  - id: SM-TY-009
+    symbol: track
+    definition: Persistent information object maintaining estimates of an observed entity over time.
+    ontology_mapping: intentionally_outside_physical_ontology
+
+  - id: SM-TY-010
+    symbol: navigation_objective
+    definition: Destination or route against which a navigation failure is reported.
+    union_of: [nmo:SpatialRegion, nmo:Route]
+
+states:
+  - id: SM-ST-001
+    symbol: located_at
+    category: world
+    definition: A physical entity is currently located at a spatial region used by the planning abstraction.
+    arguments:
+      - {role: entity, type: nmo:PhysicalEntity}
+      - {role: location, type: nmo:SpatialRegion}
+    persistence: fluent
+    update_policy: replace_by_key
+    key: [entity]
+    initialization: scenario_or_simulator
+    producers:
+      - {kind: task, ref: TC-001-S01, use: world_effect}
+      - {kind: task, ref: TC-001-S02, use: world_effect}
+      - {kind: external, ref: simulator_state_sync}
+    consumers:
+      - {kind: task, ref: TC-001-S01, use: read_and_completion}
+      - {kind: task, ref: TC-001-S02, use: read_and_completion}
+    constraints: [at_most_one_planning_location_per_entity]
+    evidence: {missions: [MC-001, MC-003, MC-026, MC-027]}
+
+  - id: SM-ST-002
+    symbol: route_destination
+    category: world
+    definition: A route terminates at a designated spatial region.
+    arguments:
+      - {role: route, type: nmo:Route}
+      - {role: location, type: nmo:SpatialRegion}
+    persistence: static
+    update_policy: immutable_during_scenario
+    key: [route]
+    initialization: scenario
+    producers: [{kind: external, ref: scenario_initialization}]
+    consumers: [{kind: task, ref: TC-001-S02, use: state_at_start_and_read}]
+    constraints: [exactly_one_destination_per_route]
+    evidence: {missions: [MC-004, MC-008, MC-031]}
+
+  - id: SM-ST-003
+    symbol: destination_reachable
+    category: world
+    definition: A platform can reach a destination under the current operational constraints.
+    arguments:
+      - {role: entity, type: nmo:Platform}
+      - {role: destination, type: nmo:SpatialRegion}
+    persistence: derived_fluent
+    update_policy: recompute_when_constraints_change
+    key: [entity, destination]
+    initialization: derived
+    producers: [{kind: external, ref: reachability_evaluator}]
+    consumers: [{kind: task, ref: TC-001-S01, use: read_and_applicability}]
+    constraints: []
+    evidence: {missions: [MC-001, MC-003, MC-060, MC-063]}
+
+  - id: SM-ST-004
+    symbol: route_traversable
+    category: world
+    definition: A route is traversable by a platform under the current operational constraints.
+    arguments:
+      - {role: route, type: nmo:Route}
+      - {role: entity, type: nmo:Platform}
+    persistence: derived_fluent
+    update_policy: recompute_when_constraints_change
+    key: [route, entity]
+    initialization: derived
+    producers: [{kind: external, ref: route_constraint_evaluator}]
+    consumers: [{kind: task, ref: TC-001-S02, use: read_and_applicability}]
+    constraints: []
+    evidence: {missions: [MC-004, MC-008, MC-031]}
+
+  - id: SM-ST-005
+    symbol: following
+    category: world
+    definition: A platform is actively maintaining a following relationship with a target entity.
+    arguments:
+      - {role: follower, type: nmo:Platform}
+      - {role: target, type: nmo:PhysicalEntity}
+    persistence: fluent
+    update_policy: assert_retract
+    key: [follower, target]
+    initialization: optional_scenario
+    producers: [{kind: task, ref: TC-006-S01, use: world_effect}]
+    consumers: [{kind: external, ref: simulator_and_task_supervision}]
+    constraints: []
+    evidence: {missions: [MC-019, MC-026, MC-027]}
+
+  - id: SM-ST-006
+    symbol: assigned_to_escort
+    category: execution
+    definition: An escort actor is assigned responsibility for protecting a designated unit.
+    arguments:
+      - {role: escort, type: nmo:PhysicalEntity}
+      - {role: protected, type: nmo:PhysicalEntity}
+    persistence: static
+    update_policy: scenario_or_command_update
+    key: [escort, protected]
+    initialization: scenario_or_command
+    producers: [{kind: external, ref: scenario_or_command_assignment}]
+    consumers: [{kind: task, ref: TC-023-S01, use: read_and_applicability}]
+    constraints: []
+    evidence: {missions: [MC-026, MC-027, MC-031, MC-032]}
+
+  - id: SM-ST-007
+    symbol: protected_unit_at_destination
+    category: world
+    definition: The protected unit has reached the destination required by the escort objective.
+    arguments: [{role: protected, type: nmo:PhysicalEntity}]
+    persistence: derived_fluent
+    update_policy: derived_from_location_and_mission_destination
+    key: [protected]
+    initialization: derived
+    producers: [{kind: external, ref: escort_goal_evaluator}]
+    consumers: [{kind: task, ref: TC-023-S01, use: desired_outcome_and_completion}]
+    constraints: []
+    evidence: {missions: [MC-026, MC-027]}
+
+  - id: SM-ST-008
+    symbol: protected_unit_preserved
+    category: world
+    definition: The protected unit remains within the preservation criteria defined by the mission.
+    arguments: [{role: protected, type: nmo:PhysicalEntity}]
+    persistence: derived_fluent
+    update_policy: derived_from_damage_and_mission_thresholds
+    key: [protected]
+    initialization: derived
+    producers: [{kind: external, ref: protection_outcome_evaluator}]
+    consumers: [{kind: task, ref: TC-023-S01, use: desired_outcome_and_completion}]
+    constraints: []
+    evidence: {missions: [MC-026, MC-027, MC-028]}
+
+  - id: SM-ST-009
+    symbol: area_designated
+    category: execution
+    definition: A spatial region is designated as the area to which the current observation requirement applies.
+    arguments: [{role: area, type: nmo:SpatialRegion}]
+    persistence: static
+    update_policy: scenario_or_command_update
+    key: [area]
+    initialization: scenario_or_command
+    producers: [{kind: external, ref: mission_or_scenario_initialization}]
+    consumers: [{kind: task, ref: TC-011-S01, use: read_and_applicability}]
+    constraints: []
+    evidence: {missions: [MC-001, MC-002, MC-003, MC-054]}
+
+  - id: SM-ST-010
+    symbol: capability_available
+    category: execution
+    definition: An entity currently exposes an executable capability of the specified ontology class.
+    arguments:
+      - {role: entity, type: nmo:PhysicalEntity}
+      - {role: capability, type: nmo:PhysicalCapability}
+    persistence: fluent
+    update_policy: synchronized_from_execution_layer
+    key: [entity, capability]
+    initialization: execution_manifest_and_runtime
+    producers: [{kind: external, ref: capability_state_sync}]
+    consumers:
+      - {kind: task, ref: TC-001-S01, use: read_invariant_applicability}
+      - {kind: task, ref: TC-001-S02, use: read_invariant_applicability}
+      - {kind: task, ref: TC-006-S01, use: read_invariant_applicability}
+      - {kind: task, ref: TC-011-S01, use: read_invariant_applicability}
+      - {kind: task, ref: TC-012-S01, use: read_invariant_applicability}
+      - {kind: task, ref: TC-012-S02, use: read_invariant_applicability}
+      - {kind: task, ref: TC-013-S01, use: read_invariant_applicability}
+      - {kind: task, ref: TC-014-S01, use: read_invariant_applicability}
+      - {kind: task, ref: TC-015-S01, use: read_invariant_applicability}
+      - {kind: task, ref: TC-016-S01, use: read_invariant_applicability}
+      - {kind: task, ref: TC-023-S01, use: read_invariant_applicability}
+    constraints: [mutually_exclusive_with_SM-ST-011_for_same_key]
+    evidence: {missions: [MC-001, MC-002, MC-026, MC-054, MC-060]}
+
+  - id: SM-ST-011
+    symbol: capability_unavailable
+    category: execution
+    definition: An entity cannot currently execute a capability of the specified ontology class.
+    arguments:
+      - {role: entity, type: nmo:PhysicalEntity}
+      - {role: capability, type: nmo:PhysicalCapability}
+    persistence: fluent
+    update_policy: synchronized_or_failure_asserted
+    key: [entity, capability]
+    initialization: execution_runtime
+    producers:
+      - {kind: external, ref: capability_state_sync}
+      - {kind: task, ref: TC-001-S01, use: failure_outcome}
+      - {kind: task, ref: TC-001-S02, use: failure_outcome}
+      - {kind: task, ref: TC-006-S01, use: failure_outcome}
+      - {kind: task, ref: TC-011-S01, use: failure_outcome}
+      - {kind: task, ref: TC-012-S01, use: failure_outcome}
+      - {kind: task, ref: TC-012-S02, use: failure_outcome}
+      - {kind: task, ref: TC-013-S01, use: failure_outcome}
+      - {kind: task, ref: TC-014-S01, use: failure_outcome}
+      - {kind: task, ref: TC-015-S01, use: failure_outcome}
+      - {kind: task, ref: TC-016-S01, use: failure_outcome}
+    consumers: [{kind: external, ref: replanning_and_execution_supervision}]
+    constraints: [mutually_exclusive_with_SM-ST-010_for_same_key]
+    evidence: {missions: [MC-001, MC-002, MC-026, MC-054, MC-060]}
+
+  - id: SM-ST-012
+    symbol: route_completed
+    category: execution
+    definition: A platform has completed traversal of a designated route.
+    arguments:
+      - {role: entity, type: nmo:Platform}
+      - {role: route, type: nmo:Route}
+    persistence: terminal_for_task_instance
+    update_policy: assert_on_completion
+    key: [entity, route]
+    initialization: false
+    producers: [{kind: task, ref: TC-001-S02, use: completion}]
+    consumers: [{kind: task, ref: TC-001-S02, use: completion}]
+    constraints: []
+    evidence: {missions: [MC-004, MC-008, MC-031]}
+
+  - id: SM-ST-013
+    symbol: navigation_failed
+    category: execution
+    definition: Navigation failed for a platform against a destination or route objective.
+    arguments:
+      - {role: entity, type: nmo:Platform}
+      - {role: objective, type: SM-TY-010}
+    persistence: terminal_for_task_instance
+    update_policy: assert_on_failure
+    key: [entity, objective]
+    initialization: false
+    producers:
+      - {kind: task, ref: TC-001-S01, use: failure_outcome}
+      - {kind: task, ref: TC-001-S02, use: failure_outcome}
+    consumers: [{kind: external, ref: replanning_and_execution_supervision}]
+    constraints: []
+    evidence: {missions: [MC-001, MC-003, MC-031]}
+
+  - id: SM-ST-014
+    symbol: escort_degraded
+    category: execution
+    definition: The assigned escort can no longer provide the required protection level.
+    arguments:
+      - {role: escort, type: nmo:PhysicalEntity}
+      - {role: protected, type: nmo:PhysicalEntity}
+    persistence: fluent
+    update_policy: assert_retract
+    key: [escort, protected]
+    initialization: false
+    producers: [{kind: task, ref: TC-023-S01, use: failure_outcome}]
+    consumers: [{kind: external, ref: replanning_and_protection_supervision}]
+    constraints: []
+    evidence: {missions: [MC-026, MC-027, MC-028]}
+
+  - id: SM-ST-015
+    symbol: escort_failed
+    category: execution
+    definition: The escort objective has failed for the assigned escort and protected unit.
+    arguments:
+      - {role: escort, type: nmo:PhysicalEntity}
+      - {role: protected, type: nmo:PhysicalEntity}
+    persistence: terminal_for_task_instance
+    update_policy: assert_on_failure
+    key: [escort, protected]
+    initialization: false
+    producers: [{kind: task, ref: TC-023-S01, use: failure_outcome}]
+    consumers: [{kind: external, ref: replanning_and_protection_supervision}]
+    constraints: []
+    evidence: {missions: [MC-026, MC-027]}
+
+  - id: SM-ST-016
+    symbol: observation_available
+    category: knowledge
+    definition: An observation record is available to an information holder.
+    arguments:
+      - {role: holder, type: SM-TY-001}
+      - {role: observation, type: SM-TY-002}
+    persistence: fluent
+    update_policy: append_evidence
+    key: [holder, observation]
+    initialization: optional_external_information
+    producers:
+      - {kind: task, ref: TC-011-S01, use: knowledge_effect}
+      - {kind: external, ref: imported_observation}
+    consumers:
+      - {kind: task, ref: TC-011-S01, use: completion}
+      - {kind: future_task, ref: Correlate_or_Assess}
+    constraints: [holder_relative]
+    evidence: {missions: [MC-001, MC-002, MC-003, MC-054]}
+
+  - id: SM-ST-017
+    symbol: observation_covers
+    category: knowledge
+    definition: For a holder, an observation record covers a designated spatial region.
+    arguments:
+      - {role: holder, type: SM-TY-001}
+      - {role: observation, type: SM-TY-002}
+      - {role: area, type: nmo:SpatialRegion}
+    persistence: fluent
+    update_policy: append_evidence_metadata
+    key: [holder, observation, area]
+    initialization: optional_external_information
+    producers:
+      - {kind: task, ref: TC-011-S01, use: knowledge_effect}
+      - {kind: external, ref: imported_observation}
+    consumers: [{kind: future_task, ref: coverage_or_assessment_evaluator}]
+    constraints: [holder_relative]
+    evidence: {missions: [MC-001, MC-002, MC-003, MC-054]}
+
+  - id: SM-ST-018
+    symbol: observation_produced_by
+    category: knowledge
+    definition: For a holder, an observation record has the stated producing platform as provenance.
+    arguments:
+      - {role: holder, type: SM-TY-001}
+      - {role: observation, type: SM-TY-002}
+      - {role: actor, type: nmo:Platform}
+    persistence: static_per_observation
+    update_policy: immutable_provenance
+    key: [holder, observation]
+    initialization: optional_external_information
+    producers:
+      - {kind: task, ref: TC-011-S01, use: knowledge_effect}
+      - {kind: external, ref: imported_observation}
+    consumers: [{kind: future_task, ref: correlation_or_assessment}]
+    constraints: [holder_relative, exactly_one_producer_per_observation]
+    evidence: {missions: [MC-003, MC-054]}
+
+  - id: SM-ST-019
+    symbol: observation_attempt_inconclusive
+    category: execution
+    definition: An observation attempt did not produce evidence of the required quality; it does not assert target absence.
+    arguments:
+      - {role: holder, type: SM-TY-001}
+      - {role: actor, type: nmo:Platform}
+      - {role: area, type: nmo:SpatialRegion}
+    persistence: terminal_for_attempt
+    update_policy: assert_on_failure
+    key: [holder, actor, area]
+    initialization: false
+    producers: [{kind: task, ref: TC-011-S01, use: failure_outcome}]
+    consumers: [{kind: external, ref: replanning_and_ISR_supervision}]
+    constraints: [does_not_imply_physical_absence]
+    evidence: {missions: [MC-003, MC-054]}
+
+  - id: SM-ST-020
+    symbol: detected
+    category: knowledge
+    definition: An information holder has evidence supporting the presence of a physical target.
+    arguments:
+      - {role: holder, type: SM-TY-001}
+      - {role: target, type: nmo:PhysicalEntity}
+    persistence: fluent
+    update_policy: assert_retract_by_evidence_policy
+    key: [holder, target]
+    initialization: optional_external_information
+    producers:
+      - {kind: task, ref: TC-012-S01, use: knowledge_effect}
+      - {kind: external, ref: imported_detection}
+    consumers:
+      - {kind: task, ref: TC-013-S01, use: read_and_applicability}
+      - {kind: task, ref: TC-014-S01, use: read_and_applicability}
+      - {kind: task, ref: TC-015-S01, use: read_and_applicability}
+      - {kind: task, ref: TC-016-S01, use: read_and_applicability}
+    constraints: [holder_relative, does_not_imply_identification]
+    evidence: {missions: [MC-001, MC-002, MC-003, MC-060, MC-063]}
+
+  - id: SM-ST-021
+    symbol: detection_evidence_available
+    category: knowledge
+    definition: Detection evidence for a physical target is available to an information holder.
+    arguments:
+      - {role: holder, type: SM-TY-001}
+      - {role: target, type: nmo:PhysicalEntity}
+      - {role: evidence, type: SM-TY-003}
+    persistence: fluent
+    update_policy: append_evidence
+    key: [holder, target, evidence]
+    initialization: optional_external_information
+    producers:
+      - {kind: task, ref: TC-012-S01, use: knowledge_effect}
+      - {kind: external, ref: imported_detection}
+    consumers: [{kind: future_task, ref: correlation_classification_or_assessment}]
+    constraints: [holder_relative]
+    evidence: {missions: [MC-001, MC-003, MC-060, MC-063]}
+
+  - id: SM-ST-022
+    symbol: detection_attempt_inconclusive
+    category: execution
+    definition: A physical-target detection attempt did not reach the required threshold; it does not assert target absence.
+    arguments:
+      - {role: holder, type: SM-TY-001}
+      - {role: actor, type: nmo:Platform}
+      - {role: target, type: nmo:PhysicalEntity}
+    persistence: terminal_for_attempt
+    update_policy: assert_on_failure
+    key: [holder, actor, target]
+    initialization: false
+    producers: [{kind: task, ref: TC-012-S01, use: failure_outcome}]
+    consumers: [{kind: external, ref: replanning_and_ISR_supervision}]
+    constraints: [does_not_imply_physical_absence]
+    evidence: {missions: [MC-001, MC-003, MC-060, MC-063]}
+
+  - id: SM-ST-023
+    symbol: emission_detected
+    category: knowledge
+    definition: An information holder has evidence supporting the presence of an emission.
+    arguments:
+      - {role: holder, type: SM-TY-001}
+      - {role: emission, type: SM-TY-004}
+    persistence: fluent
+    update_policy: assert_retract_by_evidence_policy
+    key: [holder, emission]
+    initialization: optional_external_information
+    producers:
+      - {kind: task, ref: TC-012-S02, use: knowledge_effect}
+      - {kind: external, ref: imported_emission_detection}
+    consumers: [{kind: future_task, ref: TC-017-S02}]
+    constraints: [holder_relative]
+    evidence: {missions: [MC-054, MC-055, MC-057]}
+
+  - id: SM-ST-024
+    symbol: emission_detection_evidence_available
+    category: knowledge
+    definition: Emission-detection evidence is available to an information holder.
+    arguments:
+      - {role: holder, type: SM-TY-001}
+      - {role: emission, type: SM-TY-004}
+      - {role: evidence, type: SM-TY-005}
+    persistence: fluent
+    update_policy: append_evidence
+    key: [holder, emission, evidence]
+    initialization: optional_external_information
+    producers:
+      - {kind: task, ref: TC-012-S02, use: knowledge_effect}
+      - {kind: external, ref: imported_emission_detection}
+    consumers: [{kind: future_task, ref: TC-017-S02}]
+    constraints: [holder_relative]
+    evidence: {missions: [MC-054, MC-055, MC-057]}
+
+  - id: SM-ST-025
+    symbol: emission_detection_attempt_inconclusive
+    category: execution
+    definition: An emission-detection attempt did not reach the required threshold; it does not assert emission absence.
+    arguments:
+      - {role: holder, type: SM-TY-001}
+      - {role: actor, type: nmo:Platform}
+      - {role: emission, type: SM-TY-004}
+    persistence: terminal_for_attempt
+    update_policy: assert_on_failure
+    key: [holder, actor, emission]
+    initialization: false
+    producers: [{kind: task, ref: TC-012-S02, use: failure_outcome}]
+    consumers: [{kind: external, ref: replanning_and_ISR_supervision}]
+    constraints: [does_not_imply_physical_absence]
+    evidence: {missions: [MC-054]}
+
+  - id: SM-ST-026
+    symbol: localized
+    category: knowledge
+    definition: An information holder has a location estimate for a detected physical target.
+    arguments:
+      - {role: holder, type: SM-TY-001}
+      - {role: target, type: nmo:PhysicalEntity}
+      - {role: estimate, type: SM-TY-006}
+    persistence: fluent
+    update_policy: replace_latest_by_key
+    key: [holder, target]
+    initialization: optional_external_information
+    producers:
+      - {kind: task, ref: TC-013-S01, use: knowledge_effect}
+      - {kind: external, ref: imported_location_estimate}
+    consumers:
+      - {kind: external, ref: mission_goal_evaluation}
+      - {kind: future_task, ref: assessment_reporting_and_engagement}
+    constraints: [holder_relative, estimate_carries_time_and_quality]
+    evidence: {missions: [MC-003, MC-060, MC-063]}
+
+  - id: SM-ST-027
+    symbol: location_known
+    category: knowledge
+    definition: An information holder has a usable current location estimate for a target.
+    arguments:
+      - {role: holder, type: SM-TY-001}
+      - {role: target, type: nmo:PhysicalEntity}
+    persistence: derived_fluent
+    update_policy: derive_from_usable_localization_or_track
+    key: [holder, target]
+    initialization: derived_or_external_information
+    producers:
+      - {kind: task, ref: TC-013-S01, use: knowledge_effect}
+      - {kind: external, ref: knowledge_projection}
+    consumers:
+      - {kind: task, ref: TC-006-S01, use: read_invariant_applicability}
+      - {kind: task, ref: TC-023-S01, use: read_and_applicability}
+    constraints: [holder_relative, mutually_exclusive_with_SM-ST-028_for_same_key]
+    evidence: {missions: [MC-026, MC-027, MC-060, MC-063]}
+
+  - id: SM-ST-028
+    symbol: location_unknown
+    category: knowledge
+    definition: An information holder lacks a usable current location estimate for a target after one was required or expected.
+    arguments:
+      - {role: holder, type: SM-TY-001}
+      - {role: target, type: nmo:PhysicalEntity}
+    persistence: fluent
+    update_policy: assert_retract
+    key: [holder, target]
+    initialization: optional_scenario_or_knowledge_state
+    producers:
+      - {kind: task, ref: TC-006-S01, use: failure_outcome}
+      - {kind: external, ref: knowledge_projection}
+    consumers: [{kind: external, ref: replanning_and_tracking_supervision}]
+    constraints: [holder_relative, mutually_exclusive_with_SM-ST-027_for_same_key]
+    evidence: {missions: [MC-019, MC-026, MC-027, MC-060, MC-063]}
+
+  - id: SM-ST-029
+    symbol: localization_attempt_inconclusive
+    category: execution
+    definition: A localization attempt did not produce an estimate of the required quality.
+    arguments:
+      - {role: holder, type: SM-TY-001}
+      - {role: actor, type: nmo:Platform}
+      - {role: target, type: nmo:PhysicalEntity}
+    persistence: terminal_for_attempt
+    update_policy: assert_on_failure
+    key: [holder, actor, target]
+    initialization: false
+    producers: [{kind: task, ref: TC-013-S01, use: failure_outcome}]
+    consumers: [{kind: external, ref: replanning_and_ISR_supervision}]
+    constraints: [does_not_imply_physical_absence]
+    evidence: {missions: [MC-003, MC-060, MC-063]}
+
+  - id: SM-ST-030
+    symbol: classified
+    category: knowledge
+    definition: An information holder has a classification assessment for a detected physical target.
+    arguments:
+      - {role: holder, type: SM-TY-001}
+      - {role: target, type: nmo:PhysicalEntity}
+      - {role: classification, type: SM-TY-007}
+    persistence: fluent
+    update_policy: replace_latest_by_key
+    key: [holder, target]
+    initialization: optional_external_information
+    producers:
+      - {kind: task, ref: TC-014-S01, use: knowledge_effect}
+      - {kind: external, ref: imported_classification}
+    consumers:
+      - {kind: external, ref: mission_goal_evaluation}
+      - {kind: future_task, ref: identification_assessment_and_reporting}
+    constraints: [holder_relative, assessment_carries_provenance_and_quality]
+    evidence: {missions: [MC-001, MC-003, MC-060, MC-063]}
+
+  - id: SM-ST-031
+    symbol: classification_available
+    category: knowledge
+    definition: An information holder has at least one usable classification assessment for a target.
+    arguments:
+      - {role: holder, type: SM-TY-001}
+      - {role: target, type: nmo:PhysicalEntity}
+    persistence: derived_fluent
+    update_policy: derive_from_usable_classification
+    key: [holder, target]
+    initialization: derived_or_external_information
+    producers:
+      - {kind: task, ref: TC-014-S01, use: knowledge_effect}
+      - {kind: external, ref: knowledge_projection}
+    consumers: [{kind: task, ref: TC-015-S01, use: applicability}]
+    constraints: [holder_relative]
+    evidence: {missions: [MC-001, MC-003, MC-060, MC-063]}
+
+  - id: SM-ST-032
+    symbol: classification_attempt_inconclusive
+    category: execution
+    definition: A classification attempt did not produce an assessment of the required quality.
+    arguments:
+      - {role: holder, type: SM-TY-001}
+      - {role: actor, type: nmo:Platform}
+      - {role: target, type: nmo:PhysicalEntity}
+    persistence: terminal_for_attempt
+    update_policy: assert_on_failure
+    key: [holder, actor, target]
+    initialization: false
+    producers: [{kind: task, ref: TC-014-S01, use: failure_outcome}]
+    consumers: [{kind: external, ref: replanning_and_ISR_supervision}]
+    constraints: [does_not_imply_physical_class]
+    evidence: {missions: [MC-001, MC-003, MC-060, MC-063]}
+
+  - id: SM-ST-033
+    symbol: direct_identity_evidence_available
+    category: knowledge
+    definition: Direct identity evidence independent of a prior classification is available to an information holder.
+    arguments:
+      - {role: holder, type: SM-TY-001}
+      - {role: target, type: nmo:PhysicalEntity}
+    persistence: fluent
+    update_policy: assert_retract_by_evidence_policy
+    key: [holder, target]
+    initialization: optional_external_information
+    producers: [{kind: external, ref: transponder_registry_or_prior_information}]
+    consumers: [{kind: task, ref: TC-015-S01, use: applicability}]
+    constraints: [holder_relative]
+    evidence: {missions: [MC-019, MC-060, MC-063]}
+
+  - id: SM-ST-034
+    symbol: identified
+    category: knowledge
+    definition: An information holder has an identity assessment for a detected physical target.
+    arguments:
+      - {role: holder, type: SM-TY-001}
+      - {role: target, type: nmo:PhysicalEntity}
+      - {role: identity, type: SM-TY-008}
+    persistence: fluent
+    update_policy: replace_latest_by_key
+    key: [holder, target]
+    initialization: optional_external_information
+    producers:
+      - {kind: task, ref: TC-015-S01, use: knowledge_effect}
+      - {kind: external, ref: imported_identity_assessment}
+    consumers:
+      - {kind: external, ref: mission_goal_evaluation}
+      - {kind: future_task, ref: reporting_engagement_and_support}
+    constraints: [holder_relative, assessment_carries_provenance_and_quality]
+    evidence: {missions: [MC-019, MC-060, MC-063]}
+
+  - id: SM-ST-035
+    symbol: identification_attempt_inconclusive
+    category: execution
+    definition: An identification attempt did not produce an assessment of the required quality.
+    arguments:
+      - {role: holder, type: SM-TY-001}
+      - {role: actor, type: nmo:Platform}
+      - {role: target, type: nmo:PhysicalEntity}
+    persistence: terminal_for_attempt
+    update_policy: assert_on_failure
+    key: [holder, actor, target]
+    initialization: false
+    producers: [{kind: task, ref: TC-015-S01, use: failure_outcome}]
+    consumers: [{kind: external, ref: replanning_and_ISR_supervision}]
+    constraints: [does_not_imply_false_identity]
+    evidence: {missions: [MC-019, MC-060, MC-063]}
+
+  - id: SM-ST-036
+    symbol: track_established
+    category: knowledge
+    definition: An information holder has established a track associated with a detected physical target.
+    arguments:
+      - {role: holder, type: SM-TY-001}
+      - {role: target, type: nmo:PhysicalEntity}
+      - {role: track, type: SM-TY-009}
+    persistence: fluent
+    update_policy: assert_retract
+    key: [holder, target, track]
+    initialization: optional_external_information
+    producers:
+      - {kind: task, ref: TC-016-S01, use: knowledge_effect}
+      - {kind: external, ref: imported_track}
+    consumers:
+      - {kind: external, ref: mission_goal_evaluation}
+      - {kind: future_task, ref: reporting_engagement_and_coordination}
+    constraints: [holder_relative]
+    evidence: {missions: [MC-002, MC-019, MC-054]}
+
+  - id: SM-ST-037
+    symbol: track_maintained
+    category: knowledge
+    definition: An information holder currently maintains a usable track.
+    arguments:
+      - {role: holder, type: SM-TY-001}
+      - {role: track, type: SM-TY-009}
+    persistence: fluent
+    update_policy: refreshed_while_tracking
+    key: [holder, track]
+    initialization: optional_external_information
+    producers:
+      - {kind: task, ref: TC-016-S01, use: knowledge_effect}
+      - {kind: external, ref: imported_track}
+    consumers:
+      - {kind: external, ref: mission_goal_evaluation}
+      - {kind: future_task, ref: reporting_engagement_and_coordination}
+    constraints: [holder_relative, mutually_exclusive_with_SM-ST-038_for_same_track]
+    evidence: {missions: [MC-002, MC-019, MC-054]}
+
+  - id: SM-ST-038
+    symbol: track_lost
+    category: knowledge
+    definition: An information holder can no longer maintain a previously established target track.
+    arguments:
+      - {role: holder, type: SM-TY-001}
+      - {role: target, type: nmo:PhysicalEntity}
+      - {role: track, type: SM-TY-009}
+    persistence: fluent
+    update_policy: assert_retract
+    key: [holder, track]
+    initialization: false
+    producers: [{kind: task, ref: TC-016-S01, use: failure_outcome}]
+    consumers: [{kind: external, ref: replanning_and_tracking_supervision}]
+    constraints: [holder_relative, mutually_exclusive_with_SM-ST-037_for_same_track]
+    evidence: {missions: [MC-002, MC-019, MC-054]}
+
+deferred_candidates:
+  - id: SM-CAND-001
+    symbol: area_coverage_achieved
+    mission_evidence: [MC-001, MC-002, MC-003, MC-054]
+    reason_deferred: Requires coverage aggregation and semantics for Search, Survey or Assess.
+
+  - id: SM-CAND-002
+    symbol: surveillance_continuity_achieved
+    mission_evidence: [MC-002, MC-054]
+    reason_deferred: Requires temporal aggregation beyond the current task-state model.
+
+  - id: SM-CAND-003
+    symbol: information_requirement_satisfied
+    mission_evidence: [MC-003, MC-042]
+    reason_deferred: Requires semantics for Assess and mission-level information requirements.
+
+  - id: SM-CAND-004
+    symbol: contact_or_assessment_reported
+    mission_evidence: [MC-001, MC-002, MC-003, MC-054, MC-060, MC-063]
+    reason_deferred: Requires enrichment of Report and Share.
+
+  - id: SM-CAND-005
+    symbol: confidence_requirement_satisfied
+    mission_evidence: [MC-054, MC-060, MC-063]
+    reason_deferred: Requires a normalized confidence and quality model.
+
+normalization_decisions:
+  - candidates: [target_location_known, protected_unit_location_known]
+    canonical_state: SM-ST-027
+    rationale: Location knowledge is holder-relative regardless of the consuming task.
+
+  - candidates: [target_location_unknown]
+    canonical_state: SM-ST-028
+    rationale: Unknown location is holder-relative and paired with location_known.
+
+  - candidates: [protection_capability_available]
+    canonical_state: SM-ST-010
+    rationale: Capability availability uses one generic state keyed by ontology capability class.
+
+  - candidates: [navigation_failed_with_destination, navigation_failed_with_route]
+    canonical_state: SM-ST-013
+    rationale: One state uses a typed navigation_objective union and a stable tuple shape.
