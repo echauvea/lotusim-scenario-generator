@@ -3545,12 +3545,241 @@ traceability:
       mission: MC-043
 ```
 
+### MC-039 — Conduct Maritime Strike
+
+```yaml
+id: MC-039
+name: Conduct Maritime Strike
+status: candidate
+version: 0.1.0
+
+classification:
+  mission_type: MT-06
+  primary_family: maritime-combat-operations
+  operational_intent: conduct
+  mission_target: physical-object
+
+specification:
+  purpose: >
+    Deliver a controlled maritime strike against a designated military target in order to
+    neutralize it while limiting unintended effects.
+  description: >
+    Assigned forces locate, identify and engage a designated target using authorized weapon
+    effects in accordance with mission objectives and Rules of Engagement. The strike may be
+    conducted independently or as part of a wider joint operation.
+  applicable_contexts:
+    - high-intensity-warfare
+    - littoral-warfare
+    - joint-operations
+  preconditions:
+    - designated-target-identified
+    - strike-authorized
+    - suitable-weapon-system-available
+    - rules-of-engagement-established
+  desired_end_state: >
+    The designated military target is neutralized to the required degree and unintended effects
+    remain within authorized limits.
+  success_criteria:
+    - designated-target-neutralized-to-required-degree
+    - strike-effects-confirmed
+    - unintended-effects-within-authorized-limits
+  failure_criteria:
+    - designated-target-remains-effective
+    - strike-cannot-be-completed-within-authorization
+    - unintended-effects-exceed-authorized-limits
+
+required_capabilities:
+  mandatory:
+    - IdentificationCapability
+    - EngagementCapability
+    - CommunicationCapability
+  optional:
+    - TrackingCapability
+    - CoordinationCapability
+    - AssessmentCapability
+
+traceability:
+  task_candidates:
+    - TC-012
+    - TC-015
+    - TC-016
+    - TC-042
+    - TC-036
+    - TC-021
+    - TC-039
+  ontology_concepts:
+    - PhysicalObject
+    - WeaponSystem
+    - Platform
+  related_missions:
+    - relation: supported-by
+      mission: MC-041
+    - relation: may-follow
+      mission: MC-003
+```
+
+### MC-040 — Deny Access to Maritime Area
+
+```yaml
+id: MC-040
+name: Deny Access to Maritime Area
+status: candidate
+version: 0.1.0
+
+classification:
+  mission_type: MT-05
+  primary_family: maritime-combat-operations
+  operational_intent: interdict
+  mission_target: area
+
+specification:
+  purpose: >
+    Prevent or constrain an adversary force from entering, crossing or using a designated
+    maritime area for a specified operational period.
+  description: >
+    Assigned forces establish and maintain an access-denial posture over a designated maritime
+    area. Relevant contacts are detected, tracked, warned, intercepted or engaged as authorized
+    so that adversary use of the area is prevented or made operationally ineffective.
+  applicable_contexts:
+    - sea-denial
+    - force-protection
+    - littoral-warfare
+    - high-intensity-warfare
+  preconditions:
+    - maritime-area-defined
+    - access-policy-defined
+    - assigned-forces-available
+    - rules-of-engagement-established
+  desired_end_state: >
+    The adversary cannot make effective operational use of the designated maritime area during
+    the required period, while authorized friendly access is preserved.
+  success_criteria:
+    - designated-area-denied-for-required-period
+    - relevant-adversary-contacts-handled-according-to-authorization
+    - authorized-friendly-access-preserved
+  failure_criteria:
+    - adversary-achieves-effective-use-of-designated-area
+    - denial-posture-cannot-be-maintained
+    - authorized-friendly-movement-is-unacceptably-disrupted
+
+required_capabilities:
+  mandatory:
+    - InterdictionCapability
+    - MobilityCapability
+    - PerceptionCapability
+    - CommunicationCapability
+  optional:
+    - TrackingCapability
+    - EngagementCapability
+    - CoordinationCapability
+
+traceability:
+  task_candidates:
+    - TC-001
+    - TC-002
+    - TC-012
+    - TC-016
+    - TC-026
+    - TC-030
+    - TC-033
+    - TC-036
+    - TC-039
+  ontology_concepts:
+    - MaritimeArea
+    - SpatialRegion
+    - Platform
+    - PlatformGroup
+  related_missions:
+    - relation: may-require
+      mission: MC-034
+    - relation: may-require
+      mission: MC-036
+    - relation: broader-or-overlapping
+      mission: MC-021
+```
+
+### MC-041 — Support Joint Fires
+
+```yaml
+id: MC-041
+name: Support Joint Fires
+status: candidate
+version: 0.1.0
+
+classification:
+  mission_type: MT-09
+  primary_family: maritime-combat-operations
+  operational_intent: support
+  mission_target: physical-object
+
+specification:
+  purpose: >
+    Enable accurate and timely joint fires against designated targets by providing maritime
+    sensing, coordination, targeting, engagement or assessment support.
+  description: >
+    Maritime forces contribute to a joint fires process by sharing target information,
+    coordinating fire requests, supporting target identification and, when assigned, delivering
+    or assessing authorized effects in support of another force's operation.
+  applicable_contexts:
+    - joint-operations
+    - amphibious-operations
+    - littoral-warfare
+    - high-intensity-warfare
+  preconditions:
+    - supported-operation-identified
+    - joint-coordination-arrangements-established
+    - fire-support-request-or-tasking-authorized
+    - target-information-available
+  desired_end_state: >
+    The supported joint force receives the information, coordination or effects required to
+    execute its fire mission within the requested timing and accuracy.
+  success_criteria:
+    - requested-joint-fires-support-delivered
+    - required-coordination-and-information-exchange-achieved
+    - supported-fire-mission-enabled
+  failure_criteria:
+    - support-not-delivered-within-required-time
+    - target-information-insufficient-for-authorized-action
+    - coordination-failure-prevents-supported-fire-mission
+
+required_capabilities:
+  mandatory:
+    - CoordinationCapability
+    - CommunicationCapability
+  optional:
+    - IdentificationCapability
+    - EngagementCapability
+    - AssessmentCapability
+    - TrackingCapability
+
+traceability:
+  task_candidates:
+    - TC-041
+    - TC-043
+    - TC-040
+    - TC-015
+    - TC-042
+    - TC-036
+    - TC-021
+    - TC-039
+  ontology_concepts:
+    - WeaponSystem
+    - PhysicalObject
+    - Platform
+  related_missions:
+    - relation: supports
+      mission: MC-039
+    - relation: may-support
+      mission: MC-044
+```
+
 
 
 ## 13. Changes v1.0.3 → v1.0.4
 
 - Confirmed the section 5 inventory as the authoritative source for mission identities MC-001 through MC-066.
 - Normalized MC-034 through MC-038 to the canonical mission schema.
+- Added canonical specifications for MC-039 through MC-041 by reusing relevant material from the divergent proposals under their correct mission identities.
 - Replaced free-text task references in MC-034 through MC-038 with stable Task Catalog identifiers.
 - Replaced unavailable capability and ontology references with concepts defined by the current Naval Ontology.
 - Isolated the conflicting former MC-039 through MC-066 blocks as non-normative legacy proposals pending reassignment or reuse.
