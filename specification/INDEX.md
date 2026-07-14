@@ -15,11 +15,13 @@ Cet index est la source unique d’inventaire documentaire du dépôt **LSG — 
 | Document | Version déclarée | Statut | Autorité | Rôle et observations |
 |---|---:|---|---|---|
 | [Architecture LSG](architecture/LSG_Architecture_v3.2.md) | v3.2 | Proposition courante, à valider conjointement | Informatif jusqu’à validation | Architecture globale de génération, exécution et arbitrage. Les documents amont `lsga-architecture-v2.md` et `rig-e2e.md` cités par la source ne sont pas présents dans ce dépôt. |
-| [DEM-1 — Semantic Design Rules](dem/DEM-1_Semantic_Design_Rules_v0.5.md) | v0.5 | Brouillon courant | Normatif pour la méthode | Règles de conception sémantique, sorties d’exécution typées et connaissance relative à son détenteur. |
-| [DEM-2 — Task Catalog Specification](dem/DEM-2_Task_Catalog_Specification_v0.5.md) | v0.5 | Brouillon courant | Normatif pour la méthode | Métamodèle canonique complété par `execution_output` et la progression de connaissance ISR. |
+| [DEM-1 — Semantic Design Rules](dem/DEM-1_Semantic_Design_Rules_v0.6.md) | v0.6 | Brouillon courant | Normatif pour la méthode | Règles de conception sémantique, références d’état stables et tuples canoniques. |
+| [DEM-2 — Task Catalog Specification](dem/DEM-2_Task_Catalog_Specification_v0.6.md) | v0.6 | Brouillon courant | Normatif pour la méthode | Métamodèle des signatures aligné sur le State Model normatif. |
 | [Naval Maritime Ontology](../references/ontology/LOTUSim_Naval_Maritime_Ontology_v2.0-draft.ttl) | 2.0.0-draft | Brouillon courant | Normatif pour les concepts, types, capacités, équipements et relations structurelles | La version interne et le nom de fichier sont cohérents. |
 | [Mission Catalog](../references/mission-catalog/LOTUSim_Mission_Catalog_v1.0.4.md) | v1.0.4 | Courant, brouillon de travail | Normatif pour les missions et objectifs | Les 66 missions disposent d’une spécification active conforme au métamodèle canonique. |
-| [Task Catalog](../references/task-catalog/LOTUSim_Task_Catalog_v0.8.0.md) | v0.8.0 | Courant, brouillon de travail | Normatif pour les tâches et leurs sémantiques | Les sept signatures de Observe, Detect, Localize, Classify, Identify et Track disposent d’une sémantique opérationnelle complète. |
+| [Task Catalog](../references/task-catalog/LOTUSim_Task_Catalog_v0.8.1.md) | v0.8.1 | Courant, brouillon de travail | Normatif pour les tâches et leurs sémantiques | Les 11 signatures enrichies utilisent exclusivement les identifiants stables du State Model v0.1. |
+| [State Model — source normative](../references/state-model/LOTUSim_State_Model_v0.1.yaml) | v0.1.0 | Courant, brouillon de travail | Normatif pour les états dynamiques | 38 états, 10 types propres, producteurs, consommateurs, contraintes et traçabilité. |
+| [State Model — spécification](state-model/LOTUSim_State_Model_Specification_v0.1.md) | v0.1 | Courant, brouillon de travail | Normatif pour le métamodèle | Catégories, politique d’identifiants, normalisations, cycle de vie et règles de validation. |
 
 ## Archives des catalogues
 
@@ -30,6 +32,7 @@ Cet index est la source unique d’inventaire documentaire du dépôt **LSG — 
 | [Task Catalog — pilote initial](../references/task-catalog/archive/LOTUSim_Task_Catalog_v0.6.0.md) | v0.6.0 | Archivé | Non normatif | Remplacé par v0.6.1 après correction des anomalies révélées par le pilote sémantique. |
 | [Task Catalog — pilote corrigé](../references/task-catalog/archive/LOTUSim_Task_Catalog_v0.6.1.md) | v0.6.1 | Archivé | Non normatif | Remplacé par v0.7.0 après stabilisation et affectation des Semantic Families au niveau signature. |
 | [Task Catalog — Semantic Families](../references/task-catalog/archive/LOTUSim_Task_Catalog_v0.7.0.md) | v0.7.0 | Archivé | Non normatif | Remplacé par v0.8.0 après enrichissement du noyau ISR. |
+| [Task Catalog — noyau ISR](../references/task-catalog/archive/LOTUSim_Task_Catalog_v0.8.0.md) | v0.8.0 | Archivé | Non normatif | Remplacé par v0.8.1 après alignement sur les identifiants du State Model v0.1. |
 
 ## Archives DEM
 
@@ -45,6 +48,8 @@ Cet index est la source unique d’inventaire documentaire du dépôt **LSG — 
 | [DEM-2 — Task Catalog Specification](archive/dem/DEM-2_Task_Catalog_Specification_v0.3.md) | v0.3 | Archivé | Non normatif | Remplacé par DEM-2 v0.4 après ajout du métamodèle des familles et du schéma explicatif. |
 | [DEM-1 — Semantic Design Rules](archive/dem/DEM-1_Semantic_Design_Rules_v0.4.md) | v0.4 | Archivé | Non normatif | Remplacé par DEM-1 v0.5 après introduction des sorties d’exécution et des règles de connaissance ISR. |
 | [DEM-2 — Task Catalog Specification](archive/dem/DEM-2_Task_Catalog_Specification_v0.4.md) | v0.4 | Archivé | Non normatif | Remplacé par DEM-2 v0.5 après formalisation de la progression ISR. |
+| [DEM-1 — Semantic Design Rules](archive/dem/DEM-1_Semantic_Design_Rules_v0.5.md) | v0.5 | Archivé | Non normatif | Remplacé par DEM-1 v0.6 après introduction des références d’état stables. |
+| [DEM-2 — Task Catalog Specification](archive/dem/DEM-2_Task_Catalog_Specification_v0.5.md) | v0.5 | Archivé | Non normatif | Remplacé par DEM-2 v0.6 après alignement sur le State Model normatif. |
 | [DEM Part 1 — Task Semantics & State Model](archive/dem/DEM_Part1_Task_Semantics_State_Model_v0.1.md) | v0.1 | Archivé | Non normatif | Ancien document composite. Ses décisions utiles sont réparties entre DEM-1 et DEM-2 ; aucun Task Semantics Catalog séparé ne doit être recréé. |
 
 ## Documents de gouvernance et de support
@@ -59,7 +64,6 @@ Cet index est la source unique d’inventaire documentaire du dépôt **LSG — 
 
 | Artefact | Statut attendu | Dépendances |
 |---|---|---|
-| State Model | À dériver, non créé | Relations pertinentes de l’ontologie, préconditions/objectifs des missions, lectures/effets des tâches. |
 | HDDL Domain / Problems | À dériver, non créés | State Model stabilisé et règles de projection. |
 | Schémas, validateurs et benchmarks | À planifier | Métamodèles et référentiels stabilisés. |
 
@@ -67,8 +71,9 @@ Cet index est la source unique d’inventaire documentaire du dépôt **LSG — 
 
 - Les 66 identifiants de mission `MC-001` à `MC-066` sont présents dans l’inventaire canonique et les 64 identifiants de tâche `TC-001` à `TC-064` sont présents, sans doublon d’en-tête détecté.
 - Le Mission Catalog v1.0.4 contient 66 spécifications actives conformes au métamodèle. Les anciennes propositions incompatibles autrefois numérotées MC-039 à MC-066 sont conservées dans une annexe explicitement non normative.
-- Le Task Catalog v0.8.0 reprend les 64 tâches et 79 signatures. Onze signatures possèdent désormais une sémantique complète : les quatre du pilote et les sept du noyau ISR. Les 68 autres restent à enrichir progressivement.
-- Les références de versions de l’architecture v3.2 ont été actualisées vers Mission Catalog v1.0.4 et Task Catalog v0.8.0.
+- Le Task Catalog v0.8.1 reprend les 64 tâches et 79 signatures. Onze signatures possèdent une sémantique complète et 120 références conformes aux tuples du State Model v0.1 ; les 68 autres restent à enrichir progressivement.
+- Le State Model v0.1 contient 38 états normatifs, 10 types propres et 5 candidats de mission différés faute de producteurs sémantisés.
+- Les références de versions de l’architecture v3.2 ont été actualisées vers Mission Catalog v1.0.4, Task Catalog v0.8.1 et State Model v0.1.
 - La version d’architecture fournie comme source courante contient deux liens vers LSGA v2 et un lien vers `rig-e2e.md`, alors que ces fichiers sont absents du dépôt. Ils sont conservés tels quels dans le document source et restent donc à résoudre.
 
 ## Décisions humaines encore requises

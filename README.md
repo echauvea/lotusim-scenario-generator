@@ -10,7 +10,7 @@ La documentation publiée de la Naval Maritime Ontology est accessible sur [GitH
 - Le **Mission Catalog** est la source normative des missions et de leurs objectifs.
 - Le **Task Catalog** est la source normative des tâches. Les sémantiques sont portées par chaque signature typée ; les sémantiques communes sont centralisées dans les Semantic Families.
 - La **LSG Domain Engineering Method (DEM)** fixe les règles de conception et le métamodèle du Task Catalog.
-- Le **State Model** est un artefact dérivé. Il n’est pas encore présent dans ce dépôt.
+- Le **State Model v0.1** est le vocabulaire dynamique dérivé des trois référentiels métier. Sa source YAML est normative pour les états des signatures enrichies.
 - Le **domaine et les problèmes HDDL** seront dérivés du State Model. Ils ne sont pas encore présents dans ce dépôt.
 
 ## Chaîne de dérivation
@@ -32,13 +32,15 @@ L’ontologie fournit les concepts et relations structurelles, le Mission Catalo
 ├── references/
 │   ├── ontology/                Source TTL normative
 │   ├── mission-catalog/         Mission Catalog
-│   └── task-catalog/            Task Catalog courant synchronisé
+│   ├── task-catalog/            Task Catalog courant synchronisé
+│   └── state-model/             State Model YAML normatif
 ├── site/                         Fichiers maintenus du site publié
 ├── specification/
 │   ├── INDEX.md                 Index documentaire officiel
 │   ├── architecture/            Architecture de référence de LSG
 │   ├── dem/                     Versions courantes de la méthode DEM
 │   ├── notes/                   Notes de coordination datées, non normatives
+│   ├── state-model/             Spécification du State Model
 │   └── archive/dem/             Versions DEM obsolètes ou fusionnées
 ```
 
@@ -71,6 +73,6 @@ Les scripts personnels `generer_doc.bat` et `ouvrir_doc.bat` restent volontairem
 
 ## Statut
 
-Les référentiels sont encore à des niveaux de maturité différents : l’architecture est une proposition à valider, l’ontologie et les catalogues sont des brouillons de travail, et DEM-1/DEM-2 sont des spécifications méthodologiques en brouillon. Le Task Catalog v0.8.0 est la version courante : les 79 signatures sont affectées à une Semantic Family unique et les sept signatures du noyau ISR sont enrichies selon DEM-1/DEM-2 v0.5. Les 68 autres signatures restent à traiter progressivement.
+Les référentiels sont encore à des niveaux de maturité différents : l’architecture est une proposition à valider, l’ontologie, les catalogues et le State Model v0.1 sont des brouillons de travail, et DEM-1/DEM-2 sont des spécifications méthodologiques en brouillon. Le Task Catalog v0.8.1 est la version courante : ses 11 signatures enrichies utilisent les identifiants stables du State Model selon DEM-1/DEM-2 v0.6. Les 68 autres signatures restent à traiter progressivement.
 
 La liste exhaustive, les versions, le statut et le caractère normatif ou informatif de chaque document figurent dans [specification/INDEX.md](specification/INDEX.md).
