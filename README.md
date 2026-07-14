@@ -27,20 +27,21 @@ L’ontologie fournit les concepts et relations structurelles, le Mission Catalo
 
 ```text
 .
+├── .github/workflows/           Génération et publication automatiques
 ├── README.md
 ├── references/
 │   ├── ontology/                Source TTL normative
 │   ├── mission-catalog/         Mission Catalog
 │   └── task-catalog/            Task Catalog courant synchronisé
+├── site/                         Fichiers maintenus du site publié
 ├── specification/
 │   ├── INDEX.md                 Index documentaire officiel
 │   ├── architecture/            Architecture de référence de LSG
 │   ├── dem/                     Versions courantes de la méthode DEM
 │   └── archive/dem/             Versions DEM obsolètes ou fusionnées
-└── docs/                        Site WIDOCO généré et publié par GitHub Pages
 ```
 
-Le dossier `docs/` est réservé aux fichiers générés par WIDOCO. Les sources documentaires maintenues manuellement se trouvent dans `references/` et `specification/`.
+Les sources documentaires maintenues manuellement se trouvent dans `references/`, `specification/` et `site/`. Les fichiers produits par WIDOCO ne sont pas suivis par Git.
 
 ## Documentation de l’ontologie avec WIDOCO
 
@@ -50,16 +51,22 @@ La documentation est générée avec WIDOCO 1.4.25 à partir de :
 references/ontology/LOTUSim_Naval_Maritime_Ontology_v2.0-draft.ttl
 ```
 
-Commande de référence :
+Le workflow [`.github/workflows/ontology-pages.yml`](.github/workflows/ontology-pages.yml) constitue la chaîne officielle :
+
+- chaque pull request qui touche l’ontologie, le site ou le workflow génère et valide la documentation ;
+- chaque changement correspondant fusionné dans `main` génère puis publie automatiquement le site sur GitHub Pages ;
+- les sorties HTML, RDF, JSON-LD et WebVOWL sont vérifiées avant publication.
+
+La génération locale reste facultative. Commande de référence :
 
 ```powershell
 java -jar <chemin-vers-widoco.jar> `
   -ontFile references/ontology/LOTUSim_Naval_Maritime_Ontology_v2.0-draft.ttl `
-  -outFolder docs `
+  -outFolder build/widoco `
   -rewriteAll -webVowl -lang en-fr
 ```
 
-Les scripts personnels `generer_doc.bat` et `ouvrir_doc.bat` restent volontairement ignorés par Git. Leur variable `ONT_FILE` doit pointer vers la source TTL ci-dessus. Après génération, `docs/index.html` redirige vers la documentation anglaise et `docs/.nojekyll` permet la publication directe par GitHub Pages.
+Les scripts personnels `generer_doc.bat` et `ouvrir_doc.bat` restent volontairement ignorés par Git. Ils utilisent la source TTL ci-dessus et écrivent dans `build/widoco/`, également ignoré. Le dossier publié par GitHub Pages est produit à la volée par la CI et n’est jamais modifié manuellement.
 
 ## Statut
 
