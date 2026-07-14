@@ -279,7 +279,7 @@ states:
     update_policy: assert_on_completion
     key: [entity, route]
     initialization: false
-    producers: [{kind: task, ref: TC-001-S02, use: world_effect}]
+    producers: [{kind: task, ref: TC-001-S02, use: completion}]
     consumers: [{kind: task, ref: TC-001-S02, use: completion}]
     constraints: []
     evidence: {missions: [MC-004, MC-008, MC-031]}

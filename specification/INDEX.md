@@ -57,6 +57,7 @@ Cet index est la source unique d’inventaire documentaire du dépôt **LSG — 
 | Document | Version | Statut | Autorité | Rôle |
 |---|---:|---|---|---|
 | [README racine](../README.md) | non versionné | Courant | Informatif | Présentation du dépôt, responsabilités, chaîne de dérivation, arborescence et statuts. |
+| [Validateur des référentiels](../tools/validation/validate_referentials.py) | non versionné | Courant | Contrôle automatisé | Vérifie les identifiants, références croisées, familles, types, états, bindings et principales règles DEM ; exécuté par la CI. |
 | [Documentation WIDOCO](https://echauvea.github.io/lotusim-scenario-generator/) | 2.0.0-draft | Générée par CI | Informatif | Représentation HTML, WebVOWL et sérialisations RDF de la Naval Maritime Ontology, publiée par GitHub Pages sans fichiers générés suivis dans Git. |
 | [État des lieux — Interfaçage LSG ↔ tsm](notes/2026-07-14-etat-des-lieux-interface-tsm.md) | 2026-07-14 | Note de coordination | Informatif | Constats sur la divergence du document d'architecture entre les deux dépôts et sur l'écart de vocabulaire entre `knowledge_base.json` (tsm) et le Task Catalog. Questions ouvertes à trancher avec Cyril Moron, non résolues dans ce document. |
 
@@ -65,7 +66,7 @@ Cet index est la source unique d’inventaire documentaire du dépôt **LSG — 
 | Artefact | Statut attendu | Dépendances |
 |---|---|---|
 | HDDL Domain / Problems | À dériver, non créés | State Model stabilisé et règles de projection. |
-| Schémas, validateurs et benchmarks | À planifier | Métamodèles et référentiels stabilisés. |
+| Schémas formels et benchmarks | À planifier | Métamodèles et référentiels stabilisés. Le premier validateur transversal est maintenant disponible. |
 
 ## Résultats de l’audit de consolidation
 
@@ -73,6 +74,7 @@ Cet index est la source unique d’inventaire documentaire du dépôt **LSG — 
 - Le Mission Catalog v1.0.4 contient 66 spécifications actives conformes au métamodèle. Les anciennes propositions incompatibles autrefois numérotées MC-039 à MC-066 sont conservées dans une annexe explicitement non normative.
 - Le Task Catalog v0.8.1 reprend les 64 tâches et 79 signatures. Onze signatures possèdent une sémantique complète et 120 références conformes aux tuples du State Model v0.1 ; les 68 autres restent à enrichir progressivement.
 - Le State Model v0.1 contient 38 états normatifs, 10 types propres et 5 candidats de mission différés faute de producteurs sémantisés.
+- Le validateur transversal et sa CI contrôlent automatiquement les inventaires, la traçabilité, les Semantic Families et la cohérence entre sémantiques de tâche, State Model et ontologie.
 - Les références de versions de l’architecture v3.2 ont été actualisées vers Mission Catalog v1.0.4, Task Catalog v0.8.1 et State Model v0.1.
 - La version d’architecture fournie comme source courante contient deux liens vers LSGA v2 et un lien vers `rig-e2e.md`, alors que ces fichiers sont absents du dépôt. Ils sont conservés tels quels dans le document source et restent donc à résoudre.
 

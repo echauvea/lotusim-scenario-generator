@@ -1,0 +1,45 @@
+name: Referential integrity
+
+on:
+  pull_request:
+    paths:
+      - "references/**"
+      - "specification/**"
+      - "tools/validation/**"
+      - ".github/workflows/referential-integrity.yml"
+      - "README.md"
+  push:
+    branches: [main]
+    paths:
+      - "references/**"
+      - "specification/**"
+      - "tools/validation/**"
+      - ".github/workflows/referential-integrity.yml"
+      - "README.md"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: tools/validation/requirements.txt
+
+      - name: Install validator dependency
+        run: python -m pip install -r tools/validation/requirements.txt
+
+      - name: Run unit tests
+        run: python -m unittest discover -s tools/validation/tests -v
+
+      - name: Validate normative referentials
+        run: python tools/validation/validate_referentials.py

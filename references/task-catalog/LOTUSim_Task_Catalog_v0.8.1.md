@@ -508,8 +508,6 @@ signatures:
     operational_effects:
       world:
         add:
-        - state_ref: SM-ST-012
-          bindings: {entity: actor, route: route}
         - state_ref: SM-ST-001
           bindings: {entity: actor, location: destination}
         remove:

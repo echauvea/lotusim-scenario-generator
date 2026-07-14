@@ -44,7 +44,7 @@ L’ontologie fournit les concepts et relations structurelles, le Mission Catalo
 │   └── archive/dem/             Versions DEM obsolètes ou fusionnées
 ```
 
-Les sources documentaires maintenues manuellement se trouvent dans `references/`, `specification/` et `site/`. Les fichiers produits par WIDOCO ne sont pas suivis par Git.
+Les sources documentaires maintenues manuellement se trouvent dans `references/`, `specification/` et `site/`. Les fichiers produits par WIDOCO ne sont pas suivis par Git. Les contrôles transversaux se trouvent dans `tools/validation/`.
 
 ## Documentation de l’ontologie avec WIDOCO
 
@@ -70,6 +70,20 @@ java -jar <chemin-vers-widoco.jar> `
 ```
 
 Les scripts personnels `generer_doc.bat` et `ouvrir_doc.bat` restent volontairement ignorés par Git. Ils utilisent la source TTL ci-dessus et écrivent dans `build/widoco/`, également ignoré. Le dossier publié par GitHub Pages est produit à la volée par la CI et n’est jamais modifié manuellement.
+
+## Contrôle d’intégrité des référentiels
+
+Le workflow [`.github/workflows/referential-integrity.yml`](.github/workflows/referential-integrity.yml) exécute automatiquement le validateur à chaque pull request concernée et après fusion dans `main`. Il contrôle notamment les identifiants, la traçabilité missions–tâches, l’affectation des Semantic Families, les références ontologiques, ainsi que les états, types et bindings des signatures enrichies.
+
+Exécution locale :
+
+```powershell
+python -m pip install -r tools/validation/requirements.txt
+python -m unittest discover -s tools/validation/tests -v
+python tools/validation/validate_referentials.py
+```
+
+Une validation réussie affiche les effectifs contrôlés. En cas d’erreur, le code du contrôle, le document concerné et l’incohérence sont indiqués ; dans GitHub, ces erreurs apparaissent aussi comme annotations de la pull request.
 
 ## Statut
 
