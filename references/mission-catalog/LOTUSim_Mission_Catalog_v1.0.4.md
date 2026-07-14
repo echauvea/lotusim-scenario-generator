@@ -2804,7 +2804,7 @@ traceability:
     - TC-058
     - TC-062
   ontology_concepts:
-    - Harbour
+    - HarbourArea
     - NavalBase
     - Infrastructure
     - Platform
@@ -2874,7 +2874,6 @@ required_capabilities:
     - IdentificationCapability
     - SurveyCapability
     - InterdictionCapability
-    - EscortCapability
     - ThreatAssessmentCapability
 
 traceability:
@@ -2932,7 +2931,7 @@ classification:
   mission_type: MT-04
   primary_family: protection-and-defence
   operational_intent: protect
-  mission_target: route-network
+  mission_target: route
 
 specification:
   purpose: >
@@ -2971,7 +2970,6 @@ required_capabilities:
     - CoordinationCapability
     - MobilityCapability
   optional:
-    - EscortCapability
     - InterdictionCapability
     - SurveyCapability
     - LogisticsCapability
@@ -3033,7 +3031,7 @@ classification:
   mission_type: MT-04
   primary_family: protection-and-defence
   operational_intent: conduct
-  mission_target: protected-force-or-area
+  mission_target: platform-group
 
 specification:
   purpose: >
@@ -5209,6 +5207,568 @@ traceability:
       mission: MC-028
 ```
 
+### MC-060 — Search for Missing Personnel
+
+```yaml
+id: MC-060
+name: Search for Missing Personnel
+status: candidate
+version: 0.1.0
+
+classification:
+  mission_type: MT-02
+  primary_family: personnel-recovery-and-emergency-support
+  operational_intent: search
+  mission_target: personnel
+
+specification:
+  purpose: >
+    Locate missing or isolated personnel within a defined search area and establish information
+    sufficient to enable subsequent recovery.
+  description: >
+    Assigned search assets systematically cover the designated area, detect and investigate
+    relevant indications, identify or correlate located persons when possible, and report or mark
+    their position and condition.
+  applicable_contexts:
+    - personnel-recovery
+    - maritime-accident
+    - combat-search-and-rescue
+    - disaster-response
+  preconditions:
+    - missing-personnel-or-group-defined
+    - search-area-or-last-known-position-available
+    - suitable-search-assets-assigned
+    - reporting-and-recovery-coordination-established
+  desired_end_state: >
+    The missing personnel are located with sufficient confidence and their position and relevant
+    condition information are available to the recovery force.
+  success_criteria:
+    - missing-personnel-located
+    - location-reported-or-marked
+    - information-sufficient-for-recovery-planning
+  failure_criteria:
+    - search-area-exhausted-without-location
+    - located-person-cannot-be-sufficiently-identified
+    - search-terminated-before-required-coverage
+
+required_capabilities:
+  mandatory:
+    - PerceptionCapability
+    - DetectionCapability
+    - LocalizationCapability
+    - CommunicationCapability
+  optional:
+    - IdentificationCapability
+    - TrackingCapability
+    - NavigationCapability
+    - AssessmentCapability
+    - MarkingCapability
+
+traceability:
+  task_candidates:
+    - TC-001
+    - TC-003
+    - TC-011
+    - TC-012
+    - TC-013
+    - TC-015
+    - TC-016
+    - TC-039
+    - TC-057
+    - TC-058
+  ontology_concepts:
+    - Person
+    - PersonnelGroup
+    - SpatialRegion
+    - Platform
+  related_missions:
+    - relation: precedes
+      mission: MC-061
+    - relation: may-be-part-of
+      mission: MC-062
+```
+
+### MC-061 — Recover Personnel
+
+```yaml
+id: MC-061
+name: Recover Personnel
+status: candidate
+version: 0.1.0
+
+classification:
+  mission_type: MT-07
+  primary_family: personnel-recovery-and-emergency-support
+  operational_intent: recover
+  mission_target: personnel
+
+specification:
+  purpose: >
+    Retrieve designated personnel from danger or isolation and transfer them to a specified safe
+    receiving platform or location.
+  description: >
+    Assigned recovery assets approach the located personnel, establish contact, provide immediate
+    assistance when required, recover them and transport or transfer them to the designated
+    receiving destination.
+  applicable_contexts:
+    - personnel-recovery
+    - maritime-accident
+    - combat-search-and-rescue
+    - emergency-response
+  preconditions:
+    - personnel-location-known-with-sufficient-confidence
+    - recovery-destination-defined
+    - compatible-recovery-asset-assigned
+    - recovery-coordination-established
+  desired_end_state: >
+    The designated personnel are under friendly control at the required safe receiving platform
+    or location and immediate recovery hazards have been addressed.
+  success_criteria:
+    - designated-personnel-retrieved
+    - personnel-transferred-to-safe-receiving-destination
+    - immediate-condition-assessed-and-reported
+  failure_criteria:
+    - personnel-cannot-be-retrieved
+    - personnel-lost-during-recovery
+    - recovery-force-cannot-reach-safe-destination
+
+required_capabilities:
+  mandatory:
+    - RecoveryCapability
+    - MobilityCapability
+    - CommunicationCapability
+  optional:
+    - TransportCapability
+    - ManipulationCapability
+    - HealthMonitoringCapability
+    - ProtectionCapability
+
+traceability:
+  task_candidates:
+    - TC-008
+    - TC-039
+    - TC-049
+    - TC-051
+    - TC-057
+    - TC-059
+    - TC-060
+    - TC-061
+  ontology_concepts:
+    - Person
+    - PersonnelGroup
+    - Platform
+  related_missions:
+    - relation: follows
+      mission: MC-060
+    - relation: may-be-part-of
+      mission: MC-062
+    - relation: may-require
+      mission: MC-066
+```
+
+### MC-062 — Support Combat Search and Rescue
+
+```yaml
+id: MC-062
+name: Support Combat Search and Rescue
+status: candidate
+version: 0.1.0
+
+classification:
+  mission_type: MT-09
+  primary_family: personnel-recovery-and-emergency-support
+  operational_intent: support
+  mission_target: personnel
+
+specification:
+  purpose: >
+    Enable a designated combat search-and-rescue force to locate and recover isolated personnel
+    in a hostile or contested environment.
+  description: >
+    Supporting forces provide selected search, communication, coordination, escort, protection,
+    sensing or engagement functions to the recovery force. The support package is adapted to the
+    threat, location and phase of the supported recovery operation.
+  applicable_contexts:
+    - combat-search-and-rescue
+    - hostile-environment
+    - contested-littoral
+    - joint-operations
+  preconditions:
+    - isolated-personnel-and-recovery-objective-defined
+    - supported-recovery-force-designated
+    - threat-and-support-requirements-assessed
+    - coordination-arrangements-established
+  desired_end_state: >
+    The supported recovery force can locate and recover the isolated personnel under acceptable
+    risk and protection conditions.
+  success_criteria:
+    - required-search-and-recovery-support-delivered
+    - supported-recovery-force-maintains-required-access-and-protection
+    - isolated-personnel-recovery-enabled
+  failure_criteria:
+    - critical-support-not-delivered
+    - threat-prevents-supported-recovery
+    - coordination-failure-compromises-recovery-force
+
+required_capabilities:
+  mandatory:
+    - SupportCapability
+    - CoordinationCapability
+    - CommunicationCapability
+    - ProtectionCapability
+  optional:
+    - PerceptionCapability
+    - DetectionCapability
+    - RecoveryCapability
+    - TrackingCapability
+    - EngagementCapability
+
+traceability:
+  task_candidates:
+    - TC-003
+    - TC-012
+    - TC-013
+    - TC-015
+    - TC-016
+    - TC-023
+    - TC-028
+    - TC-036
+    - TC-039
+    - TC-043
+    - TC-049
+    - TC-059
+  ontology_concepts:
+    - Person
+    - PersonnelGroup
+    - PlatformGroup
+    - Platform
+  related_missions:
+    - relation: may-include
+      mission: MC-060
+    - relation: may-include
+      mission: MC-061
+    - relation: may-require
+      mission: MC-041
+```
+
+### MC-063 — Search for Missing Platform
+
+```yaml
+id: MC-063
+name: Search for Missing Platform
+status: candidate
+version: 0.1.0
+
+classification:
+  mission_type: MT-02
+  primary_family: personnel-recovery-and-emergency-support
+  operational_intent: search
+  mission_target: platform
+
+specification:
+  purpose: >
+    Locate a missing platform within a defined search area and establish its identity, position
+    and relevant condition to support subsequent action.
+  description: >
+    Assigned assets search from the platform's last known position or expected route, investigate
+    relevant contacts and indications, identify the platform or wreck when possible, and report
+    its position and observed condition.
+  applicable_contexts:
+    - maritime-accident
+    - lost-communication
+    - overdue-platform
+    - emergency-response
+  preconditions:
+    - missing-platform-defined
+    - last-known-position-route-or-search-area-available
+    - suitable-search-assets-assigned
+    - reporting-arrangements-established
+  desired_end_state: >
+    The missing platform or associated wreck is located with sufficient confidence and its
+    position and relevant condition are available for recovery or assistance planning.
+  success_criteria:
+    - missing-platform-or-wreck-located
+    - identity-and-position-reported
+    - observed-condition-sufficiently-assessed
+  failure_criteria:
+    - search-area-exhausted-without-location
+    - relevant-contact-cannot-be-resolved
+    - search-terminated-before-required-coverage
+
+required_capabilities:
+  mandatory:
+    - PerceptionCapability
+    - DetectionCapability
+    - LocalizationCapability
+    - CommunicationCapability
+  optional:
+    - IdentificationCapability
+    - TrackingCapability
+    - NavigationCapability
+    - AssessmentCapability
+
+traceability:
+  task_candidates:
+    - TC-001
+    - TC-003
+    - TC-011
+    - TC-012
+    - TC-013
+    - TC-015
+    - TC-016
+    - TC-021
+    - TC-039
+    - TC-057
+  ontology_concepts:
+    - Platform
+    - Ship
+    - Wreck
+    - SpatialRegion
+  related_missions:
+    - relation: may-precede
+      mission: MC-064
+    - relation: may-precede
+      mission: MC-065
+    - relation: may-enable
+      mission: MC-053
+```
+
+### MC-064 — Recover Distressed Vessel
+
+```yaml
+id: MC-064
+name: Recover Distressed Vessel
+status: candidate
+version: 0.1.0
+
+classification:
+  mission_type: MT-07
+  primary_family: personnel-recovery-and-emergency-support
+  operational_intent: recover
+  mission_target: platform
+
+specification:
+  purpose: >
+    Bring a distressed vessel under control and move or restore it to a designated safe condition
+    or receiving location.
+  description: >
+    Assigned recovery assets locate and approach the vessel, assess immediate hazards, stabilize
+    it when possible, establish towing or other recovery arrangements, and move it to the required
+    safe location or condition.
+  applicable_contexts:
+    - maritime-emergency
+    - loss-of-propulsion
+    - grounding-or-damage
+    - post-incident-recovery
+  preconditions:
+    - distressed-vessel-and-location-known
+    - required-safe-condition-or-destination-defined
+    - compatible-recovery-assets-available
+    - immediate-hazards-assessed
+  desired_end_state: >
+    The distressed vessel is under friendly control in the specified safe condition or at the
+    designated receiving location, without unacceptable additional harm.
+  success_criteria:
+    - distressed-vessel-stabilized-or-secured
+    - vessel-moved-or-restored-to-required-safe-condition
+    - recovery-completed-without-unacceptable-additional-damage
+  failure_criteria:
+    - vessel-cannot-be-brought-under-control
+    - recovery-arrangement-fails
+    - vessel-or-recovery-force-suffers-unacceptable-additional-damage
+
+required_capabilities:
+  mandatory:
+    - RecoveryCapability
+    - MobilityCapability
+    - NavigationCapability
+    - CommunicationCapability
+  optional:
+    - ManipulationCapability
+    - SupportCapability
+    - ProtectionCapability
+    - AssessmentCapability
+
+traceability:
+  task_candidates:
+    - TC-001
+    - TC-008
+    - TC-021
+    - TC-023
+    - TC-039
+    - TC-049
+    - TC-056
+    - TC-057
+    - TC-059
+    - TC-060
+  ontology_concepts:
+    - Ship
+    - SurfacePlatform
+    - Platform
+  related_missions:
+    - relation: may-follow
+      mission: MC-063
+    - relation: may-require
+      mission: MC-065
+```
+
+### MC-065 — Assist Disabled Military Vessel
+
+```yaml
+id: MC-065
+name: Assist Disabled Military Vessel
+status: candidate
+version: 0.1.0
+
+classification:
+  mission_type: MT-08
+  primary_family: personnel-recovery-and-emergency-support
+  operational_intent: support
+  mission_target: platform
+
+specification:
+  purpose: >
+    Provide the technical, logistical or physical support required for a disabled military vessel
+    to regain a safe or operationally acceptable condition.
+  description: >
+    Assigned support assets assess the vessel's needs and provide selected stabilization, towing,
+    transfer, resupply, energy, fuel or coordination assistance. The mission supports the vessel
+    without necessarily taking ownership of its full recovery.
+  applicable_contexts:
+    - loss-of-propulsion
+    - equipment-failure
+    - battle-damage-support
+    - maritime-emergency
+  preconditions:
+    - disabled-vessel-and-assistance-needs-defined
+    - assistance-request-or-tasking-authorized
+    - compatible-support-assets-available
+    - safe-approach-or-transfer-conditions-established
+  desired_end_state: >
+    The disabled vessel reaches the specified safe or operationally acceptable condition and can
+    continue, await recovery or transfer responsibility as planned.
+  success_criteria:
+    - required-assistance-delivered
+    - vessel-reaches-required-safe-or-operational-condition
+    - follow-on-action-enabled
+  failure_criteria:
+    - critical-assistance-cannot-be-delivered
+    - vessel-condition-continues-to-degrade
+    - assistance-causes-unacceptable-risk-or-damage
+
+required_capabilities:
+  mandatory:
+    - SupportCapability
+    - LogisticsCapability
+    - CommunicationCapability
+    - CoordinationCapability
+  optional:
+    - EnergySupplyCapability
+    - ManipulationCapability
+    - RecoveryCapability
+    - MobilityCapability
+
+traceability:
+  task_candidates:
+    - TC-039
+    - TC-043
+    - TC-052
+    - TC-053
+    - TC-054
+    - TC-055
+    - TC-056
+    - TC-059
+    - TC-060
+  ontology_concepts:
+    - Ship
+    - SurfacePlatform
+    - Platform
+    - Materiel
+  related_missions:
+    - relation: may-follow
+      mission: MC-063
+    - relation: may-enable
+      mission: MC-064
+    - relation: may-use
+      mission: MC-047
+```
+
+### MC-066 — Support Casualty Evacuation
+
+```yaml
+id: MC-066
+name: Support Casualty Evacuation
+status: candidate
+version: 0.1.0
+
+classification:
+  mission_type: MT-07
+  primary_family: personnel-recovery-and-emergency-support
+  operational_intent: support
+  mission_target: personnel
+
+specification:
+  purpose: >
+    Enable the safe and timely movement of casualties from a point of care or recovery to a
+    designated receiving platform or location capable of providing the required follow-on care.
+  description: >
+    Assigned support assets coordinate casualty transfer, provide immediate stabilization or
+    monitoring when available, transport or evacuate the casualty, and maintain handover
+    information for the receiving organization.
+  applicable_contexts:
+    - medical-evacuation
+    - combat-casualty-support
+    - maritime-emergency
+    - disaster-response
+  preconditions:
+    - casualties-and-priority-defined
+    - receiving-platform-or-location-defined
+    - suitable-evacuation-asset-available
+    - transfer-and-handover-arrangements-established
+  desired_end_state: >
+    The casualties are transferred to the designated receiving platform or location within the
+    required time and with their condition preserved or stabilized as far as practicable.
+  success_criteria:
+    - casualties-transferred-to-designated-recipient
+    - required-evacuation-time-met
+    - condition-and-handover-information-maintained
+  failure_criteria:
+    - casualty-cannot-be-evacuated
+    - evacuation-delay-exceeds-required-limit
+    - casualty-condition-unacceptably-degrades-during-transfer
+
+required_capabilities:
+  mandatory:
+    - RecoveryCapability
+    - TransportCapability
+    - CommunicationCapability
+    - CoordinationCapability
+  optional:
+    - HealthMonitoringCapability
+    - SupportCapability
+    - MobilityCapability
+    - ProtectionCapability
+
+traceability:
+  task_candidates:
+    - TC-039
+    - TC-043
+    - TC-049
+    - TC-051
+    - TC-059
+    - TC-060
+    - TC-061
+  ontology_concepts:
+    - Person
+    - PersonnelGroup
+    - Platform
+  related_missions:
+    - relation: may-follow
+      mission: MC-061
+    - relation: may-be-part-of
+      mission: MC-062
+```
+
 
 
 ## 13. Changes v1.0.3 → v1.0.4
@@ -5219,6 +5779,8 @@ traceability:
 - Added canonical specifications for the Littoral and Amphibious Support family MC-042 through MC-046.
 - Added canonical specifications for the Sustainment and Force Support family MC-047 through MC-053.
 - Added canonical specifications for the Electromagnetic and Information Activities family MC-054 through MC-059.
+- Added canonical specifications for the Personnel Recovery and Emergency Support family MC-060 through MC-066, completing all 66 active mission specifications.
+- Corrected the remaining pre-existing controlled references: `Harbour` was replaced by `HarbourArea`; the undefined `EscortCapability` was removed from MC-031 and MC-032 because escort is represented through `ProtectionCapability` and task TC-023; and the non-controlled mission targets of MC-032 and MC-033 were normalized to `route` and `platform-group`.
 - Replaced free-text task references in MC-034 through MC-038 with stable Task Catalog identifiers.
 - Replaced unavailable capability and ontology references with concepts defined by the current Naval Ontology.
 - Isolated the conflicting former MC-039 through MC-066 blocks as non-normative legacy proposals pending reassignment or reuse.
