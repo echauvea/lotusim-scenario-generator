@@ -41,6 +41,7 @@ jobs:
         run: |
           rm -rf "$SITE_DIR"
           mkdir -p "$SITE_DIR"
+          chmod 0777 "$SITE_DIR"
           docker run --rm \
             -v "$GITHUB_WORKSPACE:/workspace" \
             "$WIDOCO_IMAGE" \
