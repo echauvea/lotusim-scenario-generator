@@ -429,11 +429,20 @@ traceability:
   - MC-033
   - MC-034
   - MC-036
+  - MC-040
   - MC-042
   - MC-043
   - MC-044
-  - MC-051
+  - MC-045
+  - MC-046
+  - MC-047
+  - MC-048
+  - MC-049
   - MC-052
+  - MC-059
+  - MC-060
+  - MC-063
+  - MC-064
   legacy_task_ids:
   - TCL-001
   - TCL-002
@@ -471,8 +480,8 @@ traceability:
   - MC-033
   - MC-034
   - MC-036
-  - MC-042
-  - MC-043
+  - MC-040
+  - MC-046
   legacy_task_ids:
   - TCL-003
 ```
@@ -506,8 +515,10 @@ traceability:
   - MC-014
   - MC-029
   - MC-030
-  - MC-049
-  - MC-059
+  - MC-042
+  - MC-060
+  - MC-062
+  - MC-063
   legacy_task_ids:
   - TCL-004
   - TCL-039
@@ -543,6 +554,9 @@ traceability:
   - MC-030
   - MC-031
   - MC-032
+  - MC-042
+  - MC-043
+  - MC-046
   legacy_task_ids:
   - TCL-005
 ```
@@ -599,6 +613,8 @@ traceability:
   - MC-031
   - MC-032
   - MC-033
+  - MC-050
+  - MC-056
   legacy_task_ids:
   - TCL-006
   - TCL-007
@@ -737,7 +753,9 @@ traceability:
   used_by_missions:
   - MC-019
   - MC-023
-  - MC-048
+  - MC-053
+  - MC-061
+  - MC-064
   legacy_task_ids:
   - TCL-010
 ```
@@ -757,8 +775,7 @@ signatures:
   implements_capabilities:
   - MobilityCapability
 traceability:
-  used_by_missions:
-  - MC-047
+  used_by_missions: []
   legacy_task_ids:
   - TCL-011
 ```
@@ -826,7 +843,9 @@ traceability:
   - MC-034
   - MC-042
   - MC-043
-  - MC-059
+  - MC-054
+  - MC-060
+  - MC-063
   legacy_task_ids:
   - TCL-013
 ```
@@ -883,11 +902,18 @@ traceability:
   - MC-034
   - MC-036
   - MC-038
+  - MC-039
   - MC-040
-  - MC-041
+  - MC-042
+  - MC-043
+  - MC-046
+  - MC-054
+  - MC-055
+  - MC-056
   - MC-057
-  - MC-058
+  - MC-060
   - MC-062
+  - MC-063
   legacy_task_ids:
   - TCL-014
   - TCL-073
@@ -919,6 +945,11 @@ traceability:
   - MC-029
   - MC-030
   - MC-036
+  - MC-042
+  - MC-054
+  - MC-060
+  - MC-062
+  - MC-063
   legacy_task_ids:
   - TCL-015
 ```
@@ -967,7 +998,8 @@ traceability:
   - MC-034
   - MC-036
   - MC-038
-  - MC-058
+  - MC-042
+  - MC-054
   legacy_task_ids:
   - TCL-016
 ```
@@ -1017,8 +1049,14 @@ traceability:
   - MC-037
   - MC-038
   - MC-039
-  - MC-040
   - MC-041
+  - MC-042
+  - MC-054
+  - MC-055
+  - MC-057
+  - MC-060
+  - MC-062
+  - MC-063
   legacy_task_ids:
   - TCL-017
 ```
@@ -1065,6 +1103,16 @@ traceability:
   - MC-036
   - MC-037
   - MC-038
+  - MC-039
+  - MC-040
+  - MC-046
+  - MC-053
+  - MC-054
+  - MC-055
+  - MC-057
+  - MC-060
+  - MC-062
+  - MC-063
   legacy_task_ids:
   - TCL-018
 ```
@@ -1105,7 +1153,7 @@ traceability:
   - MC-030
   - MC-031
   - MC-032
-  - MC-058
+  - MC-054
   legacy_task_ids:
   - TCL-019
   - TCL-074
@@ -1139,8 +1187,6 @@ traceability:
   - MC-023
   - MC-029
   - MC-030
-  - MC-063
-  - MC-064
   legacy_task_ids:
   - TCL-020
   - TCL-021
@@ -1166,6 +1212,9 @@ traceability:
   - MC-008
   - MC-009
   - MC-010
+  - MC-042
+  - MC-043
+  - MC-051
   legacy_task_ids:
   - TCL-022
 ```
@@ -1191,7 +1240,9 @@ traceability:
   - MC-008
   - MC-009
   - MC-010
-  - MC-066
+  - MC-042
+  - MC-043
+  - MC-054
   legacy_task_ids:
   - TCL-023
 ```
@@ -1243,12 +1294,18 @@ traceability:
   - MC-037
   - MC-038
   - MC-039
-  - MC-040
   - MC-041
+  - MC-042
+  - MC-043
+  - MC-051
+  - MC-054
+  - MC-055
   - MC-056
-  - MC-062
-  - MC-065
-  - MC-066
+  - MC-057
+  - MC-058
+  - MC-059
+  - MC-063
+  - MC-064
   legacy_task_ids:
   - TCL-024
 ```
@@ -1375,7 +1432,10 @@ traceability:
   - MC-032
   - MC-044
   - MC-046
-  - MC-047
+  - MC-048
+  - MC-049
+  - MC-062
+  - MC-064
   legacy_task_ids:
   - TCL-027
 ```
@@ -1440,6 +1500,7 @@ traceability:
   - MC-031
   - MC-032
   - MC-033
+  - MC-046
   legacy_task_ids:
   - TCL-029
 ```
@@ -1465,6 +1526,9 @@ traceability:
   - MC-030
   - MC-031
   - MC-033
+  - MC-040
+  - MC-046
+  - MC-057
   legacy_task_ids:
   - TCL-030
 ```
@@ -1522,9 +1586,10 @@ traceability:
   - MC-031
   - MC-032
   - MC-033
-  - MC-045
-  - MC-047
-  - MC-050
+  - MC-044
+  - MC-046
+  - MC-056
+  - MC-062
   legacy_task_ids:
   - TCL-032
 ```
@@ -1582,8 +1647,7 @@ traceability:
   - MC-032
   - MC-033
   - MC-034
-  - MC-063
-  - MC-064
+  - MC-040
   legacy_task_ids:
   - TCL-034
 ```
@@ -1614,8 +1678,6 @@ traceability:
   - MC-025
   - MC-029
   - MC-030
-  - MC-063
-  - MC-064
   legacy_task_ids:
   - TCL-035
 ```
@@ -1676,6 +1738,7 @@ traceability:
   - MC-024
   - MC-025
   - MC-030
+  - MC-040
   legacy_task_ids:
   - TCL-037
 ```
@@ -1701,10 +1764,6 @@ traceability:
   - MC-022
   - MC-023
   - MC-024
-  - MC-047
-  - MC-050
-  - MC-063
-  - MC-064
   legacy_task_ids:
   - TCL-038
 ```
@@ -1729,7 +1788,6 @@ traceability:
   - MC-020
   - MC-022
   - MC-023
-  - MC-064
   legacy_task_ids:
   - TCL-040
 ```
@@ -1766,7 +1824,8 @@ traceability:
   - MC-040
   - MC-041
   - MC-044
-  - MC-045
+  - MC-046
+  - MC-062
   legacy_task_ids:
   - TCL-041
 ```
@@ -1832,10 +1891,11 @@ traceability:
   used_by_missions:
   - MC-016
   - MC-033
+  - MC-044
   - MC-045
-  - MC-050
-  - MC-065
-  - MC-066
+  - MC-052
+  - MC-058
+  - MC-059
   legacy_task_ids:
   - TCL-044
   - TCL-045
@@ -1956,7 +2016,10 @@ traceability:
   - MC-031
   - MC-032
   - MC-033
-  - MC-059
+  - MC-041
+  - MC-045
+  - MC-051
+  - MC-058
   legacy_task_ids:
   - TCL-047
 ```
@@ -1977,7 +2040,8 @@ signatures:
   - CoordinationCapability
   - CommunicationCapability
 traceability:
-  used_by_missions: []
+  used_by_missions:
+  - MC-041
   legacy_task_ids:
   - TCL-048
 ```
@@ -2005,8 +2069,8 @@ traceability:
   - MC-037
   - MC-038
   - MC-039
-  - MC-040
   - MC-041
+  - MC-052
   legacy_task_ids:
   - TCL-049
 ```
@@ -2042,15 +2106,21 @@ traceability:
   - MC-031
   - MC-032
   - MC-033
-  - MC-039
-  - MC-046
-  - MC-048
+  - MC-041
+  - MC-044
+  - MC-045
+  - MC-047
+  - MC-049
+  - MC-050
   - MC-051
-  - MC-054
+  - MC-052
   - MC-055
-  - MC-060
-  - MC-061
+  - MC-056
+  - MC-058
+  - MC-059
+  - MC-062
   - MC-065
+  - MC-066
   legacy_task_ids:
   - TCL-050
 ```
@@ -2074,7 +2144,10 @@ traceability:
   - MC-002
   - MC-017
   - MC-032
-  - MC-060
+  - MC-045
+  - MC-050
+  - MC-051
+  - MC-056
   legacy_task_ids:
   - TCL-051
 ```
@@ -2098,7 +2171,9 @@ traceability:
   - MC-030
   - MC-031
   - MC-033
-  - MC-045
+  - MC-050
+  - MC-051
+  - MC-056
   legacy_task_ids:
   - TCL-052
 ```
@@ -2119,8 +2194,10 @@ signatures:
   - CommunicationCapability
 traceability:
   used_by_missions:
-  - MC-043
-  - MC-060
+  - MC-050
+  - MC-051
+  - MC-052
+  - MC-058
   legacy_task_ids:
   - TCL-054
 ```
@@ -2145,6 +2222,7 @@ traceability:
   - MC-018
   - MC-031
   - MC-032
+  - MC-051
   legacy_task_ids:
   - TCL-055
 ```
@@ -2165,7 +2243,9 @@ signatures:
   - DeploymentCapability
   - PayloadHostingCapability
 traceability:
-  used_by_missions: []
+  used_by_missions:
+  - MC-052
+  - MC-059
   legacy_task_ids:
   - TCL-056
 ```
@@ -2199,10 +2279,13 @@ signatures:
 traceability:
   used_by_missions:
   - MC-024
-  - MC-049
-  - MC-052
+  - MC-045
   - MC-053
-  - MC-056
+  - MC-059
+  - MC-061
+  - MC-062
+  - MC-064
+  - MC-066
   legacy_task_ids:
   - TCL-057
   - TCL-060
@@ -2224,7 +2307,9 @@ signatures:
   implements_capabilities:
   - DockingCapability
 traceability:
-  used_by_missions: []
+  used_by_missions:
+  - MC-047
+  - MC-053
   legacy_task_ids:
   - TCL-058
 ```
@@ -2247,12 +2332,15 @@ traceability:
   used_by_missions:
   - MC-016
   - MC-023
-  - MC-046
-  - MC-050
-  - MC-051
+  - MC-044
+  - MC-045
+  - MC-047
+  - MC-048
+  - MC-049
   - MC-052
   - MC-053
-  - MC-054
+  - MC-061
+  - MC-066
   legacy_task_ids:
   - TCL-061
 ```
@@ -2274,8 +2362,11 @@ signatures:
 traceability:
   used_by_missions:
   - MC-023
+  - MC-047
   - MC-048
-  - MC-055
+  - MC-049
+  - MC-053
+  - MC-065
   legacy_task_ids:
   - TCL-062
 ```
@@ -2297,8 +2388,8 @@ signatures:
 traceability:
   used_by_missions:
   - MC-032
-  - MC-048
-  - MC-055
+  - MC-047
+  - MC-065
   legacy_task_ids:
   - TCL-063
 ```
@@ -2319,8 +2410,8 @@ signatures:
   - EnergySupplyCapability
 traceability:
   used_by_missions:
-  - MC-055
-  - MC-056
+  - MC-047
+  - MC-065
   legacy_task_ids:
   - TCL-064
 ```
@@ -2341,8 +2432,8 @@ signatures:
   - EnergySupplyCapability
 traceability:
   used_by_missions:
-  - MC-048
-  - MC-055
+  - MC-047
+  - MC-065
   legacy_task_ids:
   - TCL-065
 ```
@@ -2363,7 +2454,8 @@ signatures:
   - TransportCapability
 traceability:
   used_by_missions:
-  - MC-056
+  - MC-064
+  - MC-065
   legacy_task_ids:
   - TCL-066
 ```
@@ -2392,8 +2484,11 @@ signatures:
 traceability:
   used_by_missions:
   - MC-011
-  - MC-049
   - MC-053
+  - MC-060
+  - MC-061
+  - MC-063
+  - MC-064
   legacy_task_ids:
   - TCL-067
   - TCL-075
@@ -2423,6 +2518,7 @@ traceability:
   - MC-029
   - MC-030
   - MC-031
+  - MC-060
   legacy_task_ids:
   - TCL-068
 ```
@@ -2446,11 +2542,12 @@ traceability:
   - MC-023
   - MC-024
   - MC-044
-  - MC-046
-  - MC-051
-  - MC-052
-  - MC-053
-  - MC-056
+  - MC-045
+  - MC-061
+  - MC-062
+  - MC-064
+  - MC-065
+  - MC-066
   legacy_task_ids:
   - TCL-070
 ```
@@ -2471,8 +2568,10 @@ signatures:
   - RecoveryCapability
 traceability:
   used_by_missions:
-  - MC-049
-  - MC-053
+  - MC-061
+  - MC-064
+  - MC-065
+  - MC-066
   legacy_task_ids:
   - TCL-071
 ```
@@ -2494,7 +2593,8 @@ signatures:
   - TransportCapability
 traceability:
   used_by_missions:
-  - MC-049
+  - MC-061
+  - MC-066
   legacy_task_ids:
   - TCL-072
 ```
@@ -2524,9 +2624,10 @@ traceability:
   - MC-031
   - MC-032
   - MC-033
-  - MC-062
-  - MC-065
-  - MC-066
+  - MC-050
+  - MC-051
+  - MC-054
+  - MC-056
   legacy_task_ids:
   - TCL-076
 ```
@@ -2555,8 +2656,9 @@ traceability:
   used_by_missions:
   - MC-025
   - MC-028
+  - MC-055
   - MC-057
-  - MC-061
+  - MC-058
   legacy_task_ids:
   - TCL-077
   - TCL-078
@@ -2578,8 +2680,10 @@ signatures:
   - ElectronicWarfareCapability
 traceability:
   used_by_missions:
+  - MC-055
   - MC-057
-  - MC-061
+  - MC-058
+  - MC-059
   legacy_task_ids:
   - TCL-079
 ```
@@ -2622,6 +2726,12 @@ The first semantic implementation covers TC-001 Navigate, TC-006 Follow and TC-0
 - Declared Follow as continuous and separated normal termination from failure.
 - Removed the direct `escort_completed` effect from abstract Escort and expressed its intent as desired outcomes.
 - Kept all state names as controlled candidates pending derivation of stable State Model identifiers.
+
+## 8.3 Traceability refresh for Mission Catalog v1.0.4
+
+- Regenerated every `used_by_missions` list from all 66 active mission specifications MC-001 through MC-066.
+- Removed links inherited from the divergent non-normative mission proposals.
+- No task identity, typed signature or operational semantics changed.
 
 ## 9. Changes 0.3.1 → 0.3.2
 

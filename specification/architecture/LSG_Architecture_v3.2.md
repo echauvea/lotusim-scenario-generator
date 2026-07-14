@@ -1198,7 +1198,7 @@ multi-processus de la stack LOTUSim.
 2. **§9.2** : la vérification d'intégrité référentielle est outillée
    (`validate_referentials.py`, exécution en CI).
 3. **§10.3 et Annexe D** : statuts des référentiels mis à jour — Naval
-   Ontology v2.0-draft, Mission Catalog v1.0.3, Task Catalog v0.6.1 existent ;
+   Ontology v2.0-draft, Mission Catalog v1.0.4, Task Catalog v0.6.1 existent ;
    la « famille documentaire à venir » ne concerne plus que le Profil HDDL, le
    Naval Domain et la Benchmark Suite.
 4. **§11.3 point 3 resserré** : le vocabulaire des clés de manifeste est
