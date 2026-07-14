@@ -4190,6 +4190,547 @@ traceability:
       mission: MC-045
 ```
 
+### MC-047 — Resupply Maritime Force
+
+```yaml
+id: MC-047
+name: Resupply Maritime Force
+status: candidate
+version: 0.1.0
+
+classification:
+  mission_type: MT-08
+  primary_family: sustainment-and-force-support
+  operational_intent: provide
+  mission_target: platform-group
+
+specification:
+  purpose: >
+    Restore or extend the endurance of a designated maritime force by providing the supplies,
+    fuel, energy or consumables required for continued operations.
+  description: >
+    Assigned support assets rendezvous with the receiving force and transfer the authorized
+    resources under the required safety and readiness conditions. Resupply may occur alongside,
+    at anchor or while underway according to the supported force and available capabilities.
+  applicable_contexts:
+    - maritime-sustainment
+    - extended-deployment
+    - high-tempo-operations
+    - distributed-operations
+  preconditions:
+    - receiving-force-and-requirements-defined
+    - required-supplies-available
+    - transfer-arrangements-established
+    - rendezvous-or-support-location-defined
+  desired_end_state: >
+    The designated maritime force has received the required resources and can continue its
+    assigned operation at the specified readiness and endurance level.
+  success_criteria:
+    - required-resources-transferred
+    - receiving-force-endurance-restored-to-required-level
+    - transfer-completed-under-required-safety-conditions
+  failure_criteria:
+    - critical-resource-not-transferred
+    - receiving-force-remains-below-required-endurance
+    - transfer-aborted-or-causes-unacceptable-damage
+
+required_capabilities:
+  mandatory:
+    - LogisticsCapability
+    - TransportCapability
+    - CommunicationCapability
+    - CoordinationCapability
+  optional:
+    - EnergySupplyCapability
+    - DockingCapability
+    - ManipulationCapability
+    - MobilityCapability
+
+traceability:
+  task_candidates:
+    - TC-001
+    - TC-043
+    - TC-050
+    - TC-051
+    - TC-052
+    - TC-053
+    - TC-054
+    - TC-055
+    - TC-039
+  ontology_concepts:
+    - PlatformGroup
+    - Platform
+    - Materiel
+    - Payload
+  related_missions:
+    - relation: may-use
+      mission: MC-048
+    - relation: may-use
+      mission: MC-049
+```
+
+### MC-048 — Transport Military Payload
+
+```yaml
+id: MC-048
+name: Transport Military Payload
+status: candidate
+version: 0.1.0
+
+classification:
+  mission_type: MT-08
+  primary_family: sustainment-and-force-support
+  operational_intent: provide
+  mission_target: physical-object
+
+specification:
+  purpose: >
+    Move a designated military payload from an origin to a destination while preserving its
+    required integrity, custody and availability.
+  description: >
+    An assigned carrier receives, secures and transports a military payload along an authorized
+    route before transferring or making it available at the destination. The payload may be
+    equipment, stores, mission modules or another transportable physical object.
+  applicable_contexts:
+    - maritime-logistics
+    - force-deployment
+    - distributed-operations
+    - littoral-support
+  preconditions:
+    - payload-origin-and-destination-defined
+    - payload-compatible-with-assigned-carrier
+    - authorized-route-or-movement-area-defined
+    - transfer-arrangements-established
+  desired_end_state: >
+    The designated payload is available at the required destination in the specified condition
+    and within the required delivery window.
+  success_criteria:
+    - payload-delivered-to-required-destination
+    - payload-integrity-and-custody-preserved
+    - delivery-completed-within-required-window
+  failure_criteria:
+    - payload-not-delivered
+    - payload-lost-damaged-or-compromised
+    - delivery-window-missed
+
+required_capabilities:
+  mandatory:
+    - TransportCapability
+    - MobilityCapability
+    - NavigationCapability
+    - PayloadHostingCapability
+  optional:
+    - LogisticsCapability
+    - ManipulationCapability
+    - CommunicationCapability
+    - ProtectionCapability
+
+traceability:
+  task_candidates:
+    - TC-001
+    - TC-023
+    - TC-039
+    - TC-051
+    - TC-052
+  ontology_concepts:
+    - Payload
+    - PhysicalObject
+    - Platform
+    - Route
+  related_missions:
+    - relation: may-support
+      mission: MC-047
+    - relation: broader-or-overlapping
+      mission: MC-049
+    - relation: may-support
+      mission: MC-052
+```
+
+### MC-049 — Deliver Critical Materiel
+
+```yaml
+id: MC-049
+name: Deliver Critical Materiel
+status: candidate
+version: 0.1.0
+
+classification:
+  mission_type: MT-08
+  primary_family: sustainment-and-force-support
+  operational_intent: provide
+  mission_target: physical-object
+
+specification:
+  purpose: >
+    Deliver designated critical materiel to a receiving force or location within the operational
+    time window required to preserve mission continuity.
+  description: >
+    Assigned support assets collect, transport and transfer high-priority materiel whose delayed
+    or failed delivery would materially affect the supported operation. Planning emphasizes
+    priority, delivery assurance, receiving-force coordination and protection when required.
+  applicable_contexts:
+    - urgent-logistics
+    - contested-logistics
+    - maintenance-support
+    - operational-recovery
+  preconditions:
+    - critical-materiel-and-priority-defined
+    - receiving-force-or-location-defined
+    - materiel-available-for-transfer
+    - delivery-window-defined
+  desired_end_state: >
+    The critical materiel is transferred to the designated recipient in usable condition before
+    the operational need can no longer be met.
+  success_criteria:
+    - critical-materiel-delivered-to-designated-recipient
+    - materiel-delivered-in-usable-condition
+    - operational-delivery-window-met
+  failure_criteria:
+    - critical-materiel-not-delivered
+    - materiel-unusable-on-delivery
+    - delivery-delay-compromises-supported-operation
+
+required_capabilities:
+  mandatory:
+    - LogisticsCapability
+    - TransportCapability
+    - CommunicationCapability
+    - CoordinationCapability
+  optional:
+    - ProtectionCapability
+    - ManipulationCapability
+    - MobilityCapability
+
+traceability:
+  task_candidates:
+    - TC-001
+    - TC-023
+    - TC-039
+    - TC-043
+    - TC-051
+    - TC-052
+  ontology_concepts:
+    - Materiel
+    - PhysicalObject
+    - Platform
+  related_missions:
+    - relation: specialization-of
+      mission: MC-048
+    - relation: may-support
+      mission: MC-047
+```
+
+### MC-050 — Provide Communication Relay
+
+```yaml
+id: MC-050
+name: Provide Communication Relay
+status: candidate
+version: 0.1.0
+
+classification:
+  mission_type: MT-08
+  primary_family: sustainment-and-force-support
+  operational_intent: provide
+  mission_target: communication-service
+
+specification:
+  purpose: >
+    Establish and maintain a communication relay service between designated participants that
+    cannot otherwise exchange the required information with sufficient reliability.
+  description: >
+    An assigned relay platform or system establishes the required links, forwards authorized
+    information and monitors service continuity for the specified participants, coverage area
+    and operational period.
+  applicable_contexts:
+    - beyond-line-of-sight-communications
+    - distributed-operations
+    - degraded-communications-environment
+    - joint-operations
+  preconditions:
+    - communication-participants-defined
+    - relay-service-requirements-defined
+    - compatible-communication-resources-available
+    - relay-position-or-coverage-area-defined
+  desired_end_state: >
+    The designated participants can exchange the required information through a relay service
+    that meets the specified coverage, availability and continuity requirements.
+  success_criteria:
+    - required-relay-links-established
+    - authorized-information-forwarded
+    - service-continuity-maintained-for-required-period
+  failure_criteria:
+    - required-participant-remains-unreachable
+    - relay-service-below-required-availability
+    - information-forwarding-fails-or-is-compromised
+
+required_capabilities:
+  mandatory:
+    - RelayCapability
+    - CommunicationCapability
+    - CoordinationCapability
+  optional:
+    - MobilityCapability
+    - StationKeepingCapability
+    - SelfMonitoringCapability
+
+traceability:
+  task_candidates:
+    - TC-005
+    - TC-039
+    - TC-043
+    - TC-044
+    - TC-045
+    - TC-046
+    - TC-062
+  ontology_concepts:
+    - CommunicationDevice
+    - Platform
+  related_missions:
+    - relation: may-support
+      mission: MC-044
+    - relation: may-support
+      mission: MC-045
+    - relation: may-support
+      mission: MC-051
+```
+
+### MC-051 — Provide Navigation Support
+
+```yaml
+id: MC-051
+name: Provide Navigation Support
+status: candidate
+version: 0.1.0
+
+classification:
+  mission_type: MT-08
+  primary_family: sustainment-and-force-support
+  operational_intent: provide
+  mission_target: route
+
+specification:
+  purpose: >
+    Enable a designated force to navigate an assigned route or operating area with the required
+    positional confidence and movement safety.
+  description: >
+    Supporting assets provide route, position, guidance or environmental information needed by
+    the supported force. They may establish reference information, relay updates, monitor route
+    conditions and report changes affecting safe or accurate navigation.
+  applicable_contexts:
+    - degraded-navigation-environment
+    - littoral-navigation
+    - convoy-or-group-movement
+    - route-preparation
+  preconditions:
+    - supported-force-and-route-defined
+    - navigation-support-requirements-defined
+    - required-reference-or-route-information-available
+    - communication-arrangements-established
+  desired_end_state: >
+    The supported force has the information and service continuity required to navigate the
+    designated route or area within the specified accuracy and safety constraints.
+  success_criteria:
+    - required-navigation-information-provided
+    - supported-force-maintains-required-positional-confidence
+    - relevant-route-changes-reported
+  failure_criteria:
+    - required-navigation-information-unavailable
+    - positional-confidence-below-required-threshold
+    - unreported-route-change-compromises-supported-movement
+
+required_capabilities:
+  mandatory:
+    - NavigationCapability
+    - CommunicationCapability
+    - PositionEstimationCapability
+  optional:
+    - RelayCapability
+    - CoordinationCapability
+    - PerceptionCapability
+    - AssessmentCapability
+
+traceability:
+  task_candidates:
+    - TC-019
+    - TC-021
+    - TC-039
+    - TC-040
+    - TC-043
+    - TC-044
+    - TC-045
+    - TC-046
+    - TC-047
+    - TC-062
+  ontology_concepts:
+    - Route
+    - SpatialRegion
+    - CommunicationDevice
+    - Platform
+  related_missions:
+    - relation: supported-by
+      mission: MC-050
+    - relation: may-support
+      mission: MC-043
+    - relation: may-support
+      mission: MC-046
+```
+
+### MC-052 — Deploy Uncrewed Systems
+
+```yaml
+id: MC-052
+name: Deploy Uncrewed Systems
+status: candidate
+version: 0.1.0
+
+classification:
+  mission_type: MT-09
+  primary_family: sustainment-and-force-support
+  operational_intent: support
+  mission_target: platform-group
+
+specification:
+  purpose: >
+    Place one or more uncrewed systems into their required operating environment and condition
+    so that they can support an assigned operation.
+  description: >
+    A carrier or support force prepares, launches or transfers designated uncrewed systems,
+    establishes required control or communication arrangements and confirms that the deployed
+    systems are available for their assigned activities.
+  applicable_contexts:
+    - distributed-sensing
+    - mine-warfare
+    - maritime-surveillance
+    - contested-environment
+  preconditions:
+    - uncrewed-systems-and-deployment-area-defined
+    - systems-ready-for-deployment
+    - carrier-or-launch-arrangement-available
+    - control-and-communication-arrangements-established
+  desired_end_state: >
+    The designated uncrewed systems are deployed in the required operating area, responsive to
+    the assigned control arrangements and available to perform their intended activities.
+  success_criteria:
+    - required-uncrewed-systems-deployed
+    - deployed-systems-operationally-available
+    - required-control-and-communication-links-established
+  failure_criteria:
+    - required-system-not-deployed
+    - deployed-system-not-operationally-available
+    - control-or-communication-arrangement-not-established
+
+required_capabilities:
+  mandatory:
+    - DeploymentCapability
+    - SupportCapability
+    - CommunicationCapability
+    - CoordinationCapability
+  optional:
+    - TransportCapability
+    - PayloadHostingCapability
+    - ManipulationCapability
+    - MobilityCapability
+
+traceability:
+  task_candidates:
+    - TC-001
+    - TC-038
+    - TC-039
+    - TC-042
+    - TC-043
+    - TC-046
+    - TC-048
+    - TC-051
+  ontology_concepts:
+    - UncrewedSurfaceVehicle
+    - AutonomousUnderwaterVehicle
+    - UncrewedAerialVehicle
+    - Platform
+  related_missions:
+    - relation: may-use
+      mission: MC-048
+    - relation: precedes
+      mission: MC-053
+```
+
+### MC-053 — Recover Uncrewed System
+
+```yaml
+id: MC-053
+name: Recover Uncrewed System
+status: candidate
+version: 0.1.0
+
+classification:
+  mission_type: MT-07
+  primary_family: sustainment-and-force-support
+  operational_intent: recover
+  mission_target: platform
+
+specification:
+  purpose: >
+    Retrieve a designated uncrewed system from its operating environment and return it to a
+    specified safe, controlled or transportable condition.
+  description: >
+    Assigned recovery assets locate and approach the designated system, establish control when
+    possible, retrieve or dock it, and transfer it to the required receiving platform or location.
+  applicable_contexts:
+    - post-mission-recovery
+    - system-malfunction
+    - contested-environment
+    - maritime-logistics
+  preconditions:
+    - uncrewed-system-designated-for-recovery
+    - last-known-location-or-search-area-available
+    - compatible-recovery-asset-assigned
+    - receiving-platform-or-location-defined
+  desired_end_state: >
+    The designated uncrewed system is under friendly control at the required receiving platform
+    or location and is no longer exposed in the operating environment.
+  success_criteria:
+    - designated-system-located
+    - system-retrieved-or-docked
+    - system-transferred-to-required-receiving-condition
+  failure_criteria:
+    - designated-system-not-located
+    - recovery-attempt-unsuccessful
+    - system-lost-or-damaged-beyond-acceptable-limit
+
+required_capabilities:
+  mandatory:
+    - RecoveryCapability
+    - LocalizationCapability
+    - MobilityCapability
+    - CommunicationCapability
+  optional:
+    - TrackingCapability
+    - DockingCapability
+    - ManipulationCapability
+    - TransportCapability
+
+traceability:
+  task_candidates:
+    - TC-008
+    - TC-016
+    - TC-039
+    - TC-049
+    - TC-050
+    - TC-051
+    - TC-052
+    - TC-057
+  ontology_concepts:
+    - UncrewedSurfaceVehicle
+    - AutonomousUnderwaterVehicle
+    - UncrewedAerialVehicle
+    - Platform
+  related_missions:
+    - relation: follows
+      mission: MC-052
+    - relation: may-require
+      mission: MC-063
+```
+
 
 
 ## 13. Changes v1.0.3 → v1.0.4
@@ -4198,6 +4739,7 @@ traceability:
 - Normalized MC-034 through MC-038 to the canonical mission schema.
 - Added canonical specifications for MC-039 through MC-041 by reusing relevant material from the divergent proposals under their correct mission identities.
 - Added canonical specifications for the Littoral and Amphibious Support family MC-042 through MC-046.
+- Added canonical specifications for the Sustainment and Force Support family MC-047 through MC-053.
 - Replaced free-text task references in MC-034 through MC-038 with stable Task Catalog identifiers.
 - Replaced unavailable capability and ontology references with concepts defined by the current Naval Ontology.
 - Isolated the conflicting former MC-039 through MC-066 blocks as non-normative legacy proposals pending reassignment or reuse.
