@@ -47,6 +47,7 @@ Cet index est la source unique d’inventaire documentaire du dépôt **LSG — 
 |---|---:|---|---|---|
 | [README racine](../README.md) | non versionné | Courant | Informatif | Présentation du dépôt, responsabilités, chaîne de dérivation, arborescence et statuts. |
 | [Documentation WIDOCO](https://echauvea.github.io/lotusim-scenario-generator/) | 2.0.0-draft | Générée par CI | Informatif | Représentation HTML, WebVOWL et sérialisations RDF de la Naval Maritime Ontology, publiée par GitHub Pages sans fichiers générés suivis dans Git. |
+| [État des lieux — Interfaçage LSG ↔ tsm](notes/2026-07-14-etat-des-lieux-interface-tsm.md) | 2026-07-14 | Note de coordination | Informatif | Constats sur la divergence du document d'architecture entre les deux dépôts et sur l'écart de vocabulaire entre `knowledge_base.json` (tsm) et le Task Catalog. Questions ouvertes à trancher avec Cyril Moron, non résolues dans ce document. |
 
 ## Artefacts prévus mais absents
 

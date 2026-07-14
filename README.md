@@ -38,6 +38,7 @@ L’ontologie fournit les concepts et relations structurelles, le Mission Catalo
 │   ├── INDEX.md                 Index documentaire officiel
 │   ├── architecture/            Architecture de référence de LSG
 │   ├── dem/                     Versions courantes de la méthode DEM
+│   ├── notes/                   Notes de coordination datées, non normatives
 │   └── archive/dem/             Versions DEM obsolètes ou fusionnées
 ```
 
