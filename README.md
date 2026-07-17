@@ -9,19 +9,21 @@ La documentation publiée de la Naval Maritime Ontology est accessible sur [GitH
 - La **Naval Maritime Ontology** est la source normative des concepts, types, capacités, équipements et relations structurelles.
 - Le **Mission Catalog** est la source normative des missions et de leurs objectifs.
 - Le **Task Catalog** est la source normative des tâches. Les sémantiques sont portées par chaque signature typée ; les sémantiques communes sont centralisées dans les Semantic Families.
-- La **LSG Domain Engineering Method (DEM)** fixe les règles de conception et le métamodèle du Task Catalog.
-- Le **State Model v0.5** est le vocabulaire dynamique dérivé des trois référentiels métier. Sa source YAML est normative pour les états des signatures enrichies.
-- Le **domaine et les problèmes HDDL** seront dérivés du State Model. Ils ne sont pas encore présents dans ce dépôt.
+- Le **Method Catalog** décrit les méthodes HTN qui décomposent les tâches abstraites en réseaux de sous-tâches typées.
+- La **LSG Domain Engineering Method (DEM)** fixe les règles de conception et les métamodèles du Task Catalog et du Method Catalog.
+- Le **State Model v0.6** est le vocabulaire dynamique dérivé des référentiels métier. Sa source YAML est normative pour les états des signatures et méthodes enrichies.
+- Le **domaine et les problèmes HDDL** seront dérivés du State Model et du Method Catalog. Ils ne sont pas encore présents dans ce dépôt.
 
 ## Chaîne de dérivation
 
 ```text
 Naval Maritime Ontology ─┐
-Mission Catalog ─────────┼─> State Model ─> HDDL Domain / Problems
-Task Catalog ────────────┘
+Mission Catalog ─────────┼─> State Model ─┐
+Task Catalog ────────────┘                ├─> HDDL Domain / Problems
+Task Catalog ──────────────> Method Catalog ┘
 ```
 
-L’ontologie fournit les concepts et relations structurelles, le Mission Catalog les préconditions et objectifs, et le Task Catalog les lectures, effets et conditions des tâches.
+L’ontologie fournit les concepts et relations structurelles, le Mission Catalog les préconditions et objectifs, et le Task Catalog les lectures, effets et conditions des tâches. Le Method Catalog ajoute les alternatives de décomposition, l’ordonnancement, la synchronisation et la propagation des échecs.
 
 ## Arborescence
 
@@ -33,6 +35,7 @@ L’ontologie fournit les concepts et relations structurelles, le Mission Catalo
 │   ├── ontology/                Source TTL normative
 │   ├── mission-catalog/         Mission Catalog
 │   ├── task-catalog/            Task Catalog courant synchronisé
+│   ├── method-catalog/          Méthodes de décomposition HTN
 │   └── state-model/             State Model YAML normatif
 ├── site/                         Fichiers maintenus du site publié
 ├── specification/
@@ -73,7 +76,7 @@ Les scripts personnels `generer_doc.bat` et `ouvrir_doc.bat` restent volontairem
 
 ## Contrôle d’intégrité des référentiels
 
-Le workflow [`.github/workflows/referential-integrity.yml`](.github/workflows/referential-integrity.yml) exécute automatiquement le validateur à chaque pull request concernée et après fusion dans `main`. Il contrôle notamment les identifiants, la traçabilité missions–tâches, l’affectation des Semantic Families, les références ontologiques, ainsi que les états, types et bindings des signatures enrichies.
+Le workflow [`.github/workflows/referential-integrity.yml`](.github/workflows/referential-integrity.yml) exécute automatiquement le validateur à chaque pull request concernée et après fusion dans `main`. Il contrôle notamment les identifiants, la traçabilité missions–tâches, l’affectation des Semantic Families, les références ontologiques, ainsi que les états, types et bindings des signatures et méthodes enrichies.
 
 Exécution locale :
 
@@ -87,6 +90,6 @@ Une validation réussie affiche les effectifs contrôlés. En cas d’erreur, le
 
 ## Statut
 
-Les référentiels sont encore à des niveaux de maturité différents : l’architecture est une proposition à valider, l’ontologie, les catalogues et le State Model v0.5 sont des brouillons de travail, et DEM-1/DEM-2 sont des spécifications méthodologiques en brouillon. Le Task Catalog v0.12.0 est la version courante : ses 32 signatures enrichies utilisent les identifiants stables du State Model selon DEM-1/DEM-2 v0.6. Les 47 autres signatures restent à traiter progressivement.
+Les référentiels sont encore à des niveaux de maturité différents : l’architecture est une proposition à valider, l’ontologie, les catalogues et le State Model v0.6 sont des brouillons de travail, et les spécifications DEM sont en brouillon. Le Task Catalog v0.12.0 est la version courante : ses 32 signatures enrichies utilisent les identifiants stables du State Model selon DEM-1/DEM-2 v0.6. Le Method Catalog v0.1.0 contient le pilote Escort avec deux méthodes encore partiellement projetables en HDDL. Les 47 autres signatures restent à traiter progressivement.
 
 La liste exhaustive, les versions, le statut et le caractère normatif ou informatif de chaque document figurent dans [specification/INDEX.md](specification/INDEX.md).

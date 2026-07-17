@@ -1,15 +1,15 @@
 # LOTUSim State Model Specification
 
 > **Status:** working draft
-> **Version:** 0.5
+> **Version:** 0.6
 > **Date:** 2026-07-17
-> **Normative data source:** [`LOTUSim_State_Model_v0.5.yaml`](../../references/state-model/LOTUSim_State_Model_v0.5.yaml)
+> **Normative data source:** [`LOTUSim_State_Model_v0.6.yaml`](../../references/state-model/LOTUSim_State_Model_v0.6.yaml)
 
 ## 1. Purpose
 
 The LOTUSim State Model defines the controlled dynamic-state vocabulary shared by missions, task semantics and derived planning artifacts. It is planner-independent: HDDL predicates and simulator bindings are derived from it and do not redefine its operational meaning.
 
-Version 0.5 extends the pilot, Movement and Protection baseline with the second ISR increment. It covers 32 enriched signatures: the previous 28 signatures plus Characterize Object, Characterize Emission, Inspect Object and Inspect Infrastructure.
+Version 0.6 extends the semantic baseline with the first HTN-method pilot. It retains 32 enriched signatures and adds the explicit route-assignment state required to decompose Escort without guessing the commanded route.
 
 ## 2. Sources and scope
 
@@ -19,9 +19,9 @@ The model is derived from three normative inputs:
 2. task reads, effects, completion conditions and failure outcomes in the Task Catalog;
 3. mission preconditions, desired end states and success/failure criteria in the Mission Catalog.
 
-The v0.5 normative inventory contains:
+The v0.6 normative inventory contains:
 
-- 104 states;
+- 105 states;
 - 23 State Model-owned types;
 - 4 categories: world, knowledge, execution and resource;
 - 4 mission-derived candidates deferred until their producing tasks or aggregation rules are modeled.
@@ -70,7 +70,7 @@ The ordered `arguments` list defines the canonical tuple signature. Every task b
 
 ## 5. Categories
 
-| Category | Meaning | Examples in v0.5 |
+| Category | Meaning | Examples in v0.6 |
 |---|---|---|
 | `world` | Physical or operational reality independent of who knows it. | `located_at`, `guarding`, `deployed_at` |
 | `knowledge` | Information valid for an explicit holder. | `detected`, `localized`, `classified`, `identified`, `track_maintained` |
@@ -197,6 +197,7 @@ State Model-owned types in v0.5 include information holders, observations, evide
 | SM-ST-102 | `inspection_satisfies` | knowledge | Inspect or quality evaluator |
 | SM-ST-103 | `inspection_produced_by` | knowledge | Inspect or imported record |
 | SM-ST-104 | `inspection_attempt_inconclusive` | execution | Inspect failure |
+| SM-ST-105 | `escort_route_assigned` | execution | Mission or command definition |
 
 The YAML source is authoritative for definitions, argument order, lifecycle, producers, consumers, constraints and evidence.
 
@@ -240,7 +241,7 @@ The `key` identifies the tuple components used for replacement or mutual-exclusi
 
 ## 11. Deferred mission-derived candidates
 
-Four mission-level concepts remain deliberately unpromoted in v0.5:
+Four mission-level concepts remain deliberately unpromoted in v0.6:
 
 - surveillance continuity achieved;
 - information requirement satisfied;
@@ -309,4 +310,10 @@ Version 0.5 adds requirement-scoped, holder-relative outputs for characterizatio
 - object and infrastructure inspection reuse one canonical inspection tuple because both subjects are physical entities;
 - all four task signatures keep world effects empty: their outputs describe knowledge, not a change to the inspected or characterized subject.
 
-Version 0.5 is the baseline for enriching the remaining 47 signatures. New states shall be added only when a task or mission requirement cannot reuse an existing definition. Each family increment shall update producers, consumers and deferred candidates before its task semantics are considered complete.
+## 17. Escort method support in v0.6
+
+`SM-ST-105 escort_route_assigned(escort, protected, route)` is the first state introduced by Method Catalog derivation. It makes the mission’s movement or transit objective selectable by an HTN method. It is deliberately distinct from `route_traversable`: several routes may be physically traversable, while only one is commanded for a given escort-protected pair.
+
+The state narrows both actors to `nmo:Platform`, matching the two single-platform Escort pilot methods. Convoy or `nmo:PlatformGroup` movement remains outside this tuple until group movement and integrity semantics are modeled explicitly.
+
+Version 0.6 is the baseline for enriching the remaining 47 signatures and extending the Method Catalog. New states shall be added only when a task, method or mission requirement cannot reuse an existing definition. Each increment shall update producers, consumers and deferred candidates before it is considered complete.
