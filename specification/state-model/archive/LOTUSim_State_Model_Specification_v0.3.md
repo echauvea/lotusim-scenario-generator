@@ -3,7 +3,7 @@
 > **Status:** working draft
 > **Version:** 0.3
 > **Date:** 2026-07-17
-> **Normative data source:** [`LOTUSim_State_Model_v0.3.yaml`](../../references/state-model/LOTUSim_State_Model_v0.3.yaml)
+> **Archived data source:** [`LOTUSim_State_Model_v0.3.yaml`](../../../references/state-model/archive/LOTUSim_State_Model_v0.3.yaml)
 
 ## 1. Purpose
 

@@ -10,7 +10,7 @@ La documentation publiée de la Naval Maritime Ontology est accessible sur [GitH
 - Le **Mission Catalog** est la source normative des missions et de leurs objectifs.
 - Le **Task Catalog** est la source normative des tâches. Les sémantiques sont portées par chaque signature typée ; les sémantiques communes sont centralisées dans les Semantic Families.
 - La **LSG Domain Engineering Method (DEM)** fixe les règles de conception et le métamodèle du Task Catalog.
-- Le **State Model v0.3** est le vocabulaire dynamique dérivé des trois référentiels métier. Sa source YAML est normative pour les états des signatures enrichies.
+- Le **State Model v0.4** est le vocabulaire dynamique dérivé des trois référentiels métier. Sa source YAML est normative pour les états des signatures enrichies.
 - Le **domaine et les problèmes HDDL** seront dérivés du State Model. Ils ne sont pas encore présents dans ce dépôt.
 
 ## Chaîne de dérivation
@@ -87,6 +87,6 @@ Une validation réussie affiche les effectifs contrôlés. En cas d’erreur, le
 
 ## Statut
 
-Les référentiels sont encore à des niveaux de maturité différents : l’architecture est une proposition à valider, l’ontologie, les catalogues et le State Model v0.3 sont des brouillons de travail, et DEM-1/DEM-2 sont des spécifications méthodologiques en brouillon. Le Task Catalog v0.10.0 est la version courante : ses 24 signatures enrichies utilisent les identifiants stables du State Model selon DEM-1/DEM-2 v0.6. Les 55 autres signatures restent à traiter progressivement.
+Les référentiels sont encore à des niveaux de maturité différents : l’architecture est une proposition à valider, l’ontologie, les catalogues et le State Model v0.4 sont des brouillons de travail, et DEM-1/DEM-2 sont des spécifications méthodologiques en brouillon. Le Task Catalog v0.11.0 est la version courante : ses 28 signatures enrichies utilisent les identifiants stables du State Model selon DEM-1/DEM-2 v0.6. Les 51 autres signatures restent à traiter progressivement.
 
 La liste exhaustive, les versions, le statut et le caractère normatif ou informatif de chaque document figurent dans [specification/INDEX.md](specification/INDEX.md).
