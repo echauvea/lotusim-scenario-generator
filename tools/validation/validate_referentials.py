@@ -15,9 +15,9 @@ from typing import Any, Iterable
 import yaml
 
 
-TASK_FILE = Path("references/task-catalog/LOTUSim_Task_Catalog_v0.11.0.md")
+TASK_FILE = Path("references/task-catalog/LOTUSim_Task_Catalog_v0.12.0.md")
 MISSION_FILE = Path("references/mission-catalog/LOTUSim_Mission_Catalog_v1.0.4.md")
-STATE_FILE = Path("references/state-model/LOTUSim_State_Model_v0.4.yaml")
+STATE_FILE = Path("references/state-model/LOTUSim_State_Model_v0.5.yaml")
 ONTOLOGY_FILE = Path("references/ontology/LOTUSim_Naval_Maritime_Ontology_v2.0-draft.ttl")
 
 
@@ -584,7 +584,7 @@ def validate_effect(
 def validate_links(data: RepoData, report: ValidationReport) -> None:
     relative_paths = [
         Path("README.md"), Path("specification/INDEX.md"),
-        Path("specification/state-model/LOTUSim_State_Model_Specification_v0.4.md"),
+        Path("specification/state-model/LOTUSim_State_Model_Specification_v0.5.md"),
     ]
     for relative_path in relative_paths:
         validate_document_links(data.root, relative_path, report)

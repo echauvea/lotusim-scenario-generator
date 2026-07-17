@@ -1,15 +1,15 @@
 # LOTUSim State Model Specification
 
 > **Status:** working draft
-> **Version:** 0.4
+> **Version:** 0.5
 > **Date:** 2026-07-17
-> **Normative data source:** [`LOTUSim_State_Model_v0.4.yaml`](../../references/state-model/LOTUSim_State_Model_v0.4.yaml)
+> **Normative data source:** [`LOTUSim_State_Model_v0.5.yaml`](../../references/state-model/LOTUSim_State_Model_v0.5.yaml)
 
 ## 1. Purpose
 
 The LOTUSim State Model defines the controlled dynamic-state vocabulary shared by missions, task semantics and derived planning artifacts. It is planner-independent: HDDL predicates and simulator bindings are derived from it and do not redefine its operational meaning.
 
-Version 0.4 extends the pilot, Movement and Protection baseline with the first ISR coverage-and-products increment. It covers 28 enriched signatures: the previous 24 signatures plus Search Area, Survey Area, Map Seabed and Measure Environment.
+Version 0.5 extends the pilot, Movement and Protection baseline with the second ISR increment. It covers 32 enriched signatures: the previous 28 signatures plus Characterize Object, Characterize Emission, Inspect Object and Inspect Infrastructure.
 
 ## 2. Sources and scope
 
@@ -19,10 +19,10 @@ The model is derived from three normative inputs:
 2. task reads, effects, completion conditions and failure outcomes in the Task Catalog;
 3. mission preconditions, desired end states and success/failure criteria in the Mission Catalog.
 
-The v0.4 normative inventory contains:
+The v0.5 normative inventory contains:
 
-- 86 states;
-- 18 State Model-owned types;
+- 104 states;
+- 23 State Model-owned types;
 - 4 categories: world, knowledge, execution and resource;
 - 4 mission-derived candidates deferred until their producing tasks or aggregation rules are modeled.
 
@@ -70,7 +70,7 @@ The ordered `arguments` list defines the canonical tuple signature. Every task b
 
 ## 5. Categories
 
-| Category | Meaning | Examples in v0.4 |
+| Category | Meaning | Examples in v0.5 |
 |---|---|---|
 | `world` | Physical or operational reality independent of who knows it. | `located_at`, `guarding`, `deployed_at` |
 | `knowledge` | Information valid for an explicit holder. | `detected`, `localized`, `classified`, `identified`, `track_maintained` |
@@ -83,9 +83,11 @@ All knowledge states bind `holder`. An inconclusive sensing attempt is an execut
 
 Physical types reuse the ontology with the `nmo:` prefix. Dynamic information artifacts belong to the State Model because the ontology intentionally excludes observations, operational knowledge and planning state.
 
-State Model-owned types in v0.4 include information holders, observations, evidence, estimates, assessments, tracks, formation references, protection plans, protected subjects, search and coverage requirements, surveys, maps and measurements. `SM-TY-010 navigation_objective` is an explicit union admitting `nmo:SpatialRegion`, `nmo:Route` and `nmo:PhysicalEntity`; it gives `navigation_failed` one stable tuple shape for destination-, route- and target-relative movement. `SM-TY-012 protection_plan` carries command-defined sectors, geometry and evaluation criteria. `SM-TY-013 protected_subject` is the explicit union of physical entities and spatial regions used by generic Protection states.
+State Model-owned types in v0.5 include information holders, observations, evidence, estimates, assessments, tracks, formation references, protection plans, protected subjects, search, coverage, characterization and inspection requirements, and immutable survey, map, measurement, characterization and inspection products. `SM-TY-010 navigation_objective` is an explicit union admitting `nmo:SpatialRegion`, `nmo:Route` and `nmo:PhysicalEntity`; it gives `navigation_failed` one stable tuple shape for destination-, route- and target-relative movement. `SM-TY-012 protection_plan` carries command-defined sectors, geometry and evaluation criteria. `SM-TY-013 protected_subject` is the explicit union of physical entities and spatial regions used by generic Protection states.
 
 `SM-TY-014 search_requirement` and `SM-TY-015 coverage_requirement` are command-defined criteria rather than physical things. `SM-TY-016` through `SM-TY-018` are operational knowledge products whose value, unit, time, quality, scope and provenance remain outside the physical ontology. Ontology classes such as `nmo:PhysicalProperty` and `nmo:PropertyValue` may type their subjects or values without replacing the holder-relative record.
+
+`SM-TY-019` and `SM-TY-022` make the required scope and quality explicit for characterization and inspection. `SM-TY-020`, `SM-TY-021` and `SM-TY-023` carry immutable object characterizations, emission characterizations and inspection records. They remain distinct from `classification_assessment` and `identity_assessment`: characterization records observable properties, condition or behavior against a requirement, while classification and identification answer class and identity questions.
 
 ## 7. Canonical state inventory
 
@@ -177,6 +179,24 @@ State Model-owned types in v0.4 include information holders, observations, evide
 | SM-ST-084 | `measurement_covers` | knowledge | Measure Environment or imported record |
 | SM-ST-085 | `measurement_produced_by` | knowledge | Measure Environment or imported record |
 | SM-ST-086 | `measurement_attempt_inconclusive` | execution | Measure Environment failure |
+| SM-ST-087 | `characterization_requirement_available` | execution | Mission or command definition |
+| SM-ST-088 | `object_characterization_available` | knowledge | Characterize Object or imported assessment |
+| SM-ST-089 | `object_characterization_of` | knowledge | Characterize Object or imported assessment |
+| SM-ST-090 | `object_characterization_satisfies` | knowledge | Characterize Object or quality evaluator |
+| SM-ST-091 | `object_characterization_produced_by` | knowledge | Characterize Object or imported assessment |
+| SM-ST-092 | `object_characterization_attempt_inconclusive` | execution | Characterize Object failure |
+| SM-ST-093 | `emission_characterization_requirement_available` | execution | Mission or command definition |
+| SM-ST-094 | `emission_characterization_available` | knowledge | Characterize Emission or imported assessment |
+| SM-ST-095 | `emission_characterization_of` | knowledge | Characterize Emission or imported assessment |
+| SM-ST-096 | `emission_characterization_satisfies` | knowledge | Characterize Emission or quality evaluator |
+| SM-ST-097 | `emission_characterization_produced_by` | knowledge | Characterize Emission or imported assessment |
+| SM-ST-098 | `emission_characterization_attempt_inconclusive` | execution | Characterize Emission failure |
+| SM-ST-099 | `inspection_requirement_available` | execution | Mission or command definition |
+| SM-ST-100 | `inspection_available` | knowledge | Inspect or imported record |
+| SM-ST-101 | `inspection_of` | knowledge | Inspect or imported record |
+| SM-ST-102 | `inspection_satisfies` | knowledge | Inspect or quality evaluator |
+| SM-ST-103 | `inspection_produced_by` | knowledge | Inspect or imported record |
+| SM-ST-104 | `inspection_attempt_inconclusive` | execution | Inspect failure |
 
 The YAML source is authoritative for definitions, argument order, lifecycle, producers, consumers, constraints and evidence.
 
@@ -220,7 +240,7 @@ The `key` identifies the tuple components used for replacement or mutual-exclusi
 
 ## 11. Deferred mission-derived candidates
 
-Four mission-level concepts remain deliberately unpromoted in v0.4:
+Four mission-level concepts remain deliberately unpromoted in v0.5:
 
 - surveillance continuity achieved;
 - information requirement satisfied;
@@ -279,4 +299,14 @@ Search success and area coverage are holder-relative. A certified search result 
 
 ## 16. Planned extension
 
-Version 0.4 is the baseline for enriching the remaining 51 signatures. New states shall be added only when a task or mission requirement cannot reuse an existing definition. Each family increment shall update producers, consumers and deferred candidates before its task semantics are considered complete.
+## 16. ISR characterization and inspection extension in v0.5
+
+Version 0.5 adds requirement-scoped, holder-relative outputs for characterization and inspection:
+
+- object characterization records observable properties, condition or behavior without replacing classification or identification;
+- emission characterization consumes holder-relative emission detection and records signal properties without asserting a physical emitter identity;
+- inspection records preserve the inspected subject, the satisfied requirement and producing-platform provenance;
+- object and infrastructure inspection reuse one canonical inspection tuple because both subjects are physical entities;
+- all four task signatures keep world effects empty: their outputs describe knowledge, not a change to the inspected or characterized subject.
+
+Version 0.5 is the baseline for enriching the remaining 47 signatures. New states shall be added only when a task or mission requirement cannot reuse an existing definition. Each family increment shall update producers, consumers and deferred candidates before its task semantics are considered complete.

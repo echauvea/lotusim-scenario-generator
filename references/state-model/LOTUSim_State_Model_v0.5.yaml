@@ -1,13 +1,14 @@
 model:
   id: LOTUSIM-SM
-  version: 0.4.0
+  version: 0.5.0
   status: draft
   date: 2026-07-17
   scope: >
     Foundational dynamic state vocabulary derived from the four semantic-pilot
     signatures, the seven core ISR signatures, the complete Movement family,
-    the complete Protection family, the first ISR coverage-and-products
-    extension, their mission requirements and relevant Naval Maritime Ontology concepts.
+    the complete Protection family, the ISR coverage-and-products extension,
+    the ISR characterization-and-inspection extension, their mission requirements
+    and relevant Naval Maritime Ontology concepts.
   normative_source: true
   identifier_policy:
     state: SM-ST-NNN
@@ -16,7 +17,7 @@ model:
   categories: [world, knowledge, execution, resource]
   namespaces:
     nmo: ../ontology/LOTUSim_Naval_Maritime_Ontology_v2.0-draft.ttl
-    task_catalog: ../task-catalog/LOTUSim_Task_Catalog_v0.11.0.md
+    task_catalog: ../task-catalog/LOTUSim_Task_Catalog_v0.12.0.md
     mission_catalog: ../mission-catalog/LOTUSim_Mission_Catalog_v1.0.4.md
 
 state_model_types:
@@ -109,6 +110,31 @@ state_model_types:
   - id: SM-TY-018
     symbol: measurement_record
     definition: Immutable value, unit, time, quality and provenance record for a measured physical property.
+    ontology_mapping: intentionally_outside_physical_ontology
+
+  - id: SM-TY-019
+    symbol: characterization_requirement
+    definition: Command-defined properties, quality, confidence and timeliness required for characterization of a physical entity or emission.
+    ontology_mapping: intentionally_outside_physical_ontology
+
+  - id: SM-TY-020
+    symbol: object_characterization
+    definition: Immutable holder-relative assessment of observable properties, condition or behavior of a physical entity, with quality and provenance.
+    ontology_mapping: intentionally_outside_physical_ontology
+
+  - id: SM-TY-021
+    symbol: emission_characterization
+    definition: Immutable holder-relative assessment of the observable parameters and behavior of an emission, with quality and provenance.
+    ontology_mapping: intentionally_outside_physical_ontology
+
+  - id: SM-TY-022
+    symbol: inspection_requirement
+    definition: Command-defined inspection scope, evidence, quality and completion criteria for a physical subject.
+    ontology_mapping: intentionally_outside_physical_ontology
+
+  - id: SM-TY-023
+    symbol: inspection_record
+    definition: Immutable holder-relative record of inspection observations and findings, with scope, quality and provenance.
     ontology_mapping: intentionally_outside_physical_ontology
 
 states:
@@ -305,6 +331,10 @@ states:
       - {kind: task, ref: TC-014-S01, use: read_invariant_applicability}
       - {kind: task, ref: TC-015-S01, use: read_invariant_applicability}
       - {kind: task, ref: TC-016-S01, use: read_invariant_applicability}
+      - {kind: task, ref: TC-017-S01, use: read_invariant_applicability}
+      - {kind: task, ref: TC-017-S02, use: read_invariant_applicability}
+      - {kind: task, ref: TC-018-S01, use: read_invariant_applicability}
+      - {kind: task, ref: TC-018-S02, use: read_invariant_applicability}
       - {kind: task, ref: TC-019-S01, use: read_invariant_applicability}
       - {kind: task, ref: TC-020-S01, use: read_invariant_applicability}
       - {kind: task, ref: TC-023-S01, use: read_invariant_applicability}
@@ -349,6 +379,10 @@ states:
       - {kind: task, ref: TC-014-S01, use: failure_outcome}
       - {kind: task, ref: TC-015-S01, use: failure_outcome}
       - {kind: task, ref: TC-016-S01, use: failure_outcome}
+      - {kind: task, ref: TC-017-S01, use: failure_outcome}
+      - {kind: task, ref: TC-017-S02, use: failure_outcome}
+      - {kind: task, ref: TC-018-S01, use: failure_outcome}
+      - {kind: task, ref: TC-018-S02, use: failure_outcome}
       - {kind: task, ref: TC-019-S01, use: failure_outcome}
       - {kind: task, ref: TC-020-S01, use: failure_outcome}
       - {kind: task, ref: TC-024-S01, use: failure_outcome}
@@ -528,6 +562,8 @@ states:
       - {kind: task, ref: TC-014-S01, use: read_and_applicability}
       - {kind: task, ref: TC-015-S01, use: read_and_applicability}
       - {kind: task, ref: TC-016-S01, use: read_and_applicability}
+      - {kind: task, ref: TC-017-S01, use: read_and_applicability}
+      - {kind: task, ref: TC-018-S01, use: read_and_applicability}
     constraints: [holder_relative, does_not_imply_identification]
     evidence: {missions: [MC-001, MC-002, MC-003, MC-060, MC-063]}
 
@@ -581,7 +617,7 @@ states:
     producers:
       - {kind: task, ref: TC-012-S02, use: knowledge_effect}
       - {kind: external, ref: imported_emission_detection}
-    consumers: [{kind: future_task, ref: TC-017-S02}]
+    consumers: [{kind: task, ref: TC-017-S02, use: read_and_applicability}]
     constraints: [holder_relative]
     evidence: {missions: [MC-054, MC-055, MC-057]}
 
@@ -600,7 +636,7 @@ states:
     producers:
       - {kind: task, ref: TC-012-S02, use: knowledge_effect}
       - {kind: external, ref: imported_emission_detection}
-    consumers: [{kind: future_task, ref: TC-017-S02}]
+    consumers: [{kind: future_task, ref: correlation_or_assessment}]
     constraints: [holder_relative]
     evidence: {missions: [MC-054, MC-055, MC-057]}
 
@@ -1712,6 +1748,348 @@ states:
     constraints: [does_not_imply_property_absent_or_unchanged]
     evidence: {missions: [MC-007, MC-008, MC-009, MC-010, MC-042, MC-043, MC-054]}
 
+  - id: SM-ST-087
+    symbol: characterization_requirement_available
+    category: execution
+    definition: A command-defined characterization requirement is available for a designated physical target.
+    arguments:
+      - {role: target, type: nmo:PhysicalEntity}
+      - {role: requirement, type: SM-TY-019}
+    persistence: static
+    update_policy: mission_or_command_update
+    key: [target, requirement]
+    initialization: mission_or_command
+    producers: [{kind: external, ref: mission_or_command_characterization_definition}]
+    consumers: [{kind: task, ref: TC-017-S01, use: read_and_applicability}]
+    constraints: [requirement_defines_properties_quality_confidence_and_time]
+    evidence: {missions: [MC-003, MC-004, MC-005, MC-006, MC-011, MC-012, MC-013, MC-015, MC-017, MC-029, MC-030, MC-031, MC-032]}
+
+  - id: SM-ST-088
+    symbol: object_characterization_available
+    category: knowledge
+    definition: An object-characterization assessment is available to an information holder.
+    arguments:
+      - {role: holder, type: SM-TY-001}
+      - {role: characterization, type: SM-TY-020}
+    persistence: fluent
+    update_policy: append_immutable_assessment
+    key: [holder, characterization]
+    initialization: optional_external_information
+    producers:
+      - {kind: task, ref: TC-017-S01, use: knowledge_effect}
+      - {kind: external, ref: imported_object_characterization}
+    consumers: [{kind: future_task, ref: Assess_or_Report}]
+    constraints: [holder_relative]
+    evidence: {missions: [MC-003, MC-004, MC-005, MC-006, MC-011, MC-012, MC-013, MC-015, MC-017, MC-029, MC-030, MC-031, MC-032]}
+
+  - id: SM-ST-089
+    symbol: object_characterization_of
+    category: knowledge
+    definition: For an information holder, an object-characterization assessment concerns a designated physical target.
+    arguments:
+      - {role: holder, type: SM-TY-001}
+      - {role: characterization, type: SM-TY-020}
+      - {role: target, type: nmo:PhysicalEntity}
+    persistence: static_per_assessment
+    update_policy: immutable_assessment_subject
+    key: [holder, characterization]
+    initialization: optional_external_information
+    producers:
+      - {kind: task, ref: TC-017-S01, use: knowledge_effect}
+      - {kind: external, ref: imported_object_characterization}
+    consumers: [{kind: future_task, ref: Assess_or_Report}]
+    constraints: [holder_relative, exactly_one_target_per_characterization]
+    evidence: {missions: [MC-003, MC-004, MC-005, MC-006, MC-011, MC-012, MC-013, MC-015, MC-017, MC-029, MC-030, MC-031, MC-032]}
+
+  - id: SM-ST-090
+    symbol: object_characterization_satisfies
+    category: knowledge
+    definition: For an information holder, an object characterization satisfies a specified characterization requirement.
+    arguments:
+      - {role: holder, type: SM-TY-001}
+      - {role: characterization, type: SM-TY-020}
+      - {role: requirement, type: SM-TY-019}
+    persistence: static_per_assessment
+    update_policy: immutable_quality_conclusion
+    key: [holder, characterization, requirement]
+    initialization: optional_external_information
+    producers:
+      - {kind: task, ref: TC-017-S01, use: knowledge_effect}
+      - {kind: external, ref: characterization_quality_evaluator}
+    consumers:
+      - {kind: task, ref: TC-017-S01, use: completion}
+      - {kind: external, ref: mission_goal_evaluation}
+    constraints: [holder_relative, requirement_relative]
+    evidence: {missions: [MC-003, MC-004, MC-005, MC-006, MC-011, MC-012, MC-013, MC-015, MC-017, MC-029, MC-030, MC-031, MC-032]}
+
+  - id: SM-ST-091
+    symbol: object_characterization_produced_by
+    category: knowledge
+    definition: For an information holder, an object characterization has the stated producing platform as provenance.
+    arguments:
+      - {role: holder, type: SM-TY-001}
+      - {role: characterization, type: SM-TY-020}
+      - {role: actor, type: nmo:Platform}
+    persistence: static_per_assessment
+    update_policy: immutable_provenance
+    key: [holder, characterization]
+    initialization: optional_external_information
+    producers:
+      - {kind: task, ref: TC-017-S01, use: knowledge_effect}
+      - {kind: external, ref: imported_object_characterization}
+    consumers: [{kind: future_task, ref: provenance_or_quality_evaluator}]
+    constraints: [holder_relative, exactly_one_producer_per_characterization]
+    evidence: {missions: [MC-003, MC-004, MC-005, MC-006, MC-011, MC-012, MC-013, MC-015, MC-017, MC-029, MC-030, MC-031, MC-032]}
+
+  - id: SM-ST-092
+    symbol: object_characterization_attempt_inconclusive
+    category: execution
+    definition: An object-characterization attempt did not satisfy its required scope, quality or confidence.
+    arguments:
+      - {role: holder, type: SM-TY-001}
+      - {role: actor, type: nmo:Platform}
+      - {role: target, type: nmo:PhysicalEntity}
+      - {role: requirement, type: SM-TY-019}
+    persistence: terminal_for_attempt
+    update_policy: assert_on_failure
+    key: [holder, actor, target, requirement]
+    initialization: false
+    producers: [{kind: task, ref: TC-017-S01, use: failure_outcome}]
+    consumers: [{kind: external, ref: replanning_and_ISR_supervision}]
+    constraints: [does_not_imply_target_property_absence]
+    evidence: {missions: [MC-003, MC-004, MC-005, MC-006, MC-011, MC-012, MC-013, MC-015, MC-017, MC-029, MC-030, MC-031, MC-032]}
+
+  - id: SM-ST-093
+    symbol: emission_characterization_requirement_available
+    category: execution
+    definition: A command-defined characterization requirement is available for a detected emission.
+    arguments:
+      - {role: emission, type: SM-TY-004}
+      - {role: requirement, type: SM-TY-019}
+    persistence: static
+    update_policy: mission_or_command_update
+    key: [emission, requirement]
+    initialization: mission_or_command
+    producers: [{kind: external, ref: mission_or_command_emission_characterization_definition}]
+    consumers: [{kind: task, ref: TC-017-S02, use: read_and_applicability}]
+    constraints: [requirement_defines_parameters_quality_confidence_and_time]
+    evidence: {missions: [MC-054]}
+
+  - id: SM-ST-094
+    symbol: emission_characterization_available
+    category: knowledge
+    definition: An emission-characterization assessment is available to an information holder.
+    arguments:
+      - {role: holder, type: SM-TY-001}
+      - {role: characterization, type: SM-TY-021}
+    persistence: fluent
+    update_policy: append_immutable_assessment
+    key: [holder, characterization]
+    initialization: optional_external_information
+    producers:
+      - {kind: task, ref: TC-017-S02, use: knowledge_effect}
+      - {kind: external, ref: imported_emission_characterization}
+    consumers: [{kind: future_task, ref: Assess_Report_or_EW_action}]
+    constraints: [holder_relative]
+    evidence: {missions: [MC-054]}
+
+  - id: SM-ST-095
+    symbol: emission_characterization_of
+    category: knowledge
+    definition: For an information holder, an emission-characterization assessment concerns a designated emission.
+    arguments:
+      - {role: holder, type: SM-TY-001}
+      - {role: characterization, type: SM-TY-021}
+      - {role: emission, type: SM-TY-004}
+    persistence: static_per_assessment
+    update_policy: immutable_assessment_subject
+    key: [holder, characterization]
+    initialization: optional_external_information
+    producers:
+      - {kind: task, ref: TC-017-S02, use: knowledge_effect}
+      - {kind: external, ref: imported_emission_characterization}
+    consumers: [{kind: future_task, ref: Assess_Report_or_EW_action}]
+    constraints: [holder_relative, exactly_one_emission_per_characterization]
+    evidence: {missions: [MC-054]}
+
+  - id: SM-ST-096
+    symbol: emission_characterization_satisfies
+    category: knowledge
+    definition: For an information holder, an emission characterization satisfies a specified characterization requirement.
+    arguments:
+      - {role: holder, type: SM-TY-001}
+      - {role: characterization, type: SM-TY-021}
+      - {role: requirement, type: SM-TY-019}
+    persistence: static_per_assessment
+    update_policy: immutable_quality_conclusion
+    key: [holder, characterization, requirement]
+    initialization: optional_external_information
+    producers:
+      - {kind: task, ref: TC-017-S02, use: knowledge_effect}
+      - {kind: external, ref: characterization_quality_evaluator}
+    consumers:
+      - {kind: task, ref: TC-017-S02, use: completion}
+      - {kind: external, ref: mission_goal_evaluation}
+    constraints: [holder_relative, requirement_relative]
+    evidence: {missions: [MC-054]}
+
+  - id: SM-ST-097
+    symbol: emission_characterization_produced_by
+    category: knowledge
+    definition: For an information holder, an emission characterization has the stated producing platform as provenance.
+    arguments:
+      - {role: holder, type: SM-TY-001}
+      - {role: characterization, type: SM-TY-021}
+      - {role: actor, type: nmo:Platform}
+    persistence: static_per_assessment
+    update_policy: immutable_provenance
+    key: [holder, characterization]
+    initialization: optional_external_information
+    producers:
+      - {kind: task, ref: TC-017-S02, use: knowledge_effect}
+      - {kind: external, ref: imported_emission_characterization}
+    consumers: [{kind: future_task, ref: provenance_or_quality_evaluator}]
+    constraints: [holder_relative, exactly_one_producer_per_characterization]
+    evidence: {missions: [MC-054]}
+
+  - id: SM-ST-098
+    symbol: emission_characterization_attempt_inconclusive
+    category: execution
+    definition: An emission-characterization attempt did not satisfy its required scope, quality or confidence.
+    arguments:
+      - {role: holder, type: SM-TY-001}
+      - {role: actor, type: nmo:Platform}
+      - {role: emission, type: SM-TY-004}
+      - {role: requirement, type: SM-TY-019}
+    persistence: terminal_for_attempt
+    update_policy: assert_on_failure
+    key: [holder, actor, emission, requirement]
+    initialization: false
+    producers: [{kind: task, ref: TC-017-S02, use: failure_outcome}]
+    consumers: [{kind: external, ref: replanning_and_ISR_supervision}]
+    constraints: [does_not_imply_emission_absence]
+    evidence: {missions: [MC-054]}
+
+  - id: SM-ST-099
+    symbol: inspection_requirement_available
+    category: execution
+    definition: A command-defined inspection requirement is available for a designated physical subject.
+    arguments:
+      - {role: subject, type: nmo:PhysicalEntity}
+      - {role: requirement, type: SM-TY-022}
+    persistence: static
+    update_policy: mission_or_command_update
+    key: [subject, requirement]
+    initialization: mission_or_command
+    producers: [{kind: external, ref: mission_or_command_inspection_definition}]
+    consumers:
+      - {kind: task, ref: TC-018-S01, use: read_and_applicability}
+      - {kind: task, ref: TC-018-S02, use: read_and_applicability}
+    constraints: [requirement_defines_scope_evidence_quality_and_completion]
+    evidence: {missions: [MC-005, MC-006, MC-022, MC-023, MC-029, MC-030]}
+
+  - id: SM-ST-100
+    symbol: inspection_available
+    category: knowledge
+    definition: An inspection record is available to an information holder.
+    arguments:
+      - {role: holder, type: SM-TY-001}
+      - {role: inspection, type: SM-TY-023}
+    persistence: fluent
+    update_policy: append_immutable_record
+    key: [holder, inspection]
+    initialization: optional_external_information
+    producers:
+      - {kind: task, ref: TC-018-S01, use: knowledge_effect}
+      - {kind: task, ref: TC-018-S02, use: knowledge_effect}
+      - {kind: external, ref: imported_inspection_record}
+    consumers: [{kind: future_task, ref: Assess_or_Report}]
+    constraints: [holder_relative]
+    evidence: {missions: [MC-005, MC-006, MC-022, MC-023, MC-029, MC-030]}
+
+  - id: SM-ST-101
+    symbol: inspection_of
+    category: knowledge
+    definition: For an information holder, an inspection record concerns a designated physical subject.
+    arguments:
+      - {role: holder, type: SM-TY-001}
+      - {role: inspection, type: SM-TY-023}
+      - {role: subject, type: nmo:PhysicalEntity}
+    persistence: static_per_record
+    update_policy: immutable_record_subject
+    key: [holder, inspection]
+    initialization: optional_external_information
+    producers:
+      - {kind: task, ref: TC-018-S01, use: knowledge_effect}
+      - {kind: task, ref: TC-018-S02, use: knowledge_effect}
+      - {kind: external, ref: imported_inspection_record}
+    consumers: [{kind: future_task, ref: Assess_or_Report}]
+    constraints: [holder_relative, exactly_one_subject_per_inspection]
+    evidence: {missions: [MC-005, MC-006, MC-022, MC-023, MC-029, MC-030]}
+
+  - id: SM-ST-102
+    symbol: inspection_satisfies
+    category: knowledge
+    definition: For an information holder, an inspection record satisfies a specified inspection requirement.
+    arguments:
+      - {role: holder, type: SM-TY-001}
+      - {role: inspection, type: SM-TY-023}
+      - {role: requirement, type: SM-TY-022}
+    persistence: static_per_record
+    update_policy: immutable_quality_conclusion
+    key: [holder, inspection, requirement]
+    initialization: optional_external_information
+    producers:
+      - {kind: task, ref: TC-018-S01, use: knowledge_effect}
+      - {kind: task, ref: TC-018-S02, use: knowledge_effect}
+      - {kind: external, ref: inspection_quality_evaluator}
+    consumers:
+      - {kind: task, ref: TC-018-S01, use: completion}
+      - {kind: task, ref: TC-018-S02, use: completion}
+      - {kind: external, ref: mission_goal_evaluation}
+    constraints: [holder_relative, requirement_relative]
+    evidence: {missions: [MC-005, MC-006, MC-022, MC-023, MC-029, MC-030]}
+
+  - id: SM-ST-103
+    symbol: inspection_produced_by
+    category: knowledge
+    definition: For an information holder, an inspection record has the stated producing platform as provenance.
+    arguments:
+      - {role: holder, type: SM-TY-001}
+      - {role: inspection, type: SM-TY-023}
+      - {role: actor, type: nmo:Platform}
+    persistence: static_per_record
+    update_policy: immutable_provenance
+    key: [holder, inspection]
+    initialization: optional_external_information
+    producers:
+      - {kind: task, ref: TC-018-S01, use: knowledge_effect}
+      - {kind: task, ref: TC-018-S02, use: knowledge_effect}
+      - {kind: external, ref: imported_inspection_record}
+    consumers: [{kind: future_task, ref: provenance_or_quality_evaluator}]
+    constraints: [holder_relative, exactly_one_producer_per_inspection]
+    evidence: {missions: [MC-005, MC-006, MC-022, MC-023, MC-029, MC-030]}
+
+  - id: SM-ST-104
+    symbol: inspection_attempt_inconclusive
+    category: execution
+    definition: An inspection attempt did not satisfy its required scope, evidence or quality criteria.
+    arguments:
+      - {role: holder, type: SM-TY-001}
+      - {role: actor, type: nmo:Platform}
+      - {role: subject, type: nmo:PhysicalEntity}
+      - {role: requirement, type: SM-TY-022}
+    persistence: terminal_for_attempt
+    update_policy: assert_on_failure
+    key: [holder, actor, subject, requirement]
+    initialization: false
+    producers:
+      - {kind: task, ref: TC-018-S01, use: failure_outcome}
+      - {kind: task, ref: TC-018-S02, use: failure_outcome}
+    consumers: [{kind: external, ref: replanning_and_ISR_supervision}]
+    constraints: [does_not_imply_subject_unchanged_or_undamaged]
+    evidence: {missions: [MC-005, MC-006, MC-022, MC-023, MC-029, MC-030]}
+
 deferred_candidates:
   - id: SM-CAND-002
     symbol: surveillance_continuity_achieved
@@ -1793,3 +2171,15 @@ normalization_decisions:
   - candidates: [environment_measurement, sampled_property_value, measurement_record]
     canonical_type: SM-TY-018
     rationale: Measurements require holder, time, unit, quality and provenance metadata beyond the physical ontology relation alone.
+
+  - candidates: [object_characterization, object_properties_assessment, object_condition_assessment]
+    canonical_type: SM-TY-020
+    rationale: One requirement-scoped assessment carries observable object properties, condition or behavior without replacing classification or identity.
+
+  - candidates: [emission_characterization, signal_parameters_assessment]
+    canonical_type: SM-TY-021
+    rationale: Emission characteristics remain holder-relative information and do not assert a physical emitter identity.
+
+  - candidates: [object_inspection_record, infrastructure_inspection_record, inspection_findings]
+    canonical_type: SM-TY-023
+    rationale: Object and infrastructure inspection share one immutable record because both subjects are physical entities and use the same evidence, quality and provenance pattern.
