@@ -8,9 +8,12 @@ VALIDATION_DIR = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(VALIDATION_DIR))
 
 from validate_referentials import (  # noqa: E402
+    ValidationReport,
     duplicates,
     is_ontology_subtype,
     type_compatible,
+    validate_effect,
+    validate_reverse_state_side,
     validate_repository,
 )
 
@@ -28,6 +31,21 @@ class ValidationHelpersTest(unittest.TestCase):
         types = {"SM-TY-010": {"union_of": ["nmo:SpatialRegion", "nmo:Route"]}}
         self.assertTrue(type_compatible("nmo:Route", "SM-TY-010", types, {}))
         self.assertFalse(type_compatible("nmo:Platform", "SM-TY-010", types, {}))
+
+    def test_orphan_reverse_state_reference_is_reported(self) -> None:
+        state = {
+            "id": "SM-ST-001",
+            "producers": [{"kind": "task", "ref": "TC-001-S01"}],
+        }
+        report = ValidationReport()
+        validate_reverse_state_side(state, "producers", {}, report)
+        self.assertEqual(report.errors[0][0], "STATE010")
+
+    def test_direct_world_effect_on_derived_state_is_reported(self) -> None:
+        report = ValidationReport()
+        state = {"category": "world", "persistence": "derived_fluent"}
+        validate_effect("TC-001-S01", "SM-ST-001", "effect:world", {}, state, {"SM-ST-001": {"TC-001-S01"}}, report)
+        self.assertEqual(report.errors[0][0], "SEM022")
 
 
 class CurrentRepositoryTest(unittest.TestCase):
