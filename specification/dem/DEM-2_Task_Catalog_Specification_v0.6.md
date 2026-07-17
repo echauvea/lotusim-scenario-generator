@@ -259,7 +259,7 @@ Mission Catalog ─────────┼─> State Model ─> HDDL Domain 
 Task Catalog ────────────┘
 ```
 
-The State Model is derived from relevant ontology relations, task reads and effects, and mission preconditions and objectives. Its normative machine-readable source is `references/state-model/LOTUSim_State_Model_v0.2.yaml`; its metamodel and decisions are documented by `specification/state-model/LOTUSim_State_Model_Specification_v0.2.md`. HDDL artifacts are then derived from the State Model; they do not introduce independent business semantics.
+The State Model is derived from relevant ontology relations, task reads and effects, and mission preconditions and objectives. Its normative machine-readable source is `references/state-model/LOTUSim_State_Model_v0.3.yaml`; its metamodel and decisions are documented by `specification/state-model/LOTUSim_State_Model_Specification_v0.3.md`. HDDL artifacts are then derived from the State Model; they do not introduce independent business semantics.
 
 ---
 
