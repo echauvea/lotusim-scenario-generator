@@ -15,9 +15,9 @@ from typing import Any, Iterable
 import yaml
 
 
-TASK_FILE = Path("references/task-catalog/LOTUSim_Task_Catalog_v0.8.1.md")
+TASK_FILE = Path("references/task-catalog/LOTUSim_Task_Catalog_v0.9.0.md")
 MISSION_FILE = Path("references/mission-catalog/LOTUSim_Mission_Catalog_v1.0.4.md")
-STATE_FILE = Path("references/state-model/LOTUSim_State_Model_v0.1.yaml")
+STATE_FILE = Path("references/state-model/LOTUSim_State_Model_v0.2.yaml")
 ONTOLOGY_FILE = Path("references/ontology/LOTUSim_Naval_Maritime_Ontology_v2.0-draft.ttl")
 
 
@@ -320,6 +320,19 @@ def validate_states(data: RepoData, report: ValidationReport) -> None:
         validate_state_definition(state, signature_ids, state_ids, mission_ids, data, report)
     for candidate in data.candidates:
         validate_mission_evidence(candidate["id"], candidate.get("mission_evidence", []), mission_ids, report, "STATE009")
+    validate_normalization_decisions(data, report)
+
+
+def validate_normalization_decisions(data: RepoData, report: ValidationReport) -> None:
+    state_ids = {item["id"] for item in data.states}
+    type_ids = {item["id"] for item in data.model_types}
+    for decision in data.state_model.get("normalization_decisions", []):
+        state_ref = decision.get("canonical_state")
+        type_ref = decision.get("canonical_type")
+        if state_ref and state_ref not in state_ids:
+            report.error("STATE011", "normalization_decisions", f"unknown canonical state: {state_ref}")
+        if type_ref and type_ref not in type_ids:
+            report.error("STATE012", "normalization_decisions", f"unknown canonical type: {type_ref}")
 
 
 def validate_state_definition(
@@ -384,6 +397,37 @@ def validate_semantics(data: RepoData, report: ValidationReport) -> int:
             enriched += 1
             validate_signature_semantics(signature, semantics, producers, consumers, data, report)
     return enriched
+
+
+def validate_reverse_task_state_links(data: RepoData, report: ValidationReport) -> None:
+    usages: dict[tuple[str, str], set[str]] = defaultdict(set)
+    for signature in data.signatures:
+        semantics = signature.get("semantics")
+        if not semantics:
+            continue
+        sid = signature["signature_id"]
+        for state_ref, _occurrence, use in task_state_occurrences(semantics):
+            usages[(sid, state_ref)].add(use)
+    for state in data.states:
+        validate_reverse_state_side(state, "producers", usages, report)
+        validate_reverse_state_side(state, "consumers", usages, report)
+
+
+def validate_reverse_state_side(
+    state: dict[str, Any], side: str, usages: dict[tuple[str, str], set[str]], report: ValidationReport,
+) -> None:
+    for reference in state.get(side, []):
+        if reference.get("kind") != "task":
+            continue
+        sid = reference.get("ref", "")
+        actual = usages.get((sid, state["id"]), set())
+        expected = {"failure", "completion"} if side == "producers" else {"consumer", "completion"}
+        matches = bool(actual & expected) or (side == "producers" and any(use.startswith("effect:") for use in actual))
+        if not matches:
+            report.error(
+                "STATE010", state["id"],
+                f"{side[:-1]} task reference {sid} has no matching semantic use",
+            )
 
 
 def validate_signature_semantics(
@@ -517,6 +561,8 @@ def validate_effect(
 ) -> None:
     effect_category = use.split(":", 1)[1]
     expected_category = "resource" if effect_category == "resources" else effect_category
+    if effect_category == "world" and state.get("persistence") == "derived_fluent":
+        report.error("SEM022", sid, f"direct effect references derived state {state_ref}")
     if state.get("category") != expected_category:
         report.error("SEM017", sid, f"{effect_category} effect references {state_ref}, a {state.get('category')} state")
     if sid not in producers[state_ref]:
@@ -528,7 +574,7 @@ def validate_effect(
 def validate_links(data: RepoData, report: ValidationReport) -> None:
     relative_paths = [
         Path("README.md"), Path("specification/INDEX.md"),
-        Path("specification/state-model/LOTUSim_State_Model_Specification_v0.1.md"),
+        Path("specification/state-model/LOTUSim_State_Model_Specification_v0.2.md"),
     ]
     for relative_path in relative_paths:
         validate_document_links(data.root, relative_path, report)
@@ -567,6 +613,7 @@ def validate_repository(root: Path) -> ValidationReport:
     validate_model_types(data, report)
     validate_states(data, report)
     enriched = validate_semantics(data, report)
+    validate_reverse_task_state_links(data, report)
     validate_links(data, report)
     populate_counts(data, report, enriched)
     return report

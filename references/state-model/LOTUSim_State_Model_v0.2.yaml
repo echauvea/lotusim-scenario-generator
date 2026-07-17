@@ -1,12 +1,12 @@
 model:
   id: LOTUSIM-SM
-  version: 0.1.0
+  version: 0.2.0
   status: draft
   date: 2026-07-14
   scope: >
     Foundational dynamic state vocabulary derived from the four semantic-pilot
-    signatures, the seven core ISR signatures, their mission requirements and
-    relevant Naval Maritime Ontology concepts.
+    signatures, the seven core ISR signatures, the eight additional Movement
+    signatures, their mission requirements and relevant Naval Maritime Ontology concepts.
   normative_source: true
   identifier_policy:
     state: SM-ST-NNN
@@ -15,7 +15,7 @@ model:
   categories: [world, knowledge, execution, resource]
   namespaces:
     nmo: ../ontology/LOTUSim_Naval_Maritime_Ontology_v2.0-draft.ttl
-    task_catalog: ../task-catalog/LOTUSim_Task_Catalog_v0.8.1.md
+    task_catalog: ../task-catalog/LOTUSim_Task_Catalog_v0.9.0.md
     mission_catalog: ../mission-catalog/LOTUSim_Mission_Catalog_v1.0.4.md
 
 state_model_types:
@@ -67,8 +67,13 @@ state_model_types:
 
   - id: SM-TY-010
     symbol: navigation_objective
-    definition: Destination or route against which a navigation failure is reported.
-    union_of: [nmo:SpatialRegion, nmo:Route]
+    definition: Spatial region, route or physical entity against which a navigation failure is reported.
+    union_of: [nmo:SpatialRegion, nmo:Route, nmo:PhysicalEntity]
+
+  - id: SM-TY-011
+    symbol: formation_reference
+    definition: Mission- or command-defined relative formation geometry assigned to participating platforms.
+    ontology_mapping: intentionally_outside_physical_ontology
 
 states:
   - id: SM-ST-001
@@ -85,10 +90,15 @@ states:
     producers:
       - {kind: task, ref: TC-001-S01, use: world_effect}
       - {kind: task, ref: TC-001-S02, use: world_effect}
+      - {kind: task, ref: TC-009-S01, use: world_effect}
+      - {kind: task, ref: TC-010-S01, use: world_effect}
       - {kind: external, ref: simulator_state_sync}
     consumers:
       - {kind: task, ref: TC-001-S01, use: read_and_completion}
       - {kind: task, ref: TC-001-S02, use: read_and_completion}
+      - {kind: task, ref: TC-005-S01, use: read_invariant_applicability}
+      - {kind: task, ref: TC-009-S01, use: state_at_start_read_and_completion}
+      - {kind: task, ref: TC-010-S01, use: state_at_start_read_and_completion}
     constraints: [at_most_one_planning_location_per_entity]
     evidence: {missions: [MC-001, MC-003, MC-026, MC-027]}
 
@@ -120,7 +130,10 @@ states:
     key: [entity, destination]
     initialization: derived
     producers: [{kind: external, ref: reachability_evaluator}]
-    consumers: [{kind: task, ref: TC-001-S01, use: read_and_applicability}]
+    consumers:
+      - {kind: task, ref: TC-001-S01, use: read_and_applicability}
+      - {kind: task, ref: TC-002-S01, use: read_and_applicability}
+      - {kind: task, ref: TC-009-S01, use: read_and_applicability}
     constraints: []
     evidence: {missions: [MC-001, MC-003, MC-060, MC-063]}
 
@@ -210,7 +223,9 @@ states:
     key: [area]
     initialization: scenario_or_command
     producers: [{kind: external, ref: mission_or_scenario_initialization}]
-    consumers: [{kind: task, ref: TC-011-S01, use: read_and_applicability}]
+    consumers:
+      - {kind: task, ref: TC-002-S01, use: read_and_applicability}
+      - {kind: task, ref: TC-011-S01, use: read_and_applicability}
     constraints: []
     evidence: {missions: [MC-001, MC-002, MC-003, MC-054]}
 
@@ -229,7 +244,14 @@ states:
     consumers:
       - {kind: task, ref: TC-001-S01, use: read_invariant_applicability}
       - {kind: task, ref: TC-001-S02, use: read_invariant_applicability}
+      - {kind: task, ref: TC-002-S01, use: read_invariant_applicability}
+      - {kind: task, ref: TC-005-S01, use: read_invariant_applicability}
+      - {kind: task, ref: TC-005-S02, use: read_invariant_applicability}
       - {kind: task, ref: TC-006-S01, use: read_invariant_applicability}
+      - {kind: task, ref: TC-007-S01, use: read_invariant_applicability}
+      - {kind: task, ref: TC-008-S01, use: read_invariant_applicability}
+      - {kind: task, ref: TC-009-S01, use: read_invariant_applicability}
+      - {kind: task, ref: TC-010-S01, use: read_invariant_applicability}
       - {kind: task, ref: TC-011-S01, use: read_invariant_applicability}
       - {kind: task, ref: TC-012-S01, use: read_invariant_applicability}
       - {kind: task, ref: TC-012-S02, use: read_invariant_applicability}
@@ -238,6 +260,7 @@ states:
       - {kind: task, ref: TC-015-S01, use: read_invariant_applicability}
       - {kind: task, ref: TC-016-S01, use: read_invariant_applicability}
       - {kind: task, ref: TC-023-S01, use: read_invariant_applicability}
+      - {kind: task, ref: TC-029-S01, use: read_invariant_applicability}
     constraints: [mutually_exclusive_with_SM-ST-011_for_same_key]
     evidence: {missions: [MC-001, MC-002, MC-026, MC-054, MC-060]}
 
@@ -256,7 +279,14 @@ states:
       - {kind: external, ref: capability_state_sync}
       - {kind: task, ref: TC-001-S01, use: failure_outcome}
       - {kind: task, ref: TC-001-S02, use: failure_outcome}
+      - {kind: task, ref: TC-002-S01, use: failure_outcome}
+      - {kind: task, ref: TC-005-S01, use: failure_outcome}
+      - {kind: task, ref: TC-005-S02, use: failure_outcome}
       - {kind: task, ref: TC-006-S01, use: failure_outcome}
+      - {kind: task, ref: TC-007-S01, use: failure_outcome}
+      - {kind: task, ref: TC-008-S01, use: failure_outcome}
+      - {kind: task, ref: TC-009-S01, use: failure_outcome}
+      - {kind: task, ref: TC-010-S01, use: failure_outcome}
       - {kind: task, ref: TC-011-S01, use: failure_outcome}
       - {kind: task, ref: TC-012-S01, use: failure_outcome}
       - {kind: task, ref: TC-012-S02, use: failure_outcome}
@@ -264,6 +294,7 @@ states:
       - {kind: task, ref: TC-014-S01, use: failure_outcome}
       - {kind: task, ref: TC-015-S01, use: failure_outcome}
       - {kind: task, ref: TC-016-S01, use: failure_outcome}
+      - {kind: task, ref: TC-029-S01, use: failure_outcome}
     consumers: [{kind: external, ref: replanning_and_execution_supervision}]
     constraints: [mutually_exclusive_with_SM-ST-010_for_same_key]
     evidence: {missions: [MC-001, MC-002, MC-026, MC-054, MC-060]}
@@ -298,6 +329,12 @@ states:
     producers:
       - {kind: task, ref: TC-001-S01, use: failure_outcome}
       - {kind: task, ref: TC-001-S02, use: failure_outcome}
+      - {kind: task, ref: TC-002-S01, use: failure_outcome}
+      - {kind: task, ref: TC-005-S01, use: failure_outcome}
+      - {kind: task, ref: TC-008-S01, use: failure_outcome}
+      - {kind: task, ref: TC-009-S01, use: failure_outcome}
+      - {kind: task, ref: TC-010-S01, use: failure_outcome}
+      - {kind: task, ref: TC-029-S01, use: failure_outcome}
     consumers: [{kind: external, ref: replanning_and_execution_supervision}]
     constraints: []
     evidence: {missions: [MC-001, MC-003, MC-031]}
@@ -558,6 +595,8 @@ states:
       - {kind: external, ref: knowledge_projection}
     consumers:
       - {kind: task, ref: TC-006-S01, use: read_invariant_applicability}
+      - {kind: task, ref: TC-008-S01, use: read_invariant_applicability}
+      - {kind: task, ref: TC-029-S01, use: read_invariant_applicability}
       - {kind: task, ref: TC-023-S01, use: read_and_applicability}
     constraints: [holder_relative, mutually_exclusive_with_SM-ST-028_for_same_key]
     evidence: {missions: [MC-026, MC-027, MC-060, MC-063]}
@@ -575,6 +614,8 @@ states:
     initialization: optional_scenario_or_knowledge_state
     producers:
       - {kind: task, ref: TC-006-S01, use: failure_outcome}
+      - {kind: task, ref: TC-008-S01, use: failure_outcome}
+      - {kind: task, ref: TC-029-S01, use: failure_outcome}
       - {kind: external, ref: knowledge_projection}
     consumers: [{kind: external, ref: replanning_and_tracking_supervision}]
     constraints: [holder_relative, mutually_exclusive_with_SM-ST-027_for_same_key]
@@ -723,6 +764,7 @@ states:
       - {kind: task, ref: TC-016-S01, use: knowledge_effect}
       - {kind: external, ref: imported_track}
     consumers:
+      - {kind: task, ref: TC-007-S01, use: state_at_start_read_and_applicability}
       - {kind: external, ref: mission_goal_evaluation}
       - {kind: future_task, ref: reporting_engagement_and_coordination}
     constraints: [holder_relative]
@@ -743,6 +785,7 @@ states:
       - {kind: task, ref: TC-016-S01, use: knowledge_effect}
       - {kind: external, ref: imported_track}
     consumers:
+      - {kind: task, ref: TC-007-S01, use: read_invariant_applicability}
       - {kind: external, ref: mission_goal_evaluation}
       - {kind: future_task, ref: reporting_engagement_and_coordination}
     constraints: [holder_relative, mutually_exclusive_with_SM-ST-038_for_same_track]
@@ -760,10 +803,268 @@ states:
     update_policy: assert_retract
     key: [holder, track]
     initialization: false
-    producers: [{kind: task, ref: TC-016-S01, use: failure_outcome}]
+    producers:
+      - {kind: task, ref: TC-007-S01, use: failure_outcome}
+      - {kind: task, ref: TC-016-S01, use: failure_outcome}
     consumers: [{kind: external, ref: replanning_and_tracking_supervision}]
     constraints: [holder_relative, mutually_exclusive_with_SM-ST-037_for_same_track]
     evidence: {missions: [MC-002, MC-019, MC-054]}
+
+  - id: SM-ST-039
+    symbol: patrolling
+    category: world
+    definition: A platform is actively executing a patrol pattern within a designated area.
+    arguments:
+      - {role: actor, type: nmo:Platform}
+      - {role: area, type: nmo:SpatialRegion}
+    persistence: fluent
+    update_policy: assert_while_task_active
+    key: [actor, area]
+    initialization: optional_scenario
+    producers: [{kind: task, ref: TC-002-S01, use: world_effect}]
+    consumers: [{kind: external, ref: simulator_and_task_supervision}]
+    constraints: [does_not_imply_area_coverage_complete]
+    evidence: {missions: [MC-001, MC-017, MC-020, MC-024, MC-031, MC-034]}
+
+  - id: SM-ST-040
+    symbol: station_assigned
+    category: execution
+    definition: A platform is assigned to maintain position at a designated station.
+    arguments:
+      - {role: actor, type: nmo:Platform}
+      - {role: station, type: nmo:SpatialRegion}
+    persistence: static
+    update_policy: scenario_or_command_update
+    key: [actor, station]
+    initialization: scenario_or_command
+    producers: [{kind: external, ref: mission_or_command_assignment}]
+    consumers: [{kind: task, ref: TC-005-S01, use: read_and_applicability}]
+    constraints: []
+    evidence: {missions: [MC-017, MC-021, MC-026, MC-028, MC-031]}
+
+  - id: SM-ST-041
+    symbol: station_keeping
+    category: world
+    definition: A platform is actively maintaining its assigned station within the applicable tolerance.
+    arguments:
+      - {role: actor, type: nmo:Platform}
+      - {role: station, type: nmo:SpatialRegion}
+    persistence: fluent
+    update_policy: assert_while_task_active
+    key: [actor, station]
+    initialization: optional_scenario
+    producers: [{kind: task, ref: TC-005-S01, use: world_effect}]
+    consumers: [{kind: external, ref: simulator_and_task_supervision}]
+    constraints: [requires_located_at_assigned_station]
+    evidence: {missions: [MC-017, MC-021, MC-026, MC-028, MC-031]}
+
+  - id: SM-ST-042
+    symbol: formation_assigned
+    category: execution
+    definition: A platform is assigned a relative place in a command-defined formation.
+    arguments:
+      - {role: actor, type: nmo:Platform}
+      - {role: formation, type: SM-TY-011}
+    persistence: static
+    update_policy: command_update
+    key: [actor, formation]
+    initialization: scenario_or_command
+    producers: [{kind: external, ref: formation_assignment}]
+    consumers: [{kind: task, ref: TC-005-S02, use: read_invariant_applicability}]
+    constraints: []
+    evidence: {missions: [MC-006, MC-007, MC-009, MC-013, MC-016, MC-032]}
+
+  - id: SM-ST-043
+    symbol: maintaining_formation
+    category: world
+    definition: A platform is actively maintaining the relative geometry of its assigned formation.
+    arguments:
+      - {role: actor, type: nmo:Platform}
+      - {role: formation, type: SM-TY-011}
+    persistence: fluent
+    update_policy: assert_while_task_active
+    key: [actor, formation]
+    initialization: optional_scenario
+    producers: [{kind: task, ref: TC-005-S02, use: world_effect}]
+    consumers: [{kind: external, ref: formation_and_task_supervision}]
+    constraints: [mutually_exclusive_with_SM-ST-044_for_same_key]
+    evidence: {missions: [MC-006, MC-007, MC-009, MC-013, MC-016, MC-032]}
+
+  - id: SM-ST-044
+    symbol: formation_broken
+    category: execution
+    definition: A platform no longer satisfies the tolerance of its assigned formation.
+    arguments:
+      - {role: actor, type: nmo:Platform}
+      - {role: formation, type: SM-TY-011}
+    persistence: terminal_for_attempt
+    update_policy: assert_on_failure
+    key: [actor, formation]
+    initialization: false
+    producers: [{kind: task, ref: TC-005-S02, use: failure_outcome}]
+    consumers: [{kind: external, ref: replanning_and_formation_supervision}]
+    constraints: [mutually_exclusive_with_SM-ST-043_for_same_key]
+    evidence: {missions: [MC-006, MC-007, MC-009, MC-013, MC-016, MC-032]}
+
+  - id: SM-ST-045
+    symbol: shadowing
+    category: world
+    definition: A platform is covertly maintaining the commanded observation geometry relative to a target.
+    arguments:
+      - {role: actor, type: nmo:Platform}
+      - {role: target, type: nmo:PhysicalEntity}
+    persistence: fluent
+    update_policy: assert_while_task_active
+    key: [actor, target]
+    initialization: optional_scenario
+    producers: [{kind: task, ref: TC-007-S01, use: world_effect}]
+    consumers: [{kind: external, ref: simulator_and_task_supervision}]
+    constraints: [distinct_from_overt_following]
+    evidence: {missions: [MC-019, MC-024, MC-025, MC-034]}
+
+  - id: SM-ST-046
+    symbol: approaching
+    category: world
+    definition: A platform is actively reducing separation from a designated physical target.
+    arguments:
+      - {role: actor, type: nmo:Platform}
+      - {role: target, type: nmo:PhysicalEntity}
+    persistence: fluent
+    update_policy: assert_while_task_active
+    key: [actor, target]
+    initialization: false
+    producers: [{kind: task, ref: TC-008-S01, use: world_effect}]
+    consumers: [{kind: external, ref: simulator_and_task_supervision}]
+    constraints: []
+    evidence: {missions: [MC-019, MC-023, MC-053, MC-061, MC-064]}
+
+  - id: SM-ST-047
+    symbol: approach_envelope_satisfied
+    category: world
+    definition: A platform lies within the commanded approach envelope relative to a target.
+    arguments:
+      - {role: actor, type: nmo:Platform}
+      - {role: target, type: nmo:PhysicalEntity}
+    persistence: derived_fluent
+    update_policy: derive_from_relative_geometry_and_task_tolerance
+    key: [actor, target]
+    initialization: derived
+    producers: [{kind: external, ref: relative_geometry_evaluator}]
+    consumers: [{kind: task, ref: TC-008-S01, use: completion}]
+    constraints: []
+    evidence: {missions: [MC-019, MC-023, MC-053, MC-061, MC-064]}
+
+  - id: SM-ST-048
+    symbol: inside_area
+    category: world
+    definition: A platform lies within the boundary of a designated spatial region.
+    arguments:
+      - {role: actor, type: nmo:Platform}
+      - {role: area, type: nmo:SpatialRegion}
+    persistence: derived_fluent
+    update_policy: derive_from_location_and_geometry
+    key: [actor, area]
+    initialization: derived
+    producers: [{kind: external, ref: spatial_relation_evaluator}]
+    consumers: [{kind: task, ref: TC-009-S01, use: read_and_applicability}]
+    constraints: [mutually_exclusive_with_SM-ST-049_for_same_key]
+    evidence: {missions: []}
+
+  - id: SM-ST-049
+    symbol: outside_area
+    category: world
+    definition: A platform lies outside the boundary of a designated spatial region.
+    arguments:
+      - {role: actor, type: nmo:Platform}
+      - {role: area, type: nmo:SpatialRegion}
+    persistence: derived_fluent
+    update_policy: derive_from_location_and_geometry
+    key: [actor, area]
+    initialization: derived
+    producers: [{kind: external, ref: spatial_relation_evaluator}]
+    consumers: [{kind: task, ref: TC-009-S01, use: completion}]
+    constraints: [mutually_exclusive_with_SM-ST-048_for_same_key]
+    evidence: {missions: []}
+
+  - id: SM-ST-050
+    symbol: corridor_destination
+    category: world
+    definition: A corridor terminates at the designated transit destination.
+    arguments:
+      - {role: corridor, type: nmo:Corridor}
+      - {role: location, type: nmo:SpatialRegion}
+    persistence: static
+    update_policy: immutable_during_scenario
+    key: [corridor]
+    initialization: scenario
+    producers: [{kind: external, ref: scenario_initialization}]
+    consumers: [{kind: task, ref: TC-010-S01, use: state_at_start_and_read}]
+    constraints: [exactly_one_destination_per_corridor]
+    evidence: {missions: [MC-004, MC-008, MC-012, MC-015, MC-032]}
+
+  - id: SM-ST-051
+    symbol: corridor_traversable
+    category: world
+    definition: A corridor is traversable by a platform under current operational constraints.
+    arguments:
+      - {role: corridor, type: nmo:Corridor}
+      - {role: entity, type: nmo:Platform}
+    persistence: derived_fluent
+    update_policy: recompute_when_constraints_change
+    key: [corridor, entity]
+    initialization: derived
+    producers: [{kind: external, ref: corridor_constraint_evaluator}]
+    consumers: [{kind: task, ref: TC-010-S01, use: read_invariant_applicability}]
+    constraints: []
+    evidence: {missions: [MC-004, MC-008, MC-012, MC-015, MC-032]}
+
+  - id: SM-ST-052
+    symbol: corridor_completed
+    category: execution
+    definition: A platform has completed traversal of a designated corridor.
+    arguments:
+      - {role: entity, type: nmo:Platform}
+      - {role: corridor, type: nmo:Corridor}
+    persistence: terminal_for_task_instance
+    update_policy: assert_on_completion
+    key: [entity, corridor]
+    initialization: false
+    producers: [{kind: task, ref: TC-010-S01, use: completion}]
+    consumers: [{kind: task, ref: TC-010-S01, use: completion}]
+    constraints: []
+    evidence: {missions: [MC-004, MC-008, MC-012, MC-015, MC-032]}
+
+  - id: SM-ST-053
+    symbol: evading
+    category: world
+    definition: A platform is actively maneuvering to increase safety relative to a designated threat.
+    arguments:
+      - {role: actor, type: nmo:Platform}
+      - {role: threat, type: nmo:PhysicalEntity}
+    persistence: fluent
+    update_policy: assert_while_task_active
+    key: [actor, threat]
+    initialization: false
+    producers: [{kind: task, ref: TC-029-S01, use: world_effect}]
+    consumers: [{kind: external, ref: simulator_and_task_supervision}]
+    constraints: []
+    evidence: {missions: []}
+
+  - id: SM-ST-054
+    symbol: threat_separation_satisfied
+    category: world
+    definition: A platform satisfies the commanded safety separation or masking condition relative to a threat.
+    arguments:
+      - {role: actor, type: nmo:Platform}
+      - {role: threat, type: nmo:PhysicalEntity}
+    persistence: derived_fluent
+    update_policy: derive_from_relative_geometry_and_threat_criteria
+    key: [actor, threat]
+    initialization: derived
+    producers: [{kind: external, ref: threat_separation_evaluator}]
+    consumers: [{kind: task, ref: TC-029-S01, use: completion}]
+    constraints: []
+    evidence: {missions: []}
 
 deferred_candidates:
   - id: SM-CAND-001
@@ -807,3 +1108,11 @@ normalization_decisions:
   - candidates: [navigation_failed_with_destination, navigation_failed_with_route]
     canonical_state: SM-ST-013
     rationale: One state uses a typed navigation_objective union and a stable tuple shape.
+
+  - candidates: [approach_navigation_failed, evasion_navigation_failed]
+    canonical_state: SM-ST-013
+    rationale: Target-relative movement reuses navigation_failed; SM-TY-010 now also admits a physical entity objective.
+
+  - candidates: [formation, formation_pattern, formation_geometry]
+    canonical_type: SM-TY-011
+    rationale: A formation reference is command-defined relative geometry and is not promoted to the physical ontology.
