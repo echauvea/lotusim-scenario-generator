@@ -14,9 +14,9 @@ model:
     deferred_candidate: SM-CAND-NNN
   categories: [world, knowledge, execution, resource]
   namespaces:
-    nmo: ../ontology/LOTUSim_Naval_Maritime_Ontology_v2.0-draft.ttl
-    task_catalog: ../task-catalog/LOTUSim_Task_Catalog_v0.9.0.md
-    mission_catalog: ../mission-catalog/LOTUSim_Mission_Catalog_v1.0.4.md
+    nmo: ../../ontology/LOTUSim_Naval_Maritime_Ontology_v2.0-draft.ttl
+    task_catalog: ../../task-catalog/archive/LOTUSim_Task_Catalog_v0.9.0.md
+    mission_catalog: ../../mission-catalog/LOTUSim_Mission_Catalog_v1.0.4.md
 
 state_model_types:
   - id: SM-TY-001

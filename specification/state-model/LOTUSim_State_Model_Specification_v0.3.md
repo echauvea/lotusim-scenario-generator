@@ -1,15 +1,15 @@
 # LOTUSim State Model Specification
 
 > **Status:** working draft
-> **Version:** 0.2
+> **Version:** 0.3
 > **Date:** 2026-07-17
-> **Normative data source:** [`LOTUSim_State_Model_v0.2.yaml`](../../references/state-model/LOTUSim_State_Model_v0.2.yaml)
+> **Normative data source:** [`LOTUSim_State_Model_v0.3.yaml`](../../references/state-model/LOTUSim_State_Model_v0.3.yaml)
 
 ## 1. Purpose
 
 The LOTUSim State Model defines the controlled dynamic-state vocabulary shared by missions, task semantics and derived planning artifacts. It is planner-independent: HDDL predicates and simulator bindings are derived from it and do not redefine its operational meaning.
 
-Version 0.2 extends the initial pilot and ISR baseline to the complete Movement family. It covers 19 enriched signatures: the four semantic-pilot signatures, the seven core ISR signatures and the eight Movement signatures completed in this increment.
+Version 0.3 extends the pilot, ISR and Movement baseline to the complete Protection family. It covers 24 enriched signatures: the previous 19 signatures and the five Protection signatures completed in this increment.
 
 ## 2. Sources and scope
 
@@ -19,14 +19,14 @@ The model is derived from three normative inputs:
 2. task reads, effects, completion conditions and failure outcomes in the Task Catalog;
 3. mission preconditions, desired end states and success/failure criteria in the Mission Catalog.
 
-The v0.2 normative inventory contains:
+The v0.3 normative inventory contains:
 
-- 54 states;
-- 11 State Model-owned types;
+- 67 states;
+- 13 State Model-owned types;
 - 4 categories: world, knowledge, execution and resource;
 - 5 mission-derived candidates deferred until their producing tasks or aggregation rules are modeled.
 
-No resource state is required by the current 19 signatures. The category remains part of the metamodel and will be populated by later sustainment and logistics increments.
+The first resource state, `deployable_available`, represents custody and availability of a decoy before deployment. It is removed atomically with creation of the corresponding physical `deployed_at` relation; later Logistics work may reuse and extend this custody pattern.
 
 ## 3. Identifier and reference policy
 
@@ -70,12 +70,12 @@ The ordered `arguments` list defines the canonical tuple signature. Every task b
 
 ## 5. Categories
 
-| Category | Meaning | Examples in v0.2 |
+| Category | Meaning | Examples in v0.3 |
 |---|---|---|
-| `world` | Physical or operational reality independent of who knows it. | `located_at`, `following`, `route_traversable` |
+| `world` | Physical or operational reality independent of who knows it. | `located_at`, `guarding`, `deployed_at` |
 | `knowledge` | Information valid for an explicit holder. | `detected`, `localized`, `classified`, `identified`, `track_maintained` |
-| `execution` | Assignment, capability availability, task progress or execution outcome. | `capability_available`, `route_completed`, `navigation_failed` |
-| `resource` | Consumable or renewable quantity relevant to planning. | None in v0.2 |
+| `execution` | Assignment, capability availability, task progress or execution outcome. | `capability_available`, `protection_assignment`, `protection_failed` |
+| `resource` | Consumable, renewable or custody-bound availability relevant to planning. | `deployable_available` |
 
 All knowledge states bind `holder`. An inconclusive sensing attempt is an execution outcome and never proves that a target is physically absent.
 
@@ -83,9 +83,9 @@ All knowledge states bind `holder`. An inconclusive sensing attempt is an execut
 
 Physical types reuse the ontology with the `nmo:` prefix. Dynamic information artifacts belong to the State Model because the ontology intentionally excludes observations, operational knowledge and planning state.
 
-State Model-owned types in v0.2 include information holders, observations, evidence, estimates, assessments, tracks and formation references. `SM-TY-010 navigation_objective` is an explicit union admitting `nmo:SpatialRegion`, `nmo:Route` and `nmo:PhysicalEntity`; it gives `navigation_failed` one stable tuple shape for destination-, route- and target-relative movement.
+State Model-owned types in v0.3 include information holders, observations, evidence, estimates, assessments, tracks, formation references, protection plans and protected subjects. `SM-TY-010 navigation_objective` is an explicit union admitting `nmo:SpatialRegion`, `nmo:Route` and `nmo:PhysicalEntity`; it gives `navigation_failed` one stable tuple shape for destination-, route- and target-relative movement. `SM-TY-012 protection_plan` carries command-defined sectors, geometry and evaluation criteria. `SM-TY-013 protected_subject` is the explicit union of physical entities and spatial regions used by generic Protection states.
 
-`information_holder` and `emission` remain ontology-mapping decisions. Their State Model identifiers allow work to continue without silently adding classes to the physical ontology. In v0.2, a platform or physical operational entity may realize `information_holder`; this compatibility is explicit in the YAML and does not classify every physical entity as a knowledge holder in the ontology.
+`information_holder` and `emission` remain ontology-mapping decisions. Their State Model identifiers allow work to continue without silently adding classes to the physical ontology. In v0.3, a platform or physical operational entity may realize `information_holder`; this compatibility is explicit in the YAML and does not classify every physical entity as a knowledge holder in the ontology.
 
 ## 7. Canonical state inventory
 
@@ -129,12 +129,41 @@ State Model-owned types in v0.2 include information holders, observations, evide
 | SM-ST-036 | `track_established` | knowledge | Track |
 | SM-ST-037 | `track_maintained` | knowledge | Track |
 | SM-ST-038 | `track_lost` | knowledge | Track failure |
+| SM-ST-039 | `patrolling` | world | Patrol |
+| SM-ST-040 | `station_assigned` | execution | Scenario or command assignment |
+| SM-ST-041 | `station_keeping` | world | Maintain Station |
+| SM-ST-042 | `formation_assigned` | execution | Scenario or command assignment |
+| SM-ST-043 | `maintaining_formation` | world | Maintain Formation |
+| SM-ST-044 | `formation_broken` | execution | Maintain Formation failure |
+| SM-ST-045 | `shadowing` | world | Shadow |
+| SM-ST-046 | `approaching` | world | Approach |
+| SM-ST-047 | `approach_envelope_satisfied` | world | Geometry evaluator |
+| SM-ST-048 | `inside_area` | world | Geometry evaluator |
+| SM-ST-049 | `outside_area` | world | Geometry evaluator |
+| SM-ST-050 | `corridor_destination` | world | Scenario or command initialization |
+| SM-ST-051 | `corridor_traversable` | world | Corridor evaluator |
+| SM-ST-052 | `corridor_completed` | execution | Transit Corridor |
+| SM-ST-053 | `evading` | world | Evade |
+| SM-ST-054 | `threat_separation_satisfied` | world | Geometry evaluator |
+| SM-ST-055 | `protection_assignment` | execution | Mission or command assignment |
+| SM-ST-056 | `protection_plan_available` | execution | Mission or command planning |
+| SM-ST-057 | `protective_screen_established` | world | Protective-screen evaluator |
+| SM-ST-058 | `protective_screen_integrity_satisfied` | world | Protective-screen evaluator |
+| SM-ST-059 | `guarding` | world | Guard |
+| SM-ST-060 | `interposing` | world | Interpose |
+| SM-ST-061 | `interposition_geometry_satisfied` | world | Geometry evaluator |
+| SM-ST-062 | `area_protection_criteria_satisfied` | world | Area-protection evaluator |
+| SM-ST-063 | `deployable_available` | resource | Inventory synchronization or deployment writer |
+| SM-ST-064 | `deployed_at` | world | Deploy Decoy or simulator synchronization |
+| SM-ST-065 | `decoy_effect_established` | world | Decoy-effect evaluator |
+| SM-ST-066 | `protection_failed` | execution | Protection task failure |
+| SM-ST-067 | `deployment_failed` | execution | Deploy Decoy failure |
 
 The YAML source is authoritative for definitions, argument order, lifecycle, producers, consumers, constraints and evidence.
 
 ## 8. Normalization decisions
 
-Four inconsistencies in the candidate vocabulary are resolved:
+The initial four inconsistencies in the candidate vocabulary remain resolved:
 
 - `target_location_known` and `protected_unit_location_known` become `SM-ST-027 location_known`;
 - `target_location_unknown` becomes `SM-ST-028 location_unknown`;
@@ -142,6 +171,8 @@ Four inconsistencies in the candidate vocabulary are resolved:
 - the two differently shaped uses of `navigation_failed` become one tuple `(entity, objective)`, where `objective` is `SM-TY-010 navigation_objective`.
 
 `localized(holder, target, estimate)` retains the actual estimate. `location_known(holder, target)` is a derived projection used by tasks that need only to know whether a usable estimate exists.
+
+Version 0.3 additionally normalizes screen and defense plans to `SM-TY-012`, physical and spatial protection subjects to `SM-TY-013`, non-escort protection assignments to `SM-ST-055`, and purpose-independent physical deployment to `SM-ST-064`. Escort retains its established `SM-ST-006` tuple because broadening that stable identifier would silently change its meaning.
 
 ## 9. Producer and consumer rules
 
@@ -168,7 +199,7 @@ The `key` identifies the tuple components used for replacement or mutual-exclusi
 
 ## 11. Deferred mission-derived candidates
 
-Five mission-level concepts remain deliberately unpromoted in v0.2:
+Five mission-level concepts remain deliberately unpromoted in v0.3:
 
 - area coverage achieved;
 - surveillance continuity achieved;
@@ -204,6 +235,17 @@ Movement adds states for patrol, station keeping, formation maintenance, shadowi
 
 `SM-TY-011 formation_reference` remains outside the physical ontology because it represents a command-defined relative geometry, not a physical entity. `navigation_objective` is extended to admit a physical entity for target-relative maneuvers while preserving the stable identifier `SM-TY-010`.
 
-## 14. Planned extension
+## 14. Protection extension in v0.3
 
-Version 0.2 is the baseline for enriching the remaining 60 signatures. New states shall be added only when a task or mission requirement cannot reuse an existing definition. Each family increment shall update producers, consumers and deferred candidates before its task semantics are considered complete.
+Protection adds generic assignment and plan types, active guarding and interposition relations, derived protection outcomes, and the first resource-to-world deployment transition. Four distinctions are normative:
+
+- `Screen` and `Defend` are abstract continuous tasks and therefore declare desired outcomes without direct operational effects;
+- `guarding` and `interposing` represent active execution relations, not proof that the protected subject has been preserved;
+- screen integrity, interposition geometry, area-protection criteria and decoy effects are derived by named evaluators from authoritative state;
+- `Deploy Decoy` removes custody-bound `deployable_available` while adding physical `deployed_at`; the protective decoy effect is evaluated separately.
+
+`SM-TY-012 protection_plan` and `SM-TY-013 protected_subject` remain State Model-owned. A protection plan is command-defined operational data, while the protected-subject union avoids inventing an ontology superclass spanning physical entities and spatial regions.
+
+## 15. Planned extension
+
+Version 0.3 is the baseline for enriching the remaining 55 signatures. New states shall be added only when a task or mission requirement cannot reuse an existing definition. Each family increment shall update producers, consumers and deferred candidates before its task semantics are considered complete.

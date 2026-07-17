@@ -19,9 +19,9 @@ Cet index est la source unique d’inventaire documentaire du dépôt **LSG — 
 | [DEM-2 — Task Catalog Specification](dem/DEM-2_Task_Catalog_Specification_v0.6.md) | v0.6 | Brouillon courant | Normatif pour la méthode | Métamodèle des signatures aligné sur le State Model normatif. |
 | [Naval Maritime Ontology](../references/ontology/LOTUSim_Naval_Maritime_Ontology_v2.0-draft.ttl) | 2.0.0-draft | Brouillon courant | Normatif pour les concepts, types, capacités, équipements et relations structurelles | La version interne et le nom de fichier sont cohérents. |
 | [Mission Catalog](../references/mission-catalog/LOTUSim_Mission_Catalog_v1.0.4.md) | v1.0.4 | Courant, brouillon de travail | Normatif pour les missions et objectifs | Les 66 missions disposent d’une spécification active conforme au métamodèle canonique. |
-| [Task Catalog](../references/task-catalog/LOTUSim_Task_Catalog_v0.9.0.md) | v0.9.0 | Courant, brouillon de travail | Normatif pour les tâches et leurs sémantiques | Les 19 signatures enrichies couvrent le pilote, le noyau ISR et toute la famille Movement. |
-| [State Model — source normative](../references/state-model/LOTUSim_State_Model_v0.2.yaml) | v0.2.0 | Courant, brouillon de travail | Normatif pour les états dynamiques | 54 états, 11 types propres, producteurs, consommateurs, contraintes et traçabilité. |
-| [State Model — spécification](state-model/LOTUSim_State_Model_Specification_v0.2.md) | v0.2 | Courant, brouillon de travail | Normatif pour le métamodèle | Catégories, politique d’identifiants, normalisations, cycle de vie et règles de validation. |
+| [Task Catalog](../references/task-catalog/LOTUSim_Task_Catalog_v0.10.0.md) | v0.10.0 | Courant, brouillon de travail | Normatif pour les tâches et leurs sémantiques | Les 24 signatures enrichies couvrent le pilote, le noyau ISR et les familles Movement et Protection. |
+| [State Model — source normative](../references/state-model/LOTUSim_State_Model_v0.3.yaml) | v0.3.0 | Courant, brouillon de travail | Normatif pour les états dynamiques | 67 états, 13 types propres, producteurs, consommateurs, contraintes et traçabilité. |
+| [State Model — spécification](state-model/LOTUSim_State_Model_Specification_v0.3.md) | v0.3 | Courant, brouillon de travail | Normatif pour le métamodèle | Catégories, politique d’identifiants, normalisations, cycle de vie et règles de validation. |
 
 ## Archives des catalogues
 
@@ -34,6 +34,7 @@ Cet index est la source unique d’inventaire documentaire du dépôt **LSG — 
 | [Task Catalog — Semantic Families](../references/task-catalog/archive/LOTUSim_Task_Catalog_v0.7.0.md) | v0.7.0 | Archivé | Non normatif | Remplacé par v0.8.0 après enrichissement du noyau ISR. |
 | [Task Catalog — noyau ISR](../references/task-catalog/archive/LOTUSim_Task_Catalog_v0.8.0.md) | v0.8.0 | Archivé | Non normatif | Remplacé par v0.8.1 après alignement sur les identifiants du State Model v0.1. |
 | [Task Catalog — noyau ISR aligné](../references/task-catalog/archive/LOTUSim_Task_Catalog_v0.8.1.md) | v0.8.1 | Archivé | Non normatif | Remplacé par v0.9.0 après enrichissement complet de la famille Movement. |
+| [Task Catalog — famille Movement](../references/task-catalog/archive/LOTUSim_Task_Catalog_v0.9.0.md) | v0.9.0 | Archivé | Non normatif | Remplacé par v0.10.0 après enrichissement complet de la famille Protection. |
 
 ## Archives du State Model
 
@@ -41,6 +42,8 @@ Cet index est la source unique d’inventaire documentaire du dépôt **LSG — 
 |---|---:|---|---|---|
 | [State Model — source normative initiale](../references/state-model/archive/LOTUSim_State_Model_v0.1.yaml) | v0.1.0 | Archivé | Non normatif | Remplacé par v0.2.0 après ajout des états et types nécessaires à la famille Movement. |
 | [State Model — spécification initiale](state-model/archive/LOTUSim_State_Model_Specification_v0.1.md) | v0.1 | Archivé | Non normatif | Remplacé par v0.2 après formalisation des règles Movement et des états géométriques dérivés. |
+| [State Model — source Movement](../references/state-model/archive/LOTUSim_State_Model_v0.2.yaml) | v0.2.0 | Archivé | Non normatif | Remplacé par v0.3.0 après ajout des états, types et transitions nécessaires à la famille Protection. |
+| [State Model — spécification Movement](state-model/archive/LOTUSim_State_Model_Specification_v0.2.md) | v0.2 | Archivé | Non normatif | Remplacé par v0.3 après formalisation des résultats de protection dérivés et du premier état de ressource. |
 
 ## Archives DEM
 
@@ -80,10 +83,10 @@ Cet index est la source unique d’inventaire documentaire du dépôt **LSG — 
 
 - Les 66 identifiants de mission `MC-001` à `MC-066` sont présents dans l’inventaire canonique et les 64 identifiants de tâche `TC-001` à `TC-064` sont présents, sans doublon d’en-tête détecté.
 - Le Mission Catalog v1.0.4 contient 66 spécifications actives conformes au métamodèle. Les anciennes propositions incompatibles autrefois numérotées MC-039 à MC-066 sont conservées dans une annexe explicitement non normative.
-- Le Task Catalog v0.9.0 reprend les 64 tâches et 79 signatures. Dix-neuf signatures possèdent une sémantique complète ; les 60 autres restent à enrichir progressivement.
-- Le State Model v0.2 contient 54 états normatifs, 11 types propres et 5 candidats de mission différés faute de producteurs sémantisés.
+- Le Task Catalog v0.10.0 reprend les 64 tâches et 79 signatures. Vingt-quatre signatures possèdent une sémantique complète ; les 55 autres restent à enrichir progressivement.
+- Le State Model v0.3 contient 67 états normatifs, 13 types propres et 5 candidats de mission différés faute de producteurs sémantisés.
 - Le validateur transversal et sa CI contrôlent automatiquement les inventaires, la traçabilité, les Semantic Families et la cohérence entre sémantiques de tâche, State Model et ontologie.
-- Les références de versions de l’architecture v3.2 ont été actualisées vers Mission Catalog v1.0.4, Task Catalog v0.9.0 et State Model v0.2.
+- Les références de versions de l’architecture v3.2 ont été actualisées vers Mission Catalog v1.0.4, Task Catalog v0.10.0 et State Model v0.3.
 - La version d’architecture fournie comme source courante contient deux liens vers LSGA v2 et un lien vers `rig-e2e.md`, alors que ces fichiers sont absents du dépôt. Ils sont conservés tels quels dans le document source et restent donc à résoudre.
 
 ## Décisions humaines encore requises
