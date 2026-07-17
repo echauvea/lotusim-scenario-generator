@@ -17,8 +17,9 @@ import yaml
 
 TASK_FILE = Path("references/task-catalog/LOTUSim_Task_Catalog_v0.12.0.md")
 MISSION_FILE = Path("references/mission-catalog/LOTUSim_Mission_Catalog_v1.0.4.md")
-STATE_FILE = Path("references/state-model/LOTUSim_State_Model_v0.5.yaml")
+STATE_FILE = Path("references/state-model/LOTUSim_State_Model_v0.6.yaml")
 ONTOLOGY_FILE = Path("references/ontology/LOTUSim_Naval_Maritime_Ontology_v2.0-draft.ttl")
+METHOD_FILE = Path("references/method-catalog/LOTUSim_Method_Catalog_v0.1.0.md")
 
 
 @dataclass
@@ -43,6 +44,7 @@ class RepoData:
     state_model: dict[str, Any]
     ontology: set[str]
     ontology_parents: dict[str, set[str]]
+    method_records: list[dict[str, Any]]
 
     @property
     def states(self) -> list[dict[str, Any]]:
@@ -180,7 +182,7 @@ def task_state_occurrences(semantics: dict[str, Any]) -> list[tuple[str, dict[st
 
 
 def load_data(root: Path, report: ValidationReport) -> RepoData | None:
-    paths = [root / path for path in (TASK_FILE, MISSION_FILE, STATE_FILE, ONTOLOGY_FILE)]
+    paths = [root / path for path in (TASK_FILE, MISSION_FILE, STATE_FILE, ONTOLOGY_FILE, METHOD_FILE)]
     for path in paths:
         if not path.is_file():
             report.error("FILE001", str(path.relative_to(root)), "required referential is missing")
@@ -191,17 +193,22 @@ def load_data(root: Path, report: ValidationReport) -> RepoData | None:
         mission_text = paths[1].read_text(encoding="utf-8")
         state_model = yaml.safe_load(paths[2].read_text(encoding="utf-8"))
         ontology_text = paths[3].read_text(encoding="utf-8")
+        method_text = paths[4].read_text(encoding="utf-8")
         task_section = extract_section(task_text, r"^## 6\. Typed signatures\s*$", r"^## 7\.")
         mission_section = extract_section(mission_text, r"^## 7\. Detailed mission specifications\s*$", r"^## Appendix A")
         task_records = [doc for doc in yaml_documents(task_section) if is_catalog_record(doc, "TC-", None)]
         mission_records = [doc for doc in yaml_documents(mission_section) if is_catalog_record(doc, "MC-", "specification")]
         family_docs = [doc for doc in yaml_documents(task_text) if isinstance(doc, dict) and "semantic_families" in doc]
         ontology, ontology_parents = ontology_classes(ontology_text)
+        method_records = [
+            doc for doc in yaml_documents(method_text)
+            if isinstance(doc, dict) and re.fullmatch(r"TM-\d{3}-S\d{2}-M\d{2}", str(doc.get("id", "")))
+        ]
     except (OSError, ValueError, yaml.YAMLError) as exc:
         report.error("PARSE001", "referentials", str(exc))
         return None
     families = family_docs[0].get("semantic_families", []) if family_docs else []
-    return RepoData(root, task_records, mission_records, families, state_model, ontology, ontology_parents)
+    return RepoData(root, task_records, mission_records, families, state_model, ontology, ontology_parents, method_records)
 
 
 def is_catalog_record(document: Any, prefix: str, required_field: str | None) -> bool:
@@ -219,6 +226,7 @@ def validate_identifiers(data: RepoData, report: ValidationReport) -> None:
         ("ID005", "state", [item.get("id", "") for item in data.states], r"SM-ST-\d{3}"),
         ("ID006", "state-model type", [item.get("id", "") for item in data.model_types], r"SM-TY-\d{3}"),
         ("ID007", "deferred candidate", [item.get("id", "") for item in data.candidates], r"SM-CAND-\d{3}"),
+        ("ID011", "method", [item.get("id", "") for item in data.method_records], r"TM-\d{3}-S\d{2}-M\d{2}"),
     ]
     for code, label, values, pattern in groups:
         for value in values:
@@ -314,10 +322,11 @@ def validate_model_types(data: RepoData, report: ValidationReport) -> None:
 
 def validate_states(data: RepoData, report: ValidationReport) -> None:
     signature_ids = {item["signature_id"] for item in data.signatures}
+    method_ids = {item["id"] for item in data.method_records}
     state_ids = {item["id"] for item in data.states}
     mission_ids = {item["id"] for item in data.mission_records}
     for state in data.states:
-        validate_state_definition(state, signature_ids, state_ids, mission_ids, data, report)
+        validate_state_definition(state, signature_ids, method_ids, state_ids, mission_ids, data, report)
     for candidate in data.candidates:
         validate_mission_evidence(candidate["id"], candidate.get("mission_evidence", []), mission_ids, report, "STATE009")
     validate_normalization_decisions(data, report)
@@ -336,7 +345,7 @@ def validate_normalization_decisions(data: RepoData, report: ValidationReport) -
 
 
 def validate_state_definition(
-    state: dict[str, Any], signature_ids: set[str], state_ids: set[str], mission_ids: set[str],
+    state: dict[str, Any], signature_ids: set[str], method_ids: set[str], state_ids: set[str], mission_ids: set[str],
     data: RepoData, report: ValidationReport,
 ) -> None:
     location = state["id"]
@@ -354,18 +363,20 @@ def validate_state_definition(
         report.error("STATE004", location, "state must have at least one producer and one consumer")
     if not set(state.get("key", [])).issubset(roles):
         report.error("STATE005", location, "state key contains an undeclared argument")
-    validate_state_references(state, signature_ids, state_ids, report)
+    validate_state_references(state, signature_ids, method_ids, state_ids, report)
     validate_mission_evidence(location, (state.get("evidence") or {}).get("missions", []), mission_ids, report, "STATE008")
 
 
 def validate_state_references(
-    state: dict[str, Any], signature_ids: set[str], state_ids: set[str], report: ValidationReport,
+    state: dict[str, Any], signature_ids: set[str], method_ids: set[str], state_ids: set[str], report: ValidationReport,
 ) -> None:
     for side in ("producers", "consumers"):
         for reference in state.get(side, []):
             ref = str(reference.get("ref", ""))
             if re.fullmatch(r"TC-\d{3}-S\d{2}", ref) and ref not in signature_ids:
                 report.error("STATE006", state["id"], f"unknown task signature in {side}: {ref}")
+            if reference.get("kind") == "method" and ref not in method_ids:
+                report.error("STATE013", state["id"], f"unknown method in {side}: {ref}")
     for constraint in state.get("constraints", []):
         match = re.search(r"mutually_exclusive_with_(SM-ST-\d{3})", str(constraint))
         if match and match.group(1) not in state_ids:
@@ -581,10 +592,178 @@ def validate_effect(
         report.error("SEM019", sid, f"knowledge effect on {state_ref} must bind holder")
 
 
+def validate_methods(data: RepoData, report: ValidationReport) -> None:
+    signatures = {item["signature_id"]: item for item in data.signatures}
+    states = {item["id"]: item for item in data.states}
+    model_types = {item["id"]: item for item in data.model_types}
+    mission_ids = {item["id"] for item in data.mission_records}
+    for method in data.method_records:
+        mid = method["id"]
+        parent = signatures.get(method.get("decomposes"))
+        if not parent:
+            report.error("METHOD001", mid, f"unknown decomposed signature: {method.get('decomposes')}")
+            continue
+        parent_semantics = parent.get("semantics") or {}
+        if parent_semantics.get("semantic_kind") != "abstract":
+            report.error("METHOD002", mid, "method parent must be an abstract signature")
+        parameters = validate_method_parameters(method, parent_semantics, states, model_types, data, report)
+        validate_method_state_uses(method, parameters, states, model_types, data, report)
+        validate_method_network(method, parameters, signatures, model_types, data, report)
+        validate_method_outcomes(method, parent_semantics, signatures, states, parameters, model_types, data, report)
+        readiness = (method.get("projection") or {}).get("readiness")
+        blockers = (method.get("projection") or {}).get("blockers", [])
+        if readiness not in {"ready", "partial", "blocked"}:
+            report.error("METHOD014", mid, f"invalid projection readiness: {readiness}")
+        if readiness in {"partial", "blocked"} and not blockers:
+            report.error("METHOD015", mid, f"{readiness} method must declare projection blockers")
+        for mission_id in (method.get("traceability") or {}).get("missions", []):
+            if mission_id not in mission_ids:
+                report.error("METHOD016", mid, f"unknown mission traceability reference: {mission_id}")
+
+
+def validate_method_parameters(
+    method: dict[str, Any], parent_semantics: dict[str, Any], states: dict[str, dict[str, Any]],
+    model_types: dict[str, dict[str, Any]], data: RepoData, report: ValidationReport,
+) -> dict[str, dict[str, Any]]:
+    mid = method["id"]
+    entries = method.get("parameters", [])
+    parameters = {item.get("role"): item for item in entries}
+    if len(parameters) != len(entries) or None in parameters:
+        report.error("METHOD003", mid, "method parameter roles must be present and unique")
+    parent_parameters = {item.get("role"): item for item in parent_semantics.get("parameters", [])}
+    applicability_refs = {item.get("state_ref") for item in method.get("applicability", [])}
+    for parameter in entries:
+        role = parameter.get("role", "")
+        actual_type = parameter.get("type", "")
+        validate_type_name(actual_type, mid, data, report)
+        source = parameter.get("source") or {}
+        if source.get("kind") == "parent_task":
+            parent = parent_parameters.get(source.get("role"))
+            if not parent:
+                report.error("METHOD004", mid, f"unknown parent role for {role}: {source.get('role')}")
+            elif not type_compatible(actual_type, parent.get("type", ""), model_types, data.ontology_parents):
+                report.error("METHOD005", mid, f"{role}:{actual_type} does not safely narrow parent role {source.get('role')}:{parent.get('type')}")
+        elif source.get("kind") == "state_binding":
+            state_ref = source.get("state_ref")
+            if state_ref not in states:
+                report.error("METHOD006", mid, f"unknown parameter-binding state: {state_ref}")
+            if state_ref not in applicability_refs:
+                report.error("METHOD007", mid, f"parameter-binding state {state_ref} must appear in applicability")
+        else:
+            report.error("METHOD008", mid, f"invalid source for method parameter {role}: {source.get('kind')}")
+    return parameters
+
+
+def validate_method_state_uses(
+    method: dict[str, Any], parameters: dict[str, dict[str, Any]], states: dict[str, dict[str, Any]],
+    model_types: dict[str, dict[str, Any]], data: RepoData, report: ValidationReport,
+) -> None:
+    occurrences = list(method.get("applicability", [])) + list(method.get("completion_support", []))
+    occurrences += [
+        item["establishes"] for item in method.get("failure_propagation", [])
+        if isinstance(item.get("establishes"), dict) and item["establishes"].get("state_ref")
+    ]
+    for occurrence in occurrences:
+        state_ref = occurrence.get("state_ref")
+        state = states.get(state_ref)
+        if not state:
+            report.error("METHOD009", method["id"], f"unknown state reference: {state_ref}")
+            continue
+        bindings = occurrence.get("bindings") or {}
+        argument_types = {item["role"]: item["type"] for item in state.get("arguments", [])}
+        if set(bindings) != set(argument_types):
+            report.error("METHOD010", method["id"], f"bindings for {state_ref} must be {sorted(argument_types)}, found {sorted(bindings)}")
+        for role, value in bindings.items():
+            if role not in argument_types:
+                continue
+            parameter = parameters.get(value)
+            if parameter:
+                if not type_compatible(parameter.get("type", ""), argument_types[role], model_types, data.ontology_parents):
+                    report.error("METHOD011", method["id"], f"parameter {value}:{parameter.get('type')} is incompatible with {state_ref}.{role}:{argument_types[role]}")
+            elif isinstance(value, str) and value.endswith("Capability"):
+                if value not in data.ontology or not type_compatible("nmo:" + value, argument_types[role], model_types, data.ontology_parents):
+                    report.error("METHOD011", method["id"], f"invalid capability constant for {state_ref}.{role}: {value}")
+            else:
+                report.error("METHOD011", method["id"], f"undeclared method binding value: {value}")
+
+
+def validate_method_network(
+    method: dict[str, Any], parameters: dict[str, dict[str, Any]], signatures: dict[str, dict[str, Any]],
+    model_types: dict[str, dict[str, Any]], data: RepoData, report: ValidationReport,
+) -> None:
+    mid = method["id"]
+    network = method.get("task_network") or {}
+    subtasks = network.get("subtasks", [])
+    subtask_by_id = {item.get("id"): item for item in subtasks}
+    if not subtasks or len(subtask_by_id) != len(subtasks) or None in subtask_by_id:
+        report.error("METHOD012", mid, "subtask identifiers must be present and unique")
+    for subtask in subtasks:
+        signature = signatures.get(subtask.get("task_ref"))
+        if not signature:
+            report.error("METHOD013", mid, f"unknown subtask signature: {subtask.get('task_ref')}")
+            continue
+        task_parameters = {
+            item["role"]: item for item in (signature.get("semantics") or {}).get("parameters", [])
+            if item.get("source") == "task_input"
+        }
+        bindings = subtask.get("bindings") or {}
+        if set(bindings) != set(task_parameters):
+            report.error("METHOD017", mid, f"subtask {subtask.get('id')} bindings must be {sorted(task_parameters)}, found {sorted(bindings)}")
+        for role, value in bindings.items():
+            if role not in task_parameters or value not in parameters:
+                if value not in parameters:
+                    report.error("METHOD018", mid, f"subtask {subtask.get('id')} uses undeclared variable: {value}")
+                continue
+            actual = parameters[value].get("type", "")
+            expected = task_parameters[role].get("type", "")
+            if not type_compatible(actual, expected, model_types, data.ontology_parents):
+                report.error("METHOD019", mid, f"subtask {subtask.get('id')} binding {value}:{actual} is incompatible with {role}:{expected}")
+    known = set(subtask_by_id)
+    for relation in network.get("ordering", []):
+        if relation.get("before") not in known or relation.get("after") not in known:
+            report.error("METHOD020", mid, f"ordering references unknown subtask: {relation}")
+    for relation in network.get("synchronization", []):
+        if relation.get("relation") not in {"spans", "overlaps", "handover"}:
+            report.error("METHOD021", mid, f"unknown synchronization relation: {relation.get('relation')}")
+        if relation.get("spanning") not in known or relation.get("contained") not in known:
+            report.error("METHOD022", mid, f"synchronization references unknown subtask: {relation}")
+
+
+def validate_method_outcomes(
+    method: dict[str, Any], parent_semantics: dict[str, Any], signatures: dict[str, dict[str, Any]],
+    states: dict[str, dict[str, Any]], parameters: dict[str, dict[str, Any]],
+    model_types: dict[str, dict[str, Any]], data: RepoData, report: ValidationReport,
+) -> None:
+    mid = method["id"]
+    required = {item.get("state_ref") for item in parent_semantics.get("desired_outcomes", [])}
+    required |= {item.get("state_ref") for item in parent_semantics.get("completion_conditions", [])}
+    supported = {item.get("state_ref") for item in method.get("completion_support", [])}
+    if not required.issubset(supported):
+        report.error("METHOD023", mid, f"parent outcome states lack completion support: {sorted(required - supported)}")
+    parent_outcomes = {item.get("outcome") for item in parent_semantics.get("failure_outcomes", [])}
+    network = method.get("task_network") or {}
+    subtask_by_id = {item.get("id"): item for item in network.get("subtasks", [])}
+    for propagation in method.get("failure_propagation", []):
+        parent_outcome = propagation.get("parent_outcome")
+        decision = propagation.get("decision")
+        if parent_outcome and parent_outcome not in parent_outcomes:
+            report.error("METHOD024", mid, f"unknown parent failure outcome: {parent_outcome}")
+        if not parent_outcome and not decision:
+            report.error("METHOD024", mid, "failure propagation requires a parent outcome or an explicit decision")
+        source = str(propagation.get("from", ""))
+        subtask_id, separator, outcome = source.partition(".")
+        subtask = subtask_by_id.get(subtask_id)
+        signature = signatures.get((subtask or {}).get("task_ref"))
+        outcomes = {item.get("outcome") for item in ((signature or {}).get("semantics") or {}).get("failure_outcomes", [])}
+        if not separator or outcome not in outcomes:
+            report.error("METHOD025", mid, f"unknown subtask failure source: {source}")
+
+
 def validate_links(data: RepoData, report: ValidationReport) -> None:
     relative_paths = [
         Path("README.md"), Path("specification/INDEX.md"),
-        Path("specification/state-model/LOTUSim_State_Model_Specification_v0.5.md"),
+        Path("specification/state-model/LOTUSim_State_Model_Specification_v0.6.md"),
+        METHOD_FILE, Path("specification/dem/DEM-3_Method_Catalog_Specification_v0.1.md"),
     ]
     for relative_path in relative_paths:
         validate_document_links(data.root, relative_path, report)
@@ -609,6 +788,7 @@ def populate_counts(data: RepoData, report: ValidationReport, enriched: int) -> 
         "signatures": len(data.signatures), "families": len(data.families),
         "states": len(data.states), "state_types": len(data.model_types),
         "deferred_candidates": len(data.candidates), "enriched_signatures": enriched,
+        "methods": len(data.method_records),
     }
 
 
@@ -619,6 +799,7 @@ def validate_repository(root: Path) -> ValidationReport:
         return report
     validate_identifiers(data, report)
     validate_tasks(data, report)
+    validate_methods(data, report)
     validate_traceability(data, report)
     validate_model_types(data, report)
     validate_states(data, report)

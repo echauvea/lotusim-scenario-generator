@@ -1053,7 +1053,8 @@ Chaque document se valide contre le POC au fil de l'eau, pas en cascade.
 | **LOTUSim Naval Ontology** | v2.0-draft existante | 263 classes dont 46 capacités ; annotations `nmo:hasUsageDomain` (diffusabilité) et `nmo:manifestKey` (§6.4) ; NETN-ETR et C2SIM en checklist (Annexe B) |
 | **LOTUSim Mission Catalog** | v1.0.4 existante | 66 missions, 9 familles doctrinales, capacités requises par mission |
 | **LOTUSim Task Catalog** | v0.12.0 existante | 64 verbes canoniques, 79 signatures typées ; 32 signatures alignées sur le State Model |
-| **LOTUSim State Model** | v0.5 existant | 104 états dynamiques normatifs, 23 types propres et traçabilité producteurs/consommateurs |
+| **LOTUSim Method Catalog** | v0.1.0 pilote | Deux méthodes de décomposition de la tâche Escort ; projection HDDL encore partielle |
+| **LOTUSim State Model** | v0.6 existant | 105 états dynamiques normatifs, 23 types propres et traçabilité producteurs/consommateurs |
 | **Naval Domain** (Domain HDDL) | À produire | La doctrine formalisée — chemin critique, experts métier requis |
 | **Benchmark Suite** | À produire | Scénarios de référence, métriques, protocoles |
 

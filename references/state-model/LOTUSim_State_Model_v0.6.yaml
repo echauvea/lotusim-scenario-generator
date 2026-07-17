@@ -1,14 +1,14 @@
 model:
   id: LOTUSIM-SM
-  version: 0.5.0
+  version: 0.6.0
   status: draft
   date: 2026-07-17
   scope: >
     Foundational dynamic state vocabulary derived from the four semantic-pilot
     signatures, the seven core ISR signatures, the complete Movement family,
     the complete Protection family, the ISR coverage-and-products extension,
-    the ISR characterization-and-inspection extension, their mission requirements
-    and relevant Naval Maritime Ontology concepts.
+    the ISR characterization-and-inspection extension, the Escort HTN-method
+    pilot, their mission requirements and relevant Naval Maritime Ontology concepts.
   normative_source: true
   identifier_policy:
     state: SM-ST-NNN
@@ -19,6 +19,7 @@ model:
     nmo: ../ontology/LOTUSim_Naval_Maritime_Ontology_v2.0-draft.ttl
     task_catalog: ../task-catalog/LOTUSim_Task_Catalog_v0.12.0.md
     mission_catalog: ../mission-catalog/LOTUSim_Mission_Catalog_v1.0.4.md
+    method_catalog: ../method-catalog/LOTUSim_Method_Catalog_v0.1.0.md
 
 state_model_types:
   - id: SM-TY-001
@@ -2090,6 +2091,25 @@ states:
     constraints: [does_not_imply_subject_unchanged_or_undamaged]
     evidence: {missions: [MC-005, MC-006, MC-022, MC-023, MC-029, MC-030]}
 
+  - id: SM-ST-105
+    symbol: escort_route_assigned
+    category: execution
+    definition: An escort actor and protected platform are assigned a designated route for an escort transit objective.
+    arguments:
+      - {role: escort, type: nmo:Platform}
+      - {role: protected, type: nmo:Platform}
+      - {role: route, type: nmo:Route}
+    persistence: static
+    update_policy: mission_or_command_update
+    key: [escort, protected]
+    initialization: mission_or_command
+    producers: [{kind: external, ref: mission_or_command_escort_route_assignment}]
+    consumers:
+      - {kind: method, ref: TM-023-S01-M01, use: parameter_binding_and_applicability}
+      - {kind: method, ref: TM-023-S01-M02, use: parameter_binding_and_applicability}
+    constraints: [at_most_one_active_escort_route_per_escort_protected_pair]
+    evidence: {missions: [MC-026, MC-027]}
+
 deferred_candidates:
   - id: SM-CAND-002
     symbol: surveillance_continuity_achieved
@@ -2183,3 +2203,7 @@ normalization_decisions:
   - candidates: [object_inspection_record, infrastructure_inspection_record, inspection_findings]
     canonical_type: SM-TY-023
     rationale: Object and infrastructure inspection share one immutable record because both subjects are physical entities and use the same evidence, quality and provenance pattern.
+
+  - candidates: [escort_route, protected_unit_transit_route, convoy_escort_route]
+    canonical_state: SM-ST-105
+    rationale: HTN decomposition requires one explicit route assignment for the escort-protected pair; traversability alone cannot select the commanded route.
