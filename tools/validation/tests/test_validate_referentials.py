@@ -13,6 +13,7 @@ from validate_referentials import (  # noqa: E402
     is_ontology_subtype,
     type_compatible,
     validate_effect,
+    validate_family_effect_boundaries,
     validate_reverse_state_side,
     validate_repository,
 )
@@ -46,6 +47,12 @@ class ValidationHelpersTest(unittest.TestCase):
         state = {"category": "world", "persistence": "derived_fluent"}
         validate_effect("TC-001-S01", "SM-ST-001", "effect:world", {}, state, {"SM-ST-001": {"TC-001-S01"}}, report)
         self.assertEqual(report.errors[0][0], "SEM022")
+
+    def test_ISR_direct_world_effect_is_reported(self) -> None:
+        report = ValidationReport()
+        semantics = {"operational_effects": {"world": {"add": [{"state_ref": "SM-ST-001"}], "remove": []}}}
+        validate_family_effect_boundaries("TC-003-S01", "SF-01", semantics, report)
+        self.assertEqual(report.errors[0][0], "SEM023")
 
 
 class CurrentRepositoryTest(unittest.TestCase):

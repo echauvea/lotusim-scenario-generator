@@ -15,9 +15,9 @@ from typing import Any, Iterable
 import yaml
 
 
-TASK_FILE = Path("references/task-catalog/LOTUSim_Task_Catalog_v0.10.0.md")
+TASK_FILE = Path("references/task-catalog/LOTUSim_Task_Catalog_v0.11.0.md")
 MISSION_FILE = Path("references/mission-catalog/LOTUSim_Mission_Catalog_v1.0.4.md")
-STATE_FILE = Path("references/state-model/LOTUSim_State_Model_v0.3.yaml")
+STATE_FILE = Path("references/state-model/LOTUSim_State_Model_v0.4.yaml")
 ONTOLOGY_FILE = Path("references/ontology/LOTUSim_Naval_Maritime_Ontology_v2.0-draft.ttl")
 
 
@@ -443,6 +443,7 @@ def validate_signature_semantics(
         report.error("SEM002", sid, f"invalid execution_pattern: {pattern}")
     parameter_by_role = validate_parameters(sid, semantics.get("parameters", []), data, report)
     validate_lifecycle(sid, kind, pattern, semantics, report)
+    validate_family_effect_boundaries(sid, signature.get("semantic_family"), semantics, report)
     state_by_id = {item["id"]: item for item in data.states}
     candidate_ids = {item["id"] for item in data.candidates}
     model_types = {item["id"]: item for item in data.model_types}
@@ -495,6 +496,15 @@ def validate_lifecycle(
     direct_effect = any((group or {}).get(op) for group in effects.values() for op in ("add", "remove"))
     if kind == "abstract" and direct_effect:
         report.error("SEM010", sid, "abstract task must not declare direct operational effects")
+
+
+def validate_family_effect_boundaries(
+    sid: str, family: str | None, semantics: dict[str, Any], report: ValidationReport,
+) -> None:
+    effects = semantics.get("operational_effects") or {}
+    world = effects.get("world") or {}
+    if family == "SF-01" and any(world.get(operation) for operation in ("add", "remove")):
+        report.error("SEM023", sid, "ISR signature must not declare direct world effects")
 
 
 def validate_occurrence(
@@ -574,7 +584,7 @@ def validate_effect(
 def validate_links(data: RepoData, report: ValidationReport) -> None:
     relative_paths = [
         Path("README.md"), Path("specification/INDEX.md"),
-        Path("specification/state-model/LOTUSim_State_Model_Specification_v0.3.md"),
+        Path("specification/state-model/LOTUSim_State_Model_Specification_v0.4.md"),
     ]
     for relative_path in relative_paths:
         validate_document_links(data.root, relative_path, report)
