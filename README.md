@@ -48,9 +48,14 @@ L’ontologie fournit les concepts et relations structurelles, le Mission Catalo
 │   ├── notes/                   Notes de coordination datées, non normatives
 │   ├── state-model/             Spécification du State Model
 │   └── archive/dem/             Versions DEM obsolètes ou fusionnées
+├── tools/
+│   ├── planning/                Chaîne planificateur pilote (Unified Planning + Aries)
+│   └── validation/              Validateur transversal et outils de revue experte
+└── validation/
+    └── expert-review/           Campagnes de validation métier : matrices, questionnaires, réponses
 ```
 
-Les sources documentaires maintenues manuellement se trouvent dans `references/`, `specification/` et `site/`. Les fichiers produits par WIDOCO ne sont pas suivis par Git. Les contrôles transversaux se trouvent dans `tools/validation/`.
+Les sources documentaires maintenues manuellement se trouvent dans `references/`, `specification/` et `site/`. Les fichiers produits par WIDOCO ne sont pas suivis par Git. Les contrôles transversaux se trouvent dans `tools/validation/` et les campagnes de revue experte dans `validation/`.
 
 ## Documentation de l’ontologie avec WIDOCO
 
@@ -90,6 +95,10 @@ python tools/validation/validate_referentials.py
 ```
 
 Une validation réussie affiche les effectifs contrôlés. En cas d’erreur, le code du contrôle, le document concerné et l’incohérence sont indiqués ; dans GitHub, ces erreurs apparaissent aussi comme annotations de la pull request.
+
+## Validation métier par les experts
+
+Le validateur automatique garantit la cohérence formelle ; la vérité opérationnelle des décisions doctrinales relève d’un dispositif complémentaire de revue experte, décrit dans [validation/expert-review/README.md](validation/expert-review/README.md). Un générateur dérive structurellement un item de vérification de chaque décision doctrinale du Method Catalog (la génération échoue si un item n’a pas de formulation), les experts répondent à un questionnaire HTML autonome hors-ligne, et un agrégateur met à jour la matrice de couverture (`validé` / `contesté` / `pending`) puis produit l’ordre du jour d’adjudication. La campagne pilote couvre les deux méthodes Escort.
 
 ## Statut
 
