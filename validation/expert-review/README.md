@@ -2,6 +2,7 @@
 
 > **Statut :** prototype (campagne pilote Escort)
 > **Périmètre :** validation métier du Method Catalog par des experts opérationnels.
+> **Baseline examinée :** Method Catalog v0.2.0 ; campagne `escort-v0.1`.
 
 ## Principe
 

@@ -19,7 +19,7 @@ TASK_FILE = Path("references/task-catalog/LOTUSim_Task_Catalog_v0.12.0.md")
 MISSION_FILE = Path("references/mission-catalog/LOTUSim_Mission_Catalog_v1.0.4.md")
 STATE_FILE = Path("references/state-model/LOTUSim_State_Model_v0.6.yaml")
 ONTOLOGY_FILE = Path("references/ontology/LOTUSim_Naval_Maritime_Ontology_v2.0-draft.ttl")
-METHOD_FILE = Path("references/method-catalog/LOTUSim_Method_Catalog_v0.1.0.md")
+METHOD_FILE = Path("references/method-catalog/LOTUSim_Method_Catalog_v0.2.0.md")
 
 
 @dataclass

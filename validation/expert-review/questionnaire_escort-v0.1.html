@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<title>Revue experte — Méthodes d'escorte (Method Catalog v0.1.0)</title>
+<title>Revue experte — Méthodes d'escorte (Method Catalog v0.2.0)</title>
 <style>
   body { font-family: "Segoe UI", system-ui, sans-serif; margin: 0; background: #f2f4f7; color: #1c2733; }
   .wrap { max-width: 780px; margin: 0 auto; padding: 24px 16px 80px; }
@@ -29,8 +29,8 @@
 </head>
 <body>
 <div class="wrap">
-  <h1>Revue experte — Méthodes d'escorte (Method Catalog v0.1.0)</h1>
-  <div class="meta">Campagne escort-v0.1 — générée le 2026-07-18 depuis le Method Catalog 0.1.0.
+  <h1>Revue experte — Méthodes d'escorte (Method Catalog v0.2.0)</h1>
+  <div class="meta">Campagne escort-v0.1 — générée le 2026-07-18 depuis le Method Catalog 0.2.0.
   Vos réponses restent locales : rien n'est transmis tant que vous n'exportez pas le fichier.</div>
   <div class="card">
     <div class="tag">Relecteur</div>
@@ -328,7 +328,7 @@ document.getElementById("export").addEventListener("click", () => {
   const expert = document.getElementById("expert").value.trim();
   const payload = {
     campaign: "escort-v0.1",
-    catalog_version: "0.1.0",
+    catalog_version: "0.2.0",
     expert: expert,
     exported_at: new Date().toISOString(),
     answers: answers

@@ -35,7 +35,7 @@ from pathlib import Path
 import yaml
 
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_CATALOG = ROOT / "references" / "method-catalog" / "LOTUSim_Method_Catalog_v0.1.0.md"
+DEFAULT_CATALOG = ROOT / "references" / "method-catalog" / "LOTUSim_Method_Catalog_v0.2.0.md"
 OUTPUT_DIR = ROOT / "validation" / "expert-review"
 
 METHOD_ID_RE = re.compile(r"TM-\d{3}-S\d{2}-M\d{2}")

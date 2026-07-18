@@ -1,4 +1,4 @@
-# LSGA v3 — Architecture de référence des scénarios tactiques LOTUSim
+# LSGA v3.2 — Architecture de référence des scénarios tactiques LOTUSim
 
 > **Statut** : proposition v3.2 — unification de LSGA v2 (Estelle Chauveau) et des
 > travaux d'exécution tsm (Cyril Moron). À valider conjointement.
@@ -1031,7 +1031,7 @@ poursuite multi-agents avec suivi d'exécution temps réel) :
 | Scenario Request | Schéma JSON v1 versionné | Implémenté — à étendre v2 (forces, end state, triggers) |
 | Validation | Validation structurelle au chargement | Implémenté (structurel) ; validation métier à spécifier |
 | WAL | `build_state` + `sync_positions`, préconditions calculées | Implémenté — mêmes « prédicats calculés » |
-| Domain HDDL | `knowledge_base.json` + méthodes HTN Python | Implémenté **en code** — delta n°1 : traduction HDDL (dépend du profil) |
+| Domain HDDL | `knowledge_base.json` + méthodes HTN Python | Implémenté **en code** ; premier fragment HDDL LSG validé sur MC-026, raccordement runtime restant |
 | Planning Engine Wrapper | Classe `Planner` (GTPyhop confiné, substituable) | Implémenté |
 | EAL / Execution Graph | `make_commands` + runner | Implémenté en **flux** — delta n°2 : artefact versionnable |
 | Supervision (N2) | Boucle exécutive par agent (thread, état local, réveil événementiel) | Implémenté — fusion N2/N3 à résorber (§4.7) |
@@ -1052,7 +1052,7 @@ Chacun petit, validé sur le scénario de référence :
 | 3 | Actions typées avec cycle de vie, dont `follow_target` | Exécution ↔ LOTUSim | Lignes 5, 6 — sépare N2/N3 |
 | 4 | Combat arbitré : `engage.attack_target`, points de vie, destruction | Cellule blanche | Lignes 7, 8, 9 |
 | 5 | Perception par force (curseur d'information) | Exécution | Qualité d'évaluation — différable |
-| 6 | Doctrine → HDDL, Execution Graph versionnable | Niveau 1 | Trajectoire de fond (dépend du profil HDDL) |
+| 6 | Doctrine → HDDL, Execution Graph versionnable | Niveau 1 | Pilote MC-026 acquis ; généralisation du domaine et raccordement EAL à poursuivre |
 
 Les incréments 1–4 suffisent à jouer le scénario de référence de bout en bout.
 
@@ -1066,7 +1066,7 @@ Chaque document se valide contre le POC au fil de l'eau, pas en cascade.
 | **LOTUSim Naval Ontology** | v2.0-draft existante | 263 classes dont 46 capacités ; annotations `nmo:hasUsageDomain` (diffusabilité) et `nmo:manifestKey` (§6.4) ; NETN-ETR et C2SIM en checklist (Annexe B) |
 | **LOTUSim Mission Catalog** | v1.0.4 existante | 66 missions, 9 familles doctrinales, capacités requises par mission |
 | **LOTUSim Task Catalog** | v0.12.0 existante | 64 verbes canoniques, 79 signatures typées ; 32 signatures alignées sur le State Model |
-| **LOTUSim Method Catalog** | v0.1.0 pilote | Deux méthodes de décomposition de la tâche Escort ; projection HDDL encore partielle |
+| **LOTUSim Method Catalog** | v0.2.0 pilote | Garde rapprochée techniquement projetable ; escorte avec écran partielle faute de fermeture primitive de Screen |
 | **LOTUSim State Model** | v0.6 existant | 105 états dynamiques normatifs, 23 types propres et traçabilité producteurs/consommateurs |
 | **Naval Domain** (Domain HDDL) | Premier fragment MC-026 disponible ; domaine complet à produire | Projection planificateur des référentiels — chemin critique, revue métier requise |
 | **Benchmark Suite** | À produire | Scénarios de référence, métriques, protocoles |
@@ -1240,6 +1240,16 @@ multi-processus de la stack LOTUSim.
    `start/stop` de `spans` et un premier fragment dérivé cible MC-026 ; le Naval
    Domain complet reste à produire.
 
+### Actualisation après validation planificateur
+
+1. **Method Catalog v0.2.0** : la méthode de garde rapprochée est techniquement
+   `ready` après validation du profil `start/stop` et du plan MC-026 par Aries ;
+   son statut métier reste `pilot` jusqu’à la revue experte et à l’exécution.
+2. **Alternative avec écran** : elle reste `partial` uniquement parce que Screen
+   ne possède pas encore de décomposition primitivement close.
+3. **Trajectoire d’intégration** : le chemin critique passe du choix du profil
+   HDDL à l’interprétation des commandes `start/stop` dans l’EAL/tsm.
+
 ## Annexe D — Documents de référence
 
 **Référentiels existants** (vérifiés entre eux par `validate_referentials.py`,
@@ -1248,7 +1258,7 @@ multi-processus de la stack LOTUSim.
 - **LOTUSim Naval Maritime Ontology** v2.0-draft (`.ttl`, OWL/Turtle) ;
 - **LOTUSim Mission Catalog** v1.0.4 ;
 - **LOTUSim Task Catalog** v0.12.0 ;
-- **LOTUSim Method Catalog** v0.1.0 ;
+- **LOTUSim Method Catalog** v0.2.0 ;
 - **LOTUSim State Model** v0.6 (`.yaml`).
 
 **Documents amont et connexes** :

@@ -139,6 +139,12 @@ class HDDLPilotTest(unittest.TestCase):
             self.assertIn(item["task_ref"], self.signatures)
         for item in self.traceability["methods"]:
             self.assertIn(item["method_ref"], self.methods)
+            projection = self.methods[item["method_ref"]].get("projection", {})
+            self.assertEqual(
+                projection.get("readiness"),
+                "ready",
+                f"projected method {item['method_ref']} is not ready",
+            )
         self.assertIn(self.traceability["mission"], {item["id"] for item in self.data.mission_records})
 
     def test_lifted_projection_variables_match_state_at_start_bindings(self) -> None:

@@ -19,7 +19,7 @@ model:
     nmo: ../ontology/LOTUSim_Naval_Maritime_Ontology_v2.0-draft.ttl
     task_catalog: ../task-catalog/LOTUSim_Task_Catalog_v0.12.0.md
     mission_catalog: ../mission-catalog/LOTUSim_Mission_Catalog_v1.0.4.md
-    method_catalog: ../method-catalog/LOTUSim_Method_Catalog_v0.1.0.md
+    method_catalog: ../method-catalog/LOTUSim_Method_Catalog_v0.2.0.md
 
 state_model_types:
   - id: SM-TY-001

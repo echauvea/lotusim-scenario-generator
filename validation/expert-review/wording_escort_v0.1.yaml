@@ -1,6 +1,6 @@
 # Formulations françaises des items de revue experte — campagne Escort v0.1.
 # Chaque entrée est reliée par son `id` à un item généré structurellement par
-# tools/validation/generate_expert_review.py depuis le Method Catalog v0.1.0.
+# tools/validation/generate_expert_review.py depuis le Method Catalog v0.2.0.
 # La génération échoue si un item doctrinal n'a pas de formulation : la
 # couverture est garantie par construction, pas par relecture.
 #
@@ -9,7 +9,7 @@
 # Le champ `expected` note la position actuelle du catalogue ; il n'apparaît
 # jamais dans le questionnaire (analyse des écarts uniquement).
 
-title: Revue experte — Méthodes d'escorte (Method Catalog v0.1.0)
+title: Revue experte — Méthodes d'escorte (Method Catalog v0.2.0)
 campaign: escort-v0.1
 scenario_intro: |
   <strong>Situation de référence.</strong> La frégate <em>Lynx</em> reçoit l'ordre d'escorter le pétrolier ravitailleur <em>Aber</em>

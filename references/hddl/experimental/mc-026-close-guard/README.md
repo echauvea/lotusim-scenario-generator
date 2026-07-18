@@ -1,7 +1,8 @@
 # MC-026 close-guard HDDL fragment
 
 This directory contains the first experimental HDDL projection for LSG. It
-projects `TM-023-S01-M01` against `MC-026` under the
+projects the technically ready `TM-023-S01-M01` from Method Catalog v0.2.0
+against `MC-026` under the
 [LOTUSim HDDL Profile v0.1](../../../../specification/hddl/LOTUSim_HDDL_Profile_v0.1.md).
 
 ## Files

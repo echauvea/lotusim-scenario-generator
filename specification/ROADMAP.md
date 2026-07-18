@@ -2,7 +2,7 @@
 
 > **Statut :** note de pilotage courante, informative
 > **Date de référence :** 2026-07-18
-> **Baseline métier :** fragment HDDL MC-026 validé par Aries ([PR #14](https://github.com/echauvea/lotusim-scenario-generator/pull/14)) et dispositif de revue experte ([PR #15](https://github.com/echauvea/lotusim-scenario-generator/pull/15)), commit de fusion `df4d647`
+> **Baseline métier :** Method Catalog v0.2.0, fragment HDDL MC-026 validé par Aries et dispositif de revue experte Escort prêt à distribuer
 
 ## 1. Baseline disponible
 
@@ -11,7 +11,7 @@
 - Task Catalog v0.12.0 : 64 tâches, 79 signatures typées et 7 Semantic Families.
 - 32 signatures possèdent une sémantique complète ; 47 restent à enrichir.
 - State Model v0.6 : 105 états normatifs, 23 types propres et 4 candidats différés.
-- Method Catalog v0.1.0 : deux méthodes pilotes décomposent `TC-023-S01 Escort Unit`.
+- Method Catalog v0.2.0 : deux méthodes pilotes décomposent `TC-023-S01 Escort Unit` ; la garde rapprochée est techniquement `ready`, l’alternative avec écran reste `partial` faute de fermeture primitive de Screen.
 - Profil HDDL LOTUSim v0.1 : compilation expérimentale `start/stop` des tâches continues, sans boucle de maintien au niveau 1.
 - Fragment HDDL MC-026 : premier Domain / Problem dérivé pour `TM-023-S01-M01` avec traçabilité explicite.
 - Chaîne planificateur pilote : Unified Planning 1.3.0 et Aries 0.5.0 parsèment le fragment et produisent exactement le plan primitif attendu.
@@ -68,10 +68,11 @@ Décisions et résultats :
 Pistes identifiées lors de la passe documentaire du 2026-07-18, non planifiées, à instruire opportunément :
 
 1. **Vérificateur de plan `spans`.** La compilation `start/stop` garantit la continuité des tâches spannantes par persistance d’état, sans protection contre l’entrelacement d’autres méthodes dans un problème plus riche que MC-026. Un contrôle post-planification (vérifier sur le plan produit qu’aucune action n’invalide `following` ou `guarding` entre leurs `start` et `stop`) fermerait cette limite à peu de frais et pourrait rejoindre la CI planificateur.
-2. **Actualisation du Method Catalog v0.2.** Les fiches Escort déclarent encore le blocker « HDDL profile must define… », satisfait depuis le profil v0.1. Le prochain incrément du catalogue devrait réviser les blockers et conditionner la promotion `pilot → draft` à deux preuves désormais outillées : le passage planificateur (acquis) et la campagne de revue experte (prête).
+2. **Provenance et fraîcheur des projections.** Enregistrer dans chaque résultat de planification les versions ou empreintes du profil, des catalogues, du State Model, du Domain et du Problem ; faire échouer la CI lorsqu’un fragment dérivé n’est plus aligné sur ses sources normatives.
 3. **Métrique de couverture doctrinale.** Le validateur connaît missions, méthodes et readiness : il pourrait publier un indicateur de pilotage — part des missions actives disposant d’au moins une méthode primitivement close et validée par les experts — pour objectiver la progression vers le Naval Domain complet.
 4. **Pont de vocabulaire LSG ↔ tsm.** L’écart entre `knowledge_base.json` (tâches en français, non typées) et le Task Catalog (signatures anglaises typées) reste le principal risque d’intégration. Une table de correspondance générée et validée par le validateur transversal transformerait ce risque en artefact contrôlé, sans attendre la décision sur le dépôt canonique de l’architecture.
 5. **Industrialisation des campagnes de revue.** Si le pilote Escort confirme le rendement du dispositif (temps par expert, taux de « Ça dépend »), générer les campagnes suivantes par lot — missions MC-034 à MC-066 par famille sémantique, puis chaque nouvelle méthode HTN — ferait de la validation métier un flux continu plutôt qu’un événement.
+6. **Politique linguistique des référentiels.** Déclarer explicitement que les sources normatives restent en anglais tandis que le pilotage et les questionnaires peuvent être en français, avec une seule version faisant autorité pour chaque décision, afin d’éviter qu’une traduction devienne une seconde norme implicite.
 
 ## 7. Règle de continuité
 

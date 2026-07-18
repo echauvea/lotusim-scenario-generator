@@ -1,7 +1,7 @@
 campaign: escort-v0.1
 generated: '2026-07-18'
-catalog: LOTUSim_Method_Catalog_v0.1.0.md
-catalog_version: 0.1.0
+catalog: LOTUSim_Method_Catalog_v0.2.0.md
+catalog_version: 0.2.0
 review_rule: un item est `validé` après accord d'au moins un expert ; toute réponse « Ça dépend » ou divergente
   passe l'item en `contesté`
 items:

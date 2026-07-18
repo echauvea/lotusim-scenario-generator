@@ -9,17 +9,17 @@ La documentation publiée de la Naval Maritime Ontology est accessible sur [GitH
 - La **Naval Maritime Ontology** est la source normative des concepts, types, capacités, équipements et relations structurelles.
 - Le **Mission Catalog** est la source normative des missions et de leurs objectifs.
 - Le **Task Catalog** est la source normative des tâches. Les sémantiques sont portées par chaque signature typée ; les sémantiques communes sont centralisées dans les Semantic Families.
-- Le **Method Catalog** décrit les méthodes HTN qui décomposent les tâches abstraites en réseaux de sous-tâches typées.
+- Le **Method Catalog v0.2.0** décrit les méthodes HTN qui décomposent les tâches abstraites en réseaux de sous-tâches typées et sépare maturité métier et aptitude technique à la projection.
 - La **LSG Domain Engineering Method (DEM)** fixe les règles de conception et les métamodèles du Task Catalog et du Method Catalog.
 - Le **State Model v0.6** est le vocabulaire dynamique dérivé des référentiels métier. Sa source YAML est normative pour les états des signatures et méthodes enrichies.
 - Le **profil HDDL LOTUSim v0.1** définit la première projection expérimentale `start/stop` des tâches continues ; il n’ajoute aucune sémantique métier.
-- Un premier **fragment Domain / Problem HDDL** dérivé est disponible pour `TM-023-S01-M01` et `MC-026`. Son plan primitif a été vérifié avec Unified Planning 1.3.0 et Aries 0.5.0 ; il reste expérimental et ne constitue pas encore le Naval Domain complet.
+- Un premier **fragment Domain / Problem HDDL** dérivé est disponible pour `TM-023-S01-M01` et `MC-026`. Son plan primitif a été vérifié avec Unified Planning 1.3.0 et Aries 0.5.0 ; chaque exécution réussie produit un résultat JSON publié par la CI. Le fragment reste expérimental et ne constitue pas encore le Naval Domain complet.
 
 ## Chaîne de dérivation
 
 ```text
 Ontology + Mission Catalog + Task Catalog ─> State Model
-Task Catalog + State Model + mission evidence ─> Method Catalog
+Ontology + Mission Catalog + Task Catalog + State Model ─> Method Catalog
 State Model + Method Catalog ─> HDDL Domain / Problems
 ```
 
@@ -102,7 +102,7 @@ Le validateur automatique garantit la cohérence formelle ; la vérité opérati
 
 ## Statut
 
-Les référentiels sont encore à des niveaux de maturité différents : l’architecture est une proposition à valider, l’ontologie, les catalogues et le State Model v0.6 sont des brouillons de travail, et les spécifications DEM sont en brouillon. Le Task Catalog v0.12.0 est la version courante : ses 32 signatures enrichies utilisent les identifiants stables du State Model selon DEM-1/DEM-2 v0.6. Le Method Catalog v0.1.0 contient le pilote Escort. Le profil HDDL v0.1 et son fragment MC-026 compilent expérimentalement `spans` en cycles `start/stop`, avec maintien continu délégué à l’exécution. Les 47 autres signatures restent à traiter progressivement.
+Les référentiels sont encore à des niveaux de maturité différents : l’architecture est une proposition à valider, l’ontologie, les catalogues et le State Model v0.6 sont des brouillons de travail, et les spécifications DEM sont en brouillon. Le Task Catalog v0.12.0 est la version courante : ses 32 signatures enrichies utilisent les identifiants stables du State Model selon DEM-1/DEM-2 v0.6. Le Method Catalog v0.2.0 contient le pilote Escort : la méthode de garde rapprochée est techniquement projetable, mais reste au statut métier `pilot` jusqu’à la revue experte et à la validation d’exécution. Le profil HDDL v0.1 et son fragment MC-026 compilent expérimentalement `spans` en cycles `start/stop`, avec maintien continu délégué à l’exécution. Les 47 autres signatures restent à traiter progressivement.
 
 La liste exhaustive, les versions, le statut et le caractère normatif ou informatif de chaque document figurent dans [specification/INDEX.md](specification/INDEX.md).
 
