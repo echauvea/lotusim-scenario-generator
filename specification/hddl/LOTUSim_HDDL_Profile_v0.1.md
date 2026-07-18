@@ -167,17 +167,22 @@ Generation shall fail rather than weaken the model when:
 ## 8. Pilot conformance and limitations
 
 The MC-026 fragment demonstrates syntactic projection and preservation of the
-two `spans` constraints through lifecycle ordering. It does not yet demonstrate:
+two `spans` constraints through lifecycle ordering. On 2026-07-18, Unified
+Planning 1.3.0 parsed the fragment and Aries 0.5.0 returned the exact expected
+six-action primitive plan. This validates the pilot against one selected
+toolchain, but not against every HDDL implementation.
 
-- compatibility with every HDDL planner;
+The pilot does not yet demonstrate:
+
+- portability across other HDDL planners;
 - execution-adapter interpretation of start/stop commands;
 - runtime monitoring of continuous invariants;
 - recovery and replanning under injected failures;
 - convoy or platform-group escort;
 - primitive closure of the screened Escort alternative.
 
-The profile shall remain experimental until the fragment is parsed by the
-selected planner toolchain and executed through the LSG/tsm adaptation path.
+The profile shall remain experimental until the fragment is executed through
+the LSG/tsm adaptation path and the lifecycle contract is validated at runtime.
 
 ## 9. External language references
 

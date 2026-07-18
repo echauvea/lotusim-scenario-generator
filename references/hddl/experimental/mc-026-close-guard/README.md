@@ -26,6 +26,22 @@ plan. Follow and Guard remain active execution objectives while Navigate Route
 runs. Their actual continuous control and invariant monitoring are outside the
 level-1 planner.
 
+## Planner validation
+
+On 2026-07-18, the fragment was parsed and solved without modification using
+Unified Planning 1.3.0 and Aries 0.5.0. Aries returned
+`SOLVED_SATISFICING` and exactly the primitive sequence above.
+
+To reproduce the check in an isolated Python 3.12 environment:
+
+```text
+python -m pip install -r tools/planning/requirements-aries.txt
+python tools/planning/run_mc026_aries.py
+```
+
+The runner checks both solvability and exact primitive ordering. The CI repeats
+this test whenever the HDDL fragment, profile or planner tooling changes.
+
 ## Interpretation limits
 
 - The fragment is derived and non-normative.
