@@ -19,7 +19,7 @@ Its purpose is to ensure that all contributors model missions, tasks and symboli
 1. The Naval Maritime Ontology is the single source of truth for concepts and types.
 2. The Mission Catalog is the single source of truth for missions and mission objectives.
 3. The Task Catalog is the single source of truth for operational tasks and their signature-level semantics.
-4. The State Model is derived from these three repositories.
+4. The State Model is derived from these three repositories; method design may reveal additional command or execution states, which shall be normalized in the State Model before a method references them.
 5. The Method Catalog is the source of truth for HTN decomposition alternatives.
 6. HDDL is an implementation artifact derived from the State Model and Method Catalog.
 
@@ -192,10 +192,9 @@ This cardinality preserves both principles:
 Every modeling element shall be traceable through the following derivation chain:
 
 ```text
-Naval Maritime Ontology ─┐
-Mission Catalog ─────────┼─> State Model ─┐
-Task Catalog ────────────┘                ├─> HDDL Domain / Problems
-Task Catalog ──────────────> Method Catalog ┘
+Ontology + Mission Catalog + Task Catalog ─> State Model
+Task Catalog + State Model + mission evidence ─> Method Catalog
+State Model + Method Catalog ─> HDDL Domain / Problems
 ```
 
 No state element shall appear directly in HDDL without traceability to the State Model and its upstream repositories. No HTN decomposition shall appear without traceability to the Method Catalog.

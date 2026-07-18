@@ -16,7 +16,7 @@ Ce document ne tranche rien : il liste des constats factuels et les questions qu
 
 - D'après le changelog de la v3.2, le delta v3.1 → v3.2 est "sans changement de fond" (traduction FR d'une section, mention d'un validateur CI, mise à jour de statuts de versions des référentiels). Pas critique en soi.
 - Mais le changelog **ne documente pas** la transition v3 → v3.1 : trou dans l'historique, indépendamment de la synchro entre dépôts.
-- La v3.2 contient des liens relatifs vers `lsga-architecture-v2.md` et `rig-e2e.md` comme s'ils étaient dans le même dépôt (`[LSGA v2](lsga-architecture-v2.md)`) — ces fichiers n'existent que dans tsm. Liens cassés dès qu'on consulte ou publie le dépôt LSG isolément.
+- La v3.2 contenait alors des liens relatifs vers `lsga-architecture-v2.md` et `rig-e2e.md` comme s'ils étaient dans le même dépôt — ces fichiers n'existent que dans tsm. Les liens étaient donc cassés depuis le dépôt LSG isolé.
 
 **Conséquence** : il n'y a aujourd'hui aucune source unique de vérité pour ce document. Deux copies, dans deux dépôts, sans mécanisme de synchronisation.
 
@@ -64,3 +64,12 @@ Le **Task Catalog** (LSG) utilise des verbes canoniques anglais typés (`Navigat
 ## 6. Proposition
 
 Un point court (30 min) centré sur les questions 1 et 3 en priorité : elles conditionnent la suite (où corriger les liens cassés, et sur quel périmètre lancer le premier mapping vocabulaire ↔ doctrine).
+
+---
+
+## 7. Mise à jour au 2026-07-18
+
+- Les liens LSGA v2 et `rig-e2e.md` de l’architecture LSG pointent désormais explicitement vers le dépôt GitHub `tactical_scenario_maker` ; le défaut de lien local est résolu.
+- Le choix du dépôt canonique de l’architecture reste à confirmer avec l’équipe tsm.
+- Le premier mapping doctrinal est désormais représenté côté LSG par le Method Catalog v0.1.0 : deux méthodes pilotes décomposent Escort, sans encore remplacer ni modifier `knowledge_base.json` dans tsm.
+- La priorité technique suivante est le profil de projection HDDL et son expérimentation sur MC-026, avant un raccordement mécanique au runtime tsm.

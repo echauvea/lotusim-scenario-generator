@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -13,6 +14,7 @@ from validate_referentials import (  # noqa: E402
     is_ontology_subtype,
     type_compatible,
     validate_effect,
+    validate_document_links,
     validate_family_effect_boundaries,
     validate_reverse_state_side,
     validate_repository,
@@ -53,6 +55,14 @@ class ValidationHelpersTest(unittest.TestCase):
         semantics = {"operational_effects": {"world": {"add": [{"state_ref": "SM-ST-001"}], "remove": []}}}
         validate_family_effect_boundaries("TC-003-S01", "SF-01", semantics, report)
         self.assertEqual(report.errors[0][0], "SEM023")
+
+    def test_broken_markdown_link_is_reported(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "README.md").write_text("[missing](docs/missing.md)\n", encoding="utf-8")
+            report = ValidationReport()
+            validate_document_links(root, Path("README.md"), report)
+            self.assertEqual(report.errors[0][0], "DOC002")
 
 
 class CurrentRepositoryTest(unittest.TestCase):
