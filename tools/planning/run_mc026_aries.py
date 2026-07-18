@@ -15,7 +15,8 @@ from unified_planning.shortcuts import OneshotPlanner
 
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_FRAGMENT = ROOT / "references/hddl/experimental/mc-026-close-guard"
-DEFAULT_OUTPUT = ROOT / "outputs/mc-026/aries-plan.json"
+OUTPUT_ROOT = ROOT / "outputs"
+DEFAULT_OUTPUT = Path("mc-026/aries-plan.json")
 EXPECTED_PLAN = (
     "start-follow-designated-unit(escort-1, protected-hvu-1)",
     "start-guard-object(escort-1, protected-hvu-1)",
@@ -85,14 +86,28 @@ def result_document(result: object, domain: Path, problem: Path) -> dict[str, ob
     }
 
 
-def write_result(document: dict[str, object], output: Path) -> None:
+def safe_output_path(output: Path) -> Path:
+    """Resolve an output path while confining it to the repository output root."""
+
+    if output.is_absolute():
+        raise ValueError("The output path must be relative to the outputs directory.")
+    output_root = OUTPUT_ROOT.resolve()
+    resolved = (output_root / output).resolve()
+    if resolved == output_root or not resolved.is_relative_to(output_root):
+        raise ValueError("The output path must remain inside the outputs directory.")
+    return resolved
+
+
+def write_result(document: dict[str, object], output: Path) -> Path:
     """Write a deterministic UTF-8 JSON result."""
 
-    output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(
+    resolved_output = safe_output_path(output)
+    resolved_output.parent.mkdir(parents=True, exist_ok=True)
+    resolved_output.write_text(
         json.dumps(document, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
+    return resolved_output
 
 
 def main() -> int:
@@ -105,7 +120,7 @@ def main() -> int:
         "--output",
         type=Path,
         default=DEFAULT_OUTPUT,
-        help="JSON result path (default: outputs/mc-026/aries-plan.json).",
+        help="JSON path relative to outputs/ (default: mc-026/aries-plan.json).",
     )
     args = parser.parse_args()
 
@@ -137,13 +152,16 @@ def main() -> int:
         )
         return 1
 
-    write_result(document, args.output)
+    try:
+        output_path = write_result(document, args.output)
+    except ValueError as error:
+        parser.error(str(error))
 
     print(f"Planner: Aries | Status: {result.status.name}")
     for index, action in enumerate(actual_plan, start=1):
         print(f"{index}. {action}")
     print("MC-026 primitive plan matches the expected start/stop lifecycle.")
-    print(f"JSON result: {args.output.resolve()}")
+    print(f"JSON result: {output_path}")
     return 0
 
 

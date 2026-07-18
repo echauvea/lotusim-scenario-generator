@@ -1,10 +1,15 @@
 import json
-import tempfile
 import unittest
 from pathlib import Path
 from types import SimpleNamespace
+from uuid import uuid4
 
-from tools.planning.run_mc026_aries import result_document, write_result
+from tools.planning.run_mc026_aries import (
+    OUTPUT_ROOT,
+    result_document,
+    safe_output_path,
+    write_result,
+)
 
 
 class PlannerResultTest(unittest.TestCase):
@@ -37,13 +42,21 @@ class PlannerResultTest(unittest.TestCase):
         )
 
     def test_write_result_creates_valid_json(self) -> None:
-        with tempfile.TemporaryDirectory() as directory:
-            output = Path(directory) / "nested" / "plan.json"
-            write_result({"status": "SOLVED_SATISFICING"}, output)
+        relative_output = Path("tests") / f"{uuid4()}.json"
+        output = write_result({"status": "SOLVED_SATISFICING"}, relative_output)
+        try:
             self.assertEqual(
                 json.loads(output.read_text(encoding="utf-8")),
                 {"status": "SOLVED_SATISFICING"},
             )
+        finally:
+            output.unlink(missing_ok=True)
+
+    def test_output_path_cannot_escape_output_directory(self) -> None:
+        with self.assertRaises(ValueError):
+            safe_output_path(Path("../outside.json"))
+        with self.assertRaises(ValueError):
+            safe_output_path(OUTPUT_ROOT.parent / "outside.json")
 
 
 if __name__ == "__main__":
