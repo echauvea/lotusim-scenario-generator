@@ -325,7 +325,6 @@ Capability Types shown per verb are the union over its signatures.
 
 | ID | Verb | Capability Types | Legacy signatures | Status |
 |---|---|---|---|---|
-
 | TC-001 | `Navigate` | CT-01 | Navigate to Location; Navigate Route | `draft` |
 | TC-002 | `Patrol` | CT-01 | Patrol Area | `draft` |
 | TC-003 | `Search` | CT-02, CT-05 | Search Area; Search Vessel | `candidate` |
@@ -4725,7 +4724,9 @@ traceability:
 - Completion outcomes and planning predicates belong to planning or execution state.
 - A lexical verb is not merged when its semantics cannot be represented by typed signatures without ambiguity; signature-level capability classification is the mechanism that preserves this rule under merging.
 
-## 8. Changes 0.2.0 → 0.3.0
+## 8. Change history
+
+### 8.1 Changes 0.2.0 → 0.3.0
 
 1. **Capability classification moved from task level to signature level** (`capability_type` and `implements_capabilities` per signature). Resolves the Search/Maintain inconsistency without splitting canonical verbs.
 2. **`implements_capabilities` refined to the most specific ontology classes** (46-class Capability hierarchy of the Naval Ontology v2.0). This closes the resolution chain verb → capability → `nmo:manifestKey` → typed action family.
@@ -4742,11 +4743,11 @@ traceability:
 | Locate Missing Entity | CT-06 | CT-02 |
 | Locate Emitter | CT-06 | CT-11 |
 
-## 8.1 Semantic foundation introduced in v0.6.0
+### 8.2 Semantic foundation introduced in v0.6.0
 
 The first semantic implementation covers TC-001 Navigate, TC-006 Follow and TC-023 Escort. Candidate state names are intentionally provisional until normalization into the LOTUSim State Model.
 
-## 8.2 Semantic pilot closed in v0.6.1
+### 8.3 Semantic pilot closed in v0.6.1
 
 - Aligned the four pilot signatures with the canonical DEM-2 v0.3 semantic structure.
 - Added mandatory `execution_pattern`, explicit parameter sources, applicability, desired outcomes, completion conditions and termination conditions.
@@ -4756,20 +4757,20 @@ The first semantic implementation covers TC-001 Navigate, TC-006 Follow and TC-0
 - Removed the direct `escort_completed` effect from abstract Escort and expressed its intent as desired outcomes.
 - Kept all state names as controlled candidates pending derivation of stable State Model identifiers.
 
-## 8.3 Traceability refresh for Mission Catalog v1.0.4
+### 8.4 Traceability refresh for Mission Catalog v1.0.4
 
 - Regenerated every `used_by_missions` list from all 66 active mission specifications MC-001 through MC-066.
 - Removed links inherited from the divergent non-normative mission proposals.
 - No task identity, typed signature or operational semantics changed.
 
-## 8.4 Semantic Families stabilized in v0.7.0
+### 8.5 Semantic Families stabilized in v0.7.0
 
 - Defined seven normative Semantic Families with objectives, shared concepts, transitions, invariants, terminology and validation rules.
 - Assigned a stable `TC-NNN-SNN` identifier and exactly one `semantic_family` to each of the 79 typed signatures.
 - Kept generic verbs multi-family when required: their family view is the derived union of their signatures.
 - Added the canonical multi-family example `Search`: `Search Area` belongs to ISR, while `Search Vessel` belongs to Engagement.
 
-## 8.5 Core ISR semantics introduced in v0.8.0
+### 8.6 Core ISR semantics introduced in v0.8.0
 
 - Added complete operational semantics to the seven signatures of Observe, Detect, Localize, Classify, Identify and Track.
 - Made every ISR knowledge effect relative to an explicit `knowledge_holder`.
@@ -4778,7 +4779,7 @@ The first semantic implementation covers TC-001 Navigate, TC-006 Follow and TC-0
 - Defined ISR as a branching knowledge progression rather than a mandatory linear pipeline.
 - Declared Track as continuous, with explicit normal termination conditions and `target_lost` as a failure outcome.
 
-## 8.6 State Model alignment in v0.8.1
+### 8.7 State Model alignment in v0.8.1
 
 - Replaced every candidate state name in the 11 enriched signatures with a stable `SM-ST-NNN` reference from State Model v0.1.
 - Replaced generic parameter type names with explicit `nmo:` or `SM-TY-NNN` references and verified their compatibility with State Model arguments.
@@ -4787,7 +4788,7 @@ The first semantic implementation covers TC-001 Navigate, TC-006 Follow and TC-0
 - Gave `SM-ST-013 navigation_failed` one canonical tuple shape through the `navigation_objective` union type.
 - Added the `location_known` projection as a Localize knowledge effect.
 
-## 8.7 Movement family completed in v0.9.0
+### 8.8 Movement family completed in v0.9.0
 
 - Added complete semantics to the eight remaining Movement signatures: Patrol Area, Maintain Station, Maintain Formation, Shadow, Approach, Withdraw, Transit Corridor and Evade.
 - Distinguished continuous active relations from durative completion conditions.
@@ -4795,7 +4796,7 @@ The first semantic implementation covers TC-001 Navigate, TC-006 Follow and TC-0
 - Added explicit origin capture for withdrawal and corridor transit location replacement.
 - Aligned all new state references with State Model v0.2.
 
-## 8.8 Protection family completed in v0.10.0
+### 8.9 Protection family completed in v0.10.0
 
 - Added complete semantics to Screen Protected Force, Guard Object, Interpose, Defend Area and Deploy Decoy.
 - Kept Screen and Defend abstract and effect-free, with explicit desired outcomes and normal termination conditions.
@@ -4803,7 +4804,7 @@ The first semantic implementation covers TC-001 Navigate, TC-006 Follow and TC-0
 - Modeled decoy deployment as an atomic custody-to-world transition and kept the decoy's protective effect derived.
 - Aligned all Protection state references with State Model v0.3.
 
-## 8.9 ISR coverage and products introduced in v0.11.0
+### 8.10 ISR coverage and products introduced in v0.11.0
 
 - Added complete semantics to Search Area, Survey Area, Map Seabed and Measure Environment.
 - Made Search Area abstract and requirement-driven, without direct knowledge or world effects.
@@ -4811,25 +4812,24 @@ The first semantic implementation covers TC-001 Navigate, TC-006 Follow and TC-0
 - Added typed survey, map and measurement products with explicit scope and provenance.
 - Kept all four signatures free of direct world effects and aligned them with State Model v0.4.
 
-## 8.10 ISR characterization and inspection introduced in v0.12.0
+### 8.11 ISR characterization and inspection introduced in v0.12.0
 
 - Added complete semantics to Characterize Object, Characterize Emission, Inspect Object and Inspect Infrastructure.
 - Distinguished characterization from classification and identification through explicit requirement-scoped assessment products.
 - Added immutable inspection records with subject, requirement satisfaction and producing-platform provenance.
 - Kept all four signatures free of direct world effects and aligned them with State Model v0.5.
 
-## 9. Changes 0.3.1 → 0.3.2
+### 8.12 Changes 0.3.1 → 0.3.2
 
 - Regenerated `used_by_missions` from the Mission Catalog v0.5.0, including the completed Mine Warfare family MC-012 to MC-017.
 - No task identity or signature semantics changed.
 
-## 10. Open points
+### 8.13 Changes 0.3.3 → 0.3.4
+
+- Recomputed `used_by_missions` after completion of MC-028 through MC-033.
+
+## 9. Open points
 
 - **Fate of the Capability Type layer (CT-01…CT-11):** now that signatures reference fine-grained ontology classes, the CT layer is derivable from the ontology hierarchy and does not superpose cleanly onto it (CT-04/05/06/07 all fall under `InteractionCapability`; CT-03 and CT-10 sit under `SupportCapability`). Decision pending: keep as editorial grouping, or drop in favour of the ontology hierarchy.
 - **Target localization:** `nmo:LocalizationCapability` denotes platform self-localization (subclass of `NavigationCapability`). No ontology class covers *target* localization; `Localize Object` and Mission Catalog MT-02 baselines currently fall back to `DetectionCapability`/`PerceptionCapability`. Candidate ontology addition: `TargetLocalizationCapability` under `PerceptionCapability`.
 - Continue regenerating `used_by_missions` from Mission Catalog `task_candidates` after each mission-family consolidation; do not maintain the reverse links manually.
-
-
-## Changes 0.3.3 → 0.3.4
-
-- Recomputed `used_by_missions` after completion of MC-028 through MC-033.

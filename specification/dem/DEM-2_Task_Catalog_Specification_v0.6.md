@@ -254,9 +254,9 @@ An inconclusive sensing attempt is represented as an attempt outcome, never as p
 # 9. Traceability and State Model Derivation
 
 ```text
-Naval Maritime Ontology ─┐
-Mission Catalog ─────────┼─> State Model ─> HDDL Domain / Problems
-Task Catalog ────────────┘
+Ontology + Mission Catalog + Task Catalog ─> State Model
+Task Catalog + State Model + mission evidence ─> Method Catalog
+State Model + Method Catalog ─> HDDL Domain / Problems
 ```
 
 The State Model is derived from relevant ontology relations, task reads and effects, and mission preconditions and objectives. Its normative machine-readable source is `references/state-model/LOTUSim_State_Model_v0.6.yaml`; its metamodel and decisions are documented by `specification/state-model/LOTUSim_State_Model_Specification_v0.6.md`. HTN decompositions are defined separately in the Method Catalog according to DEM-3. HDDL artifacts are then derived from the State Model and Method Catalog; they do not introduce independent business semantics.

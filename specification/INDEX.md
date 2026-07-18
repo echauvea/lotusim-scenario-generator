@@ -14,7 +14,7 @@ Cet index est la source unique d’inventaire documentaire du dépôt **LSG — 
 
 | Document | Version déclarée | Statut | Autorité | Rôle et observations |
 |---|---:|---|---|---|
-| [Architecture LSG](architecture/LSG_Architecture_v3.2.md) | v3.2 | Proposition courante, à valider conjointement | Informatif jusqu’à validation | Architecture globale de génération, exécution et arbitrage. Les documents amont `lsga-architecture-v2.md` et `rig-e2e.md` cités par la source ne sont pas présents dans ce dépôt. |
+| [Architecture LSG](architecture/LSG_Architecture_v3.2.md) | v3.2 | Proposition courante, à valider conjointement | Informatif jusqu’à validation | Architecture globale de génération, exécution et arbitrage. Les documents amont LSGA v2 et `rig-e2e.md` restent hébergés dans le dépôt `tactical_scenario_maker` et sont référencés par des liens externes. |
 | [DEM-1 — Semantic Design Rules](dem/DEM-1_Semantic_Design_Rules_v0.6.md) | v0.6 | Brouillon courant | Normatif pour la méthode | Règles de conception sémantique, références d’état stables et tuples canoniques. |
 | [DEM-2 — Task Catalog Specification](dem/DEM-2_Task_Catalog_Specification_v0.6.md) | v0.6 | Brouillon courant | Normatif pour la méthode | Métamodèle des signatures aligné sur le State Model normatif. |
 | [DEM-3 — Method Catalog Specification](dem/DEM-3_Method_Catalog_Specification_v0.1.md) | v0.1 | Pilote courant | Normatif pour la méthode | Métamodèle des méthodes HTN, réseaux de sous-tâches, synchronisations et projection HDDL. |
@@ -78,9 +78,10 @@ Cet index est la source unique d’inventaire documentaire du dépôt **LSG — 
 | Document | Version | Statut | Autorité | Rôle |
 |---|---:|---|---|---|
 | [README racine](../README.md) | non versionné | Courant | Informatif | Présentation du dépôt, responsabilités, chaîne de dérivation, arborescence et statuts. |
+| [Feuille de route](ROADMAP.md) | 2026-07-18 | Courant | Informatif | Baseline vérifiée, limites du pilote Escort, ordre de reprise et décisions différées. |
 | [Validateur des référentiels](../tools/validation/validate_referentials.py) | non versionné | Courant | Contrôle automatisé | Vérifie les identifiants, références croisées, familles, types, états, bindings, méthodes HTN et principales règles DEM ; exécuté par la CI. |
 | [Documentation WIDOCO](https://echauvea.github.io/lotusim-scenario-generator/) | 2.0.0-draft | Générée par CI | Informatif | Représentation HTML, WebVOWL et sérialisations RDF de la Naval Maritime Ontology, publiée par GitHub Pages sans fichiers générés suivis dans Git. |
-| [État des lieux — Interfaçage LSG ↔ tsm](notes/2026-07-14-etat-des-lieux-interface-tsm.md) | 2026-07-14 | Note de coordination | Informatif | Constats sur la divergence du document d'architecture entre les deux dépôts et sur l'écart de vocabulaire entre `knowledge_base.json` (tsm) et le Task Catalog. Questions ouvertes à trancher avec Cyril Moron, non résolues dans ce document. |
+| [État des lieux — Interfaçage LSG ↔ tsm](notes/2026-07-14-etat-des-lieux-interface-tsm.md) | 2026-07-14, mise à jour 2026-07-18 | Note de coordination | Informatif | Constats sur la divergence entre les dépôts et sur l'écart avec `knowledge_base.json` ; addendum indiquant les liens corrigés et le pilote Method Catalog désormais disponible. |
 
 ## Artefacts prévus mais absents
 
@@ -98,11 +99,12 @@ Cet index est la source unique d’inventaire documentaire du dépôt **LSG — 
 - Le Method Catalog v0.1.0 introduit deux méthodes pilotes pour Escort. Elles explicitent les sous-tâches concurrentes, leurs conditions et les décisions de reprise ; leur projection HDDL reste partielle.
 - Le validateur transversal et sa CI contrôlent automatiquement les inventaires, la traçabilité, les Semantic Families et la cohérence entre sémantiques de tâche, méthodes HTN, State Model et ontologie.
 - Les références de versions de l’architecture v3.2 ont été actualisées vers Mission Catalog v1.0.4, Task Catalog v0.12.0, Method Catalog v0.1.0 et State Model v0.6.
-- La version d’architecture fournie comme source courante contient deux liens vers LSGA v2 et un lien vers `rig-e2e.md`, alors que ces fichiers sont absents du dépôt. Ils sont conservés tels quels dans le document source et restent donc à résoudre.
+- L’architecture référence LSGA v2 et `rig-e2e.md` par des liens externes vers `tactical_scenario_maker` ; aucun lien local cassé ne subsiste dans la documentation Markdown.
+- L’architecture présente désormais Ontology, Mission Catalog, Task Catalog, State Model et Method Catalog comme sources normatives de la projection HDDL, conformément à DEM-1/DEM-3.
 
 ## Décisions humaines encore requises
 
 1. Valider le statut normatif futur de l’architecture v3.2, actuellement présentée comme proposition à valider conjointement.
-2. Décider si les documents amont absents (`lsga-architecture-v2.md` et `rig-e2e.md`) doivent être intégrés au dépôt ou rester des références externes.
-3. Arbitrer l’écart architectural entre LSGA v3.2, qui présente encore le Domain HDDL comme source de vérité de la doctrine, et DEM-1/DEM-2, qui imposent Ontology + Mission Catalog + Task Catalog comme sources métier normatives et HDDL comme artefact dérivé. Cette divergence n’a pas été corrigée silencieusement dans l’architecture.
-4. Faire relire et valider par les experts métier les 33 spécifications nouvellement consolidées MC-034 à MC-066 avant de promouvoir leur statut de `candidate` à `draft`.
+2. Confirmer avec l’équipe `tactical_scenario_maker` quel dépôt porte la copie canonique de l’architecture ; les documents amont restent pour l’instant des références externes.
+3. Faire relire et valider par les experts métier les 33 spécifications nouvellement consolidées MC-034 à MC-066 avant de promouvoir leur statut de `candidate` à `draft`.
+4. Choisir la stratégie de projection HDDL des tâches continues et des synchronisations `spans` avant de promouvoir les méthodes Escort.

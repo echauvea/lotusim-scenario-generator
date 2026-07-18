@@ -760,11 +760,11 @@ def validate_method_outcomes(
 
 
 def validate_links(data: RepoData, report: ValidationReport) -> None:
-    relative_paths = [
-        Path("README.md"), Path("specification/INDEX.md"),
-        Path("specification/state-model/LOTUSim_State_Model_Specification_v0.6.md"),
-        METHOD_FILE, Path("specification/dem/DEM-3_Method_Catalog_Specification_v0.1.md"),
-    ]
+    relative_paths = sorted(
+        path.relative_to(data.root)
+        for path in data.root.rglob("*.md")
+        if ".git" not in path.parts
+    )
     for relative_path in relative_paths:
         validate_document_links(data.root, relative_path, report)
 

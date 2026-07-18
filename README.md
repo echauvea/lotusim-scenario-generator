@@ -17,10 +17,9 @@ La documentation publiée de la Naval Maritime Ontology est accessible sur [GitH
 ## Chaîne de dérivation
 
 ```text
-Naval Maritime Ontology ─┐
-Mission Catalog ─────────┼─> State Model ─┐
-Task Catalog ────────────┘                ├─> HDDL Domain / Problems
-Task Catalog ──────────────> Method Catalog ┘
+Ontology + Mission Catalog + Task Catalog ─> State Model
+Task Catalog + State Model + mission evidence ─> Method Catalog
+State Model + Method Catalog ─> HDDL Domain / Problems
 ```
 
 L’ontologie fournit les concepts et relations structurelles, le Mission Catalog les préconditions et objectifs, et le Task Catalog les lectures, effets et conditions des tâches. Le Method Catalog ajoute les alternatives de décomposition, l’ordonnancement, la synchronisation et la propagation des échecs.
@@ -40,6 +39,7 @@ L’ontologie fournit les concepts et relations structurelles, le Mission Catalo
 ├── site/                         Fichiers maintenus du site publié
 ├── specification/
 │   ├── INDEX.md                 Index documentaire officiel
+│   ├── ROADMAP.md               État courant et ordre de reprise
 │   ├── architecture/            Architecture de référence de LSG
 │   ├── dem/                     Versions courantes de la méthode DEM
 │   ├── notes/                   Notes de coordination datées, non normatives
@@ -93,3 +93,5 @@ Une validation réussie affiche les effectifs contrôlés. En cas d’erreur, le
 Les référentiels sont encore à des niveaux de maturité différents : l’architecture est une proposition à valider, l’ontologie, les catalogues et le State Model v0.6 sont des brouillons de travail, et les spécifications DEM sont en brouillon. Le Task Catalog v0.12.0 est la version courante : ses 32 signatures enrichies utilisent les identifiants stables du State Model selon DEM-1/DEM-2 v0.6. Le Method Catalog v0.1.0 contient le pilote Escort avec deux méthodes encore partiellement projetables en HDDL. Les 47 autres signatures restent à traiter progressivement.
 
 La liste exhaustive, les versions, le statut et le caractère normatif ou informatif de chaque document figurent dans [specification/INDEX.md](specification/INDEX.md).
+
+Pour reprendre les travaux sans reconstruire le contexte, consulter la [feuille de route courante](specification/ROADMAP.md). Elle récapitule le dernier incrément validé, les limites du pilote Escort et l’ordre recommandé des prochaines étapes.

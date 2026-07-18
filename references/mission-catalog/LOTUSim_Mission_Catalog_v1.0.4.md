@@ -142,7 +142,7 @@ Elementary actions such as `detect`, `classify`, `identify`, `track`, `navigate`
 
 ## 4. Machine-readable mission schema
 
-Canonical source format: YAML validated by JSON Schema.
+Canonical source format: YAML blocks validated by the repository referential validator. A standalone JSON Schema remains a planned formal artifact.
 
 ```yaml
 id: MC-001
@@ -3122,7 +3122,7 @@ traceability:
 
 ## 8. Phase A consolidation — Mission Type assignment
 
-All 66 candidate missions have been assigned to one and only one Mission Type.
+All 66 active missions have been assigned to one and only one Mission Type.
 
 Assignment principles:
 
@@ -3136,7 +3136,7 @@ Assignment principles:
 - logistics, transport, relay and assistance belong to `MT-08`;
 - amphibious support, special-operations support, joint fires support and other enabling activities belong to `MT-09`.
 
-Potentially ambiguous assignments remain `candidate` until their detailed mission specification is reviewed. In particular:
+The following potentially ambiguous assignments were examined during consolidation and retained:
 
 - `Conduct Mine Reconnaissance` is classified as Search;
 - `Verify Mine Clearance` is classified as Survey;
@@ -3152,25 +3152,26 @@ Potentially ambiguous assignments remain `candidate` until their detailed missio
 
 ## 10. Earlier changes
 
-### Changes 0.3.0 → 0.3.1
+### 10.1 Changes 0.3.0 → 0.3.1
 
 - Ontology references corrected against the Naval Ontology v2.0: `Area` and `SpatialEntity` (which do not exist as ontology classes) replaced by `SpatialRegion` in the mission-target table (§3.5) and in the `ontology_concepts` lists of MC-001, MC-026 and MC-027. `SpatialRegion` is retained rather than a specific subclass because a mission-target area may be coastal, harbour, restricted or seabed; introducing an intermediate `nmo:Area` class grouping the `*Area` subclasses is a candidate ontology change (v2.1), not a catalog decision.
 
-## 10. Changes 0.4.0 → 0.5.0
+### 10.2 Changes 0.4.0 → 0.5.0
 
 - Completed detailed specifications for the six Mine Warfare missions MC-012 to MC-017.
 - Added capability requirements, task candidates, ontology concepts and typed mission relationships for the Mine Warfare family.
 - Promoted MC-012 to MC-017 from `candidate` to `draft`.
 - Regenerated Task Catalog `used_by_missions` references from Mission Catalog `task_candidates`.
 
-## 11. Open consolidation points
+## 11. Open validation points
 
 - Review the naming and scope of lethal combat missions before validation.
 - Replace operational labels such as high-value unit, convoy, suspect vessel and threat by Scenario Model roles rather than ontology classes.
-- Complete detailed specifications iteratively and validate all task references against the Task Catalog.
+- Obtain domain-expert review of MC-034 through MC-066 before promoting them from `candidate` to `draft`.
+- Re-run mission-to-task traceability validation after every mission or task change.
 
 
-## 12. Detailed mission specifications — Maritime Combat Operations
+## 12. Detailed mission specifications — consolidated extension MC-034 to MC-066
 
 The specifications in this section use the mission identities and classifications defined in the canonical inventory in section 5.
 

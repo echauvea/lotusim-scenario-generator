@@ -2,7 +2,7 @@
 
 > **Statut** : proposition v3.2 — unification de LSGA v2 (Estelle Chauveau) et des
 > travaux d'exécution tsm (Cyril Moron). À valider conjointement.
-> **Date** : 2026-07-13
+> **Date** : 2026-07-13 — alignement documentaire 2026-07-18
 > **Lignée** : étend [LSGA v2](https://github.com/cmoron-lab/tactical_scenario_maker/blob/main/docs/lsga-architecture-v2.md) (génération, dans le dépôt `tactical_scenario_maker`) au cycle
 > complet du scénario — génération, exécution, arbitrage. Changements v2 → v3
 > en [Annexe C](#annexe-c--changements) ; changements v3.1 → v3.2 idem.
@@ -67,18 +67,23 @@ distribuée de la simulation.
 
 ## 1.3 Principes d'architecture
 
-Les principes P1–P7 de la v2 sont reconduits tels quels ; P8–P10 portent
-l'extension du périmètre.
+Les principes P1–P7 de la v2 sont reconduits dans leur intention ; P2 est
+précisé pour distinguer les référentiels métier de leur projection HDDL.
+P8–P10 portent l'extension du périmètre.
 
 **P1 — Séparation des responsabilités.** Chaque composant possède une
 responsabilité unique. Génération, planification, exécution, arbitrage et
 simulation sont découplés.
 
 **P2 — Source unique de vérité.** Chaque information possède une unique source
-de vérité : le **Domain HDDL** pour la doctrine ; le **Problem HDDL** pour
-l'état symbolique d'un scénario ; le **Planning Model** pour ce qui est transmis
-au moteur ; l'**Execution Graph** pour le scénario exécutable ; le **Simulation
-State**, maintenu par l'environnement d'exécution, pour le monde simulé.
+de vérité : l'**Ontology** pour les concepts et types ; le **Mission Catalog**
+pour les missions et objectifs ; le **Task Catalog** pour les tâches et leur
+sémantique ; le **State Model** pour le vocabulaire dynamique normalisé ; le
+**Method Catalog** pour les décompositions HTN. Le **Domain HDDL** est leur
+projection pour un planificateur, le **Problem HDDL** instancie l'état
+symbolique d'un scénario, le **Planning Model** est transmis au moteur,
+l'**Execution Graph** décrit le scénario exécutable et le **Simulation State**,
+maintenu par l'environnement d'exécution, reste la vérité du monde simulé.
 
 **P3 — Découplage par adaptation.** Le **WAL** (World Abstraction Layer) fait
 la transition monde simulé → modèle symbolique ; l'**EAL** (Execution
@@ -330,10 +335,10 @@ construit objets, état initial et réseau de tâches, traduit les grandeurs
 physiques en **prédicats symboliques calculés** (distances, zones,
 disponibilités), applique le profil HDDL. Il ne modifie jamais le Domain HDDL.
 
-**Domain HDDL.** La formalisation de la doctrine opérationnelle — types,
-prédicats, tâches, méthodes HTN, opérateurs. Écrit, revu et versionné par les
-experts métier ; indépendant de tout scénario. C'est le patrimoine doctrinal
-de LOTUSim.
+**Domain HDDL.** Projection exécutable et indépendante du scénario des types,
+prédicats, tâches, méthodes HTN et opérateurs issus des référentiels LSG.
+Il est généré ou contrôlé selon le profil HDDL LOTUSim, revu avec les experts
+métier et versionné, mais n'introduit aucune sémantique doctrinale indépendante.
 
 **Planning Engine Wrapper.** Encapsulation complète du moteur HTN — chargement
 domaine/problème, appel, récupération, traduction des erreurs. Aucune logique
@@ -352,16 +357,18 @@ actions exécutables — le paradigme HTN, cohérent avec le MDMP et les démarc
 doctrinales OTAN. HDDL est le standard ouvert associé : séparation
 domaine/problème, moteurs multiples, format textuel versionnable. Un **profil
 HDDL LOTUSim** définit le sous-ensemble officiel du langage — pivot de
-faisabilité de la traduction doctrine → HDDL, premier livrable documentaire
-(§10.3).
+faisabilité de la projection des référentiels métier vers HDDL, premier
+livrable documentaire (§10.3).
 
-**Séparation doctrine / scénario.** Connaissances permanentes dans le Domain,
-mission particulière dans le Problem : versionnement indépendant,
-réutilisation, comparaison, reproductibilité.
+**Séparation doctrine / scénario.** Sémantique permanente dans les référentiels
+métier, projection planificateur dans le Domain, mission particulière dans le
+Problem : versionnement indépendant, réutilisation, comparaison,
+reproductibilité.
 
 **Positionnement du LLM.** Outil d'assistance uniquement : il peut interpréter
 une demande, produire un Scenario Request, proposer un Problem HDDL conforme.
-Il ne modifie jamais la doctrine ni le Domain HDDL (P5).
+Il ne modifie jamais directement les référentiels métier ni le Domain HDDL
+dérivé sans passer par la validation prévue par P5.
 
 **Temps et ressources.** Le planificateur ne raisonne ni sur le temps continu
 ni sur des valeurs numériques : dépendances causales pour la structure,
@@ -615,7 +622,7 @@ de vie et des invariants.
 | Représentation | Description | Responsable |
 |---|---|---|
 | **Scenario Request** | Demande structurée : forces, relations, agents, missions, triggers, end state, curseur d'information | Validation (production : autorat cellule blanche) |
-| **Planning Model** | Domain HDDL (doctrine) + Problem HDDL par force | WAL |
+| **Planning Model** | Domain HDDL (projection des référentiels) + Problem HDDL par force | WAL |
 | **Raw Planning Result** | Sortie native du moteur — transitoire, jamais exposée | Planning Engine Wrapper |
 | **Execution Graph** | Scénario exécutable : tâches affectées par agent, dépendances, synchronisations — versionnable | EAL |
 | **Profil d'exécution** | Choix par agent : autonomie + fidélité — séparé du scénario | Préparation du run |
@@ -681,13 +688,18 @@ initial (Annexe B).
 
 ## 6.4 Alignement sur les référentiels LOTUSim
 
-Le modèle de scénario instancie les références des trois référentiels
-externes sans les redéfinir :
+Le modèle de scénario instancie les références des référentiels LSG sans les
+redéfinir :
 
 - `ontology_type` référence la **Naval Ontology** ;
 - `mission_id` référence le **Mission Catalog** ;
 - `task_verb` référence le **Task Catalog** ;
 - `capability_type` référence une classe Capability de l'ontologie.
+
+Les prédicats de planification se projettent depuis le **State Model** et les
+décompositions des tâches abstraites depuis le **Method Catalog**. Ces deux
+référentiels sont consommés par la génération du Domain HDDL, pas recopiés dans
+chaque scénario.
 
 Le modèle de scénario possède l'information contextuelle exclue à dessein des
 référentiels : appartenance aux forces et allégeances ; rôles opérationnels ;
@@ -760,9 +772,10 @@ tasks:
 
 Le Task Catalog définit le verbe et ses signatures typées — chaque signature
 porte sa classification de capacité, référençant les classes ontologiques
-**les plus spécifiques** applicables (Task Catalog ≥ v0.3). Le Domain HDDL ou
-un autre formalisme de planification définit décomposition, prédicats et
-ordonnancement.
+**les plus spécifiques** applicables (Task Catalog ≥ v0.3). Le State Model
+définit les états dynamiques ; le Method Catalog définit les décompositions et
+contraintes d'ordonnancement ou de synchronisation ; le Domain HDDL ou un autre
+formalisme de planification les projette selon son profil.
 
 ### Chaîne de résolution : du verbe de tâche à l'action typée
 
@@ -1049,16 +1062,16 @@ Chaque document se valide contre le POC au fil de l'eau, pas en cascade.
 
 | Document | Statut | Note |
 |---|---|---|
-| **Profil HDDL LOTUSim** | À produire — **premier livrable** | Pivot de faisabilité de la traduction doctrine → HDDL |
+| **Profil HDDL LOTUSim** | À produire — **prochain livrable** | Pivot de faisabilité de la projection des référentiels vers HDDL |
 | **LOTUSim Naval Ontology** | v2.0-draft existante | 263 classes dont 46 capacités ; annotations `nmo:hasUsageDomain` (diffusabilité) et `nmo:manifestKey` (§6.4) ; NETN-ETR et C2SIM en checklist (Annexe B) |
 | **LOTUSim Mission Catalog** | v1.0.4 existante | 66 missions, 9 familles doctrinales, capacités requises par mission |
 | **LOTUSim Task Catalog** | v0.12.0 existante | 64 verbes canoniques, 79 signatures typées ; 32 signatures alignées sur le State Model |
 | **LOTUSim Method Catalog** | v0.1.0 pilote | Deux méthodes de décomposition de la tâche Escort ; projection HDDL encore partielle |
 | **LOTUSim State Model** | v0.6 existant | 105 états dynamiques normatifs, 23 types propres et traçabilité producteurs/consommateurs |
-| **Naval Domain** (Domain HDDL) | À produire | La doctrine formalisée — chemin critique, experts métier requis |
+| **Naval Domain** (Domain HDDL) | À produire | Projection planificateur des référentiels — chemin critique, revue métier requise |
 | **Benchmark Suite** | À produire | Scénarios de référence, métriques, protocoles |
 
-Les trois référentiels métier et le State Model dérivé sont vérifiés entre eux par le validateur
+L'ontologie, les trois catalogues et le State Model dérivé sont vérifiés entre eux par le validateur
 d'intégrité référentielle (§9.2).
 
 ---
@@ -1077,8 +1090,10 @@ WAL) ; les modèles numériques détaillés restent côté simulation.
 piste de recherche ; le critère d'escalade (§4.6) rend la replanification
 complète soutenable en la réservant aux vrais événements.
 
-**Dépendance au domaine.** La qualité des scénarios dépend de la qualité du
-Domain HDDL : le générateur ne produit que ce que la doctrine représente.
+**Dépendance aux référentiels et à leur projection.** La qualité des scénarios
+dépend de la qualité des référentiels métier, du State Model, du Method Catalog
+et de leur projection HDDL : le générateur ne produit que ce que cette chaîne
+représente correctement.
 
 ## 11.2 Angle mort identifié : la perception
 
@@ -1212,6 +1227,16 @@ multi-processus de la stack LOTUSim.
    rationales condensés (§2.7, §5.6), renvoi des descriptions de composants
    (§3.2) vers les contrats du ch. 7. Aucun changement de fond.
 
+### Alignement documentaire du 2026-07-18
+
+1. **Autorité doctrinale clarifiée** : Ontology, Mission Catalog, Task Catalog,
+   State Model et Method Catalog portent la sémantique ; le Domain HDDL est une
+   projection planificateur et non une source métier indépendante.
+2. **Pilote Escort intégré** : Method Catalog v0.1.0 et State Model v0.6 ajoutés
+   à la famille documentaire et à l'annexe D.
+3. **Liens amont corrigés** : LSGA v2 et `rig-e2e.md` sont référencés par leurs
+   URL dans `tactical_scenario_maker`.
+
 ## Annexe D — Documents de référence
 
 **Référentiels existants** (vérifiés entre eux par `validate_referentials.py`,
@@ -1220,7 +1245,8 @@ multi-processus de la stack LOTUSim.
 - **LOTUSim Naval Maritime Ontology** v2.0-draft (`.ttl`, OWL/Turtle) ;
 - **LOTUSim Mission Catalog** v1.0.4 ;
 - **LOTUSim Task Catalog** v0.12.0 ;
-- **LOTUSim State Model** v0.5 (`.yaml`).
+- **LOTUSim Method Catalog** v0.1.0 ;
+- **LOTUSim State Model** v0.6 (`.yaml`).
 
 **Documents amont et connexes** :
 

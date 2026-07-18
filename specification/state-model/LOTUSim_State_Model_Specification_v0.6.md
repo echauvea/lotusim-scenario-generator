@@ -13,11 +13,12 @@ Version 0.6 extends the semantic baseline with the first HTN-method pilot. It re
 
 ## 2. Sources and scope
 
-The model is derived from three normative inputs:
+The model is derived from three primary normative inputs and may be extended by a fourth controlled input:
 
 1. relevant physical types and capabilities in the Naval Maritime Ontology;
 2. task reads, effects, completion conditions and failure outcomes in the Task Catalog;
-3. mission preconditions, desired end states and success/failure criteria in the Mission Catalog.
+3. mission preconditions, desired end states and success/failure criteria in the Mission Catalog;
+4. command or execution-state requirements exposed while designing methods in the Method Catalog, provided the state is normalized here before the method references it.
 
 The v0.6 normative inventory contains:
 
@@ -298,8 +299,6 @@ This increment distinguishes a command-defined requirement, the records produced
 
 Search success and area coverage are holder-relative. A certified search result does not assert that an object is physically absent outside the stated search criteria, confidence and coverage standard.
 
-## 16. Planned extension
-
 ## 16. ISR characterization and inspection extension in v0.5
 
 Version 0.5 adds requirement-scoped, holder-relative outputs for characterization and inspection:
@@ -313,6 +312,8 @@ Version 0.5 adds requirement-scoped, holder-relative outputs for characterizatio
 ## 17. Escort method support in v0.6
 
 `SM-ST-105 escort_route_assigned(escort, protected, route)` is the first state introduced by Method Catalog derivation. It makes the mission’s movement or transit objective selectable by an HTN method. It is deliberately distinct from `route_traversable`: several routes may be physically traversable, while only one is commanded for a given escort-protected pair.
+
+Method design may reveal that an intended command input has no canonical state. Such a state must be added here before the method references it; the method itself does not own the state definition or invent a private predicate.
 
 The state narrows both actors to `nmo:Platform`, matching the two single-platform Escort pilot methods. Convoy or `nmo:PlatformGroup` movement remains outside this tuple until group movement and integrity semantics are modeled explicitly.
 
