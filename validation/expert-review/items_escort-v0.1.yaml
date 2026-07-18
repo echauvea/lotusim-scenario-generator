@@ -1,0 +1,642 @@
+campaign: escort-v0.1
+generated: '2026-07-18'
+catalog: LOTUSim_Method_Catalog_v0.1.0.md
+catalog_version: 0.1.0
+review_rule: un item est `validé` après accord d'au moins un expert ; toute réponse « Ça dépend » ou divergente
+  passe l'item en `contesté`
+items:
+- id: VQ-TM-023-S01-M01-APP-ST006
+  scope: method
+  method: TM-023-S01-M01
+  category: applicability
+  targets:
+  - state_ref: SM-ST-006
+    bindings:
+      escort: escort_actor
+      protected: protected_unit
+  question:
+    format: vf
+    theme: Conditions de déclenchement
+    statement: 'Une escorte ne peut être planifiée que si l''escorteur a reçu formellement la responsabilité
+      de protéger cette unité précise (ordre d''escorte explicite). Jamais d''escorte « opportuniste »
+      sans ordre.
+
+      '
+    expected: Vrai
+  status: pending
+- id: VQ-TM-023-S01-M01-APP-ST105
+  scope: method
+  method: TM-023-S01-M01
+  category: applicability
+  targets:
+  - state_ref: SM-ST-105
+    bindings:
+      escort: escort_actor
+      protected: protected_unit
+      route: route
+  question:
+    format: vf
+    theme: Conditions de déclenchement
+    statement: 'La route du transit doit avoir été assignée par le commandement avant le début de l''escorte
+      : l''escorteur ne choisit pas lui-même la route parmi les routes praticables.
+
+      '
+    expected: Vrai
+  status: pending
+- id: VQ-TM-023-S01-M01-APP-ST055
+  scope: method
+  method: TM-023-S01-M01
+  category: applicability
+  targets:
+  - state_ref: SM-ST-055
+    bindings:
+      protector: escort_actor
+      protected: protected_unit
+  question:
+    format: vf
+    theme: Conditions de déclenchement
+    statement: 'Le modèle distingue deux choses : l''ordre d''escorte (qui escorte qui) et la responsabilité
+      de protection (qui répond de l''intégrité de l''unité protégée). Cette distinction correspond à
+      une réalité opérationnelle — les deux peuvent être portées par des acteurs différents.
+
+      '
+    expected: Vrai
+  status: pending
+- id: VQ-TM-023-S01-M01-APP-ST027
+  scope: method
+  method: TM-023-S01-M01
+  category: applicability
+  targets:
+  - state_ref: SM-ST-027
+    bindings:
+      holder: escort_actor
+      target: protected_unit
+  question:
+    format: vf
+    theme: Conditions de déclenchement
+    statement: 'L''escorte ne peut pas débuter tant que l''escorteur ne dispose pas d''une position actuelle
+      exploitable de l''unité à protéger.
+
+      '
+    expected: Vrai
+  status: pending
+- id: VQ-TM-023-S01-M01-APP-ST004
+  scope: method
+  method: TM-023-S01-M01
+  category: applicability
+  targets:
+  - state_ref: SM-ST-004
+    bindings:
+      route: route
+      entity: protected_unit
+  question:
+    format: vf
+    theme: Conditions de déclenchement
+    statement: 'Avant le départ, il suffit de vérifier que la route est praticable par l''unité protégée
+      ; la praticabilité par l''escorteur lui-même n''a pas besoin d''être vérifiée.
+
+      '
+    expected: Vrai
+    note_analyste: 'Le catalogue ne vérifie SM-ST-004 que pour protected_unit. Une réponse « Faux » majoritaire
+      signifierait qu''il faut ajouter la condition pour escort_actor.
+
+      '
+  status: pending
+- id: VQ-TM-023-S01-M01-CAP
+  scope: method
+  method: TM-023-S01-M01
+  category: capabilities
+  targets:
+  - state_ref: SM-ST-010
+    bindings:
+      entity: escort_actor
+      capability: TargetFollowingCapability
+  - state_ref: SM-ST-010
+    bindings:
+      entity: escort_actor
+      capability: ProtectionCapability
+  - state_ref: SM-ST-010
+    bindings:
+      entity: escort_actor
+      capability: StationKeepingCapability
+  - state_ref: SM-ST-010
+    bindings:
+      entity: protected_unit
+      capability: RouteFollowingCapability
+  question:
+    format: vf
+    theme: Capacités requises
+    statement: 'Pour une garde rapprochée, on exige de l''escorteur trois aptitudes : suivre une unité
+      désignée, assurer une protection, tenir un poste ; et de l''unité protégée une seule : suivre une
+      route. Cette liste est correcte — ni trop exigeante, ni insuffisante.
+
+      '
+    expected: Vrai
+  status: pending
+- id: VQ-TM-023-S01-M01-DEC
+  scope: method
+  method: TM-023-S01-M01
+  category: decomposition
+  targets:
+  - id: follow_protected_unit
+    task_ref: TC-006-S01
+    bindings:
+      actor: escort_actor
+      followed_unit: protected_unit
+  - id: guard_protected_unit
+    task_ref: TC-025-S01
+    bindings:
+      guard_actor: escort_actor
+      guarded_object: protected_unit
+  - id: transit_protected_unit
+    task_ref: TC-001-S02
+    bindings:
+      actor: protected_unit
+      route: route
+  question:
+    format: vf
+    theme: Déroulement
+    statement: 'À ce niveau de description, la garde rapprochée se réduit à trois activités menées de
+      front : le pétrolier suit sa route ; la frégate suit le pétrolier ; la frégate le garde. Rien d''indispensable
+      ne manque à ce niveau (la veille capteurs, les comptes rendus, etc. relèvent du niveau de conduite,
+      pas de la description de la méthode).
+
+      '
+    expected: Vrai
+  status: pending
+- id: VQ-TM-023-S01-M01-ORD
+  scope: method
+  method: TM-023-S01-M01
+  category: ordering
+  targets: []
+  question:
+    format: vf
+    theme: Déroulement
+    statement: 'Peu importe l''ordre dans lequel la frégate établit le suivi et la garde, pourvu que les
+      deux soient effectifs avant que le pétrolier ne s''ébranle sur sa route.
+
+      '
+    expected: Vrai
+  status: pending
+- id: VQ-TM-023-S01-M01-SYNC
+  scope: method
+  method: TM-023-S01-M01
+  category: synchronization
+  targets:
+  - relation: spans
+    spanning: follow_protected_unit
+    contained: transit_protected_unit
+  - relation: spans
+    spanning: guard_protected_unit
+    contained: transit_protected_unit
+  question:
+    format: vf
+    theme: Déroulement
+    statement: 'Le suivi et la protection doivent rester actifs sans interruption pendant toute la durée
+      du transit. Une interruption même brève (par exemple : la frégate s''écarte pour investiguer un
+      contact) remet en cause l''escorte telle que décrite.
+
+      '
+    expected: Vrai
+    note_analyste: 'Une majorité de « Ça dépend » indiquerait que la relation spans est trop rigide et
+      qu''il faudra un jour modéliser les interruptions tolérées.
+
+      '
+  status: pending
+- id: VQ-TM-023-S01-M01-COMP
+  scope: method
+  method: TM-023-S01-M01
+  category: completion
+  targets:
+  - state_ref: SM-ST-007
+    bindings:
+      protected: protected_unit
+    supported_by:
+    - transit_protected_unit
+    - escort_goal_evaluator
+  - state_ref: SM-ST-008
+    bindings:
+      protected: protected_unit
+    supported_by:
+    - guard_protected_unit
+    - protection_outcome_evaluator
+  question:
+    format: vf
+    theme: Critère de succès
+    statement: 'L''escorte est réussie quand — et seulement quand — le pétrolier est arrivé à destination
+      ET est resté intègre selon les critères de la mission. Rien d''autre n''entre dans le critère de
+      succès : ni l''état de la frégate, ni le respect d''un horaire.
+
+      '
+    expected: Vrai
+  status: pending
+- id: VQ-TM-023-S01-M01-FAIL-target_lost
+  scope: method
+  method: TM-023-S01-M01
+  category: failure
+  targets:
+  - from: follow_protected_unit.target_lost
+    decision: reacquire_protected_unit
+  question:
+    format: vf
+    theme: Conduite sur incident
+    statement: 'Si la frégate perd la position du pétrolier en cours de transit, la réaction par défaut
+      est de chercher à le réacquérir — on ne déclare pas l''escorte échouée.
+
+      '
+    expected: Vrai
+  status: pending
+- id: VQ-TM-023-S01-M01-FAIL-protection_capability_lost
+  scope: method
+  method: TM-023-S01-M01
+  category: failure
+  targets:
+  - from: guard_protected_unit.protection_capability_lost
+    parent_outcome: escort_capability_lost
+    establishes:
+      state_ref: SM-ST-014
+      bindings:
+        escort: escort_actor
+        protected: protected_unit
+  question:
+    format: vf
+    theme: Conduite sur incident
+    statement: 'Si la frégate perd sa capacité de protection (avarie du système d''armes, par exemple),
+      l''escorte est déclarée dégradée et la décision remonte à l''échelon supérieur — mais le transit
+      n''est pas interrompu automatiquement.
+
+      '
+    expected: Vrai
+  status: pending
+- id: VQ-TM-023-S01-M01-FAIL-route_blocked
+  scope: method
+  method: TM-023-S01-M01
+  category: failure
+  targets:
+  - from: transit_protected_unit.route_blocked
+    decision: replan_escort_route
+  question:
+    format: vf
+    theme: Conduite sur incident
+    statement: 'Si la route devient impraticable, la réaction par défaut est de replanifier la route d''escorte
+      — sans lever le dispositif de protection pendant la replanification.
+
+      '
+    expected: Vrai
+  status: pending
+- id: VQ-TM-023-S01-M01-NARROW
+  scope: method
+  method: TM-023-S01-M01
+  category: type_narrowing
+  targets:
+  - role: escort_actor
+    type: nmo:Platform
+    source:
+      kind: parent_task
+      role: escort_actor
+  - role: protected_unit
+    type: nmo:Platform
+    source:
+      kind: parent_task
+      role: protected_unit
+  question:
+    format: vf
+    theme: Périmètre
+    statement: 'Ces méthodes ne valent que pour une plateforme escortant une autre plateforme. Escorter
+      un convoi ou un groupe constitué est un problème différent, qui mérite sa propre description — on
+      ne doit pas l''y ramener silencieusement.
+
+      '
+    expected: Vrai
+  status: pending
+- id: VQ-TM-023-S01-M02-APP-ST006
+  scope: method
+  method: TM-023-S01-M02
+  category: applicability
+  targets:
+  - state_ref: SM-ST-006
+    bindings:
+      escort: escort_actor
+      protected: protected_unit
+  covered_by: VQ-TM-023-S01-M01-APP-ST006
+  status: pending
+- id: VQ-TM-023-S01-M02-APP-ST105
+  scope: method
+  method: TM-023-S01-M02
+  category: applicability
+  targets:
+  - state_ref: SM-ST-105
+    bindings:
+      escort: escort_actor
+      protected: protected_unit
+      route: route
+  covered_by: VQ-TM-023-S01-M01-APP-ST105
+  status: pending
+- id: VQ-TM-023-S01-M02-APP-ST055
+  scope: method
+  method: TM-023-S01-M02
+  category: applicability
+  targets:
+  - state_ref: SM-ST-055
+    bindings:
+      protector: escort_actor
+      protected: protected_unit
+  covered_by: VQ-TM-023-S01-M01-APP-ST055
+  status: pending
+- id: VQ-TM-023-S01-M02-APP-ST056
+  scope: method
+  method: TM-023-S01-M02
+  category: applicability
+  targets:
+  - state_ref: SM-ST-056
+    bindings:
+      protected: protected_unit
+      plan: screen_plan
+  question:
+    format: vf
+    theme: Escorte avec écran
+    statement: 'L''escorte avec écran n''est envisageable que si un plan de protection défini par le commandement
+      est disponible : l''escorteur ne conçoit pas l''écran de sa propre initiative.
+
+      '
+    expected: Vrai
+  status: pending
+- id: VQ-TM-023-S01-M02-APP-ST027
+  scope: method
+  method: TM-023-S01-M02
+  category: applicability
+  targets:
+  - state_ref: SM-ST-027
+    bindings:
+      holder: escort_actor
+      target: protected_unit
+  covered_by: VQ-TM-023-S01-M01-APP-ST027
+  status: pending
+- id: VQ-TM-023-S01-M02-APP-ST004
+  scope: method
+  method: TM-023-S01-M02
+  category: applicability
+  targets:
+  - state_ref: SM-ST-004
+    bindings:
+      route: route
+      entity: protected_unit
+  covered_by: VQ-TM-023-S01-M01-APP-ST004
+  status: pending
+- id: VQ-TM-023-S01-M02-CAP
+  scope: method
+  method: TM-023-S01-M02
+  category: capabilities
+  targets:
+  - state_ref: SM-ST-010
+    bindings:
+      entity: escort_actor
+      capability: TargetFollowingCapability
+  - state_ref: SM-ST-010
+    bindings:
+      entity: escort_actor
+      capability: ProtectionCapability
+  - state_ref: SM-ST-010
+    bindings:
+      entity: protected_unit
+      capability: RouteFollowingCapability
+  question:
+    format: vf
+    theme: Escorte avec écran
+    statement: 'Contrairement à la garde rapprochée, la tenue d''écran n''exige pas de l''escorteur l''aptitude
+      à tenir un poste fixe (l''écran impose ses propres évolutions).
+
+      '
+    expected: Vrai
+    note_analyste: 'Le catalogue omet StationKeepingCapability pour M02. « Faux » majoritaire = ajout
+      requis.
+
+      '
+  status: pending
+- id: VQ-TM-023-S01-M02-DEC
+  scope: method
+  method: TM-023-S01-M02
+  category: decomposition
+  targets:
+  - id: follow_protected_unit
+    task_ref: TC-006-S01
+    bindings:
+      actor: escort_actor
+      followed_unit: protected_unit
+  - id: screen_protected_unit
+    task_ref: TC-024-S01
+    bindings:
+      screen_actor: escort_actor
+      protected_force: protected_unit
+      screen_plan: screen_plan
+  - id: transit_protected_unit
+    task_ref: TC-001-S02
+    bindings:
+      actor: protected_unit
+      route: route
+  question:
+    format: vf
+    theme: Escorte avec écran
+    statement: 'Dans l''escorte avec écran, l''activité « tenir l''écran » reste décrite globalement à
+      ce stade (secteurs, barrières et postes seront détaillés plus tard). Remplacer la garde rapprochée
+      par la tenue d''écran, en conservant le suivi et le transit, décrit correctement cette forme d''escorte.
+
+      '
+    expected: Vrai
+  status: pending
+- id: VQ-TM-023-S01-M02-ORD
+  scope: method
+  method: TM-023-S01-M02
+  category: ordering
+  targets: []
+  covered_by: VQ-TM-023-S01-M01-ORD
+  status: pending
+- id: VQ-TM-023-S01-M02-SYNC
+  scope: method
+  method: TM-023-S01-M02
+  category: synchronization
+  targets:
+  - relation: spans
+    spanning: follow_protected_unit
+    contained: transit_protected_unit
+  - relation: spans
+    spanning: screen_protected_unit
+    contained: transit_protected_unit
+  covered_by: VQ-TM-023-S01-M01-SYNC
+  status: pending
+- id: VQ-TM-023-S01-M02-COMP
+  scope: method
+  method: TM-023-S01-M02
+  category: completion
+  targets:
+  - state_ref: SM-ST-007
+    bindings:
+      protected: protected_unit
+    supported_by:
+    - transit_protected_unit
+    - escort_goal_evaluator
+  - state_ref: SM-ST-008
+    bindings:
+      protected: protected_unit
+    supported_by:
+    - screen_protected_unit
+    - protection_outcome_evaluator
+  covered_by: VQ-TM-023-S01-M01-COMP
+  status: pending
+- id: VQ-TM-023-S01-M02-FAIL-target_lost
+  scope: method
+  method: TM-023-S01-M02
+  category: failure
+  targets:
+  - from: follow_protected_unit.target_lost
+    decision: reacquire_protected_unit
+  covered_by: VQ-TM-023-S01-M01-FAIL-target_lost
+  status: pending
+- id: VQ-TM-023-S01-M02-FAIL-protection_capability_lost
+  scope: method
+  method: TM-023-S01-M02
+  category: failure
+  targets:
+  - from: screen_protected_unit.protection_capability_lost
+    parent_outcome: escort_capability_lost
+    establishes:
+      state_ref: SM-ST-014
+      bindings:
+        escort: escort_actor
+        protected: protected_unit
+  covered_by: VQ-TM-023-S01-M01-FAIL-protection_capability_lost
+  status: pending
+- id: VQ-TM-023-S01-M02-FAIL-persistent_screen_gap
+  scope: method
+  method: TM-023-S01-M02
+  category: failure
+  targets:
+  - from: screen_protected_unit.persistent_screen_gap
+    decision: reconfigure_screen
+  question:
+    format: vf
+    theme: Escorte avec écran
+    statement: 'Si une brèche durable apparaît dans l''écran, la réaction par défaut est de reconfigurer
+      l''écran — on n''interrompt pas le transit et on ne déclare pas l''échec de l''escorte.
+
+      '
+    expected: Vrai
+  status: pending
+- id: VQ-TM-023-S01-M02-FAIL-route_blocked
+  scope: method
+  method: TM-023-S01-M02
+  category: failure
+  targets:
+  - from: transit_protected_unit.route_blocked
+    decision: replan_escort_route
+  covered_by: VQ-TM-023-S01-M01-FAIL-route_blocked
+  status: pending
+- id: VQ-TM-023-S01-M02-NARROW
+  scope: method
+  method: TM-023-S01-M02
+  category: type_narrowing
+  targets:
+  - role: escort_actor
+    type: nmo:Platform
+    source:
+      kind: parent_task
+      role: escort_actor
+  - role: protected_unit
+    type: nmo:Platform
+    source:
+      kind: parent_task
+      role: protected_unit
+  covered_by: VQ-TM-023-S01-M01-NARROW
+  status: pending
+- id: VQ-TC-023-S01-SIG-APPGAP
+  scope: signature
+  signature: TC-023-S01
+  category: applicability_gap
+  targets:
+  - TM-023-S01-M01
+  - TM-023-S01-M02
+  question:
+    format: open
+    theme: Chasse aux manques
+    statement: 'Décrivez une situation réelle où toutes les conditions listées plus haut sont réunies,
+      mais où lancer l''escorte serait quand même une erreur. (S''il n''y en a pas, écrivez « RAS ».)
+
+      '
+  status: pending
+- id: VQ-TC-023-S01-SIG-ALTGAP
+  scope: signature
+  signature: TC-023-S01
+  category: alternative_gap
+  targets:
+  - TM-023-S01-M01
+  - TM-023-S01-M02
+  question:
+    format: open
+    theme: Chasse aux manques
+    statement: 'Garde rapprochée et escorte avec écran : ces deux modes couvrent-ils l''essentiel des
+      escortes d''une unité seule ? Citez une forme d''escorte courante qui n''entre dans aucun des deux.
+      (S''il n''y en a pas, écrivez « RAS ».)
+
+      '
+  status: pending
+- id: VQ-TC-023-S01-SIG-DISCRIM
+  scope: signature
+  signature: TC-023-S01
+  category: discriminant
+  targets:
+  - TM-023-S01-M01
+  - TM-023-S01-M02
+  question:
+    format: vf
+    theme: Choix entre les deux modes
+    statement: 'Aujourd''hui, le modèle ne connaît qu''un seul critère pour préférer l''écran à la garde
+      rapprochée : l''existence d''un plan de protection. C''est le bon discriminant — le vrai choix ne
+      dépend ni de la menace, ni du milieu, ni du nombre d''escorteurs disponibles.
+
+      '
+    expected: Ça dépend
+    note_analyste: 'Question volontairement provocante : les commentaires doivent faire émerger les vrais
+      discriminants exigés par MDR-11 avant validation opérationnelle.
+
+      '
+  status: pending
+- id: VQ-TC-023-S01-CHOICE-01
+  scope: catalog
+  category: method_choice
+  targets:
+  - TM-023-S01-M01
+  - TM-023-S01-M02
+  question:
+    format: choice
+    theme: Le choix du commandant
+    context: 'Transit littoral resserré, menace principale : mines et embarcations rapides. Aucun plan
+      de protection n''a été émis. Vous commandez la frégate.
+
+      '
+    statement: Quel mode d'escorte adoptez-vous ?
+    options:
+    - Garde rapprochée
+    - Escorte avec écran
+    - Autre (précisez en commentaire)
+    expected: Garde rapprochée
+  status: pending
+- id: VQ-TC-023-S01-CHOICE-02
+  scope: catalog
+  category: method_choice
+  targets:
+  - TM-023-S01-M01
+  - TM-023-S01-M02
+  question:
+    format: choice
+    theme: Le choix du commandant
+    context: 'Transit hauturier de 48 h, menace sous-marine évaluée sérieuse, plan de protection émis
+      par le commandement. Vous commandez la frégate (aptitude ASM complète).
+
+      '
+    statement: Quel mode d'escorte adoptez-vous ?
+    options:
+    - Garde rapprochée
+    - Escorte avec écran
+    - Autre (précisez en commentaire)
+    expected: Escorte avec écran
+  status: pending
