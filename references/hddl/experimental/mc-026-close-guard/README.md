@@ -42,6 +42,14 @@ python tools/planning/run_mc026_aries.py
 The runner checks both solvability and exact primitive ordering. The CI repeats
 this test whenever the HDDL fragment, profile or planner tooling changes.
 
+Each successful run writes `outputs/mc-026/aries-plan.json`. The JSON records
+the planner and interface versions, solution status, input files, selected HTN
+method with its grounded parameters, and the ordered primitive plan. The
+`outputs/` directory is generated locally and intentionally ignored by Git.
+
+GitHub Actions publishes the same JSON for 30 days as the downloadable
+`mc-026-aries-plan` artifact attached to the workflow run.
+
 ## Interpretation limits
 
 - The fragment is derived and non-normative.
