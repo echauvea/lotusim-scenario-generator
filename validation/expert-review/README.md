@@ -28,9 +28,13 @@ qu'apparaissent les conditions manquantes.
    (aucune donnée ne quitte le poste) ; ~20 minutes par expert, en parallèle ou en différé.
 3. **Collecter** : chaque expert exporte un fichier `reponses_<campagne>_<nom>.json` et le renvoie ;
    les fichiers sont déposés dans `validation/expert-review/responses/`.
-4. **Adjuger** : un item passe à `validé` (statut dans la matrice) après accord d'au moins un
-   expert ; toute réponse « Ça dépend », divergente entre experts ou contraire à la position du
-   catalogue passe l'item en `contesté`. Seuls les items contestés justifient un échange synchrone.
+4. **Adjuger** : `python tools/validation/aggregate_expert_review.py --matrix validation/expert-review/items_<campagne>.yaml`
+   met à jour automatiquement le statut de chaque item dans la matrice — `validé` après accord
+   d'au moins un expert avec la position du catalogue ; `contesté` dès qu'apparaît un « Ça
+   dépend », un désaccord entre experts, une réponse contraire au catalogue ou un manque signalé —
+   et produit `report_<campagne>.md`, l'ordre du jour de l'atelier d'adjudication (items contestés
+   seulement, avec les commentaires des experts). Les items dédoublonnés héritent du statut de
+   l'item qui les couvre.
 5. **Corriger** : chaque correction du Method Catalog issue d'un item contesté référence l'item
    (`VQ-…`) dans sa PR ; l'item repasse en `pending` et sera reposé à la campagne suivante.
 
@@ -45,9 +49,9 @@ qu'apparaissent les conditions manquantes.
   `status` lors de l'adjudication.
 - `questionnaire_<campagne>.html` — formulaire autonome généré, à distribuer tel quel.
 - `responses/` — réponses collectées (JSON), une par expert et par campagne.
+- `report_<campagne>.md` — rapport d'adjudication généré : couverture chiffrée et ordre du jour
+  des items contestés.
 
 ## Extensions prévues
 
-- Script d'agrégation des réponses (tableau des écarts réponse/`expected`, désaccords entre
-  experts, mise à jour des statuts de la matrice).
 - Réutilisation du même dispositif pour la revue métier des missions candidates MC-034 à MC-066.
