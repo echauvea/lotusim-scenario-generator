@@ -1,0 +1,36 @@
+; Experimental MC-026 happy-path instance.
+; The WAL supplies the initial symbolic snapshot.
+
+(define (problem mc-026-close-guard-pilot)
+  (:domain lotusim-mc026-close-guard)
+
+  (:objects
+    escort-1 protected-hvu-1 - platform
+    escort-route-1 - route
+    transit-origin transit-destination - spatial-region)
+
+  (:htn
+    :parameters ()
+    :ordered-tasks (and
+      (escort-unit escort-1 protected-hvu-1)))
+
+  (:init
+    (assigned-to-escort escort-1 protected-hvu-1)
+    (escort-route-assigned escort-1 protected-hvu-1 escort-route-1)
+    (protection-assignment escort-1 protected-hvu-1)
+    (location-known escort-1 protected-hvu-1)
+    (route-traversable escort-route-1 protected-hvu-1)
+    (route-destination escort-route-1 transit-destination)
+    (located-at protected-hvu-1 transit-origin)
+    (capability-available escort-1 target-following-capability)
+    (capability-available escort-1 protection-capability)
+    (capability-available escort-1 station-keeping-capability)
+    (capability-available protected-hvu-1 route-following-capability)
+
+    ; SM-ST-008 is a WAL/external-evaluator snapshot, not a Guard effect.
+    (protected-unit-preserved protected-hvu-1))
+
+  (:goal (and
+    (route-completed protected-hvu-1 escort-route-1)
+    (protected-unit-at-destination protected-hvu-1)
+    (protected-unit-preserved protected-hvu-1))))

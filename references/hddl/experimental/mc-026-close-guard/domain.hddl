@@ -1,0 +1,127 @@
+; Experimental derived artifact -- not a business-semantic source.
+; Profile: LOTUSim HDDL Profile v0.1
+; Method: TM-023-S01-M01
+
+(define (domain lotusim-mc026-close-guard)
+  (:requirements :typing :hierarchy :method-preconditions)
+
+  (:types
+    route
+    spatial-region
+    physical-capability
+    physical-entity - object
+    platform - physical-entity)
+
+  (:constants
+    target-following-capability
+    protection-capability
+    station-keeping-capability
+    route-following-capability - physical-capability)
+
+  (:predicates
+    ; All predicates map one-to-one to State Model v0.6 entries.
+    (located-at ?entity - physical-entity ?location - spatial-region)
+    (route-destination ?route - route ?location - spatial-region)
+    (route-traversable ?route - route ?entity - platform)
+    (following ?follower - platform ?target - physical-entity)
+    (assigned-to-escort ?escort - physical-entity ?protected - physical-entity)
+    (protected-unit-at-destination ?protected - physical-entity)
+    (protected-unit-preserved ?protected - physical-entity)
+    (capability-available ?entity - physical-entity ?capability - physical-capability)
+    (route-completed ?entity - platform ?route - route)
+    (location-known ?holder - physical-entity ?target - physical-entity)
+    (protection-assignment ?protector - physical-entity ?protected - physical-entity)
+    (guarding ?guard - platform ?protected - physical-entity)
+    (escort-route-assigned ?escort - platform ?protected - platform ?route - route))
+
+  ; TC-023-S01 Escort Unit
+  (:task escort-unit
+    :parameters (?escort - platform ?protected - platform))
+
+  ; TM-023-S01-M01 compiled from two spans relations.
+  (:method close-guard-route-escort
+    :parameters
+      (?escort - platform ?protected - platform ?route - route
+       ?destination - spatial-region ?origin - spatial-region)
+    :task (escort-unit ?escort ?protected)
+    :precondition (and
+      (assigned-to-escort ?escort ?protected)
+      (escort-route-assigned ?escort ?protected ?route)
+      (protection-assignment ?escort ?protected)
+      (location-known ?escort ?protected)
+      (route-traversable ?route ?protected)
+      (route-destination ?route ?destination)
+      (located-at ?protected ?origin)
+      (capability-available ?escort target-following-capability)
+      (capability-available ?escort protection-capability)
+      (capability-available ?escort station-keeping-capability)
+      (capability-available ?protected route-following-capability))
+    :ordered-subtasks (and
+      (start-follow-designated-unit ?escort ?protected)
+      (start-guard-object ?escort ?protected)
+      (navigate-route ?protected ?route ?destination ?origin)
+      (evaluate-escort-destination ?protected ?route ?destination)
+      (stop-guard-object ?escort ?protected)
+      (stop-follow-designated-unit ?escort ?protected)))
+
+  ; TC-006-S01 lifecycle start.
+  (:action start-follow-designated-unit
+    :parameters (?actor - platform ?followed - physical-entity)
+    :precondition (and
+      (capability-available ?actor target-following-capability)
+      (location-known ?actor ?followed))
+    :effect (and
+      (following ?actor ?followed)))
+
+  ; TC-006-S01 lifecycle stop; normal termination is not failure.
+  (:action stop-follow-designated-unit
+    :parameters (?actor - platform ?followed - physical-entity)
+    :precondition (and
+      (following ?actor ?followed))
+    :effect (and
+      (not (following ?actor ?followed))))
+
+  ; TC-025-S01 lifecycle start.
+  (:action start-guard-object
+    :parameters (?guard - platform ?protected - physical-entity)
+    :precondition (and
+      (protection-assignment ?guard ?protected)
+      (location-known ?guard ?protected)
+      (capability-available ?guard protection-capability)
+      (capability-available ?guard station-keeping-capability))
+    :effect (and
+      (guarding ?guard ?protected)))
+
+  ; TC-025-S01 lifecycle stop; normal termination is not failure.
+  (:action stop-guard-object
+    :parameters (?guard - platform ?protected - physical-entity)
+    :precondition (and
+      (guarding ?guard ?protected))
+    :effect (and
+      (not (guarding ?guard ?protected))))
+
+  ; TC-001-S02 Navigate Route.
+  (:action navigate-route
+    :parameters
+      (?actor - platform ?route - route ?destination - spatial-region
+       ?origin - spatial-region)
+    :precondition (and
+      (route-traversable ?route ?actor)
+      (route-destination ?route ?destination)
+      (located-at ?actor ?origin)
+      (capability-available ?actor route-following-capability))
+    :effect (and
+      (not (located-at ?actor ?origin))
+      (located-at ?actor ?destination)
+      (route-completed ?actor ?route)))
+
+  ; Named State Model producer: escort_goal_evaluator for SM-ST-007.
+  (:action evaluate-escort-destination
+    :parameters
+      (?protected - platform ?route - route ?destination - spatial-region)
+    :precondition (and
+      (route-completed ?protected ?route)
+      (route-destination ?route ?destination)
+      (located-at ?protected ?destination))
+    :effect (and
+      (protected-unit-at-destination ?protected))))

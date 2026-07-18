@@ -12,6 +12,8 @@
 - 32 signatures possèdent une sémantique complète ; 47 restent à enrichir.
 - State Model v0.6 : 105 états normatifs, 23 types propres et 4 candidats différés.
 - Method Catalog v0.1.0 : deux méthodes pilotes décomposent `TC-023-S01 Escort Unit`.
+- Profil HDDL LOTUSim v0.1 : compilation expérimentale `start/stop` des tâches continues, sans boucle de maintien au niveau 1.
+- Fragment HDDL MC-026 : premier Domain / Problem dérivé pour `TM-023-S01-M01` avec traçabilité explicite.
 - Les contrôles locaux et la CI vérifient les identifiants, références, familles, types, états, bindings et méthodes.
 
 ## 2. Pilote Escort
@@ -23,23 +25,25 @@ Deux alternatives sont documentées :
 
 La route commandée est représentée explicitement par `SM-ST-105 escort_route_assigned`. Les événements récupérables entraînent une décision de reprise ; ils ne sont pas assimilés automatiquement à un échec de la tâche Escort.
 
-Les deux méthodes restent `partial` pour la projection HDDL : la relation `spans` impose que les tâches continues restent actives pendant le transit, et `Screen` demeure abstraite.
+La stratégie pilote de projection de `spans` est désormais `start/stop` : Follow et Guard sont démarrées avant Navigate Route et arrêtées après le transit. Leur maintien et leurs invariants restent supervisés à l’exécution. La seconde méthode reste en plus non primitivement close car `Screen` demeure abstraite.
 
-## 3. Prochain incrément recommandé
+## 3. Incrément HDDL expérimental
 
-Produire un premier fragment HDDL expérimental pour la méthode de garde rapprochée `TM-023-S01-M01`, testé sur `MC-026 Escort High-Value Unit`.
+Le premier fragment HDDL expérimental pour la méthode de garde rapprochée `TM-023-S01-M01`, appliqué à `MC-026 Escort High-Value Unit`, est disponible sous `references/hddl/experimental/mc-026-close-guard/`.
 
-Ordre de travail :
+Décisions et résultats :
 
-1. définir le sous-ensemble initial du profil HDDL LOTUSim ;
-2. choisir la compilation des tâches continues et de `spans` : temporelle, cycle `start/maintain/stop`, ou transit segmenté ;
-3. construire un cas MC-026 minimal avec objets, état initial et réseau de tâches ;
-4. dériver le fragment HDDL sans ajouter de sémantique absente des référentiels ;
-5. vérifier la sélection de méthode, le plan produit et les décisions de reprise ;
-6. consigner les limites du profil avant toute généralisation.
+1. sous-ensemble HDDL classique typé, hiérarchique et totalement ordonné pour le pilote ;
+2. compilation de `spans` par cycles `start/stop`, sans discrétisation temporelle ;
+3. réutilisation exclusive des prédicats du State Model ;
+4. préservation de `protected_unit_preserved` comme résultat d’évaluation externe, jamais comme effet de Guard ;
+5. décisions de reprise conservées comme contrats d’exécution et de replanification ;
+6. limites et rejets de projection consignés avant généralisation.
 
 ## 4. Travaux suivants
 
+- Parser le fragment avec la chaîne HDDL retenue et vérifier le plan primitif attendu.
+- Définir l’interprétation des commandes `start/stop` dans l’Execution Adaptation Layer, puis tester les arrêts normaux et les incidents injectés.
 - Décomposer `TC-024-S01 Screen` afin de fermer primitivement la seconde méthode Escort.
 - Modéliser l’escorte de convoi ou de groupe séparément de l’escorte d’une plateforme unique.
 - Enrichir les 47 signatures restantes en priorité lorsqu’elles sont requises par une méthode ou une mission pilote.
@@ -53,7 +57,7 @@ Ordre de travail :
 - statut normatif final de l’architecture v3.2 et choix de son dépôt canonique avec l’équipe `tactical_scenario_maker` ;
 - maintien ou suppression de la couche éditoriale Capability Types `CT-01` à `CT-11` ;
 - éventuel ajout ontologique de `TargetLocalizationCapability` ;
-- stratégie HDDL pour le temps continu et les synchronisations.
+- promotion éventuelle du profil HDDL v0.1 après validation planificateur et exécution.
 
 ## 6. Règle de continuité
 
