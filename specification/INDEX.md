@@ -83,13 +83,13 @@ Cet index est la source unique d’inventaire documentaire du dépôt **LSG — 
 | [Validateur des référentiels](../tools/validation/validate_referentials.py) | non versionné | Courant | Contrôle automatisé | Vérifie les identifiants, références croisées, familles, types, états, bindings, méthodes HTN et principales règles DEM ; exécuté par la CI. |
 | [Documentation WIDOCO](https://echauvea.github.io/lotusim-scenario-generator/) | 2.0.0-draft | Générée par CI | Informatif | Représentation HTML, WebVOWL et sérialisations RDF de la Naval Maritime Ontology, publiée par GitHub Pages sans fichiers générés suivis dans Git. |
 | [État des lieux — Interfaçage LSG ↔ tsm](notes/2026-07-14-etat-des-lieux-interface-tsm.md) | 2026-07-14, mise à jour 2026-07-18 | Note de coordination | Informatif | Constats sur la divergence entre les dépôts et sur l'écart avec `knowledge_base.json` ; addendum indiquant les liens corrigés et le pilote Method Catalog désormais disponible. |
-| [Fragment HDDL MC-026](../references/hddl/experimental/mc-026-close-guard/README.md) | profil v0.1 | Dérivé, expérimental | Non normatif | Premier Domain / Problem minimal pour `TM-023-S01-M01`, avec table de traçabilité explicite. |
+| [Fragment HDDL MC-026](../references/hddl/experimental/mc-026-close-guard/README.md) | profil v0.1 | Dérivé, expérimental, validé par Aries 0.5.0 | Non normatif | Premier Domain / Problem minimal pour `TM-023-S01-M01`, avec table de traçabilité explicite et plan primitif vérifié. |
 
 ## Artefacts prévus mais absents
 
 | Artefact | Statut attendu | Dépendances |
 |---|---|---|
-| Naval Domain / Problems complets | Premier fragment MC-026 disponible ; généralisation à produire | Validation du profil v0.1 avec le planificateur et l’adaptation d’exécution, puis extension progressive du Method Catalog. |
+| Naval Domain / Problems complets | Premier fragment MC-026 validé avec Aries ; généralisation à produire | Validation de l’adaptation d’exécution, puis extension progressive du Method Catalog. |
 | Schémas formels et benchmarks | À planifier | Métamodèles et référentiels stabilisés. Le premier validateur transversal est maintenant disponible. |
 
 ## Résultats de l’audit de consolidation
@@ -99,7 +99,7 @@ Cet index est la source unique d’inventaire documentaire du dépôt **LSG — 
 - Le Task Catalog v0.12.0 reprend les 64 tâches et 79 signatures. Trente-deux signatures possèdent une sémantique complète ; les 47 autres restent à enrichir progressivement.
 - Le State Model v0.6 contient 105 états normatifs, 23 types propres et 4 candidats de mission différés faute de producteurs sémantisés.
 - Le Method Catalog v0.1.0 introduit deux méthodes pilotes pour Escort. Elles explicitent les sous-tâches concurrentes, leurs conditions et les décisions de reprise ; leur projection HDDL reste partielle.
-- Le profil HDDL v0.1 choisit la compilation `start/stop` pour les tâches continues et projette les deux relations `spans` de `TM-023-S01-M01` dans un fragment expérimental MC-026 sans nouveau prédicat métier.
+- Le profil HDDL v0.1 choisit la compilation `start/stop` pour les tâches continues et projette les deux relations `spans` de `TM-023-S01-M01` dans un fragment expérimental MC-026 sans nouveau prédicat métier. Unified Planning 1.3.0 et Aries 0.5.0 produisent exactement le plan primitif attendu.
 - Le validateur transversal et sa CI contrôlent automatiquement les inventaires, la traçabilité, les Semantic Families et la cohérence entre sémantiques de tâche, méthodes HTN, State Model et ontologie.
 - Les références de versions de l’architecture v3.2 ont été actualisées vers Mission Catalog v1.0.4, Task Catalog v0.12.0, Method Catalog v0.1.0 et State Model v0.6.
 - L’architecture référence LSGA v2 et `rig-e2e.md` par des liens externes vers `tactical_scenario_maker` ; aucun lien local cassé ne subsiste dans la documentation Markdown.
@@ -110,4 +110,4 @@ Cet index est la source unique d’inventaire documentaire du dépôt **LSG — 
 1. Valider le statut normatif futur de l’architecture v3.2, actuellement présentée comme proposition à valider conjointement.
 2. Confirmer avec l’équipe `tactical_scenario_maker` quel dépôt porte la copie canonique de l’architecture ; les documents amont restent pour l’instant des références externes.
 3. Faire relire et valider par les experts métier les 33 spécifications nouvellement consolidées MC-034 à MC-066 avant de promouvoir leur statut de `candidate` à `draft`.
-4. Valider le profil HDDL `start/stop` avec le planificateur retenu et l’adaptation d’exécution avant de promouvoir les méthodes Escort.
+4. Valider le profil HDDL `start/stop` avec l’adaptation d’exécution avant de promouvoir les méthodes Escort ; la validation avec le planificateur Aries est acquise pour le pilote MC-026.

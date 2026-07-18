@@ -13,7 +13,7 @@ La documentation publiée de la Naval Maritime Ontology est accessible sur [GitH
 - La **LSG Domain Engineering Method (DEM)** fixe les règles de conception et les métamodèles du Task Catalog et du Method Catalog.
 - Le **State Model v0.6** est le vocabulaire dynamique dérivé des référentiels métier. Sa source YAML est normative pour les états des signatures et méthodes enrichies.
 - Le **profil HDDL LOTUSim v0.1** définit la première projection expérimentale `start/stop` des tâches continues ; il n’ajoute aucune sémantique métier.
-- Un premier **fragment Domain / Problem HDDL** dérivé est disponible pour `TM-023-S01-M01` et `MC-026`. Il reste expérimental et ne constitue pas encore le Naval Domain complet.
+- Un premier **fragment Domain / Problem HDDL** dérivé est disponible pour `TM-023-S01-M01` et `MC-026`. Son plan primitif a été vérifié avec Unified Planning 1.3.0 et Aries 0.5.0 ; il reste expérimental et ne constitue pas encore le Naval Domain complet.
 
 ## Chaîne de dérivation
 

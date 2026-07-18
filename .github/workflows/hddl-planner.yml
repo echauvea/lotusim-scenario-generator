@@ -1,0 +1,40 @@
+name: HDDL planner validation
+
+on:
+  pull_request:
+    paths:
+      - "references/hddl/**"
+      - "specification/hddl/**"
+      - "tools/planning/**"
+      - ".github/workflows/hddl-planner.yml"
+  push:
+    branches: [main]
+    paths:
+      - "references/hddl/**"
+      - "specification/hddl/**"
+      - "tools/planning/**"
+      - ".github/workflows/hddl-planner.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  solve-mc026:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: tools/planning/requirements-aries.txt
+
+      - name: Install planner dependencies
+        run: python -m pip install -r tools/planning/requirements-aries.txt
+
+      - name: Parse and solve MC-026
+        run: python tools/planning/run_mc026_aries.py

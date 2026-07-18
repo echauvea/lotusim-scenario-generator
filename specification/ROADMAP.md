@@ -14,6 +14,7 @@
 - Method Catalog v0.1.0 : deux méthodes pilotes décomposent `TC-023-S01 Escort Unit`.
 - Profil HDDL LOTUSim v0.1 : compilation expérimentale `start/stop` des tâches continues, sans boucle de maintien au niveau 1.
 - Fragment HDDL MC-026 : premier Domain / Problem dérivé pour `TM-023-S01-M01` avec traçabilité explicite.
+- Chaîne planificateur pilote : Unified Planning 1.3.0 et Aries 0.5.0 parsèment le fragment et produisent exactement le plan primitif attendu.
 - Les contrôles locaux et la CI vérifient les identifiants, références, familles, types, états, bindings et méthodes.
 
 ## 2. Pilote Escort
@@ -39,10 +40,10 @@ Décisions et résultats :
 4. préservation de `protected_unit_preserved` comme résultat d’évaluation externe, jamais comme effet de Guard ;
 5. décisions de reprise conservées comme contrats d’exécution et de replanification ;
 6. limites et rejets de projection consignés avant généralisation.
+7. validation reproductible par Aries du cycle complet `start Follow / start Guard / Navigate / evaluate / stop Guard / stop Follow`.
 
 ## 4. Travaux suivants
 
-- Parser le fragment avec la chaîne HDDL retenue et vérifier le plan primitif attendu.
 - Définir l’interprétation des commandes `start/stop` dans l’Execution Adaptation Layer, puis tester les arrêts normaux et les incidents injectés.
 - Décomposer `TC-024-S01 Screen` afin de fermer primitivement la seconde méthode Escort.
 - Modéliser l’escorte de convoi ou de groupe séparément de l’escorte d’une plateforme unique.
