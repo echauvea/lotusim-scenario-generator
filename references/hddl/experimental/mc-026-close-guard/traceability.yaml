@@ -1,0 +1,62 @@
+profile: LOTUSim_HDDL_Profile_v0.1
+status: experimental
+source_method: TM-023-S01-M01
+mission: MC-026
+
+predicates:
+  - {hddl: located-at, state_ref: SM-ST-001}
+  - {hddl: route-destination, state_ref: SM-ST-002}
+  - {hddl: route-traversable, state_ref: SM-ST-004}
+  - {hddl: following, state_ref: SM-ST-005}
+  - {hddl: assigned-to-escort, state_ref: SM-ST-006}
+  - {hddl: protected-unit-at-destination, state_ref: SM-ST-007}
+  - {hddl: protected-unit-preserved, state_ref: SM-ST-008}
+  - {hddl: capability-available, state_ref: SM-ST-010}
+  - {hddl: route-completed, state_ref: SM-ST-012}
+  - {hddl: location-known, state_ref: SM-ST-027}
+  - {hddl: protection-assignment, state_ref: SM-ST-055}
+  - {hddl: guarding, state_ref: SM-ST-059}
+  - {hddl: escort-route-assigned, state_ref: SM-ST-105}
+
+compound_tasks:
+  - {hddl: escort-unit, task_ref: TC-023-S01}
+
+methods:
+  - {hddl: close-guard-route-escort, method_ref: TM-023-S01-M01}
+
+projection_variables:
+  - hddl: destination
+    task_ref: TC-001-S02
+    source: state_at_start
+    state_ref: SM-ST-002
+  - hddl: origin
+    task_ref: TC-001-S02
+    source: state_at_start
+    state_ref: SM-ST-001
+
+actions:
+  - hddl: start-follow-designated-unit
+    task_ref: TC-006-S01
+    lifecycle_phase: start
+    active_state_ref: SM-ST-005
+  - hddl: stop-follow-designated-unit
+    task_ref: TC-006-S01
+    lifecycle_phase: stop
+    active_state_ref: SM-ST-005
+  - hddl: start-guard-object
+    task_ref: TC-025-S01
+    lifecycle_phase: start
+    active_state_ref: SM-ST-059
+  - hddl: stop-guard-object
+    task_ref: TC-025-S01
+    lifecycle_phase: stop
+    active_state_ref: SM-ST-059
+  - {hddl: navigate-route, task_ref: TC-001-S02}
+  - hddl: evaluate-escort-destination
+    external_producer: escort_goal_evaluator
+    produces_state_ref: SM-ST-007
+
+problem_assumptions:
+  initial_external_states: [SM-ST-004, SM-ST-008, SM-ST-010, SM-ST-027]
+  runtime_evaluated_outcomes: [SM-ST-007, SM-ST-008]
+  failure_handling: execution_supervision_and_level_1_replanning

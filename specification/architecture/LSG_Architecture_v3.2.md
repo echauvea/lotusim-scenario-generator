@@ -1062,13 +1062,13 @@ Chaque document se valide contre le POC au fil de l'eau, pas en cascade.
 
 | Document | Statut | Note |
 |---|---|---|
-| **Profil HDDL LOTUSim** | À produire — **prochain livrable** | Pivot de faisabilité de la projection des référentiels vers HDDL |
+| **Profil HDDL LOTUSim** | v0.1 expérimental | Compilation `start/stop` de `spans` pour le pilote MC-026 ; maintien continu délégué à l’exécution |
 | **LOTUSim Naval Ontology** | v2.0-draft existante | 263 classes dont 46 capacités ; annotations `nmo:hasUsageDomain` (diffusabilité) et `nmo:manifestKey` (§6.4) ; NETN-ETR et C2SIM en checklist (Annexe B) |
 | **LOTUSim Mission Catalog** | v1.0.4 existante | 66 missions, 9 familles doctrinales, capacités requises par mission |
 | **LOTUSim Task Catalog** | v0.12.0 existante | 64 verbes canoniques, 79 signatures typées ; 32 signatures alignées sur le State Model |
 | **LOTUSim Method Catalog** | v0.1.0 pilote | Deux méthodes de décomposition de la tâche Escort ; projection HDDL encore partielle |
 | **LOTUSim State Model** | v0.6 existant | 105 états dynamiques normatifs, 23 types propres et traçabilité producteurs/consommateurs |
-| **Naval Domain** (Domain HDDL) | À produire | Projection planificateur des référentiels — chemin critique, revue métier requise |
+| **Naval Domain** (Domain HDDL) | Premier fragment MC-026 disponible ; domaine complet à produire | Projection planificateur des référentiels — chemin critique, revue métier requise |
 | **Benchmark Suite** | À produire | Scénarios de référence, métriques, protocoles |
 
 L'ontologie, les trois catalogues et le State Model dérivé sont vérifiés entre eux par le validateur
@@ -1236,6 +1236,9 @@ multi-processus de la stack LOTUSim.
    à la famille documentaire et à l'annexe D.
 3. **Liens amont corrigés** : LSGA v2 et `rig-e2e.md` sont référencés par leurs
    URL dans `tactical_scenario_maker`.
+4. **Projection HDDL amorcée** : le profil HDDL v0.1 choisit une compilation
+   `start/stop` de `spans` et un premier fragment dérivé cible MC-026 ; le Naval
+   Domain complet reste à produire.
 
 ## Annexe D — Documents de référence
 
@@ -1257,7 +1260,8 @@ multi-processus de la stack LOTUSim.
   sur l'absence de source canonique unique pour ce document.
 - Runbook du rig d'intégration : [rig-e2e.md](https://github.com/cmoron-lab/tactical_scenario_maker/blob/main/docs/rig-e2e.md)
   (également dans `tactical_scenario_maker`).
-- À produire : Profil HDDL LOTUSim, Naval Domain, Benchmark Suite (§10.3).
+- Disponible à titre expérimental : Profil HDDL LOTUSim v0.1 et fragment MC-026 ;
+  à produire : Naval Domain complet et Benchmark Suite (§10.3).
 - Historique : la review LSGA v2 (11/07), la note « Trois niveaux de
   décision » (12/07), le document de convergence `architecture-unifiee.md` et
   l'architecture tsm `ARCHITECTURE.md` sont absorbés par la présente v3 —
