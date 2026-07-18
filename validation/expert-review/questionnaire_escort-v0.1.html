@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Revue experte — Méthodes d'escorte (Method Catalog v0.1.0)</title>
+<style>
+  body { font-family: "Segoe UI", system-ui, sans-serif; margin: 0; background: #f2f4f7; color: #1c2733; }
+  .wrap { max-width: 780px; margin: 0 auto; padding: 24px 16px 80px; }
+  h1 { font-size: 1.35rem; margin: 0 0 4px; }
+  .meta { color: #5b6b7b; font-size: 0.9rem; margin-bottom: 18px; }
+  .card { background: #fff; border: 1px solid #dde3ea; border-radius: 10px; padding: 18px 20px; margin-bottom: 14px; }
+  .scenario { background: #eef4fb; border: 1px solid #c9dcf0; border-radius: 10px; padding: 14px 18px; margin-bottom: 18px; font-size: 0.95rem; }
+  .tag { display: inline-block; font-size: 0.72rem; letter-spacing: 0.04em; text-transform: uppercase; color: #4c6ef5; background: #edf1ff; border-radius: 4px; padding: 2px 8px; margin-bottom: 8px; }
+  .statement { font-size: 1rem; line-height: 1.5; margin: 0 0 12px; }
+  .choices { display: flex; gap: 8px; flex-wrap: wrap; }
+  .choices label { border: 1px solid #c6cfd9; border-radius: 8px; padding: 8px 14px; cursor: pointer; user-select: none; background: #fafbfc; }
+  .choices input { margin-right: 6px; }
+  .choices label:has(input:checked) { border-color: #4c6ef5; background: #edf1ff; font-weight: 600; }
+  textarea { width: 100%; box-sizing: border-box; min-height: 64px; margin-top: 10px; border: 1px solid #c6cfd9; border-radius: 8px; padding: 8px; font: inherit; }
+  .hint { font-size: 0.82rem; color: #8a5a00; margin-top: 6px; display: none; }
+  .progress { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #dde3ea; padding: 10px 16px; display: flex; align-items: center; gap: 14px; }
+  .bar { flex: 1; height: 8px; background: #e3e8ee; border-radius: 4px; overflow: hidden; }
+  .bar > div { height: 100%; width: 0; background: #4c6ef5; transition: width 0.2s; }
+  button { background: #4c6ef5; color: #fff; border: 0; border-radius: 8px; padding: 10px 18px; font: inherit; font-weight: 600; cursor: pointer; }
+  button:disabled { background: #aab6c6; cursor: not-allowed; }
+  input[type=text] { border: 1px solid #c6cfd9; border-radius: 8px; padding: 8px; font: inherit; width: 100%; box-sizing: border-box; }
+  .idline { font-size: 0.72rem; color: #9aa7b4; margin-top: 10px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Revue experte — Méthodes d'escorte (Method Catalog v0.1.0)</h1>
+  <div class="meta">Campagne escort-v0.1 — générée le 2026-07-18 depuis le Method Catalog 0.1.0.
+  Vos réponses restent locales : rien n'est transmis tant que vous n'exportez pas le fichier.</div>
+  <div class="card">
+    <div class="tag">Relecteur</div>
+    <p class="statement">Votre nom (ou trigramme) :</p>
+    <input type="text" id="expert" placeholder="ex. E. Chauveau">
+    <p class="statement" style="margin-top:12px">Répondez d'après votre expérience opérationnelle, pas d'après ce que le modèle « devrait » dire.
+    <strong>« Ça dépend » est une réponse précieuse</strong> : elle doit être accompagnée d'un commentaire expliquant de quoi ça dépend.</p>
+  </div>
+  <div class="scenario"><strong>Situation de référence.</strong> La frégate <em>Lynx</em> reçoit l'ordre d'escorter le pétrolier ravitailleur <em>Aber</em><br>depuis sa position actuelle jusqu'à un port de destination, le long d'une route de transit.<br>Le modèle en cours de validation décrit deux façons de conduire cette escorte :<br>la <strong>garde rapprochée</strong> (la frégate suit le pétrolier et le garde au plus près pendant tout le transit)<br>et l'<strong>escorte avec écran</strong> (la frégate tient un écran de protection selon un plan défini par le commandement).<br>Les questions portent sur ce que ce modèle affirme. Répondez d'après la pratique réelle : si le modèle a tort, c'est lui qu'on corrigera.<br></div>
+  <div id="questions"></div>
+  <div class="progress">
+    <div class="bar"><div id="fill"></div></div>
+    <span id="count">0 / 0</span>
+    <button id="export" disabled>Exporter mes réponses</button>
+  </div>
+</div>
+<script>
+const ITEMS = [
+ {
+  "id": "VQ-TM-023-S01-M01-APP-ST006",
+  "category": "applicability",
+  "question": {
+   "format": "vf",
+   "theme": "Conditions de déclenchement",
+   "statement": "Une escorte ne peut être planifiée que si l'escorteur a reçu formellement la responsabilité de protéger cette unité précise (ordre d'escorte explicite). Jamais d'escorte « opportuniste » sans ordre.\n"
+  }
+ },
+ {
+  "id": "VQ-TM-023-S01-M01-APP-ST105",
+  "category": "applicability",
+  "question": {
+   "format": "vf",
+   "theme": "Conditions de déclenchement",
+   "statement": "La route du transit doit avoir été assignée par le commandement avant le début de l'escorte : l'escorteur ne choisit pas lui-même la route parmi les routes praticables.\n"
+  }
+ },
+ {
+  "id": "VQ-TM-023-S01-M01-APP-ST055",
+  "category": "applicability",
+  "question": {
+   "format": "vf",
+   "theme": "Conditions de déclenchement",
+   "statement": "Le modèle distingue deux choses : l'ordre d'escorte (qui escorte qui) et la responsabilité de protection (qui répond de l'intégrité de l'unité protégée). Cette distinction correspond à une réalité opérationnelle — les deux peuvent être portées par des acteurs différents.\n"
+  }
+ },
+ {
+  "id": "VQ-TM-023-S01-M01-APP-ST027",
+  "category": "applicability",
+  "question": {
+   "format": "vf",
+   "theme": "Conditions de déclenchement",
+   "statement": "L'escorte ne peut pas débuter tant que l'escorteur ne dispose pas d'une position actuelle exploitable de l'unité à protéger.\n"
+  }
+ },
+ {
+  "id": "VQ-TM-023-S01-M01-APP-ST004",
+  "category": "applicability",
+  "question": {
+   "format": "vf",
+   "theme": "Conditions de déclenchement",
+   "statement": "Avant le départ, il suffit de vérifier que la route est praticable par l'unité protégée ; la praticabilité par l'escorteur lui-même n'a pas besoin d'être vérifiée.\n"
+  }
+ },
+ {
+  "id": "VQ-TM-023-S01-M01-CAP",
+  "category": "capabilities",
+  "question": {
+   "format": "vf",
+   "theme": "Capacités requises",
+   "statement": "Pour une garde rapprochée, on exige de l'escorteur trois aptitudes : suivre une unité désignée, assurer une protection, tenir un poste ; et de l'unité protégée une seule : suivre une route. Cette liste est correcte — ni trop exigeante, ni insuffisante.\n"
+  }
+ },
+ {
+  "id": "VQ-TM-023-S01-M01-DEC",
+  "category": "decomposition",
+  "question": {
+   "format": "vf",
+   "theme": "Déroulement",
+   "statement": "À ce niveau de description, la garde rapprochée se réduit à trois activités menées de front : le pétrolier suit sa route ; la frégate suit le pétrolier ; la frégate le garde. Rien d'indispensable ne manque à ce niveau (la veille capteurs, les comptes rendus, etc. relèvent du niveau de conduite, pas de la description de la méthode).\n"
+  }
+ },
+ {
+  "id": "VQ-TM-023-S01-M01-ORD",
+  "category": "ordering",
+  "question": {
+   "format": "vf",
+   "theme": "Déroulement",
+   "statement": "Peu importe l'ordre dans lequel la frégate établit le suivi et la garde, pourvu que les deux soient effectifs avant que le pétrolier ne s'ébranle sur sa route.\n"
+  }
+ },
+ {
+  "id": "VQ-TM-023-S01-M01-SYNC",
+  "category": "synchronization",
+  "question": {
+   "format": "vf",
+   "theme": "Déroulement",
+   "statement": "Le suivi et la protection doivent rester actifs sans interruption pendant toute la durée du transit. Une interruption même brève (par exemple : la frégate s'écarte pour investiguer un contact) remet en cause l'escorte telle que décrite.\n"
+  }
+ },
+ {
+  "id": "VQ-TM-023-S01-M01-COMP",
+  "category": "completion",
+  "question": {
+   "format": "vf",
+   "theme": "Critère de succès",
+   "statement": "L'escorte est réussie quand — et seulement quand — le pétrolier est arrivé à destination ET est resté intègre selon les critères de la mission. Rien d'autre n'entre dans le critère de succès : ni l'état de la frégate, ni le respect d'un horaire.\n"
+  }
+ },
+ {
+  "id": "VQ-TM-023-S01-M01-FAIL-target_lost",
+  "category": "failure",
+  "question": {
+   "format": "vf",
+   "theme": "Conduite sur incident",
+   "statement": "Si la frégate perd la position du pétrolier en cours de transit, la réaction par défaut est de chercher à le réacquérir — on ne déclare pas l'escorte échouée.\n"
+  }
+ },
+ {
+  "id": "VQ-TM-023-S01-M01-FAIL-protection_capability_lost",
+  "category": "failure",
+  "question": {
+   "format": "vf",
+   "theme": "Conduite sur incident",
+   "statement": "Si la frégate perd sa capacité de protection (avarie du système d'armes, par exemple), l'escorte est déclarée dégradée et la décision remonte à l'échelon supérieur — mais le transit n'est pas interrompu automatiquement.\n"
+  }
+ },
+ {
+  "id": "VQ-TM-023-S01-M01-FAIL-route_blocked",
+  "category": "failure",
+  "question": {
+   "format": "vf",
+   "theme": "Conduite sur incident",
+   "statement": "Si la route devient impraticable, la réaction par défaut est de replanifier la route d'escorte — sans lever le dispositif de protection pendant la replanification.\n"
+  }
+ },
+ {
+  "id": "VQ-TM-023-S01-M01-NARROW",
+  "category": "type_narrowing",
+  "question": {
+   "format": "vf",
+   "theme": "Périmètre",
+   "statement": "Ces méthodes ne valent que pour une plateforme escortant une autre plateforme. Escorter un convoi ou un groupe constitué est un problème différent, qui mérite sa propre description — on ne doit pas l'y ramener silencieusement.\n"
+  }
+ },
+ {
+  "id": "VQ-TM-023-S01-M02-APP-ST056",
+  "category": "applicability",
+  "question": {
+   "format": "vf",
+   "theme": "Escorte avec écran",
+   "statement": "L'escorte avec écran n'est envisageable que si un plan de protection défini par le commandement est disponible : l'escorteur ne conçoit pas l'écran de sa propre initiative.\n"
+  }
+ },
+ {
+  "id": "VQ-TM-023-S01-M02-CAP",
+  "category": "capabilities",
+  "question": {
+   "format": "vf",
+   "theme": "Escorte avec écran",
+   "statement": "Contrairement à la garde rapprochée, la tenue d'écran n'exige pas de l'escorteur l'aptitude à tenir un poste fixe (l'écran impose ses propres évolutions).\n"
+  }
+ },
+ {
+  "id": "VQ-TM-023-S01-M02-DEC",
+  "category": "decomposition",
+  "question": {
+   "format": "vf",
+   "theme": "Escorte avec écran",
+   "statement": "Dans l'escorte avec écran, l'activité « tenir l'écran » reste décrite globalement à ce stade (secteurs, barrières et postes seront détaillés plus tard). Remplacer la garde rapprochée par la tenue d'écran, en conservant le suivi et le transit, décrit correctement cette forme d'escorte.\n"
+  }
+ },
+ {
+  "id": "VQ-TM-023-S01-M02-FAIL-persistent_screen_gap",
+  "category": "failure",
+  "question": {
+   "format": "vf",
+   "theme": "Escorte avec écran",
+   "statement": "Si une brèche durable apparaît dans l'écran, la réaction par défaut est de reconfigurer l'écran — on n'interrompt pas le transit et on ne déclare pas l'échec de l'escorte.\n"
+  }
+ },
+ {
+  "id": "VQ-TC-023-S01-SIG-APPGAP",
+  "category": "applicability_gap",
+  "question": {
+   "format": "open",
+   "theme": "Chasse aux manques",
+   "statement": "Décrivez une situation réelle où toutes les conditions listées plus haut sont réunies, mais où lancer l'escorte serait quand même une erreur. (S'il n'y en a pas, écrivez « RAS ».)\n"
+  }
+ },
+ {
+  "id": "VQ-TC-023-S01-SIG-ALTGAP",
+  "category": "alternative_gap",
+  "question": {
+   "format": "open",
+   "theme": "Chasse aux manques",
+   "statement": "Garde rapprochée et escorte avec écran : ces deux modes couvrent-ils l'essentiel des escortes d'une unité seule ? Citez une forme d'escorte courante qui n'entre dans aucun des deux. (S'il n'y en a pas, écrivez « RAS ».)\n"
+  }
+ },
+ {
+  "id": "VQ-TC-023-S01-SIG-DISCRIM",
+  "category": "discriminant",
+  "question": {
+   "format": "vf",
+   "theme": "Choix entre les deux modes",
+   "statement": "Aujourd'hui, le modèle ne connaît qu'un seul critère pour préférer l'écran à la garde rapprochée : l'existence d'un plan de protection. C'est le bon discriminant — le vrai choix ne dépend ni de la menace, ni du milieu, ni du nombre d'escorteurs disponibles.\n"
+  }
+ },
+ {
+  "id": "VQ-TC-023-S01-CHOICE-01",
+  "category": "method_choice",
+  "question": {
+   "format": "choice",
+   "theme": "Le choix du commandant",
+   "context": "Transit littoral resserré, menace principale : mines et embarcations rapides. Aucun plan de protection n'a été émis. Vous commandez la frégate.\n",
+   "statement": "Quel mode d'escorte adoptez-vous ?",
+   "options": [
+    "Garde rapprochée",
+    "Escorte avec écran",
+    "Autre (précisez en commentaire)"
+   ]
+  }
+ },
+ {
+  "id": "VQ-TC-023-S01-CHOICE-02",
+  "category": "method_choice",
+  "question": {
+   "format": "choice",
+   "theme": "Le choix du commandant",
+   "context": "Transit hauturier de 48 h, menace sous-marine évaluée sérieuse, plan de protection émis par le commandement. Vous commandez la frégate (aptitude ASM complète).\n",
+   "statement": "Quel mode d'escorte adoptez-vous ?",
+   "options": [
+    "Garde rapprochée",
+    "Escorte avec écran",
+    "Autre (précisez en commentaire)"
+   ]
+  }
+ }
+];
+const answers = {};
+const container = document.getElementById("questions");
+
+function render() {
+  ITEMS.forEach((it, idx) => {
+    const card = document.createElement("div");
+    card.className = "card";
+    const q = it.question;
+    let choicesHtml = "";
+    if (q.format === "vf") {
+      choicesHtml = ["Vrai", "Faux", "Ça dépend"].map(v =>
+        `<label><input type="radio" name="${it.id}" value="${v}">${v}</label>`).join("");
+    } else if (q.format === "choice") {
+      choicesHtml = q.options.map(v =>
+        `<label><input type="radio" name="${it.id}" value="${v}">${v}</label>`).join("");
+    }
+    card.innerHTML = `
+      <div class="tag">${idx + 1}. ${q.theme || it.category}</div>
+      ${q.context ? `<p class="statement" style="color:#5b6b7b">${q.context}</p>` : ""}
+      <p class="statement">${q.statement}</p>
+      <div class="choices">${choicesHtml}</div>
+      <textarea placeholder="${q.format === "open" ? "Votre réponse…" : "Commentaire (obligatoire si « Ça dépend »)…"}"></textarea>
+      <div class="hint">Merci de préciser de quoi ça dépend.</div>
+      <div class="idline">${it.id}</div>`;
+    container.appendChild(card);
+    const update = () => {
+      const chosen = card.querySelector("input:checked");
+      const comment = card.querySelector("textarea").value.trim();
+      const hint = card.querySelector(".hint");
+      let done = false;
+      if (q.format === "open") { done = comment.length > 0; }
+      else if (chosen) {
+        const needsComment = chosen.value === "Ça dépend";
+        hint.style.display = needsComment && !comment ? "block" : "none";
+        done = !needsComment || comment.length > 0;
+      }
+      if (done) { answers[it.id] = { value: chosen ? chosen.value : null, comment: comment }; }
+      else { delete answers[it.id]; }
+      refresh();
+    };
+    card.addEventListener("change", update);
+    card.querySelector("textarea").addEventListener("input", update);
+  });
+  refresh();
+}
+
+function refresh() {
+  const total = ITEMS.length;
+  const done = Object.keys(answers).length;
+  document.getElementById("count").textContent = done + " / " + total;
+  document.getElementById("fill").style.width = (100 * done / total) + "%";
+  document.getElementById("export").disabled = done < total || !document.getElementById("expert").value.trim();
+}
+document.getElementById("expert").addEventListener("input", refresh);
+
+document.getElementById("export").addEventListener("click", () => {
+  const expert = document.getElementById("expert").value.trim();
+  const payload = {
+    campaign: "escort-v0.1",
+    catalog_version: "0.1.0",
+    expert: expert,
+    exported_at: new Date().toISOString(),
+    answers: answers
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "reponses_escort-v0.1_" + expert.replace(/\W+/g, "-") + ".json";
+  a.click();
+});
+render();
+</script>
+</body>
+</html>
