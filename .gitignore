@@ -3,6 +3,7 @@ Thumbs.db
 generer_doc.bat
 ouvrir_doc.bat
 /build/
+/outputs/
 __pycache__/
 *.py[cod]
 .venv/

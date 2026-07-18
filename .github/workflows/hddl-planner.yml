@@ -36,5 +36,16 @@ jobs:
       - name: Install planner dependencies
         run: python -m pip install -r tools/planning/requirements-aries.txt
 
+      - name: Test planner result export
+        run: python -m unittest discover -s tools/planning/tests -v
+
       - name: Parse and solve MC-026
         run: python tools/planning/run_mc026_aries.py
+
+      - name: Publish MC-026 planner result
+        uses: actions/upload-artifact@v7
+        with:
+          name: mc-026-aries-plan
+          path: outputs/mc-026/aries-plan.json
+          if-no-files-found: error
+          retention-days: 30
