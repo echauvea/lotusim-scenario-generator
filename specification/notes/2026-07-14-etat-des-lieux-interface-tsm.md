@@ -73,3 +73,18 @@ Un point court (30 min) centré sur les questions 1 et 3 en priorité : elles co
 - Le choix du dépôt canonique de l’architecture reste à confirmer avec l’équipe tsm.
 - Le premier mapping doctrinal est désormais représenté côté LSG par le Method Catalog v0.1.0 : deux méthodes pilotes décomposent Escort, sans encore remplacer ni modifier `knowledge_base.json` dans tsm.
 - La priorité technique suivante est le profil de projection HDDL et son expérimentation sur MC-026, avant un raccordement mécanique au runtime tsm.
+
+---
+
+## 8. Mise à jour après validation HDDL/Aries
+
+- Le profil HDDL v0.1 a retenu la compilation `start/stop` et le fragment MC-026
+  a été résolu par Aries 0.5.0 ; le choix du profil n’est plus une question ouverte
+  pour le pilote de garde rapprochée.
+- Le Method Catalog v0.2.0 distingue désormais la projection techniquement
+  `ready` de `TM-023-S01-M01` de son statut métier encore `pilot`.
+- La priorité technique se déplace vers le raccordement EAL/tsm : interprétation
+  des commandes `start/stop`, surveillance des invariants, arrêts sur incident et
+  replanification.
+- Le mapping entre `knowledge_base.json` et les signatures typées LSG reste un
+  chantier distinct et toujours ouvert.

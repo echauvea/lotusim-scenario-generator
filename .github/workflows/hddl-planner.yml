@@ -4,6 +4,11 @@ on:
   pull_request:
     paths:
       - "references/hddl/**"
+      - "references/method-catalog/**"
+      - "references/mission-catalog/**"
+      - "references/state-model/**"
+      - "references/task-catalog/**"
+      - "specification/dem/**"
       - "specification/hddl/**"
       - "tools/planning/**"
       - ".github/workflows/hddl-planner.yml"
@@ -11,6 +16,11 @@ on:
     branches: [main]
     paths:
       - "references/hddl/**"
+      - "references/method-catalog/**"
+      - "references/mission-catalog/**"
+      - "references/state-model/**"
+      - "references/task-catalog/**"
+      - "specification/dem/**"
       - "specification/hddl/**"
       - "tools/planning/**"
       - ".github/workflows/hddl-planner.yml"
