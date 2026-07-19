@@ -19,9 +19,9 @@ from __future__ import annotations
 
 import argparse
 import datetime
+import html
 import os
 import re
-import subprocess
 import sys
 from pathlib import Path
 
@@ -64,10 +64,13 @@ def current_commit() -> str:
     sha = os.getenv("GITHUB_SHA")
     if sha:
         return sha[:7]
+    head = ROOT / ".git" / "HEAD"
     try:
-        return subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=ROOT,
-                              capture_output=True, text=True, check=True).stdout.strip()
-    except (OSError, subprocess.CalledProcessError):
+        content = head.read_text(encoding="utf-8").strip()
+        if content.startswith("ref: "):
+            content = (ROOT / ".git" / content[5:]).read_text(encoding="utf-8").strip()
+        return content[:7]
+    except OSError:
         return "local"
 
 
@@ -98,11 +101,13 @@ def campaign_rows(campaigns: list[dict]) -> str:
     rows = []
     for c in campaigns:
         avancement = pct(c["valides"], c["total"])
-        reviewers = ", ".join(c["reviewers"]) if c["reviewers"] else "—"
+        # Reviewer and campaign names originate from expert response files:
+        # always escape them before they reach the published page.
+        reviewers = html.escape(", ".join(c["reviewers"])) if c["reviewers"] else "—"
         rows.append(
             "          <tr>"
-            f"<td><code>{c['name']}</code></td>"
-            f"<td>{c['target']}</td>"
+            f"<td><code>{html.escape(c['name'])}</code></td>"
+            f"<td>{html.escape(c['target'])}</td>"
             f"<td>{c['total']} ({c['asked']} questions)</td>"
             f"<td>{c['valides']}</td>"
             f"<td>{c['contestes']}</td>"
@@ -122,8 +127,8 @@ def campaign_cards(campaigns: list[dict]) -> str:
                 else f'<span class="etat partiel">{c["contestes"]} contesté(s) à adjuger</span>'
                 if c["contestes"] else '<span class="etat pret">aucun item contesté</span>')
         cards.append(f"""      <div class="voie metier">
-        <h3>Campagne <code>{c['name']}</code></h3>
-        <div class="mode">cible : {c['target']} · dernière agrégation : {c['aggregated']}</div>
+        <h3>Campagne <code>{html.escape(c['name'])}</code></h3>
+        <div class="mode">cible : {html.escape(c['target'])} · dernière agrégation : {html.escape(str(c['aggregated']))}</div>
         <div class="jauge" style="margin-top:8px">
           <div class="jauge-barre"><i class="cuivre" style="width:{avancement}%"></i></div>
           <span class="jauge-val">{c['valides']}/{c['total']} · {avancement} %</span>
@@ -172,7 +177,8 @@ def main() -> int:
         readiness = str((record.get("projection") or {}).get("readiness", "?"))
         css = READINESS_CLASS.get(readiness, "attente")
         short_id = str(record.get("id", "?")).rsplit("-", 1)[-1]
-        method_chips.append(f'<span>{short_id} <span class="etat {css}">{readiness}</span></span>')
+        method_chips.append(f'<span>{html.escape(short_id)} '
+                            f'<span class="etat {css}">{html.escape(readiness)}</span></span>')
 
     fragments = len(list((ROOT / "references" / "hddl" / "experimental").glob("*/domain.hddl")))
 
@@ -191,7 +197,7 @@ def main() -> int:
         "__COMMIT__": current_commit(),
         "__VALIDATION_SUMMARY__": "passée",
         "__VALIDATION_ETAT__": "100 % passant",
-        "__ONTO_VERSION__": onto_version.group(1),
+        "__ONTO_VERSION__": html.escape(onto_version.group(1)),
         "__ONTO_CLASSES__": str(len(data.ontology)),
         "__ONTO_CAPACITES__": str(capabilities),
         "__MC_VERSION__": version_from_name("LOTUSim_Mission_Catalog_v*.md", ROOT / "references" / "mission-catalog"),
@@ -226,15 +232,15 @@ def main() -> int:
         "__CAMPAGNES_CARTES__": campaign_cards(campaigns),
     }
 
-    html = TEMPLATE.read_text(encoding="utf-8")
+    page = TEMPLATE.read_text(encoding="utf-8")
     for token, value in tokens.items():
-        html = html.replace(token, value)
-    leftover = sorted(set(re.findall(r"__[A-Z_]+__", html)))
+        page = page.replace(token, value)
+    leftover = sorted(set(re.findall(r"__[A-Z_]+__", page)))
     if leftover:
         fail(f"unresolved template tokens: {leftover}")
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(html, encoding="utf-8")
+    args.output.write_text(page, encoding="utf-8")
     print(f"Dashboard generated: {args.output} "
           f"(commit {tokens['__COMMIT__']}, {exp_valides}/{exp_total} expert items validated)")
     return 0
