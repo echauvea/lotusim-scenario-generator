@@ -7,7 +7,9 @@ on:
       - "site/**"
       - "validation/expert-review/**"
       - "specification/hddl/**"
+      - "specification/dem/**"
       - "tools/validation/**"
+      - "tools/planning/**"
       - "tools/reporting/**"
       - ".github/workflows/ontology-pages.yml"
   push:
@@ -18,7 +20,9 @@ on:
       - "site/**"
       - "validation/expert-review/**"
       - "specification/hddl/**"
+      - "specification/dem/**"
       - "tools/validation/**"
+      - "tools/planning/**"
       - "tools/reporting/**"
       - ".github/workflows/ontology-pages.yml"
   workflow_dispatch:
@@ -66,6 +70,16 @@ jobs:
         run: |
           python3 -m pip install --quiet -r tools/validation/requirements.txt
           python3 tools/reporting/generate_dashboard.py --output "$SITE_DIR/dashboard/index.html"
+          python3 -m json.tool "$SITE_DIR/dashboard/summary.json" > /dev/null
+
+      - name: Upload dashboard preview (pull requests)
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: dashboard-preview
+          path: |
+            _site/dashboard/index.html
+            _site/dashboard/summary.json
 
       - name: Validate generated site
         shell: bash
