@@ -94,12 +94,39 @@
   table.campagnes code { font-family: var(--mono); font-size: 0.8rem; }
   .table-scroll { overflow-x: auto; }
 
-  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; }
-  .kpi { background: var(--carte); border: 1px solid var(--trait); border-radius: 6px; padding: 14px 16px; display: grid; gap: 2px; }
-  .kpi.accent { border-top: 3px solid var(--cuivre); }
-  .kpi-valeur { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 1.6rem; font-weight: 650; }
-  .kpi-libelle { font-size: 0.84rem; font-weight: 650; }
-  .kpi-note { font-size: 0.76rem; color: var(--ardoise-claire); }
+  .tuiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+  .tuile { background: var(--carte); border: 1px solid var(--trait); border-radius: 6px; padding: 14px 16px; display: grid; gap: 2px; }
+  .tuile-libelle { font-size: 0.82rem; font-weight: 650; color: var(--ardoise); }
+  .tuile-valeur { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 1.7rem; font-weight: 650; }
+  .tuile-note { font-size: 0.78rem; color: var(--ardoise-claire); }
+
+  .note-etat { display: flex; align-items: center; gap: 10px; margin: 18px 0; font-size: 0.84rem; color: var(--ardoise); flex-wrap: wrap; }
+  .pastille { font-family: var(--mono); font-size: 0.74rem; color: var(--acier); background: var(--acier-doux); border-radius: 12px; padding: 2px 10px; white-space: nowrap; }
+
+  table.matrice { width: 100%; border-collapse: separate; border-spacing: 6px 8px; font-size: 0.84rem; }
+  table.matrice th { font-size: 0.8rem; font-weight: 650; color: var(--ardoise); text-align: center; padding: 0 4px 2px; }
+  table.matrice th:first-child { text-align: left; }
+  table.matrice td.ref-nom { color: var(--ardoise); font-weight: 650; white-space: nowrap; padding-right: 8px; }
+  .cellule { border-radius: 8px; padding: 9px 12px; text-align: center; display: grid; gap: 1px; min-width: 120px; }
+  .cellule b { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 1.05rem; font-weight: 650; }
+  .cellule span { font-size: 0.74rem; color: var(--ardoise); }
+  .c-inv { background: var(--acier-doux); }
+  .c-instr { background: var(--cuivre-doux); }
+  .c-mesure { background: var(--algue-doux); }
+  .c-nm { background: repeating-linear-gradient(-55deg, var(--barre-fond) 0 6px, var(--carte) 6px 12px); border: 1px solid var(--trait); }
+  .c-nm b, .c-nm span { color: var(--ardoise-claire); }
+  .legende { display: flex; flex-wrap: wrap; gap: 16px; font-size: 0.78rem; color: var(--ardoise); margin: 4px 0 22px; }
+  .legende i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -1px; margin-right: 5px; }
+
+  .callout { background: var(--carte); border: 1px solid var(--trait); border-radius: 6px; padding: 14px 18px; margin-bottom: 14px; font-size: 0.9rem; }
+  .callout h3 { display: inline; font-size: 0.95rem; margin: 0 10px 0 0; }
+  .callout p { margin: 6px 0 0; color: var(--ardoise); }
+
+  .preuve { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin: 22px 0 10px; }
+  .preuve-titre { font-weight: 650; }
+  .preuve-sous { font-size: 0.78rem; color: var(--ardoise-claire); }
+  .preuve .jauge-barre { flex: 1; min-width: 160px; }
+  .preuve .jauge-barre > i { background: var(--algue); }
 
   footer.doctrine { margin-top: 40px; padding-top: 18px; border-top: 1px solid var(--trait); color: var(--ardoise); font-size: 0.86rem; max-width: 72ch; }
   footer.doctrine strong { color: var(--encre); font-weight: 650; }
@@ -268,13 +295,37 @@
 
   <!-- ═══ Onglet 2 : validation experte ═══ -->
   <section class="panneau" id="panneau-validation" role="tabpanel" aria-labelledby="onglet-validation" hidden>
-    <p class="titre-colonne">Indicateurs — toutes campagnes</p>
-    <div class="kpis">
-      <div class="kpi"><span class="kpi-valeur">__KPI_INSTRUMENTES__</span><span class="kpi-libelle">items instrumentés</span><span class="kpi-note">décisions doctrinales sous contrôle</span></div>
-      <div class="kpi"><span class="kpi-valeur">__KPI_EXPOSES__</span><span class="kpi-libelle">items exposés</span><span class="kpi-note">vus par au moins un expert</span></div>
-      <div class="kpi accent"><span class="kpi-valeur">__KPI_VALIDES__</span><span class="kpi-libelle">items validés</span><span class="kpi-note">accord expert · catalogue courant</span></div>
-      <div class="kpi"><span class="kpi-valeur">__KPI_CONTESTES__</span><span class="kpi-libelle">items contestés</span><span class="kpi-note">à adjuger en atelier</span></div>
-      <div class="kpi"><span class="kpi-valeur">__KPI_OBSOLETES__</span><span class="kpi-libelle">validations obsolètes</span><span class="kpi-note">le catalogue a évolué depuis</span></div>
+    <div class="tuiles">
+      <div class="tuile"><span class="tuile-libelle">Référentiels instrumentés</span><span class="tuile-valeur">__TUILE_REF_PCT__ %</span><span class="tuile-note">__TUILE_REF_NOTE__</span></div>
+      <div class="tuile"><span class="tuile-libelle">Couverture validée mesurée</span><span class="tuile-valeur">__TUILE_VAL_PCT__ %</span><span class="tuile-note">__TUILE_VAL_NOTE__</span></div>
+      <div class="tuile"><span class="tuile-libelle">Questions distribuables</span><span class="tuile-valeur">__TUILE_QUESTIONS__</span><span class="tuile-note">__TUILE_QUESTIONS_NOTE__</span></div>
+    </div>
+
+    <div class="note-etat"><span class="pastille">État réel · __DATE_COURTE__</span> Un pourcentage de validation n'est affiché que lorsqu'un dénominateur d'affirmations existe.</div>
+
+    <div class="table-scroll">
+      <table class="matrice">
+        <thead>
+          <tr><th></th><th>Inventaire</th><th>Items instrumentés</th><th>Exposition experte</th><th>Validé &amp; à jour</th></tr>
+        </thead>
+        <tbody>
+__MATRICE_LIGNES__
+        </tbody>
+      </table>
+    </div>
+    <div class="legende">
+      <span><i style="background:var(--acier-doux)"></i>inventorié</span>
+      <span><i style="background:var(--cuivre-doux)"></i>instrumenté</span>
+      <span><i style="background:var(--algue-doux)"></i>mesuré</span>
+      <span><i style="background:repeating-linear-gradient(-55deg,var(--barre-fond) 0 4px,var(--carte) 4px 8px);border:1px solid var(--trait)"></i>non encore mesurable</span>
+    </div>
+
+__CALLOUTS__
+
+    <div class="preuve">
+      <div><div class="preuve-titre">Projection HDDL MC-026</div><div class="preuve-sous">preuve technique, hors KPI métier</div></div>
+      <div class="jauge-barre"><i style="width:100%"></i></div>
+      <span class="jauge-val">pilote résolu par Aries · __HDDL_FRAGMENTS__/__HDDL_FRAGMENTS__</span>
     </div>
 
     <p class="titre-colonne" style="margin-top:26px">Campagnes de revue experte</p>
@@ -287,9 +338,6 @@
 __CAMPAGNES_LIGNES__
         </tbody>
       </table>
-    </div>
-    <div style="margin-top:26px">
-__CAMPAGNES_CARTES__
     </div>
     <p style="color:var(--ardoise);font-size:0.86rem;max-width:72ch">Un item passe à <code>validé</code> après accord d'au moins un expert avec la position du catalogue ; il passe à <code>contesté</code> dès qu'apparaît un « Ça dépend », un désaccord entre experts, une réponse contraire au catalogue ou un manque signalé. Une validation acquise sur une version antérieure du catalogue est comptée <code>obsolète</code>, jamais comme encore valide. Les items contestés forment l'ordre du jour d'adjudication (<code>report_&lt;campagne&gt;.md</code>). La revue des missions candidates MC-034–066 réutilisera ce dispositif.</p>
     <p style="color:var(--ardoise-claire);font-size:0.8rem;max-width:72ch">Cette page ne publie que des agrégats : les noms des experts, leurs réponses libres et les commentaires d'adjudication restent dans les données internes du dépôt. Les indicateurs sont aussi disponibles en <a href="summary.json" style="color:var(--acier)">JSON</a>.</p>

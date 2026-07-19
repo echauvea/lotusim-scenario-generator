@@ -100,6 +100,7 @@ def load_campaigns(current_versions: dict[str, str]) -> list[dict]:
         campaigns.append({
             "name": matrix.get("campaign", path.stem),
             "target": f"{catalog} ({version})",
+            "catalog_prefix": prefix,
             "instrumented": len(items),
             "asked": sum(1 for item in items if "covered_by" not in item),
             "exposed": sum(1 for item in items if item.get("reviewers")),
@@ -133,28 +134,65 @@ def campaign_rows(campaigns: list[dict]) -> str:
     return "\n".join(rows)
 
 
-def campaign_cards(campaigns: list[dict]) -> str:
-    cards = []
-    for c in campaigns:
-        avancement = pct(c["validated"], c["instrumented"])
-        if c["stale"]:
-            etat = f'<span class="etat bloque">{c["stale"]} validation(s) obsolète(s) — le catalogue a évolué depuis la campagne</span>'
-        elif not c["reviewer_count"]:
-            etat = '<span class="etat attente">en attente d\'experts</span>'
-        elif c["contested"]:
-            etat = f'<span class="etat partiel">{c["contested"]} contesté(s) à adjuger</span>'
+def cell(css: str, big: str, small: str) -> str:
+    return f'<td><div class="cellule {css}"><b>{big}</b><span>{small}</span></div></td>'
+
+
+def matrix_rows(rows: list[dict]) -> str:
+    lines = []
+    for row in rows:
+        cells = [cell("c-inv", row["inventory"], row["inventory_label"])]
+        if row["campaigns"]:
+            instr = sum(c["instrumented"] for c in row["campaigns"])
+            exposed = sum(c["exposed"] for c in row["campaigns"])
+            validated = sum(c["validated"] for c in row["campaigns"])
+            stale = sum(c["stale"] for c in row["campaigns"])
+            valid_label = f"{validated} / {instr} validés"
+            if stale:
+                valid_label += f" · {stale} obsolètes"
+            cells.append(cell("c-instr", "100 %", f"{instr} / {instr} items"))
+            cells.append(cell("c-mesure", f"{pct(exposed, instr)} %", f"{exposed} / {instr} exposés"))
+            cells.append(cell("c-mesure", f"{pct(validated, instr)} %", valid_label))
         else:
-            etat = '<span class="etat pret">aucun item contesté</span>'
-        cards.append(f"""      <div class="voie metier">
-        <h3>Campagne <code>{html.escape(c['name'])}</code></h3>
-        <div class="mode">cible : {html.escape(c['target'])} · {c['reviewer_count']} relecteur(s) · dernière agrégation : {html.escape(c['aggregated'])}</div>
-        <div class="jauge" style="margin-top:8px">
-          <div class="jauge-barre"><i class="cuivre" style="width:{avancement}%"></i></div>
-          <span class="jauge-val">{c['validated']}/{c['instrumented']} · {avancement} %</span>
-        </div>
-        <p class="verdict">{etat}</p>
-      </div>""")
-    return "\n".join(cards)
+            cells.append(cell("c-nm", "—", "extracteur absent"))
+            cells.append(cell("c-nm", "—", "non mesurable"))
+            cells.append(cell("c-nm", "—", "non mesurable"))
+        lines.append(f'          <tr><td class="ref-nom">{row["name"]}</td>{"".join(cells)}</tr>')
+    return "\n".join(lines)
+
+
+def callouts(rows: list[dict]) -> str:
+    blocks = []
+    for row in rows:
+        if not row["campaigns"]:
+            continue
+        instr = sum(c["instrumented"] for c in row["campaigns"])
+        asked = sum(c["asked"] for c in row["campaigns"])
+        exposed = sum(c["exposed"] for c in row["campaigns"])
+        validated = sum(c["validated"] for c in row["campaigns"])
+        contested = sum(c["contested"] for c in row["campaigns"])
+        stale = sum(c["stale"] for c in row["campaigns"])
+        phrase = (f"Le générateur couvre {instr} items du périmètre instrumenté, "
+                  f"condensés en {asked} questions. ")
+        if stale:
+            badge, classe = "instrumenté · obsolescence", "bloque"
+            phrase += (f"{stale} validation(s) acquises sur une version antérieure du catalogue "
+                       "sont comptées obsolètes et à re-soumettre.")
+        elif exposed == 0:
+            badge, classe = "instrumenté · en attente", "attente"
+            phrase += ("Aucune réponse experte n'a encore été collectée : "
+                       "la couverture validée est donc réellement de 0 %.")
+        elif contested:
+            badge, classe = "instrumenté · à adjuger", "partiel"
+            phrase += f"{contested} item(s) contesté(s) attendent l'atelier d'adjudication."
+        else:
+            badge, classe = "instrumenté · en cours", "pret"
+            phrase += f"{validated} item(s) validé(s) sur {instr}."
+        blocks.append(f"""    <div class="callout">
+      <h3>{row['name']}</h3><span class="etat {classe}">{badge}</span>
+      <p>{phrase}</p>
+    </div>""")
+    return "\n".join(blocks)
 
 
 def main() -> int:
@@ -222,6 +260,31 @@ def main() -> int:
     exp_total = kpi["instrumented"]
     exp_valides = kpi["validated"]
 
+    referential_rows = [
+        {"name": "Ontologie", "inventory": str(len(data.ontology)), "inventory_label": "classes",
+         "prefix": "LOTUSim_Naval_Maritime_Ontology"},
+        {"name": "Mission Catalog", "inventory": str(counts["missions"]),
+         "inventory_label": f"missions · {candidates} candidates", "prefix": "LOTUSim_Mission_Catalog"},
+        {"name": "Task Catalog", "inventory": str(counts["signatures"]),
+         "inventory_label": "signatures", "prefix": "LOTUSim_Task_Catalog"},
+        {"name": "State Model", "inventory": str(counts["states"]),
+         "inventory_label": f"états · {counts['state_types']} types", "prefix": "LOTUSim_State_Model"},
+        {"name": "Method Catalog", "inventory": str(counts["methods"]),
+         "inventory_label": "méthodes pilotes", "prefix": "LOTUSim_Method_Catalog"},
+    ]
+    for row in referential_rows:
+        row["campaigns"] = [c for c in campaigns if c["catalog_prefix"] == row["prefix"]]
+    orphans = [c["name"] for c in campaigns
+               if c["catalog_prefix"] not in {r["prefix"] for r in referential_rows}]
+    if orphans:
+        fail(f"campaigns target unknown referentials: {orphans}")
+
+    instrumented_rows = [r for r in referential_rows if r["campaigns"]]
+    instrumented_names = ", ".join(r["name"] for r in instrumented_rows)
+    mois = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet",
+            "août", "septembre", "octobre", "novembre", "décembre"]
+    now = datetime.datetime.now(datetime.timezone.utc)
+
     commit = current_commit()
     sm_total = counts["states"] + counts["deferred_candidates"]
     tokens = {
@@ -260,13 +323,16 @@ def main() -> int:
         "__EXP_TOTAL__": str(exp_total),
         "__EXP_VALIDES__": str(exp_valides),
         "__EXP_PCT__": str(pct(exp_valides, exp_total)),
-        "__KPI_INSTRUMENTES__": str(kpi["instrumented"]),
-        "__KPI_EXPOSES__": str(kpi["exposed"]),
-        "__KPI_VALIDES__": str(kpi["validated"]),
-        "__KPI_CONTESTES__": str(kpi["contested"]),
-        "__KPI_OBSOLETES__": str(kpi["stale"]),
+        "__DATE_COURTE__": f"{now.day} {mois[now.month - 1]} {now.year}",
+        "__TUILE_REF_PCT__": str(pct(len(instrumented_rows), len(referential_rows))),
+        "__TUILE_REF_NOTE__": f"{len(instrumented_rows)} sur {len(referential_rows)} : {instrumented_names}",
+        "__TUILE_VAL_PCT__": str(pct(kpi["validated"], kpi["instrumented"])),
+        "__TUILE_VAL_NOTE__": f"{kpi['validated']} sur {kpi['instrumented']} items, périmètre {instrumented_names}",
+        "__TUILE_QUESTIONS__": str(sum(c["asked"] for c in campaigns)),
+        "__TUILE_QUESTIONS_NOTE__": f"{kpi['instrumented'] - sum(c['asked'] for c in campaigns)} items supplémentaires dédupliqués",
+        "__MATRICE_LIGNES__": matrix_rows(referential_rows),
+        "__CALLOUTS__": callouts(referential_rows),
         "__CAMPAGNES_LIGNES__": campaign_rows(campaigns),
-        "__CAMPAGNES_CARTES__": campaign_cards(campaigns),
     }
 
     summary = {
