@@ -27,6 +27,7 @@ from __future__ import annotations
 
 import argparse
 import datetime
+import hashlib
 import json
 import re
 import sys
@@ -40,6 +41,15 @@ OUTPUT_DIR = ROOT / "validation" / "expert-review"
 
 METHOD_ID_RE = re.compile(r"TM-\d{3}-S\d{2}-M\d{2}")
 CAPABILITY_STATE = "SM-ST-010"
+
+
+def workspace_path(path: Path, label: str) -> Path:
+    resolved = path.resolve()
+    try:
+        resolved.relative_to(ROOT.resolve())
+    except ValueError as exc:
+        raise ValueError(f"{label} must stay inside the repository: {resolved}") from exc
+    return resolved
 
 
 def load_methods(catalog_path: Path) -> list[dict]:
@@ -341,6 +351,13 @@ def main() -> int:
     parser.add_argument("--wording", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, default=OUTPUT_DIR)
     args = parser.parse_args()
+    try:
+        args.catalog = workspace_path(args.catalog, "catalog")
+        args.wording = workspace_path(args.wording, "wording")
+        args.output_dir = workspace_path(args.output_dir, "output directory")
+    except ValueError as exc:
+        print(f"Generation refused: {exc}", file=sys.stderr)
+        return 1
 
     methods = load_methods(args.catalog)
     if not methods:
@@ -371,6 +388,7 @@ def main() -> int:
         "generated": datetime.date.today().isoformat(),
         "catalog": args.catalog.name,
         "catalog_version": catalog_version,
+        "catalog_sha256": hashlib.sha256(args.catalog.read_bytes()).hexdigest(),
         "review_rule": "un item est `validé` après accord d'au moins un expert ; "
                        "toute réponse « Ça dépend » ou divergente passe l'item en `contesté`",
         "items": [

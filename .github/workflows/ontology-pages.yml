@@ -1,4 +1,4 @@
-name: Ontology documentation
+name: Documentation and referential dashboard
 
 on:
   pull_request:
@@ -69,6 +69,7 @@ jobs:
       - name: Generate referential dashboard
         run: |
           python3 -m pip install --quiet -r tools/validation/requirements.txt
+          python3 -m unittest discover -s tools/reporting/tests -p 'test_*.py'
           python3 tools/reporting/generate_dashboard.py --output "$SITE_DIR/dashboard/index.html"
           python3 -m json.tool "$SITE_DIR/dashboard/summary.json" > /dev/null
 

@@ -118,18 +118,23 @@ def main() -> int:
         answers = collect_answers(item["id"], responses)
         status, reasons = adjudicate(item, answers)
         item["status"] = status
-        item["reviewers"] = sorted({a["expert"] for a in answers})
+        # The repository is public. Keep identities in local response/report
+        # files only; the tracked matrix carries aggregate evidence.
+        item.pop("reviewers", None)
+        item["reviewer_count"] = len({a["expert"] for a in answers})
         if reasons:
             contested_details[item["id"]] = reasons
     for item in items:
         if "covered_by" in item:
             covering = by_id[item["covered_by"]]
             item["status"] = covering["status"]
-            item["reviewers"] = covering.get("reviewers", [])
+            item.pop("reviewers", None)
+            item["reviewer_count"] = covering.get("reviewer_count", 0)
 
     matrix["last_aggregation"] = {
         "date": datetime.date.today().isoformat(),
-        "responses": [r.get("expert", "?") for r in responses],
+        "response_count": len(responses),
+        "reviewer_count": len({r.get("expert", "?") for r in responses}),
     }
     args.matrix.write_text(
         yaml.safe_dump(matrix, allow_unicode=True, sort_keys=False, width=100),

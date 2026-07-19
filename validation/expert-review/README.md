@@ -28,7 +28,9 @@ qu'apparaissent les conditions manquantes.
 2. **Distribuer** : envoyer le fichier HTML aux experts. Il est autonome et hors-ligne
    (aucune donnée ne quitte le poste) ; ~20 minutes par expert, en parallèle ou en différé.
 3. **Collecter** : chaque expert exporte un fichier `reponses_<campagne>_<nom>.json` et le renvoie ;
-   les fichiers sont déposés dans `validation/expert-review/responses/`.
+   les fichiers sont déposés localement dans `validation/expert-review/responses/`. Ce dossier contient
+   des données nominatives et des commentaires métier : ses fichiers JSON sont ignorés par Git et ne
+   doivent jamais être publiés dans ce dépôt public.
 4. **Adjuger** : `python tools/validation/aggregate_expert_review.py --matrix validation/expert-review/items_<campagne>.yaml`
    met à jour automatiquement le statut de chaque item dans la matrice — `validé` après accord
    d'au moins un expert avec la position du catalogue ; `contesté` dès qu'apparaît un « Ça
@@ -51,7 +53,10 @@ qu'apparaissent les conditions manquantes.
 - `questionnaire_<campagne>.html` — formulaire autonome généré, à distribuer tel quel.
 - `responses/` — réponses collectées (JSON), une par expert et par campagne.
 - `report_<campagne>.md` — rapport d'adjudication généré : couverture chiffrée et ordre du jour
-  des items contestés.
+  des items contestés. Il reste local et ignoré par Git car il reprend les noms et commentaires.
+
+La matrice suivie dans Git ne conserve que des agrégats (`reviewer_count`, statuts et date
+d'agrégation). Les identités des experts restent exclusivement dans les réponses et rapports locaux.
 
 ## Extensions prévues
 
