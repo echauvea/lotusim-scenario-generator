@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import argparse
 import datetime
+import hashlib
 import html
 import json
 import os
@@ -55,6 +56,27 @@ def version_from_name(pattern: str, directory: Path) -> str:
     return f"v{version.group(1)}"
 
 
+def current_catalog_sources(versions: dict[str, str]) -> dict[str, dict[str, str]]:
+    locations = {
+        "LOTUSim_Mission_Catalog": (
+            ROOT / "references" / "mission-catalog", "LOTUSim_Mission_Catalog_v*.md"),
+        "LOTUSim_Task_Catalog": (
+            ROOT / "references" / "task-catalog", "LOTUSim_Task_Catalog_v*.md"),
+        "LOTUSim_Method_Catalog": (
+            ROOT / "references" / "method-catalog", "LOTUSim_Method_Catalog_v*.md"),
+    }
+    sources = {}
+    for prefix, (directory, pattern) in locations.items():
+        matches = sorted(directory.glob(pattern))
+        if len(matches) != 1:
+            fail(f"exactly one current catalog expected for {prefix}, found {len(matches)}")
+        sources[prefix] = {
+            "version": versions[prefix],
+            "sha256": hashlib.sha256(matches[0].read_bytes()).hexdigest(),
+        }
+    return sources
+
+
 def pct(numerator: int, denominator: int) -> int:
     if denominator <= 0:
         fail(f"invalid denominator for percentage: {numerator}/{denominator}")
@@ -65,17 +87,33 @@ def current_commit() -> str:
     sha = os.getenv("GITHUB_SHA")
     if sha:
         return sha[:7]
-    head = ROOT / ".git" / "HEAD"
     try:
+        marker = ROOT / ".git"
+        if marker.is_file():
+            declaration = marker.read_text(encoding="utf-8").strip()
+            if not declaration.startswith("gitdir: "):
+                return "local"
+            git_dir = (ROOT / declaration[8:]).resolve()
+        else:
+            git_dir = marker
+        common_dir = git_dir
+        common_marker = git_dir / "commondir"
+        if common_marker.is_file():
+            common_dir = (git_dir / common_marker.read_text(encoding="utf-8").strip()).resolve()
+        head = git_dir / "HEAD"
         content = head.read_text(encoding="utf-8").strip()
         if content.startswith("ref: "):
-            content = (ROOT / ".git" / content[5:]).read_text(encoding="utf-8").strip()
+            ref = content[5:]
+            ref_path = common_dir / ref
+            if not ref_path.is_file():
+                return "local"
+            content = ref_path.read_text(encoding="utf-8").strip()
         return content[:7]
     except OSError:
         return "local"
 
 
-def load_campaigns(current_versions: dict[str, str]) -> list[dict]:
+def load_campaigns(current_sources: dict[str, dict[str, str]]) -> list[dict]:
     """Load campaign matrices as aggregate KPIs only.
 
     Privacy rule (deliberate): expert names never leave this function — the
@@ -90,12 +128,19 @@ def load_campaigns(current_versions: dict[str, str]) -> list[dict]:
         if not items:
             fail(f"campaign matrix without items: {path.name}")
         statuses = [item.get("status", "pending") for item in items]
-        reviewer_count = len({name for item in items for name in item.get("reviewers", [])})
+        aggregation = matrix.get("last_aggregation") or {}
+        if any("reviewers" in item for item in items) or "responses" in aggregation:
+            fail(f"campaign matrix contains expert identities: {path.name}")
+        reviewer_count = int(aggregation.get("reviewer_count", 0))
         catalog = str(matrix.get("catalog", "?"))
         version = str(matrix.get("catalog_version", "?"))
         prefix = re.sub(r"_v[\d.]+(?:-\w+)?\.\w+$", "", catalog)
-        current = current_versions.get(prefix)
-        is_stale = current is not None and f"v{version}" != current
+        current = current_sources.get(prefix)
+        catalog_sha256 = matrix.get("catalog_sha256")
+        version_changed = current is not None and f"v{version}" != current["version"]
+        content_changed = (current is not None and catalog_sha256 is not None
+                           and catalog_sha256 != current["sha256"])
+        is_stale = version_changed or content_changed
         validated = statuses.count("validé")
         campaigns.append({
             "name": matrix.get("campaign", path.stem),
@@ -103,13 +148,13 @@ def load_campaigns(current_versions: dict[str, str]) -> list[dict]:
             "catalog_prefix": prefix,
             "instrumented": len(items),
             "asked": sum(1 for item in items if "covered_by" not in item),
-            "exposed": sum(1 for item in items if item.get("reviewers")),
+            "exposed": sum(1 for item in items if item.get("reviewer_count", 0)),
             "validated": 0 if is_stale else validated,
             "stale": validated if is_stale else 0,
             "contested": statuses.count("contesté"),
             "pending": statuses.count("pending"),
             "reviewer_count": reviewer_count,
-            "aggregated": str((matrix.get("last_aggregation") or {}).get("date", "—")),
+            "aggregated": str(aggregation.get("date", "—")),
         })
     return campaigns
 
@@ -150,7 +195,7 @@ def matrix_rows(rows: list[dict]) -> str:
             valid_label = f"{validated} / {instr} validés"
             if stale:
                 valid_label += f" · {stale} obsolètes"
-            cells.append(cell("c-instr", "100 %", f"{instr} / {instr} items"))
+            cells.append(cell("c-instr", str(instr), f"items · {sum(c['asked'] for c in row['campaigns'])} questions"))
             cells.append(cell("c-mesure", f"{pct(exposed, instr)} %", f"{exposed} / {instr} exposés"))
             cells.append(cell("c-mesure", f"{pct(validated, instr)} %", valid_label))
         else:
@@ -250,11 +295,11 @@ def main() -> int:
     hddl_profile = version_from_name("LOTUSim_HDDL_Profile_v*.md", ROOT / "specification" / "hddl")
     sm_version = f"v{data.state_model['model']['version']}"
 
-    campaigns = load_campaigns({
+    campaigns = load_campaigns(current_catalog_sources({
         "LOTUSim_Mission_Catalog": mc_version,
         "LOTUSim_Task_Catalog": tc_version,
         "LOTUSim_Method_Catalog": tm_version,
-    })
+    }))
     kpi = {key: sum(c[key] for c in campaigns)
            for key in ("instrumented", "exposed", "validated", "contested", "stale")}
     exp_total = kpi["instrumented"]
@@ -274,6 +319,10 @@ def main() -> int:
     ]
     for row in referential_rows:
         row["campaigns"] = [c for c in campaigns if c["catalog_prefix"] == row["prefix"]]
+        row["expert_review"] = {
+            key: sum(c[key] for c in row["campaigns"])
+            for key in ("instrumented", "exposed", "validated", "contested", "stale")
+        } if row["campaigns"] else None
     orphans = [c["name"] for c in campaigns
                if c["catalog_prefix"] not in {r["prefix"] for r in referential_rows}]
     if orphans:
@@ -351,7 +400,9 @@ def main() -> int:
                             "deferred": counts["deferred_candidates"], "expert_review": None},
             "method_catalog": {"version": tm_version, "methods": counts["methods"],
                                "abstract_total": len(abstract_ids),
-                               "abstract_covered": len(covered), "expert_review": kpi},
+                               "abstract_covered": len(covered),
+                               "expert_review": next(r["expert_review"] for r in referential_rows
+                                                     if r["prefix"] == "LOTUSim_Method_Catalog")},
             "hddl": {"profile": hddl_profile, "fragments": fragments,
                      "planner_verified": None},
         },

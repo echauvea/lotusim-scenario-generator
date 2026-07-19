@@ -1,7 +1,8 @@
 campaign: escort-v0.1
-generated: '2026-07-18'
+generated: '2026-07-19'
 catalog: LOTUSim_Method_Catalog_v0.2.0.md
 catalog_version: 0.2.0
+catalog_sha256: 43c40b367c9bf24d4971bc018b462be4dbee4919e0c883ad9c4fc9cee58d7e4f
 review_rule: un item est `validé` après accord d'au moins un expert ; toute réponse « Ça dépend » ou divergente
   passe l'item en `contesté`
 items:

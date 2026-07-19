@@ -7,3 +7,8 @@ ouvrir_doc.bat
 __pycache__/
 *.py[cod]
 .venv/
+
+# Expert responses and adjudication reports may contain names and free text.
+# The repository and GitHub Pages site are public: keep these local only.
+/validation/expert-review/responses/*.json
+/validation/expert-review/report_*.md
