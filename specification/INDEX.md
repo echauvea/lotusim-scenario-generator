@@ -87,6 +87,7 @@ Cet index est la source unique d’inventaire documentaire du dépôt **LSG — 
 | [État des lieux — Interfaçage LSG ↔ tsm](notes/2026-07-14-etat-des-lieux-interface-tsm.md) | 2026-07-14, mise à jour 2026-07-18 | Note de coordination | Informatif | Constats sur la divergence entre les dépôts et sur l'écart avec `knowledge_base.json` ; addenda couvrant les liens corrigés, le pilote Method Catalog et le déplacement du chemin critique vers l’EAL/tsm. |
 | [Fragment HDDL MC-026](../references/hddl/experimental/mc-026-close-guard/README.md) | profil v0.1 | Dérivé, expérimental, validé par Aries 0.5.0 | Non normatif | Premier Domain / Problem minimal pour `TM-023-S01-M01`, avec table de traçabilité explicite, plan primitif vérifié et résultat JSON publié par la CI. |
 | [Dispositif de revue experte](../validation/expert-review/README.md) | campagne escort-v0.1 | Courant, prototype | Contrôle métier outillé | Validation opérationnelle du Method Catalog : items dérivés structurellement (couverture garantie), questionnaire HTML autonome hors-ligne, matrice de statuts et rapport d'adjudication. Campagne pilote Escort prête : 35 items, 23 questions. |
+| [Tableau de bord des référentiels](https://echauvea.github.io/lotusim-scenario-generator/dashboard/) | non versionné | Généré par CI | Informatif | Chaîne de dérivation, versions, taux de remplissage et avancement des revues expertes ; métriques issues des parseurs du validateur, régénéré à chaque fusion (`tools/reporting/generate_dashboard.py`). |
 
 ## Artefacts prévus mais absents
 

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LSG — Tableau de bord des référentiels</title>
+<style>
+  :root {
+    --encre: #1b2a36; --papier: #f3f5f6; --carte: #ffffff; --trait: #d4dbdf;
+    --acier: #2e6e93; --acier-doux: #e3edf3; --cuivre: #b4652a; --cuivre-doux: #f6ebe1;
+    --algue: #3e7d5d; --algue-doux: #e4efe9; --ambre: #a3742a; --ambre-doux: #f5edda;
+    --rouge: #a33b2a; --rouge-doux: #f6e4e0;
+    --ardoise: #5d6f7b; --ardoise-claire: #8a97a0; --barre-fond: #e2e8eb;
+    --sans: "Segoe UI Variable Text", "Segoe UI", "Avenir Next", system-ui, sans-serif;
+    --mono: "Cascadia Code", Consolas, ui-monospace, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --encre: #dde6ec; --papier: #101c24; --carte: #17262f; --trait: #2c3e4a;
+      --acier: #6aa5c8; --acier-doux: #1c3345; --cuivre: #d68a4d; --cuivre-doux: #3a2a1c;
+      --algue: #6bab8a; --algue-doux: #1d332a; --ambre: #c9a05a; --ambre-doux: #362d1a;
+      --rouge: #cf7a68; --rouge-doux: #3b241f;
+      --ardoise: #9db0bb; --ardoise-claire: #7c8f9a; --barre-fond: #243642;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--papier); color: var(--encre); font-family: var(--sans); font-size: 15px; line-height: 1.5; }
+  .page { max-width: 1180px; margin: 0 auto; padding: 36px 28px 64px; }
+  header.entete { margin-bottom: 24px; }
+  .surtitre { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--acier); margin-bottom: 6px; }
+  h1 { font-size: 1.6rem; font-weight: 650; margin: 0 0 6px; letter-spacing: -0.01em; text-wrap: balance; }
+  .meta { color: var(--ardoise); font-size: 0.88rem; }
+  .meta code { font-family: var(--mono); font-size: 0.82rem; }
+  .badge-ok { display: inline-block; font-family: var(--mono); font-size: 0.74rem; border-radius: 4px; padding: 1px 8px; color: var(--algue); background: var(--algue-doux); }
+
+  nav.onglets { display: flex; gap: 4px; border-bottom: 1px solid var(--trait); margin: 22px 0 28px; }
+  nav.onglets button {
+    font: 650 0.9rem var(--sans); color: var(--ardoise); background: none; border: none;
+    padding: 8px 14px 10px; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px;
+  }
+  nav.onglets button[aria-selected="true"] { color: var(--encre); border-bottom-color: var(--acier); }
+  nav.onglets button:focus-visible { outline: 2px solid var(--acier); outline-offset: 2px; border-radius: 3px; }
+  .panneau[hidden] { display: none; }
+
+  .colonnes { display: grid; grid-template-columns: 1.35fr 1fr; gap: 40px; align-items: start; }
+  @media (max-width: 900px) { .colonnes { grid-template-columns: 1fr; } }
+  .titre-colonne { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ardoise); margin: 0 0 14px; display: flex; align-items: center; gap: 10px; }
+  .titre-colonne::after { content: ""; flex: 1; height: 1px; background: var(--trait); }
+
+  .noeud { background: var(--carte); border: 1px solid var(--trait); border-radius: 6px; padding: 16px 18px 14px; }
+  .noeud-entete { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .noeud-nom { font-weight: 650; font-size: 1.02rem; }
+  .version { font-family: var(--mono); font-size: 0.74rem; color: var(--acier); background: var(--acier-doux); border-radius: 4px; padding: 1px 7px; }
+  .autorite { margin-left: auto; font-size: 0.76rem; color: var(--ardoise-claire); }
+  .noeud-role { color: var(--ardoise); font-size: 0.86rem; margin: 3px 0 10px; }
+  .chiffres { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 0.8rem; display: flex; flex-wrap: wrap; column-gap: 16px; row-gap: 2px; margin-bottom: 10px; }
+  .chiffres b { font-weight: 650; }
+  .jauge { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 12px; }
+  .jauge-barre { height: 7px; border-radius: 4px; background: var(--barre-fond); overflow: hidden; }
+  .jauge-barre > i { display: block; height: 100%; background: var(--acier); border-radius: 4px; }
+  .jauge-barre > i.cuivre { background: var(--cuivre); }
+  .jauge-barre.non-mesure { background: repeating-linear-gradient(-55deg, var(--barre-fond) 0 5px, var(--carte) 5px 9px); border: 1px solid var(--trait); }
+  .jauge-val { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 0.78rem; color: var(--ardoise); white-space: nowrap; }
+  .jauge-legende { font-size: 0.76rem; color: var(--ardoise-claire); margin-top: 4px; }
+  .etat { display: inline-block; font-family: var(--mono); font-size: 0.72rem; border-radius: 4px; padding: 1px 7px; }
+  .etat.pret { color: var(--algue); background: var(--algue-doux); }
+  .etat.partiel { color: var(--ambre); background: var(--ambre-doux); }
+  .etat.bloque { color: var(--rouge); background: var(--rouge-doux); }
+  .etat.attente { color: var(--ardoise); background: var(--barre-fond); }
+  .lien { display: grid; justify-items: center; padding: 3px 0; }
+  .lien-trait { width: 1px; height: 12px; background: var(--ardoise-claire); }
+  .lien-libelle { font-size: 0.76rem; color: var(--ardoise); text-align: center; padding: 1px 10px; max-width: 46ch; }
+  .lien-fleche { color: var(--ardoise-claire); font-size: 0.72rem; line-height: 0.9; }
+  .noeud.derive { border-style: dashed; }
+  .noeud.fantome { border-style: dashed; background: transparent; }
+  .noeud.fantome .noeud-nom { color: var(--ardoise); font-weight: 600; }
+
+  .voie { background: var(--carte); border: 1px solid var(--trait); border-radius: 6px; padding: 16px 18px; margin-bottom: 18px; border-top: 3px solid var(--acier); }
+  .voie.metier { border-top-color: var(--cuivre); }
+  .voie.planif { border-top-color: var(--algue); }
+  .voie h3 { margin: 0 0 2px; font-size: 0.98rem; font-weight: 650; }
+  .voie .mode { font-size: 0.78rem; color: var(--ardoise-claire); margin-bottom: 10px; }
+  .voie h4 { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ardoise); margin: 12px 0 5px; }
+  .voie p { margin: 0; font-size: 0.86rem; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { font-family: var(--mono); font-size: 0.72rem; color: var(--ardoise); border: 1px solid var(--trait); border-radius: 4px; padding: 1px 7px; }
+  .chip.cible { color: var(--cuivre); border-color: var(--cuivre); }
+  .verdict { font-size: 0.86rem; margin-top: 8px; }
+
+  table.campagnes { width: 100%; border-collapse: collapse; font-size: 0.86rem; background: var(--carte); border: 1px solid var(--trait); border-radius: 6px; overflow: hidden; }
+  table.campagnes th { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ardoise); text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--trait); }
+  table.campagnes td { padding: 9px 14px; border-bottom: 1px solid var(--trait); font-variant-numeric: tabular-nums; }
+  table.campagnes tr:last-child td { border-bottom: none; }
+  table.campagnes code { font-family: var(--mono); font-size: 0.8rem; }
+  .table-scroll { overflow-x: auto; }
+
+  footer.doctrine { margin-top: 40px; padding-top: 18px; border-top: 1px solid var(--trait); color: var(--ardoise); font-size: 0.86rem; max-width: 72ch; }
+  footer.doctrine strong { color: var(--encre); font-weight: 650; }
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="entete">
+    <div class="surtitre">LSG · LOTUSim Scenario Generator</div>
+    <h1>Tableau de bord des référentiels</h1>
+    <div class="meta">Généré le __DATE__ · commit <code>__COMMIT__</code> · validation formelle <span class="badge-ok">__VALIDATION_SUMMARY__</span></div>
+  </header>
+
+  <nav class="onglets" role="tablist">
+    <button role="tab" aria-selected="true" aria-controls="panneau-referentiels" id="onglet-referentiels">Référentiels &amp; flux</button>
+    <button role="tab" aria-selected="false" aria-controls="panneau-validation" id="onglet-validation">Validation experte</button>
+  </nav>
+
+  <!-- ═══ Onglet 1 : chaîne des référentiels ═══ -->
+  <section class="panneau" id="panneau-referentiels" role="tabpanel" aria-labelledby="onglet-referentiels">
+    <div class="colonnes">
+      <section aria-label="Chaîne de dérivation">
+        <p class="titre-colonne">Chaîne de dérivation normative</p>
+
+        <div class="noeud">
+          <div class="noeud-entete">
+            <span class="noeud-nom">Naval Maritime Ontology</span>
+            <span class="version">__ONTO_VERSION__</span>
+            <span class="autorite">normatif · concepts &amp; types</span>
+          </div>
+          <p class="noeud-role">Concepts, types, capacités, équipements et relations structurelles du monde physique simulable.</p>
+          <div class="chiffres"><span><b>__ONTO_CLASSES__</b> classes</span><span><b>__ONTO_CAPACITES__</b> capacités</span></div>
+          <div class="jauge">
+            <div class="jauge-barre non-mesure"></div>
+            <span class="jauge-val">non mesuré</span>
+          </div>
+          <div class="jauge-legende">Complétude non chiffrable : l'ontologie s'étend à la demande des référentiels aval.</div>
+        </div>
+
+        <div class="lien"><div class="lien-trait"></div><div class="lien-libelle">types &amp; concepts — alimente tous les référentiels aval</div><div class="lien-fleche">▼</div></div>
+
+        <div class="noeud">
+          <div class="noeud-entete">
+            <span class="noeud-nom">Mission Catalog</span>
+            <span class="version">__MC_VERSION__</span>
+            <span class="autorite">normatif · missions &amp; objectifs</span>
+          </div>
+          <p class="noeud-role">Missions, préconditions et objectifs ; évidence doctrinale des méthodes.</p>
+          <div class="chiffres"><span><b>__MC_TOTAL__</b> missions</span><span><b>__MC_ACTIVES__</b> hors candidates</span><span><b>__MC_CANDIDATES__</b> candidates</span></div>
+          <div class="jauge">
+            <div class="jauge-barre"><i style="width:__MC_PCT__%"></i></div>
+            <span class="jauge-val">__MC_ACTIVES__/__MC_TOTAL__ · __MC_PCT__ %</span>
+          </div>
+          <div class="jauge-legende">Missions sorties du statut <code>candidate</code> — les autres attendent la revue métier.</div>
+        </div>
+
+        <div class="lien"><div class="lien-trait"></div><div class="lien-libelle">préconditions &amp; objectifs typés</div><div class="lien-fleche">▼</div></div>
+
+        <div class="noeud">
+          <div class="noeud-entete">
+            <span class="noeud-nom">Task Catalog</span>
+            <span class="version">__TC_VERSION__</span>
+            <span class="autorite">normatif · tâches &amp; signatures</span>
+          </div>
+          <p class="noeud-role">Signatures typées : lectures, effets, invariants, conditions de fin et d'échec.</p>
+          <div class="chiffres"><span><b>__TC_TACHES__</b> tâches</span><span><b>__TC_SIGNATURES__</b> signatures</span><span><b>__TC_FAMILLES__</b> familles</span></div>
+          <div class="jauge">
+            <div class="jauge-barre"><i style="width:__TC_PCT__%"></i></div>
+            <span class="jauge-val">__TC_ENRICHIES__/__TC_SIGNATURES__ · __TC_PCT__ %</span>
+          </div>
+          <div class="jauge-legende">Signatures entièrement sémantisées — les autres sont enrichies à la demande d'une mission ou d'une méthode.</div>
+        </div>
+
+        <div class="lien"><div class="lien-trait"></div><div class="lien-libelle">lectures, effets &amp; conditions → dérivation du vocabulaire dynamique</div><div class="lien-fleche">▼</div></div>
+
+        <div class="noeud">
+          <div class="noeud-entete">
+            <span class="noeud-nom">State Model</span>
+            <span class="version">__SM_VERSION__</span>
+            <span class="autorite">normatif · états dynamiques</span>
+          </div>
+          <p class="noeud-role">Vocabulaire d'états normalisé : producteurs, consommateurs, contraintes, traçabilité.</p>
+          <div class="chiffres"><span><b>__SM_ETATS__</b> états</span><span><b>__SM_TYPES__</b> types propres</span><span><b>__SM_DIFFERES__</b> candidats différés</span></div>
+          <div class="jauge">
+            <div class="jauge-barre"><i style="width:__SM_PCT__%"></i></div>
+            <span class="jauge-val">__SM_ETATS__/__SM_TOTAL__ · __SM_PCT__ %</span>
+          </div>
+          <div class="jauge-legende">États normatifs — les différés attendent un producteur sémantisé.</div>
+        </div>
+
+        <div class="lien"><div class="lien-trait"></div><div class="lien-libelle">références d'état stables → applicabilité &amp; bindings des méthodes</div><div class="lien-fleche">▼</div></div>
+
+        <div class="noeud">
+          <div class="noeud-entete">
+            <span class="noeud-nom">Method Catalog</span>
+            <span class="version">__TM_VERSION__</span>
+            <span class="autorite">normatif · décompositions HTN</span>
+          </div>
+          <p class="noeud-role">Réseaux de sous-tâches, synchronisations (<code>spans</code>) et propagation des échecs.</p>
+          <div class="chiffres">__TM_CHIPS__</div>
+          <div class="jauge">
+            <div class="jauge-barre"><i style="width:__TM_PCT__%"></i></div>
+            <span class="jauge-val">__TM_COUVERTES__/__TM_ABSTRAITES__ · __TM_PCT__ %</span>
+          </div>
+          <div class="jauge-legende">Tâches abstraites identifiées disposant d'au moins une méthode.</div>
+        </div>
+
+        <div class="lien"><div class="lien-trait"></div><div class="lien-libelle">projection via le Profil HDDL — compilation <code>start/stop</code> de <code>spans</code></div><div class="lien-fleche">▼</div></div>
+
+        <div class="noeud derive">
+          <div class="noeud-entete">
+            <span class="noeud-nom">HDDL Domain / Problems</span>
+            <span class="version">profil __HDDL_PROFIL__</span>
+            <span class="autorite">dérivé · jamais source métier</span>
+          </div>
+          <p class="noeud-role">Projection exécutable, traçable prédicat par prédicat vers le State Model.</p>
+          <div class="chiffres"><span><b>__HDDL_FRAGMENTS__</b> fragment(s) expérimentaux</span></div>
+          <div class="jauge">
+            <div class="jauge-barre"><i style="width:__HDDL_PCT__%"></i></div>
+            <span class="jauge-val">__HDDL_FRAGMENTS__/__MC_TOTAL__ · __HDDL_PCT__ %</span>
+          </div>
+          <div class="jauge-legende">Missions couvertes par un fragment planifiable.</div>
+        </div>
+
+        <div class="lien"><div class="lien-trait"></div><div class="lien-libelle">commandes <code>start/stop</code> — contrat d'exécution</div><div class="lien-fleche">▼</div></div>
+
+        <div class="noeud fantome">
+          <div class="noeud-entete">
+            <span class="noeud-nom">Execution Adaptation Layer</span>
+            <span class="autorite">à définir avec tsm</span>
+          </div>
+          <p class="noeud-role">Interprétation des cycles start/stop, supervision du maintien, incidents et reprises.</p>
+        </div>
+      </section>
+
+      <section aria-label="Voies de validation">
+        <p class="titre-colonne">Trois voies de validation</p>
+
+        <div class="voie">
+          <h3>Validation formelle</h3>
+          <div class="mode">automatique · CI à chaque pull request</div>
+          <p>Cohérence structurelle : identifiants, références croisées, familles, types &amp; bindings, règles DEM, méthodes HTN — via <code>validate_referentials.py</code>.</p>
+          <p class="verdict">État : <span class="etat pret">__VALIDATION_ETAT__</span></p>
+        </div>
+
+        <div class="voie metier">
+          <h3>Validation métier</h3>
+          <div class="mode">revue experte · asynchrone, en aveugle — détail dans l'onglet dédié</div>
+          <p>Vérité opérationnelle des décisions doctrinales : applicabilité, décompositions, <code>spans</code>, incidents, critères de succès, discriminants.</p>
+          <div class="jauge" style="margin-top:10px">
+            <div class="jauge-barre"><i class="cuivre" style="width:__EXP_PCT__%"></i></div>
+            <span class="jauge-val">__EXP_VALIDES__/__EXP_TOTAL__ · __EXP_PCT__ %</span>
+          </div>
+          <div class="jauge-legende">Items validés, toutes campagnes confondues.</div>
+        </div>
+
+        <div class="voie planif">
+          <h3>Validation planificateur</h3>
+          <div class="mode">technique · reproductible en CI</div>
+          <p>Unified Planning + Aries reproduisent le plan attendu sur chaque fragment dérivé.</p>
+          <p class="verdict">État : <span class="etat pret">acquise pour MC-026</span></p>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <!-- ═══ Onglet 2 : validation experte ═══ -->
+  <section class="panneau" id="panneau-validation" role="tabpanel" aria-labelledby="onglet-validation" hidden>
+    <p class="titre-colonne">Campagnes de revue experte</p>
+    <div class="table-scroll">
+      <table class="campagnes">
+        <thead>
+          <tr><th>Campagne</th><th>Cible</th><th>Items</th><th>Validés</th><th>Contestés</th><th>En attente</th><th>Relecteurs</th><th>Avancement</th></tr>
+        </thead>
+        <tbody>
+__CAMPAGNES_LIGNES__
+        </tbody>
+      </table>
+    </div>
+    <div style="margin-top:26px">
+__CAMPAGNES_CARTES__
+    </div>
+    <p style="color:var(--ardoise);font-size:0.86rem;max-width:72ch">Un item passe à <code>validé</code> après accord d'au moins un expert avec la position du catalogue ; il passe à <code>contesté</code> dès qu'apparaît un « Ça dépend », un désaccord entre experts, une réponse contraire au catalogue ou un manque signalé. Les items contestés forment l'ordre du jour d'adjudication (<code>report_&lt;campagne&gt;.md</code>). La revue des missions candidates MC-034–066 réutilisera ce dispositif.</p>
+  </section>
+
+  <footer class="doctrine">
+    <strong>Règle de continuité.</strong> L'ontologie et les catalogues portent la sémantique métier ; le State Model normalise le vocabulaire dynamique ; le Method Catalog porte les décompositions. Le HDDL est une projection exécutable — jamais une source métier indépendante.
+  </footer>
+</div>
+<script>
+  const onglets = document.querySelectorAll("nav.onglets button");
+  onglets.forEach(bouton => {
+    bouton.addEventListener("click", () => {
+      onglets.forEach(autre => {
+        autre.setAttribute("aria-selected", autre === bouton ? "true" : "false");
+        document.getElementById(autre.getAttribute("aria-controls")).hidden = autre !== bouton;
+      });
+    });
+  });
+</script>
+</body>
+</html>
