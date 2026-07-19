@@ -3,15 +3,23 @@ name: Ontology documentation
 on:
   pull_request:
     paths:
-      - "references/ontology/**"
+      - "references/**"
       - "site/**"
+      - "validation/expert-review/**"
+      - "specification/hddl/**"
+      - "tools/validation/**"
+      - "tools/reporting/**"
       - ".github/workflows/ontology-pages.yml"
   push:
     branches:
       - main
     paths:
-      - "references/ontology/**"
+      - "references/**"
       - "site/**"
+      - "validation/expert-review/**"
+      - "specification/hddl/**"
+      - "tools/validation/**"
+      - "tools/reporting/**"
       - ".github/workflows/ontology-pages.yml"
   workflow_dispatch:
 
@@ -54,11 +62,17 @@ jobs:
           cp site/index.html "$SITE_DIR/index.html"
           touch "$SITE_DIR/.nojekyll"
 
+      - name: Generate referential dashboard
+        run: |
+          python3 -m pip install --quiet -r tools/validation/requirements.txt
+          python3 tools/reporting/generate_dashboard.py --output "$SITE_DIR/dashboard/index.html"
+
       - name: Validate generated site
         shell: bash
         run: |
           set -euo pipefail
           test -f "$SITE_DIR/index.html"
+          test -f "$SITE_DIR/dashboard/index.html"
           test -f "$SITE_DIR/index-en.html"
           test -f "$SITE_DIR/index-fr.html"
           test -f "$SITE_DIR/ontology.ttl"

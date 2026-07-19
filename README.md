@@ -50,6 +50,7 @@ L’ontologie fournit les concepts et relations structurelles, le Mission Catalo
 │   └── archive/dem/             Versions DEM obsolètes ou fusionnées
 ├── tools/
 │   ├── planning/                Chaîne planificateur pilote (Unified Planning + Aries)
+│   ├── reporting/               Générateur du tableau de bord publié sur GitHub Pages
 │   └── validation/              Validateur transversal et outils de revue experte
 └── validation/
     └── expert-review/           Campagnes de validation métier : matrices, questionnaires, réponses
@@ -99,6 +100,10 @@ Une validation réussie affiche les effectifs contrôlés. En cas d’erreur, le
 ## Validation métier par les experts
 
 Le validateur automatique garantit la cohérence formelle ; la vérité opérationnelle des décisions doctrinales relève d’un dispositif complémentaire de revue experte, décrit dans [validation/expert-review/README.md](validation/expert-review/README.md). Un générateur dérive structurellement un item de vérification de chaque décision doctrinale du Method Catalog (la génération échoue si un item n’a pas de formulation), les experts répondent à un questionnaire HTML autonome hors-ligne, et un agrégateur met à jour la matrice de couverture (`validé` / `contesté` / `pending`) puis produit l’ordre du jour d’adjudication. La campagne pilote couvre les deux méthodes Escort.
+
+## Tableau de bord des référentiels
+
+Un [tableau de bord statique](https://echauvea.github.io/lotusim-scenario-generator/dashboard/) est régénéré par la CI à chaque fusion dans `main` touchant les référentiels : chaîne de dérivation, versions, taux de remplissage (avec dénominateurs explicites) et avancement des campagnes de revue experte. Deux règles de conception, à ne pas relâcher sans décision explicite : les métriques sont calculées par les parseurs du validateur (aucune divergence possible avec ce que la CI vérifie), et la génération échoue si une métrique est incalculable ou si les référentiels ne valident pas — le tableau n’affiche jamais de chiffres périmés. Génération locale : `python tools/reporting/generate_dashboard.py` (sortie dans `build/dashboard/`).
 
 ## Statut
 
