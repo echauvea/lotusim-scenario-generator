@@ -239,9 +239,13 @@ def main() -> int:
     if leftover:
         fail(f"unresolved template tokens: {leftover}")
 
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(page, encoding="utf-8")
-    print(f"Dashboard generated: {args.output} "
+    workspace = Path(os.getenv("GITHUB_WORKSPACE", ROOT)).resolve()
+    output = args.output.resolve()
+    if not str(output).startswith(str(workspace) + os.sep):
+        fail(f"output path must stay inside {workspace}")
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(page, encoding="utf-8")
+    print(f"Dashboard generated: {output} "
           f"(commit {tokens['__COMMIT__']}, {exp_valides}/{exp_total} expert items validated)")
     return 0
 
